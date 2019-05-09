@@ -19,11 +19,15 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
-      title: 'lynight',
-      theme: ThemeData(fontFamily: 'Montserrat'),
-      home: DiscoverTab(),
+      theme: ThemeData(
+          primarySwatch: Colors.deepOrange,
+          accentColor: Colors.deepPurple,
+          fontFamily: 'Montserrat'),
+      //home: AuthPage(),
+      routes: {
+        '/': (BuildContext context) => DiscoverTab(),
+      },
     );
   }
 }
