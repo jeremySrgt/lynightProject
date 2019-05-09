@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import './topClubCard.dart';
 import './bottomClubCard.dart';
+import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
+import 'package:lynight/searchBar/bar.dart';
 
 class DiscoverTab extends StatefulWidget {
   @override
@@ -60,8 +62,8 @@ class _DiscoverTabState extends State<DiscoverTab> {
               ],
             ),
           ),
-          Text('2-'),
-          Text('3'),
+          SearchBar(),
+          UserProfil(),
         ]),
         appBar: AppBar(
           title: Text(

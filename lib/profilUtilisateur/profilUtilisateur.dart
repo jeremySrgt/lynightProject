@@ -74,8 +74,7 @@ class UserProfil extends StatelessWidget {
       ),
     );
 
-    return Scaffold(
-      body: Column(
+    return Column(
             children: [
               Image.asset(
                 'assets/boite.jpg',
@@ -87,8 +86,7 @@ class UserProfil extends StatelessWidget {
               styleSection,
               infoSection
             ],
-          ),
-    );
+          );
   }
 
 }

@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
           fontFamily: 'Montserrat'),
       //home: AuthPage(),
       routes: {
-        '/': (BuildContext context) => UserProfil(),
+        '/': (BuildContext context) => DiscoverTab(),
       },
     );
   }
