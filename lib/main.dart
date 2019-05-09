@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:lynight/discoverPage/discoverTab.dart';
+import 'package:lynight/searchBar/bar.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -23,7 +24,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'lynight',
       theme: ThemeData(fontFamily: 'Montserrat'),
-      home: DiscoverTab(),
+      home: SearchBar(),
     );
   }
 }
