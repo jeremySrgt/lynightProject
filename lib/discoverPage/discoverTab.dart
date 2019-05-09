@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './topClubCard.dart';
 import './bottomClubCard.dart';
+import 'package:lynight/searchBar/bar.dart';
 
 class DiscoverTab extends StatelessWidget {
   final scaffoldKey = GlobalKey<
@@ -25,7 +26,8 @@ class DiscoverTab extends StatelessWidget {
   }
 
   Widget bottomOfThePage(){
-    return BottomNavigationBar(items: [
+    return BottomNavigationBar(
+      items: [
       BottomNavigationBarItem(
         icon: Icon(Icons.adjust),
         title: Text(''),
@@ -38,7 +40,8 @@ class DiscoverTab extends StatelessWidget {
         icon: Icon(Icons.favorite),
         title: Text(''),
       ),
-    ]);
+    ],
+    );
   }
 
   @override
