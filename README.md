@@ -1,6 +1,6 @@
 # lynight
 
-application pour le projet E3 Esiee Paris !
+application pour le projet E3 Esiee Paris 
 
 ## Getting Started
 
