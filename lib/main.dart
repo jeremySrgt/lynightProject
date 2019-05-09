@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:lynight/discoverPage/discoverTab.dart';
+import 'profilUtilisateur/profilUtilisateur.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -26,7 +27,7 @@ class _MyAppState extends State<MyApp> {
           fontFamily: 'Montserrat'),
       //home: AuthPage(),
       routes: {
-        '/': (BuildContext context) => DiscoverTab(),
+        '/': (BuildContext context) => UserProfil(),
       },
     );
   }
