@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 
 import 'package:lynight/discoverPage/discoverTab.dart';
 import 'profilUtilisateur/profilUtilisateur.dart';
-import 'package:lynight/nightCubPage/nightClubProfile';
+import 'package:lynight/nightCubPage/nightClubProfile.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
