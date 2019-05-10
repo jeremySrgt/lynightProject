@@ -29,6 +29,7 @@ class UserProfil extends StatelessWidget {
           Text(
             'Date de naissance',
             style: TextStyle(
+              fontWeight: FontWeight.bold,
 
             ),
           ),
