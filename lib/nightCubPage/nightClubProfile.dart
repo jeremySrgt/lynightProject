@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
-
 class NightClubProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,7 +10,7 @@ class NightClubProfile extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment:
-              CrossAxisAlignment.start, //met dans le bon axe
+                  CrossAxisAlignment.start, //met dans le bon axe
               children: [
                 Container(
                   padding: const EdgeInsets.only(bottom: 10),
@@ -28,7 +25,7 @@ class NightClubProfile extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Row(
                     crossAxisAlignment:
-                    CrossAxisAlignment.start, //met dans le bonne axe
+                        CrossAxisAlignment.start, //met dans le bonne axe
                     children: [
                       Icon(
                         Icons.place,
@@ -47,7 +44,7 @@ class NightClubProfile extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 5),
                   child: Row(
                     crossAxisAlignment:
-                    CrossAxisAlignment.start, //met dans le bonne axe
+                        CrossAxisAlignment.start, //met dans le bonne axe
                     children: [
                       Icon(
                         Icons.phone,
@@ -119,7 +116,7 @@ class NightClubProfile extends StatelessWidget {
     );
 
     Widget priceSection = Container(
-      padding: const EdgeInsets.only(left: 250),
+      padding: const EdgeInsets.only(left: 200),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -138,25 +135,37 @@ class NightClubProfile extends StatelessWidget {
     );
 
     // TODO: implement build
-    return MaterialApp(
-      title: 'Boite Kelly Kelly',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Boite Kelly Kelly'),
-        ),
-        body: Column(
-          children: [
-            Image.asset(
-              'assets/nightClub.jpg',
-              width: 500,
-              height: 250,
-              fit: BoxFit.cover, //as small as possible but take all the place
+    return Scaffold(
+      body: Column(
+        children: [
+          Stack(children: <Widget>[
+            Hero(
+              tag: 'club',
+              child: Image.asset(
+                'assets/boite.jpg',
+                width: 500,
+                height: 250,
+                fit: BoxFit.cover, //as small as possible but take all the place
+              ),
             ),
-            upperSection,
-            textSection,
-            priceSection,
-          ],
-        ),
+            SafeArea(
+              child: FlatButton(
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.deepOrange,
+                  size: 30.0,
+                ),
+                onPressed: () {
+//                  Navigator.pushNamed(context, '/');
+                Navigator.pop(context);
+                },
+              ),
+            ),
+          ]),
+          upperSection,
+          textSection,
+          priceSection,
+        ],
       ),
     );
   }

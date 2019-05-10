@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'principalPage.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
+import 'package:lynight/authentification/signIn.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -27,7 +28,8 @@ class _MyAppState extends State<MyApp> {
           fontFamily: 'Comfortaa'),
       //home: AuthPage(),
       routes: {
-        '/': (BuildContext context) => PrincipalPage(),
+        '/': (BuildContext context) => LoginPage(),
+        '/principal': (BuildContext context) => PrincipalPage(),
         '/nightClubProfile': (BuildContext context) => NightClubProfile(),
         '/userProfil': (BuildContext context) => UserProfil(),
 

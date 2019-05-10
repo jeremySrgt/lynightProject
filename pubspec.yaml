@@ -18,6 +18,8 @@ environment:
 
 dependencies:
   google_maps_flutter: ^0.4.0
+  firebase_auth: ^0.11.0
+  firebase_core: ^0.4.0 #firebase auth reuqire firebase core pour une raison ignore
   flutter:
     sdk: flutter
 

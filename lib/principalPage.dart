@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
 import 'package:lynight/searchBar/bar.dart';
@@ -6,6 +7,10 @@ import 'package:lynight/discoverPage/topClubCard.dart';
 import 'package:lynight/discoverPage/bottomClubCard.dart';
 
 class PrincipalPage extends StatefulWidget {
+  final FirebaseUser user;
+
+  PrincipalPage({@required this.user});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -101,7 +106,13 @@ class _PrincipalPageState extends State<PrincipalPage>
           child: ListView(
             children: <Widget>[
               DrawerHeader(
-                child: Text('DRAWER TO DO'),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text(widget.user.email),
+                    ),
+                  ],
+                ),
                 decoration: BoxDecoration(
                     border:
                         Border(bottom: BorderSide(color: Colors.deepOrange))),
