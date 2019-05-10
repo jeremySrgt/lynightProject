@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'dart:math';
-
-import 'package:lynight/discoverPage/discoverTab.dart';
-import 'profilUtilisateur/profilUtilisateur.dart';
-import 'package:lynight/nightCubPage/nightClubProfile';
-import 'package:lynight/maps/googleMapsClient.dart';
-import 'package:lynight/nightCubPage/nightClubProfile';
-import 'package:lynight/searchBar/AnimatedContainer.dart';
+import 'principalPage.dart';
+import 'package:lynight/nightCubPage/nightClubProfile.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -32,7 +26,7 @@ class _MyAppState extends State<MyApp> {
           fontFamily: 'Montserrat'),
       //home: AuthPage(),
       routes: {
-        '/': (BuildContext context) => AnimatedContainerApp(),
+        '/': (BuildContext context) => PrincipalPage(),
         '/nightClubProfile': (BuildContext context) => NightClubProfile(),
 
       },

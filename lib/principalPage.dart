@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-import './topClubCard.dart';
-import './bottomClubCard.dart';
 import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
 import 'package:lynight/searchBar/bar.dart';
+import 'package:lynight/discoverPage/topClubCard.dart';
+import 'package:lynight/discoverPage/bottomClubCard.dart';
 
-class DiscoverTab extends StatefulWidget {
+class PrincipalPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _DiscoverTabState();
+    return _PrincipalPageState();
   }
 }
 
-class _DiscoverTabState extends State<DiscoverTab> {
+class _PrincipalPageState extends State<PrincipalPage> {
 
   String appBarTitle = 'DÉCOUVRIR';
 
