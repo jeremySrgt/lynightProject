@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'principalPage.dart';
-import 'package:lynight/nightCubPage/nightClubProfile';
+import 'package:lynight/nightCubPage/nightClubProfile.dart';
+import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -23,11 +24,12 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
           primarySwatch: Colors.deepOrange,
           accentColor: Colors.deepPurple,
-          fontFamily: 'Montserrat'),
+          fontFamily: 'Comfortaa'),
       //home: AuthPage(),
       routes: {
         '/': (BuildContext context) => PrincipalPage(),
         '/nightClubProfile': (BuildContext context) => NightClubProfile(),
+        '/userProfil': (BuildContext context) => UserProfil(),
 
       },
     );

@@ -13,23 +13,43 @@ class PrincipalPage extends StatefulWidget {
   }
 }
 
-class _PrincipalPageState extends State<PrincipalPage> {
+class _PrincipalPageState extends State<PrincipalPage>
+    with TickerProviderStateMixin {
+  String appBarTitle = 'Découvrir';
 
-  String appBarTitle = 'DÉCOUVRIR';
+  TabController _controller;
 
+  void initState() {
+    super.initState();
+    _controller = new TabController(length: 3, vsync: this);
+    _controller.addListener(_handleSelected);
+  }
 
+  void _handleSelected() {
+    setState(() {
+      if (_controller.index == 0) {
+        appBarTitle = 'Découvrir';
+      }
+      if (_controller.index == 1) {
+        appBarTitle = 'Recherche';
+      }
+      if (_controller.index == 2) {
+        appBarTitle = 'Favoris';
+      }
+    });
+  }
 
   Widget bottomNavigation() {
     return Container(
       color: Colors.white,
       child: TabBar(
+          controller: _controller,
           unselectedLabelColor: Colors.black,
           labelColor: Colors.deepOrange,
           indicatorColor: Colors.white,
           tabs: [
             Tab(
               icon: Icon(Icons.adjust),
-
             ),
             Tab(
               icon: Icon(Icons.search),
@@ -45,12 +65,11 @@ class _PrincipalPageState extends State<PrincipalPage> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return DefaultTabController(
-
       length: 3,
       child: Scaffold(
         backgroundColor: Colors.white,
         bottomNavigationBar: bottomNavigation(),
-        body: TabBarView(children: [
+        body: TabBarView(controller: _controller, children: [
           SafeArea(
             child: Column(
               children: <Widget>[
@@ -58,7 +77,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
                   height: 20.0,
                 ),
                 TopClubCard(),
-                bottomClubCard(),
+                BottomClubCard(),
               ],
             ),
           ),
@@ -67,24 +86,32 @@ class _PrincipalPageState extends State<PrincipalPage> {
         ]),
         appBar: AppBar(
           title: Text(
-            'DÉCOUVRIR',
-            style:
-                TextStyle(color: Colors.deepOrange, fontFamily: 'Montserrat',fontSize: 34.0,fontWeight: FontWeight.w500),
+            appBarTitle,
+            style: TextStyle(
+                color: Colors.deepOrange,
+                fontFamily: 'Montserrat',
+                fontSize: 34.0,
+                fontWeight: FontWeight.w500),
           ),
-          iconTheme: IconThemeData(
-            color: Colors.deepOrange
-          ),
+          iconTheme: IconThemeData(color: Colors.deepOrange),
           backgroundColor: Colors.white,
           elevation: 0.0,
         ),
         drawer: Drawer(
-          child: Column(
+          child: ListView(
             children: <Widget>[
-              SafeArea(
-                //permet de ne pas display sous la bar de notif des tels
-                child: ListTile(
-                  title: Text('DRAWER TO DO'),
-                ),
+              DrawerHeader(
+                child: Text('DRAWER TO DO'),
+                decoration: BoxDecoration(
+                    border:
+                        Border(bottom: BorderSide(color: Colors.deepOrange))),
+              ),
+              //permet de ne pas display sous la bar de notif des tels
+              ListTile(
+                title: Text('Profil'),
+                onTap: () {
+                  //Navigator.pushReplacementNamed(context, '/userProfil');
+                },
               ),
             ],
           ),
