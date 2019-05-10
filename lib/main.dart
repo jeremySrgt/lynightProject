@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
 import 'package:lynight/discoverPage/discoverTab.dart';
+import 'package:lynight/maps/googleMapsClient.dart';
 import 'profilUtilisateur/profilUtilisateur.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
+
 
 void main() {
 //  debugPaintSizeEnabled = true;
