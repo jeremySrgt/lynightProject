@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 
 import 'package:lynight/discoverPage/discoverTab.dart';
 import 'profilUtilisateur/profilUtilisateur.dart';
+import 'package:lynight/maps/googleMapsClient.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
