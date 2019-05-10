@@ -63,6 +63,9 @@ flutter:
       - family: Montserrat
         fonts:
           - asset: fonts/Montserrat/Montserrat-Regular.ttf
+      - family: Comfortaa
+        fonts:
+          - asset: fonts/Comfortaa/Comfortaa[wght].ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
