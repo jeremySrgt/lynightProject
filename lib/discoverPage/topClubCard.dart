@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lynight/nightCubPage/nightClubProfile';
+import 'package:lynight/nightCubPage/nightClubProfile.dart';
 
 
 class TopClubCard extends StatelessWidget {

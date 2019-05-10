@@ -13,7 +13,7 @@ class NightClubProfile extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment:
-              CrossAxisAlignment.start, //met dans le bonne axe
+              CrossAxisAlignment.start, //met dans le bon axe
               children: [
                 Container(
                   padding: const EdgeInsets.only(bottom: 10),
