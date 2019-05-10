@@ -5,7 +5,7 @@ import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
 import 'package:lynight/searchBar/bar.dart';
 import 'package:lynight/discoverPage/topClubCard.dart';
 import 'package:lynight/discoverPage/bottomClubCard.dart';
-
+import 'package:lynight/maps/googleMapsClient.dart';
 class PrincipalPage extends StatefulWidget {
   final FirebaseUser user;
 
@@ -89,7 +89,7 @@ class _PrincipalPageState extends State<PrincipalPage>
             ),
           ),
           SearchBar(),
-          UserProfil(),
+          GoogleMapsClient(),
         ]),
         appBar: AppBar(
           title: Text(
