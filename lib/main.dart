@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
 import 'package:lynight/discoverPage/discoverTab.dart';
-import 'profilUtilisateur/profilUtilisateur.dart';
 import 'package:lynight/maps/googleMapsClient.dart';
+import 'profilUtilisateur/profilUtilisateur.dart';
+import 'package:lynight/nightCubPage/nightClubProfile';
+
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -29,6 +30,8 @@ class _MyAppState extends State<MyApp> {
       //home: AuthPage(),
       routes: {
         '/': (BuildContext context) => DiscoverTab(),
+        '/nightClubProfile': (BuildContext context) => NightClubProfile(),
+
       },
     );
   }

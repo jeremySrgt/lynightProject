@@ -57,7 +57,7 @@ class _DiscoverTabState extends State<DiscoverTab> {
                 SizedBox(
                   height: 20.0,
                 ),
-                topClubCard(),
+                TopClubCard(),
                 bottomClubCard(),
               ],
             ),
