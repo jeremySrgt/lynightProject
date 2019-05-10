@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:lynight/discoverPage/discoverTab.dart';
-import 'package:lynight/maps/googleMapsClient.dart';
-import 'profilUtilisateur/profilUtilisateur.dart';
+import 'principalPage.dart';
 import 'package:lynight/nightCubPage/nightClubProfile';
-
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -29,7 +26,7 @@ class _MyAppState extends State<MyApp> {
           fontFamily: 'Montserrat'),
       //home: AuthPage(),
       routes: {
-        '/': (BuildContext context) => DiscoverTab(),
+        '/': (BuildContext context) => PrincipalPage(),
         '/nightClubProfile': (BuildContext context) => NightClubProfile(),
 
       },
