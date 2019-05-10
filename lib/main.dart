@@ -5,7 +5,6 @@ import 'package:lynight/maps/googleMapsClient.dart';
 import 'profilUtilisateur/profilUtilisateur.dart';
 import 'package:lynight/nightCubPage/nightClubProfile';
 
-
 void main() {
 //  debugPaintSizeEnabled = true;
   runApp(MyApp());
@@ -29,7 +28,7 @@ class _MyAppState extends State<MyApp> {
           fontFamily: 'Montserrat'),
       //home: AuthPage(),
       routes: {
-        '/': (BuildContext context) => DiscoverTab(),
+        '/': (BuildContext context) => GoogleMapsClient(),
         '/nightClubProfile': (BuildContext context) => NightClubProfile(),
 
       },
