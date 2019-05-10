@@ -46,6 +46,7 @@ flutter:
   assets:
     - assets/boite.jpg
     - assets/nightClub.jpg
+    - assets/test.jpg
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -63,6 +64,9 @@ flutter:
       - family: Montserrat
         fonts:
           - asset: fonts/Montserrat/Montserrat-Regular.ttf
+      - family: Comfortaa
+        fonts:
+          - asset: fonts/Comfortaa/Comfortaa[wght].ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
