@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       //home: AuthPage(),
       routes: {
         '/': (BuildContext context) => LoginPage(),
-        '/principal': (BuildContext context) => PrincipalPage(),
+//        '/principal': (BuildContext context) => PrincipalPage(),
         '/nightClubProfile': (BuildContext context) => NightClubProfile(),
         '/userProfil': (BuildContext context) => UserProfil(),
 

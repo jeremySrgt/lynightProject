@@ -39,9 +39,9 @@ class UserProfil extends StatelessWidget {
                     ),
                   ),
                   CircleAvatar(
-                    backgroundImage: ExactAssetImage('assets/test.jpg'),
+                    backgroundImage: ExactAssetImage('assets/nightClub.jpg'),
                     minRadius: 30,
-                    maxRadius: 90,
+                    maxRadius: 50,
                   ),
                   FlatButton(
                     onPressed: () {},

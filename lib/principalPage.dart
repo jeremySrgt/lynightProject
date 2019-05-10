@@ -23,6 +23,8 @@ class _PrincipalPageState extends State<PrincipalPage>
   String appBarTitle = 'Découvrir';
 
   TabController _controller;
+  //TODO changer la couleur de l'appbar en focntion de la couleur de l'element en dessous - ca fait plus joli
+  //TODO par exemple dans le profil utilisateur c'est flagrant
 
   void initState() {
     super.initState();
@@ -121,7 +123,7 @@ class _PrincipalPageState extends State<PrincipalPage>
               ListTile(
                 title: Text('Profil'),
                 onTap: () {
-                  //Navigator.pushReplacementNamed(context, '/userProfil');
+                  Navigator.pushNamed(context, '/userProfil');
                 },
               ),
             ],
