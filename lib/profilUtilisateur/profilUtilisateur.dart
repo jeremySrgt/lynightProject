@@ -9,7 +9,7 @@ class UserProfil extends StatelessWidget {
         Container(
           padding: EdgeInsets.only(top: 16),
           width: 500,
-          height: 320,
+          height: 300,
           decoration: BoxDecoration(
             color: Colors.redAccent,
             borderRadius: BorderRadius.only(
@@ -18,6 +18,9 @@ class UserProfil extends StatelessWidget {
           ),
           child: Column(
             children: <Widget>[
+              Divider(),
+              Divider(),
+              Divider(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 // Centrer les icones et l'image sur la page
@@ -70,22 +73,16 @@ class UserProfil extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 8),
                       child: Text(
                         'NOM Prénom',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontSize: 18.0),
                       ),
                     ),
                     Text(
                       'Pseudo',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontSize: 15.0),
                     ),
                     Text(
                       'Date de naissance',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontSize: 15.0),
                     ),
                   ],
                 ),
@@ -93,49 +90,39 @@ class UserProfil extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(5),
-          child: Row(
-            children: [
-              Icon(
-                Icons.music_note,
-                color: Colors.orange,
-              ),
-              Text(
-                'Style de musique :',
-                style: TextStyle(),
-              )
-            ],
+        ListTile(
+          leading: Icon(Icons.music_note),
+          title: Text(
+            "Style de musique",
+            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+          ),
+          subtitle: Text(
+            "Electro, Rap,...",
+            style: TextStyle(fontSize: 15.0),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(5),
-          child: Row(
-            children: [
-              Icon(
-                Icons.mail,
-                color: Colors.orange,
-              ),
-              Text(
-                'Adresse Mail :',
-                style: TextStyle(),
-              )
-            ],
+        Divider(),
+        ListTile(
+          leading: Icon(Icons.mail),
+          title: Text(
+            "Email",
+            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+          ),
+          subtitle: Text(
+            "exemple@gmail.com",
+            style: TextStyle(fontSize: 15.0),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(5),
-          child: Row(
-            children: [
-              Icon(
-                Icons.phone,
-                color: Colors.orange,
-              ),
-              Text(
-                'Téléphone :',
-                style: TextStyle(),
-              )
-            ],
+        Divider(),
+        ListTile(
+          leading: Icon(Icons.phone),
+          title: Text(
+            "Numéro",
+            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+          ),
+          subtitle: Text(
+            "0101010101",
+            style: TextStyle(fontSize: 15.0),
           ),
         ),
       ],
