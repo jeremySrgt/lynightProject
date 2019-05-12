@@ -20,41 +20,8 @@ class SearchBar extends StatelessWidget {
     );
   }
 }
-/*@override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Container(
-      child: TextField(
-        onChanged: (value) {},
-        decoration: InputDecoration(
-          labelText: "Recherchez un nom de boîte",
-          prefixIcon: Icon(Icons.search, color: Colors.grey,)
-        ),
-      ),
-        */ /*child: IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              showSearch(context: context, delegate: DataSearch());*/ /*
-              //drawer: Drawer(),
-//            })
-  );
-  }
-}*/
 
 class MyHomePage extends StatefulWidget {
-  final clubsList = [
-    "Wanderlust",
-    "AuDD",
-    "ESIEE",
-    "ChezJerem",
-    "Club Haussmann",
-    "BNK",
-    "Nuits Fauves",
-    "Coachella",
-    "Kelly Kelly NightClub"
-  ];
-
-  final recentSearch = ["AuDD", "ESIEE", "ChezJerem"];
 
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
@@ -70,7 +37,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     // TODO: implement build
     return new Container(
       child: new TextField(
@@ -82,10 +48,12 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.grey,
             ),
             border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25.0)))
-        ),
+                borderRadius: BorderRadius.all(Radius.circular(25.0)))),
         onSubmitted: (String str) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => new SuggestionList(inputSearch: str)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => new SuggestionList(inputSearch: str)));
         },
       ),
     );
@@ -102,19 +70,6 @@ class SuggestionList extends StatefulWidget {
 }
 
 class _SuggestionListState extends State<SuggestionList> {
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Next Page"),
-      ),
-      body: new Text("${widget.inputSearch}"),
-    );
-  }
-}
-
-
-class DataSearch extends SearchDelegate<String> {
   final clubsList = [
     "Wanderlust",
     "AuDD",
@@ -127,61 +82,21 @@ class DataSearch extends SearchDelegate<String> {
     "Kelly Kelly NightClub"
   ];
 
-  final recentSearch = ["AuDD", "ESIEE", "ChezJerem"];
-
   @override
-  List<Widget> buildActions(BuildContext context) {
-    // TODO: implement buildActions
-    return [
-      IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            query = "";
-          })
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-        icon: AnimatedIcon(
-          icon: AnimatedIcons.menu_arrow,
-          progress: transitionAnimation,
+  Widget build(BuildContext context) {
+    final suggestionList = clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
+    return new Scaffold(
+        appBar: new AppBar(
+          title: new Text("Résultats"),
         ),
-        onPressed: () {
-          close(context, null);
-        });
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return NightClubProfile();
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty
-        ? recentSearch
-        : clubsList.where((p) => p.startsWith(query)).toList();
-
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-            onTap: () {
-              showResults(context);
+        body: new ListView.builder(
+            itemBuilder: (context, index) {
+              return ListTile(
+                leading: Icon(Icons.domain),
+                title: Text("${suggestionList[index]}"),
+                onTap: () {},
+              );
             },
-            title: RichText(
-              text: TextSpan(
-                  text: suggestionList[index].substring(0, query.length),
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                  children: [
-                    TextSpan(
-                        text: suggestionList[index].substring(query.length),
-                        style: TextStyle(color: Colors.grey))
-                  ]),
-            ),
-          ),
-      itemCount: suggestionList.length,
-    );
+            itemCount: suggestionList.length));
   }
 }
