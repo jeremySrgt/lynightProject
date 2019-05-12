@@ -8,8 +8,8 @@ class UserProfil extends StatelessWidget {
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(top: 16),
-          width: 500,
-          height: 300,
+          width: 500, // Dimensions du carré rouge
+          height: 330,
           decoration: BoxDecoration(
             color: Colors.redAccent,
             borderRadius: BorderRadius.only(
@@ -18,7 +18,7 @@ class UserProfil extends StatelessWidget {
           ),
           child: Column(
             children: <Widget>[
-              Divider(),
+              Divider(), // saut de ligne
               Divider(),
               Divider(),
               Row(
@@ -26,27 +26,27 @@ class UserProfil extends StatelessWidget {
                 // Centrer les icones et l'image sur la page
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FlatButton(
+                  FlatButton(// Bouton pour les modifications
                     onPressed: () {},
                     padding: EdgeInsets.all(10.0),
                     child: Column(
-                      // Replace with a Row for horizontal icon + text
                       children: <Widget>[
                         Icon(
                           Icons.mode_edit,
                           size: 35.0,
                           color: Colors.white,
                         ),
+                        Divider(),
                         Text("Modification")
                       ],
                     ),
                   ),
-                  CircleAvatar(
+                  CircleAvatar( // photo de profil
                     backgroundImage: ExactAssetImage('assets/nightClub.jpg'),
                     minRadius: 30,
-                    maxRadius: 50,
+                    maxRadius: 70,
                   ),
-                  FlatButton(
+                  FlatButton( // Bouton pour les paramètres
                     onPressed: () {},
                     padding: EdgeInsets.all(10.0),
                     child: Column(
@@ -57,6 +57,7 @@ class UserProfil extends StatelessWidget {
                           size: 35.0,
                           color: Colors.white,
                         ),
+                        Divider(),
                         Text("Paramètres")
                       ],
                     ),
