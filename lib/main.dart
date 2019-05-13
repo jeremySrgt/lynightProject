@@ -3,8 +3,9 @@ import 'package:flutter/rendering.dart';
 import 'principalPage.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
-import 'package:lynight/authentification/signIn.dart';
 import 'package:lynight/maps/googleMapsClient.dart';
+import 'package:lynight/authentification/auth.dart';
+import 'package:lynight/authentification/root_page.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -24,12 +25,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          primarySwatch: Colors.deepOrange,
-          accentColor: Colors.deepPurple,
+          primaryColor: Colors.redAccent,
+          accentColor: Colors.blueGrey[600],
           fontFamily: 'Comfortaa'),
       //home: AuthPage(),
       routes: {
-        '/': (BuildContext context) => LoginPage(),
+        '/': (BuildContext context) => RootPage(auth: Auth(),),
 //        '/principal': (BuildContext context) => PrincipalPage(),
         '/nightClubProfile': (BuildContext context) => NightClubProfile(),
         '/userProfil': (BuildContext context) => UserProfil(),

@@ -24,8 +24,8 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
 
   @override
   Widget build(BuildContext context) {
-    var assetsImage = new AssetImage('assets/loupe.png');
-    var imageLoupe = new Image(image: assetsImage);
+    //var assetsImage = new AssetImage('assets/loupe.png');
+    //var imageLoupe = new Image(image: assetsImage);
 
     return MaterialApp(
       home: Scaffold(
@@ -44,13 +44,14 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
             },
             child: AnimatedContainer(
               // Use the properties stored in the State class.
+              child: MyHomePage(),
               alignment: Alignment.center,
-              child: Container(
+              /*child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.deepOrange,
                   borderRadius: _borderRadius
                 ),
-              ),
+              ),*/
               width: _width,
               height: _height,
               decoration: BoxDecoration(
