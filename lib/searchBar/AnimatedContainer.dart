@@ -24,8 +24,8 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
 
   @override
   Widget build(BuildContext context) {
-    var assetsImage = new AssetImage('assets/loupe.png');
-    var imageLoupe = new Image(image: assetsImage);
+    //var assetsImage = new AssetImage('assets/loupe.png');
+    //var imageLoupe = new Image(image: assetsImage);
 
     return MaterialApp(
       home: Scaffold(
