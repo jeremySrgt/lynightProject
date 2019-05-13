@@ -39,19 +39,19 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
                 _borderRadius = BorderRadius.circular(8);
                 _width = 300;
                 _height = 80;
-                MyHomePage();
-                //_opacity = 0.5;
+                _opacity = 0.5;
               });
             },
             child: AnimatedContainer(
               // Use the properties stored in the State class.
+              child: MyHomePage(),
               alignment: Alignment.center,
-              child: Container(
+              /*child: Container(
                 decoration: BoxDecoration(
                   color: Colors.deepOrange,
                   borderRadius: _borderRadius
                 ),
-              ),
+              ),*/
               width: _width,
               height: _height,
               decoration: BoxDecoration(
