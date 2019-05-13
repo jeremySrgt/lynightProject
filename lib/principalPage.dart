@@ -6,10 +6,24 @@ import 'package:lynight/searchBar/bar.dart';
 import 'package:lynight/discoverPage/topClubCard.dart';
 import 'package:lynight/discoverPage/bottomClubCard.dart';
 import 'package:lynight/maps/googleMapsClient.dart';
-class PrincipalPage extends StatefulWidget {
-  final FirebaseUser user;
+import 'package:lynight/authentification/test/auth.dart';
 
-  PrincipalPage({@required this.user});
+
+
+class PrincipalPage extends StatefulWidget {
+  PrincipalPage({this.auth, this.onSignOut});
+  final BaseAuth auth;
+  final VoidCallback onSignOut;
+
+  void _signOut() async {
+    try {
+      await auth.signOut();
+      onSignOut();
+    } catch (e) {
+      print(e);
+    }
+
+  }
 
   @override
   State<StatefulWidget> createState() {
@@ -111,8 +125,12 @@ class _PrincipalPageState extends State<PrincipalPage>
                 child: Column(
                   children: <Widget>[
                     ListTile(
-                      title: Text(widget.user.email),
+                      title: Text('nom utilisateur'),
                     ),
+                    FlatButton(
+                        onPressed: widget._signOut,
+                        child: Text('Déconnexion', style: TextStyle(fontSize: 14.0, color: Colors.black))
+                    )
                   ],
                 ),
                 decoration: BoxDecoration(
