@@ -116,7 +116,7 @@ class NightClubProfile extends StatelessWidget {
     );
 
     Widget priceSection = Container(
-      padding: const EdgeInsets.only(left: 200),
+      padding: const EdgeInsets.only(left: 150),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
