@@ -9,8 +9,8 @@ class UserProfil extends StatelessWidget {
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(top: 16),
-          width: 500, // Dimensions du carré rouge
-          height: 330,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/2.3,
           decoration: BoxDecoration(
             color: Colors.redAccent,
             borderRadius: BorderRadius.only(
