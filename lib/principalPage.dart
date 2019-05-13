@@ -6,14 +6,15 @@ import 'package:lynight/searchBar/bar.dart';
 import 'package:lynight/discoverPage/topClubCard.dart';
 import 'package:lynight/discoverPage/bottomClubCard.dart';
 import 'package:lynight/maps/googleMapsClient.dart';
-import 'package:lynight/authentification/test/auth.dart';
+import 'package:lynight/authentification/auth.dart';
 
 
 
 class PrincipalPage extends StatefulWidget {
-  PrincipalPage({this.auth, this.onSignOut});
+  PrincipalPage({this.auth, this.onSignOut,this.userID});
   final BaseAuth auth;
   final VoidCallback onSignOut;
+  final String userID;
 
   void _signOut() async {
     try {
@@ -102,7 +103,7 @@ class _PrincipalPageState extends State<PrincipalPage>
               ],
             ),
           ),
-          SearchBar(),
+          MyHomePage(),
           GoogleMapsClient(),
         ]),
         appBar: AppBar(
@@ -125,7 +126,7 @@ class _PrincipalPageState extends State<PrincipalPage>
                 child: Column(
                   children: <Widget>[
                     ListTile(
-                      title: Text('nom utilisateur'),
+                      title: Text(widget.userID),
                     ),
                     FlatButton(
                         onPressed: widget._signOut,
