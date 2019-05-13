@@ -13,10 +13,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => new _LoginPageState();
 }
 
-enum FormType {
-  login,
-  register
-}
+enum FormType { login, register }
 
 class _LoginPageState extends State<LoginPage> {
   static final formKey = new GlobalKey<FormState>();
@@ -26,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   String _password;
   FormType _formType = FormType.login;
   String _authHint = '';
+  bool _isLoading = false;
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -35,8 +33,11 @@ class _LoginPageState extends State<LoginPage> {
     }
     return false;
   }
-  
+
   void validateAndSubmit() async {
+    setState(() {
+      _isLoading = true;
+    });
     if (validateAndSave()) {
       try {
         String userId = _formType == FormType.login
@@ -44,10 +45,10 @@ class _LoginPageState extends State<LoginPage> {
             : await widget.auth.createUser(_email, _password);
         setState(() {
           _authHint = 'Connecté\n\nUser id: $userId';
+          _isLoading = false;
         });
         widget.onSignIn();
-      }
-      catch (e) {
+      } catch (e) {
         setState(() {
           _authHint = 'Erreur connexion\n\n${e.toString()}';
         });
@@ -76,34 +77,53 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  Widget _buildUsernameField(){
-    return TextFormField(
-      key: new Key('email'),
-      decoration: InputDecoration(labelText: 'Email'),
-      keyboardType: TextInputType.emailAddress,
-      validator: (String value) {
-        if (value.isEmpty ||
-            !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                .hasMatch(value)) {
-          return 'Saisissez un e-mail valide';
-        }
-      },
-      onSaved: (value) => _email = value,
+  Widget _buildUsernameField() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      child: TextFormField(
+        maxLines: 1,
+        key: new Key('email'),
+        decoration: InputDecoration(
+          labelText: 'Email',
+          icon: new Icon(
+            Icons.mail,
+            color: Colors.grey,
+          ),
+        ),
+        keyboardType: TextInputType.emailAddress,
+        validator: (String value) {
+          if (value.isEmpty ||
+              !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                  .hasMatch(value)) {
+            return 'Saisissez un e-mail valide';
+          }
+        },
+        onSaved: (value) => _email = value,
+      ),
     );
   }
 
-  Widget _buildPasswordField(){
-    return TextFormField(
-      key: new Key('password'),
-      decoration: InputDecoration(labelText: 'Mot de passe'),
-      controller: _passwordTextController,
-      obscureText: true,
-      validator: (String value) {
-        if (value.isEmpty || value.length < 6) {
-          return 'Au minimum 6 caractères sont requis pour le mot de passe';
-        }
-      },
-      onSaved: (value) => _password = value,
+  Widget _buildPasswordField() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+      child: TextFormField(
+        maxLines: 1,
+        key: new Key('password'),
+        decoration: InputDecoration(
+            labelText: 'Mot de passe',
+            icon: new Icon(
+              Icons.lock,
+              color: Colors.grey,
+            )),
+        controller: _passwordTextController,
+        obscureText: true,
+        validator: (String value) {
+          if (value.isEmpty || value.length < 6) {
+            return 'Au minimum 6 caractères sont requis pour le mot de passe';
+          }
+        },
+        onSaved: (value) => _password = value,
+      ),
     );
   }
 
@@ -139,49 +159,55 @@ class _LoginPageState extends State<LoginPage> {
 //  }
 
   Widget _builConfirmPasswordTextField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Confirmez le mot de passe'),
-      obscureText: true,
-      validator: (String value) {
-        if (_passwordTextController.text != value) {
-          return 'Le mot de passe ne correspond pas';
-        }
-      },
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+      child: TextFormField(
+        decoration: InputDecoration(
+            labelText: 'Confirmez le mot de passe',
+            icon: new Icon(
+              Icons.lock,
+              color: Colors.grey,
+            )),
+        obscureText: true,
+        validator: (String value) {
+          if (_passwordTextController.text != value) {
+            return 'Le mot de passe ne correspond pas';
+          }
+        },
+      ),
     );
   }
 
-  Widget submitWidgets(){
-    switch(_formType){
+  Widget submitWidgets() {
+    switch (_formType) {
       case FormType.login:
-        return Column(
+        return ListView(
+          shrinkWrap: true,
           children: <Widget>[
             PrimaryButton(
                 key: new Key('login'),
                 text: 'Connexion',
                 height: 44.0,
-                onPressed: validateAndSubmit
-            ),
+                onPressed: validateAndSubmit),
             FlatButton(
                 key: new Key('need-account'),
-                child: new Text("Créer un compte"),
-                onPressed: moveToRegister
-            ),
+                child: Text("Créer un compte"),
+                onPressed: moveToRegister),
           ],
         );
       case FormType.register:
-        return Column(
+        return ListView(
+          shrinkWrap: true,
           children: <Widget>[
             PrimaryButton(
                 key: new Key('register'),
                 text: 'Créer',
                 height: 44.0,
-                onPressed: validateAndSubmit
-            ),
+                onPressed: validateAndSubmit),
             FlatButton(
                 key: new Key('need-login'),
-                child: new Text("Déjà un compte ? Se connecter"),
-                onPressed: moveToLogin
-            ),
+                child: Text("Déjà un compte ? Se connecter"),
+                onPressed: moveToLogin),
           ],
         );
     }
@@ -189,7 +215,6 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       child: Text('Probleme creation du submitWidget'),
     );
-
   }
 
 //  List<Widget> submitWidgets() {
@@ -226,61 +251,55 @@ class _LoginPageState extends State<LoginPage> {
 //    return null;
 //  }
 
+  Widget _showCircularProgress() {
+    return Center(child: CircularProgressIndicator());
+  }
+
   Widget hintText() {
     return Container(
         //height: 80.0,
         padding: const EdgeInsets.all(32.0),
-        child: new Text(
-            _authHint,
+        child: new Text(_authHint,
             key: new Key('hint'),
             style: TextStyle(fontSize: 18.0, color: Colors.grey),
-            textAlign: TextAlign.center)
-    );
+            textAlign: TextAlign.center));
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      backgroundColor: Colors.grey[300],
-      body: SingleChildScrollView(child: new Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            Card(
-              child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Form(
-                        key: formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            _buildUsernameField(),
-                            _buildPasswordField(),
-                            _formType == FormType.register
-                                ? _builConfirmPasswordTextField()
-                                : Container(),
-                             SizedBox(
-                               height: 10.0,
-                             ),
-                             submitWidgets(),
-                          ],
-                        )
-                    )
-                ),
-              ])
-            ),
-            hintText()
-          ]
-        )
-      ))
-    );
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+            child: Container(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(children: <Widget>[
+                  Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                    Container(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Form(
+                            key: formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                _buildUsernameField(),
+                                _buildPasswordField(),
+                                _formType == FormType.register
+                                    ? _builConfirmPasswordTextField()
+                                    : Container(),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                _isLoading == false
+                                    ? submitWidgets()
+                                    : _showCircularProgress()
+                              ],
+                            ))),
+                  ]),
+                  hintText()
+                ]))));
   }
 
   Widget padded({Widget child}) {
@@ -289,5 +308,15 @@ class _LoginPageState extends State<LoginPage> {
       child: child,
     );
   }
-}
 
+  Widget _showLogo() {
+    return Padding(
+      padding: EdgeInsets.only(top: 20.0),
+      child: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        radius: 48.0,
+        child: Image.asset('assets/boite.jpg'),
+      ),
+    );
+  }
+}
