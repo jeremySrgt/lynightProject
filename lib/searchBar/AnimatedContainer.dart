@@ -44,13 +44,14 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
             },
             child: AnimatedContainer(
               // Use the properties stored in the State class.
+              child: MyHomePage(),
               alignment: Alignment.center,
-              child: Container(
+              /*child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.deepOrange,
                   borderRadius: _borderRadius
                 ),
-              ),
+              ),*/
               width: _width,
               height: _height,
               decoration: BoxDecoration(
