@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/authentification/login_page.dart';
-import 'package:lynight/authentification/home_page.dart';
 import 'package:lynight/principalPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class RootPage extends StatefulWidget {
@@ -20,6 +20,9 @@ enum AuthStatus {
 
 class _RootPageState extends State<RootPage> {
 
+  String userID;
+  String userMail;
+
   AuthStatus authStatus = AuthStatus.notSignedIn;
 
   initState() {
@@ -27,8 +30,18 @@ class _RootPageState extends State<RootPage> {
     widget.auth.currentUser().then((userId) {
       setState(() {
         authStatus = userId != null ? AuthStatus.signedIn : AuthStatus.notSignedIn;
+        userID = userId;
       });
     });
+    widget.auth.userEmail().then((userEmail) {
+      setState(() {
+        userMail = userEmail;
+      });
+    });
+  }
+
+  Future<String> getUserID(){
+    return widget.auth.currentUser();
   }
 
   void _updateAuthStatus(AuthStatus status) {
@@ -49,6 +62,7 @@ class _RootPageState extends State<RootPage> {
       case AuthStatus.signedIn:
         return PrincipalPage(
           auth: widget.auth,
+          userID: userMail,
           onSignOut: () => _updateAuthStatus(AuthStatus.notSignedIn)
         );
     }

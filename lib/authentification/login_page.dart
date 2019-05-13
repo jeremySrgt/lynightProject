@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lynight/authentification/primary_button.dart';
+import 'package:lynight/authentification/auth.dart';
 import 'auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,7 +16,7 @@ class LoginPage extends StatefulWidget {
 
 enum FormType { login, register }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   static final formKey = new GlobalKey<FormState>();
   final TextEditingController _passwordTextController = TextEditingController();
 
@@ -24,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   FormType _formType = FormType.login;
   String _authHint = '';
   bool _isLoading = false;
+
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -35,7 +37,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void validateAndSubmit() async {
-
     if (validateAndSave()) {
       setState(() {
         _isLoading = true;
@@ -188,13 +189,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   Widget _showCircularProgress() {
     return Container(
       padding: const EdgeInsets.all(20.0),
-      child: Center(
-          child: CircularProgressIndicator()
-      ),
+      child: Center(child: CircularProgressIndicator()),
     );
   }
 
@@ -206,6 +204,25 @@ class _LoginPageState extends State<LoginPage> {
             key: new Key('hint'),
             style: TextStyle(fontSize: 18.0, color: Colors.grey),
             textAlign: TextAlign.center));
+  }
+
+  Widget _buildForm() {
+    return Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            _buildUsernameField(),
+            _buildPasswordField(),
+            _formType == FormType.register
+                ? _builConfirmPasswordTextField()
+                : Container(),
+            SizedBox(
+              height: 10.0,
+            ),
+            _isLoading == false ? submitWidgets() : _showCircularProgress()
+          ],
+        ));
   }
 
   @override
@@ -221,25 +238,9 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(children: <Widget>[
                   Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                     Container(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Form(
-                            key: formKey,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: <Widget>[
-                                _buildUsernameField(),
-                                _buildPasswordField(),
-                                _formType == FormType.register
-                                    ? _builConfirmPasswordTextField()
-                                    : Container(),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                _isLoading == false
-                                    ? submitWidgets()
-                                    : _showCircularProgress()
-                              ],
-                            ))),
+                      padding: const EdgeInsets.all(16.0),
+                      child: _buildForm(),
+                    ),
                   ]),
                   hintText()
                 ]))));
