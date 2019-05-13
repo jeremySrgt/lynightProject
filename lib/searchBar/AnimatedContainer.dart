@@ -39,7 +39,8 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
                 _borderRadius = BorderRadius.circular(8);
                 _width = 300;
                 _height = 80;
-                _opacity = 0.5;
+                MyHomePage();
+                //_opacity = 0.5;
               });
             },
             child: AnimatedContainer(
@@ -47,7 +48,7 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
               alignment: Alignment.center,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.deepOrange,
                   borderRadius: _borderRadius
                 ),
               ),

@@ -88,7 +88,7 @@ class _PrincipalPageState extends State<PrincipalPage>
               ],
             ),
           ),
-          SearchBar(),
+          MyHomePage(),
           GoogleMapsClient(),
         ]),
         appBar: AppBar(

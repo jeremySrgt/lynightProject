@@ -7,7 +7,7 @@ class InputSearch {
   InputSearch(this.strInput);
 }
 
-class SearchBar extends StatelessWidget {
+/*class SearchBar extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class SearchBar extends StatelessWidget {
       home: new MyHomePage(title: 'ListView with Search'),
     );
   }
-}
+}*/
 
 class MyHomePage extends StatefulWidget {
 
