@@ -6,7 +6,7 @@ import 'package:lynight/searchBar/bar.dart';
 import 'package:lynight/discoverPage/topClubCard.dart';
 import 'package:lynight/discoverPage/bottomClubCard.dart';
 import 'package:lynight/maps/googleMapsClient.dart';
-import 'package:lynight/authentification/test/auth.dart';
+import 'package:lynight/authentification/auth.dart';
 
 
 

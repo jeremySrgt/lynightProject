@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lynight/authentification/test/auth.dart';
-import 'package:lynight/authentification/test/login_page.dart';
-import 'package:lynight/authentification/test/home_page.dart';
+import 'package:lynight/authentification/auth.dart';
+import 'package:lynight/authentification/login_page.dart';
+import 'package:lynight/authentification/home_page.dart';
 import 'package:lynight/principalPage.dart';
 
 

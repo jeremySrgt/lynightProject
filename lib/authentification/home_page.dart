@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lynight/authentification/test/auth.dart';
+import 'package:lynight/authentification/auth.dart';
 class HomePage extends StatelessWidget {
   HomePage({this.auth, this.onSignOut});
   final BaseAuth auth;

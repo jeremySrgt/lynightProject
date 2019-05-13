@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lynight/authentification/test/primary_button.dart';
+import 'package:lynight/authentification/primary_button.dart';
 import 'auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -35,10 +35,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void validateAndSubmit() async {
-    setState(() {
-      _isLoading = true;
-    });
+
     if (validateAndSave()) {
+      setState(() {
+        _isLoading = true;
+      });
       try {
         String userId = _formType == FormType.login
             ? await widget.auth.signIn(_email, _password)
@@ -50,6 +51,7 @@ class _LoginPageState extends State<LoginPage> {
         widget.onSignIn();
       } catch (e) {
         setState(() {
+          _isLoading = false;
           _authHint = 'Erreur connexion\n\n${e.toString()}';
         });
         print(e);
@@ -119,44 +121,13 @@ class _LoginPageState extends State<LoginPage> {
         obscureText: true,
         validator: (String value) {
           if (value.isEmpty || value.length < 6) {
-            return 'Au minimum 6 caractères sont requis pour le mot de passe';
+            return '6 caractères minimum sont requis';
           }
         },
         onSaved: (value) => _password = value,
       ),
     );
   }
-
-//  List<Widget> usernameAndPassword() {
-//    return [
-//      padded(child: new TextFormField(
-//        key: new Key('email'),
-//        decoration: new InputDecoration(labelText: 'Email'),
-//        autocorrect: false,
-//        validator: (String value) {
-//          if (value.isEmpty ||
-//              !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-//                  .hasMatch(value)) {
-//            return 'Saisissez un e-mail valide';
-//          }
-//        },
-//        onSaved: (value) => _email = value,
-//      )),
-//      padded(child: new TextFormField(
-//        key: new Key('password'),
-//        decoration: new InputDecoration(labelText: 'Mot de passe'),
-//        controller: _passwordTextController,
-//        obscureText: true,
-//        autocorrect: false,
-//        validator: (String value) {
-//          if (value.isEmpty || value.length < 6) {
-//            return 'Au minimum 6 caractères sont requis pour le mot de passe';
-//          }
-//        },
-//        onSaved: (value) => _password = value,
-//      )),
-//    ];
-//  }
 
   Widget _builConfirmPasswordTextField() {
     return Padding(
@@ -217,42 +188,14 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-//  List<Widget> submitWidgets() {
-//    switch (_formType) {
-//      case FormType.login:
-//        return [
-//          new PrimaryButton(
-//            key: new Key('login'),
-//            text: 'Connexion',
-//            height: 44.0,
-//            onPressed: validateAndSubmit
-//          ),
-//          new FlatButton(
-//            key: new Key('need-account'),
-//            child: new Text("Créer un compte"),
-//            onPressed: moveToRegister
-//          ),
-//        ];
-//      case FormType.register:
-//        return [
-//          new PrimaryButton(
-//            key: new Key('register'),
-//            text: 'Créer',
-//            height: 44.0,
-//            onPressed: validateAndSubmit
-//          ),
-//          new FlatButton(
-//            key: new Key('need-login'),
-//            child: new Text("Déjà un compte ? Se connecter"),
-//            onPressed: moveToLogin
-//          ),
-//        ];
-//    }
-//    return null;
-//  }
 
   Widget _showCircularProgress() {
-    return Center(child: CircularProgressIndicator());
+    return Container(
+      padding: const EdgeInsets.all(20.0),
+      child: Center(
+          child: CircularProgressIndicator()
+      ),
+    );
   }
 
   Widget hintText() {
@@ -319,4 +262,16 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+//  Widget _acceptSwitch() {
+//    return SwitchListTile(
+//      value: _formData['acceptTerms'],
+//      onChanged: (bool value) {
+//        setState(() {
+//          _formData['acceptTerms'] = value;
+//        });
+//      },
+//      title: Text('Accept the Terms'),
+//    );
+//  }
 }

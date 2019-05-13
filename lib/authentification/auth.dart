@@ -1,144 +1,34 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 
-enum AuthMode { SignUp, Login }
+abstract class BaseAuth {
 
-class AuthPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _AuthPageState();
-  }
+  Future<String> currentUser();
+  Future<String> signIn(String email, String password);
+  Future<String> createUser(String email, String password);
+  Future<void> signOut();
 }
 
-class _AuthPageState extends State<AuthPage> {
-  final Map<String, dynamic> _formData = {
-    'email': null,
-    'password': null,
-    'acceptTerms': false
-  };
+class Auth implements BaseAuth {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  final TextEditingController _passwordTextController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  AuthMode _authMode = AuthMode.Login;
-
-  Widget _buildEmailTextField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'E-Mail'),
-      keyboardType: TextInputType.emailAddress,
-      validator: (String value) {
-        if (value.isEmpty ||
-            !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                .hasMatch(value)) {
-          return 'Saisissez un e-mail valide';
-        }
-      },
-      onSaved: (String value) {
-        _formData['email'] = value;
-      },
-    );
+  Future<String> signIn(String email, String password) async {
+    FirebaseUser user = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+    return user.uid;
   }
 
-  Widget _buildPasswordTextField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Mot de passe'),
-      obscureText: true,
-      controller: _passwordTextController,
-      validator: (String value) {
-        if (value.isEmpty || value.length < 6) {
-          return 'Au minimum 6 caractères sont requis pour le mot de passe';
-        }
-      },
-      onSaved: (String value) {
-        _formData['password'] = value;
-      },
-    );
+  Future<String> createUser(String email, String password) async {
+    FirebaseUser user = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+    return user.uid;
   }
 
-  Widget _builConfirmPasswordTextField() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Confirmez le mot de passe'),
-      obscureText: true,
-      validator: (String value) {
-        if (_passwordTextController.text != value) {
-          return 'Le mot de passe ne correspond pas';
-        }
-      },
-    );
+  Future<String> currentUser() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    return user != null ? user.uid : null;
   }
 
-  Widget _acceptSwitch() {
-    return SwitchListTile(
-      value: _formData['acceptTerms'],
-      onChanged: (bool value) {
-        setState(() {
-          _formData['acceptTerms'] = value;
-        });
-      },
-      title: Text('Accept the Terms'),
-    );
+  Future<void> signOut() async {
+    return _firebaseAuth.signOut();
   }
 
-  void _submitForm() {
-    if (!_formKey.currentState.validate() || !_formData['acceptTerms']) {
-      return;
-    }
-    _formKey.currentState.save();
-    print(_formData);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Login '),
-      ),
-      body: Container(
-        margin: EdgeInsets.all(10.0),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  _buildEmailTextField(),
-                  _buildPasswordTextField(),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  _authMode == AuthMode.SignUp
-                      ? _builConfirmPasswordTextField()
-                      : Container(),
-                  _acceptSwitch(),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  FlatButton(
-                    child: Text(
-                        '${_authMode == AuthMode.Login ? 'S\'enregistrer' : 'Connexion'}'),
-                    onPressed: () {
-                      setState(() {
-                        _authMode = _authMode == AuthMode.Login
-                            ? AuthMode.SignUp
-                            : AuthMode.Login;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  RaisedButton(
-                    color: Theme.of(context).primaryColor,
-                    textColor: Colors.white,
-                    child: Text('LOGIN'),
-                    onPressed: _submitForm,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }
