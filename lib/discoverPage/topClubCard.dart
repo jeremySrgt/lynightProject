@@ -21,11 +21,14 @@ Widget build(BuildContext context) {
                     children: <Widget>[
                       ClipRRect(
                         borderRadius: BorderRadius.circular(11.0),
-                        child: Image.asset(
-                          './assets/boite.jpg',
-                          fit: BoxFit.cover,
-                          height: 240.0,
-                          width: 300.0,
+                        child: Hero(
+                          tag: 'club',
+                          child: Image.asset(
+                            './assets/boite.jpg',
+                            fit: BoxFit.cover,
+                            height: 240.0,
+                            width: 300.0,
+                          ),
                         ),
                       ),
                     ],

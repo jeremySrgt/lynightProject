@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:lynight/searchBar/bar.dart';
 
 void main() => runApp(AnimatedContainerApp());
 
@@ -15,10 +16,17 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
   double _width = 50;
   double _height = 50;
   Color _color = Colors.deepOrange;
-  BorderRadiusGeometry _borderRadius = BorderRadius.circular(8);
+  BorderRadiusGeometry _borderRadius = BorderRadius.circular(50);
+
+  double _width2 = 0;
+  double _height2 = 0;
+  double _opacity = 0;
 
   @override
   Widget build(BuildContext context) {
+    //var assetsImage = new AssetImage('assets/loupe.png');
+    //var imageLoupe = new Image(image: assetsImage);
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -28,12 +36,21 @@ class _AnimatedContainerAppState extends State<AnimatedContainerApp> {
           child: GestureDetector(
             onTap: () {
               setState(() {
-                _color = Colors.amber;
+                _borderRadius = BorderRadius.circular(8);
+                _width = 300;
+                _height = 80;
+                _opacity = 0.5;
               });
-            }, //Mettre la barre de recherche dans les accoalades
+            },
             child: AnimatedContainer(
               // Use the properties stored in the State class.
-              child: Icon(Icons.search, color: Colors.white),
+              alignment: Alignment.center,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: _borderRadius
+                ),
+              ),
               width: _width,
               height: _height,
               decoration: BoxDecoration(

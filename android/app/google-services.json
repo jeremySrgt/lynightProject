@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "130415787973",
+    "firebase_url": "https://lynight-53310.firebaseio.com",
+    "project_id": "lynight-53310",
+    "storage_bucket": "lynight-53310.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130415787973:android:6b521964a11e7a9b",
+        "android_client_info": {
+          "package_name": "com.flutter.jerem.lynight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130415787973-ggj8jak7778gj6krt8vts044jqthn8pv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqaaz2x7P-FQj3_wplJ3M5FGXAvtICEm8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130415787973-ggj8jak7778gj6krt8vts044jqthn8pv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

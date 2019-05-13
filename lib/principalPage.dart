@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
 import 'package:lynight/searchBar/bar.dart';
 import 'package:lynight/discoverPage/topClubCard.dart';
 import 'package:lynight/discoverPage/bottomClubCard.dart';
-
+import 'package:lynight/maps/googleMapsClient.dart';
 class PrincipalPage extends StatefulWidget {
+  final FirebaseUser user;
+
+  PrincipalPage({@required this.user});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -18,6 +23,8 @@ class _PrincipalPageState extends State<PrincipalPage>
   String appBarTitle = 'Découvrir';
 
   TabController _controller;
+  //TODO changer la couleur de l'appbar en focntion de la couleur de l'element en dessous - ca fait plus joli
+  //TODO par exemple dans le profil utilisateur c'est flagrant
 
   void initState() {
     super.initState();
@@ -82,7 +89,7 @@ class _PrincipalPageState extends State<PrincipalPage>
             ),
           ),
           SearchBar(),
-          UserProfil(),
+          GoogleMapsClient(),
         ]),
         appBar: AppBar(
           title: Text(
@@ -101,7 +108,13 @@ class _PrincipalPageState extends State<PrincipalPage>
           child: ListView(
             children: <Widget>[
               DrawerHeader(
-                child: Text('DRAWER TO DO'),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text(widget.user.email),
+                    ),
+                  ],
+                ),
                 decoration: BoxDecoration(
                     border:
                         Border(bottom: BorderSide(color: Colors.deepOrange))),
@@ -110,7 +123,7 @@ class _PrincipalPageState extends State<PrincipalPage>
               ListTile(
                 title: Text('Profil'),
                 onTap: () {
-                  //Navigator.pushReplacementNamed(context, '/userProfil');
+                  Navigator.pushNamed(context, '/userProfil');
                 },
               ),
             ],

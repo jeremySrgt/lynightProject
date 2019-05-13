@@ -3,92 +3,130 @@ import 'package:flutter/material.dart';
 class UserProfil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-    Widget personSection = Container( // description de la personne
-      padding: const EdgeInsets.all(32),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-
-          Container(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text(
-              'NOM Prénom',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+    return Scaffold(
+        body: Column(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(top: 16),
+          width: 500, // Dimensions du carré rouge
+          height: 330,
+          decoration: BoxDecoration(
+            color: Colors.redAccent,
+            borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(32),
+                bottomLeft: Radius.circular(32)),
+          ),
+          child: Column(
+            children: <Widget>[
+              Divider(), // saut de ligne
+              Divider(),
+              Divider(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                // Centrer les icones et l'image sur la page
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FlatButton(// Bouton pour les modifications
+                    onPressed: () {},
+                    padding: EdgeInsets.all(10.0),
+                    child: Column(
+                      children: <Widget>[
+                        Icon(
+                          Icons.mode_edit,
+                          size: 35.0,
+                          color: Colors.white,
+                        ),
+                        Divider(),
+                        Text("Modification")
+                      ],
+                    ),
+                  ),
+                  CircleAvatar( // photo de profil
+                    backgroundImage: ExactAssetImage('assets/nightClub.jpg'),
+                    minRadius: 30,
+                    maxRadius: 70,
+                  ),
+                  FlatButton( // Bouton pour les paramètres
+                    onPressed: () {},
+                    padding: EdgeInsets.all(10.0),
+                    child: Column(
+                      // Replace with a Row for horizontal icon + text
+                      children: <Widget>[
+                        Icon(
+                          Icons.settings,
+                          size: 35.0,
+                          color: Colors.white,
+                        ),
+                        Divider(),
+                        Text("Paramètres")
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ),
-          Text(
-            'Pseudo',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-
-            ),
-          ),
-          Text(
-            'Date de naissance',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-
-            ),
-          ),
-        ],
-      ),
-    );
-
-    Widget styleSection = Container(
-      padding: const EdgeInsets.all(5),
-      child: Row(
-        children: [
-          Icon(
-            Icons.music_note,
-            color: Colors.orange,
-          ),
-          Text(
-            'Style de musique :',
-            style: TextStyle(
-
-            ),
-          )
-
-        ],
-      ),
-    );
-
-    Widget infoSection = Container(
-      padding: const EdgeInsets.all(5),
-      child: Row(
-        children: [
-          Icon(
-            Icons.mail,
-            color: Colors.orange,
-          ),
-          Text(
-            'Adresse Mail :',
-            style: TextStyle(
-
-            ),
-          )
-
-        ],
-      ),
-    );
-
-    return Column(
-            children: [
-              Image.asset(
-                'assets/boite.jpg',
-                width: 220,
-                height: 308,
-                fit: BoxFit.cover,
+              Container(
+                // description de la personne
+                padding: const EdgeInsets.all(32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        'NOM Prénom',
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                    ),
+                    Text(
+                      'Pseudo',
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                    Text(
+                      'Date de naissance',
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                  ],
+                ),
               ),
-              personSection,
-              styleSection,
-              infoSection
             ],
-          );
+          ),
+        ),
+        ListTile(
+          leading: Icon(Icons.music_note),
+          title: Text(
+            "Style de musique",
+            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+          ),
+          subtitle: Text(
+            "Electro, Rap,...",
+            style: TextStyle(fontSize: 15.0),
+          ),
+        ),
+        Divider(),
+        ListTile(
+          leading: Icon(Icons.mail),
+          title: Text(
+            "Email",
+            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+          ),
+          subtitle: Text(
+            "exemple@gmail.com",
+            style: TextStyle(fontSize: 15.0),
+          ),
+        ),
+        Divider(),
+        ListTile(
+          leading: Icon(Icons.phone),
+          title: Text(
+            "Numéro",
+            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+          ),
+          subtitle: Text(
+            "0101010101",
+            style: TextStyle(fontSize: 15.0),
+          ),
+        ),
+      ],
+    ));
   }
-
 }
-

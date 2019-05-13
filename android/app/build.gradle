@@ -38,7 +38,7 @@ android {
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner" //changer a cause du bug
     }
 
     buildTypes {
@@ -55,7 +55,10 @@ flutter {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation 'junit:junit:4.12' //changer a cause du bug
+    androidTestImplementation 'androidx.test:runner:1.1.1' //changer a cause du bug
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1' //changer a cause du bug
+    implementation 'com.google.firebase:firebase-core:16.0.9' //firebase
 }
+
+apply plugin: 'com.google.gms.google-services' // firebase utilise
