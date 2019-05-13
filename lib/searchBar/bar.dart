@@ -103,7 +103,7 @@ class _SuggestionListState extends State<SuggestionList> {
     final suggestionList =
         clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
 
-    final makeListTile = ListTile(
+    ListTile makeListTile(int index) => ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
         leading: Container(
           padding: EdgeInsets.only(right: 12.0),
@@ -115,14 +115,15 @@ class _SuggestionListState extends State<SuggestionList> {
             width: 55,
             height: 55,
             decoration: BoxDecoration(
-              color: Colors.redAccent,
-              borderRadius: BorderRadius.all(Radius.circular(100))
-            ),
-            child: Text("IMAGE"),
+                image: DecorationImage(
+                    image: AssetImage('assets/nightClub.jpg'),
+                    fit: BoxFit.fill),
+                //color: Colors.redAccent,
+                borderRadius: BorderRadius.all(Radius.circular(100))),
           ),
         ),
         title: Text(
-          "Nom de la boîte",
+          "${suggestionList[index]}",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
@@ -134,37 +135,36 @@ class _SuggestionListState extends State<SuggestionList> {
           ],
         ),
         trailing:
-        Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0));
+            Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0));
 
-    final makeCard = Card(
-      color: Colors.transparent,
-      elevation: 8.0,
-      margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-      child: Container(
-        decoration: BoxDecoration(color: Colors.deepOrangeAccent,
-          borderRadius: BorderRadius.all(Radius.circular(25))),
-        child: makeListTile,
+    Card makeCard(int index) => Card(
+          color: Colors.transparent,
+          elevation: 8.0,
+          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.deepOrangeAccent,
+                borderRadius: BorderRadius.all(Radius.circular(25))),
+            child: makeListTile(index),
+          ),
+        );
+
+    final makeBody = Container(
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: suggestionList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return makeCard(index);
+        },
       ),
     );
 
-    final makeBody = Container(
-        child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: 10,
-          itemBuilder: (BuildContext context, int index) {
-            return makeCard;
-          },
-        ),
-    );
-
-
-
     return new Scaffold(
-        appBar: new AppBar(
-          title: new Text("Résultats"),
-        ),
-        body: makeBody,
+      appBar: new AppBar(
+        title: new Text("Résultats"),
+      ),
+      body: makeBody,
       /*new ListView.builder(
             itemBuilder: (context, index) {
               return ListTile(
@@ -173,6 +173,7 @@ class _SuggestionListState extends State<SuggestionList> {
                 onTap: () {},
               );
             },
-            itemCount: suggestionList.length)*/);
+            itemCount: suggestionList.length)*/
+    );
   }
 }
