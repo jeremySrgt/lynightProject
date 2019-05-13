@@ -6,8 +6,8 @@ class NightClubProfile extends StatelessWidget {
     Widget infoSection = Expanded(
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.only(left: 50),
+          Expanded(
+            //margin: EdgeInsets.only(left: 50),
            // width: 275,
             //height: 150,
             /*decoration: BoxDecoration(
@@ -25,7 +25,7 @@ class NightClubProfile extends StatelessWidget {
                   CrossAxisAlignment.start, //met dans le bon axe
               children: [
                 Container(
-                  padding: const EdgeInsets.fromLTRB(15, 20, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
                   height: 40,
                   child: Text(
                     'Informations\n',
@@ -110,8 +110,8 @@ class NightClubProfile extends StatelessWidget {
     Widget musicSection = Expanded(
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.fromLTRB(50, 15, 0,0),
+          Expanded(
+            //margin: EdgeInsets.fromLTRB(50, 15, 0,0),
             //width: 275,
             //height: 150,
             /*decoration: BoxDecoration(
@@ -129,14 +129,14 @@ class NightClubProfile extends StatelessWidget {
               CrossAxisAlignment.start, //met dans le bon axe
               children: [
                 Container(
-                  padding: const EdgeInsets.all(15),
-                  height: 40,
+                  padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
+                  height: 50,
                   child: Text(
                     'Musique\n',
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(50, 25, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
                     CrossAxisAlignment.start, //met dans le bonne axe
@@ -292,7 +292,7 @@ class NightClubProfile extends StatelessWidget {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              expandedHeight: 250.0,
+              expandedHeight: 200.0,
               floating: false,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
