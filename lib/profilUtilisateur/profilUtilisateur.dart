@@ -9,8 +9,8 @@ class UserProfil extends StatelessWidget {
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(top: 16),
-          width: 500,
-          height: 320,
+          width: 500, // Dimensions du carré rouge
+          height: 330,
           decoration: BoxDecoration(
             color: Colors.redAccent,
             borderRadius: BorderRadius.only(
@@ -19,32 +19,35 @@ class UserProfil extends StatelessWidget {
           ),
           child: Column(
             children: <Widget>[
+              Divider(), // saut de ligne
+              Divider(),
+              Divider(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 // Centrer les icones et l'image sur la page
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FlatButton(
+                  FlatButton(// Bouton pour les modifications
                     onPressed: () {},
                     padding: EdgeInsets.all(10.0),
                     child: Column(
-                      // Replace with a Row for horizontal icon + text
                       children: <Widget>[
                         Icon(
                           Icons.mode_edit,
                           size: 35.0,
                           color: Colors.white,
                         ),
+                        Divider(),
                         Text("Modification")
                       ],
                     ),
                   ),
-                  CircleAvatar(
+                  CircleAvatar( // photo de profil
                     backgroundImage: ExactAssetImage('assets/nightClub.jpg'),
                     minRadius: 30,
-                    maxRadius: 50,
+                    maxRadius: 70,
                   ),
-                  FlatButton(
+                  FlatButton( // Bouton pour les paramètres
                     onPressed: () {},
                     padding: EdgeInsets.all(10.0),
                     child: Column(
@@ -55,6 +58,7 @@ class UserProfil extends StatelessWidget {
                           size: 35.0,
                           color: Colors.white,
                         ),
+                        Divider(),
                         Text("Paramètres")
                       ],
                     ),
@@ -71,22 +75,16 @@ class UserProfil extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 8),
                       child: Text(
                         'NOM Prénom',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontSize: 18.0),
                       ),
                     ),
                     Text(
                       'Pseudo',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontSize: 15.0),
                     ),
                     Text(
                       'Date de naissance',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontSize: 15.0),
                     ),
                   ],
                 ),
@@ -94,49 +92,39 @@ class UserProfil extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(5),
-          child: Row(
-            children: [
-              Icon(
-                Icons.music_note,
-                color: Colors.orange,
-              ),
-              Text(
-                'Style de musique :',
-                style: TextStyle(),
-              )
-            ],
+        ListTile(
+          leading: Icon(Icons.music_note),
+          title: Text(
+            "Style de musique",
+            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+          ),
+          subtitle: Text(
+            "Electro, Rap,...",
+            style: TextStyle(fontSize: 15.0),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(5),
-          child: Row(
-            children: [
-              Icon(
-                Icons.mail,
-                color: Colors.orange,
-              ),
-              Text(
-                'Adresse Mail :',
-                style: TextStyle(),
-              )
-            ],
+        Divider(),
+        ListTile(
+          leading: Icon(Icons.mail),
+          title: Text(
+            "Email",
+            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+          ),
+          subtitle: Text(
+            "exemple@gmail.com",
+            style: TextStyle(fontSize: 15.0),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(5),
-          child: Row(
-            children: [
-              Icon(
-                Icons.phone,
-                color: Colors.orange,
-              ),
-              Text(
-                'Téléphone :',
-                style: TextStyle(),
-              )
-            ],
+        Divider(),
+        ListTile(
+          leading: Icon(Icons.phone),
+          title: Text(
+            "Numéro",
+            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+          ),
+          subtitle: Text(
+            "0101010101",
+            style: TextStyle(fontSize: 15.0),
           ),
         ),
       ],

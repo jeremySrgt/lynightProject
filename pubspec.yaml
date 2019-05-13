@@ -48,6 +48,7 @@ flutter:
   assets:
     - assets/boite.jpg
     - assets/nightClub.jpg
+    #- assets/loupe.png
     #- assets/test.jpg
   #  - images/a_dot_ham.jpeg
 
