@@ -2,7 +2,38 @@ import 'package:flutter/material.dart';
 
 class NightClubProfile extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+    Widget build(BuildContext context) {
+
+
+    Widget bigRoundedBoxes = Container(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Column(
+              crossAxisAlignment:
+                  CrossAxisAlignment.start, //met dans le bon axe
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 16),
+                  width: 500, // Dimensions du carré rouge
+                  height: 400,
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(32),
+                        topRight: Radius.circular(32)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+
+
+
     Widget upperSection = Container(
       padding: const EdgeInsets.all(20), //offset de 50
       child: Row(
@@ -123,7 +154,7 @@ class NightClubProfile extends StatelessWidget {
           const RaisedButton(
             onPressed: null,
             child: Text(
-              'Reserver sa place',
+              'Let\'s party',
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.black,
@@ -136,6 +167,40 @@ class NightClubProfile extends StatelessWidget {
 
     // TODO: implement build
     return Scaffold(
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              expandedHeight: 250.0,
+              floating: false,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  title: Text("Kelly Kelly NightClub",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                      )),
+                  background: Image.asset(
+                    'assets/boite.jpg',
+                    fit: BoxFit.cover,
+                  )),
+            ),
+          ];
+        },
+        body: Column(
+          children: <Widget>[
+            upperSection,
+            textSection,
+            priceSection,
+          ],
+        ),
+
+
+      ),
+
+    );
+    /*return Scaffold(
       body: Column(
         children: [
           Stack(children: <Widget>[
@@ -157,16 +222,14 @@ class NightClubProfile extends StatelessWidget {
                 ),
                 onPressed: () {
 //                  Navigator.pushNamed(context, '/');
-                Navigator.pop(context);
+                  Navigator.pop(context);
                 },
               ),
             ),
           ]),
-          upperSection,
-          textSection,
-          priceSection,
+          bigRoundedBoxes,
         ],
       ),
-    );
+    );*/
   }
 }
