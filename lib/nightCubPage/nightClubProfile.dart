@@ -33,7 +33,7 @@ class NightClubProfile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(50, 20, 0, 0),
                   child: Text(
                     'Kelly Kelly NightClub',
                     style: TextStyle(
@@ -42,7 +42,7 @@ class NightClubProfile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(50, 25, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(55, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
                         CrossAxisAlignment.start, //met dans le bonne axe
@@ -61,7 +61,7 @@ class NightClubProfile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(50, 25, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(55, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
                         CrossAxisAlignment.start, //met dans le bonne axe
@@ -81,7 +81,7 @@ class NightClubProfile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(50, 25, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(55, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -100,23 +100,90 @@ class NightClubProfile extends StatelessWidget {
                     ],
                   ),
                 ),
-                /*Container(
-                  padding: const EdgeInsets.only(bottom: 10, left: 20),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(55, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'Du mercredi au samedi, de 23h à 6h du matin, nous vous proposons : strip-teases, lap dance, table dance et shows privés.\n',
+                        'Du mercredi au samedi, de 23h à 6h du matin, \n'
+                        'nous vous proposons :\n'
+                        'strip-teases, lap dance et shows privés.\n',
+                      softWrap: true,
                       ),
                     ],
                   ),
-                ),*/
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
+                  height: 50,
+                  child: Text(
+                    'Musique\n',
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
+                  child: Row(
+                    crossAxisAlignment:
+                        CrossAxisAlignment.start, //met dans le bonne axe
+                    children: [
+                      Icon(
+                        Icons.music_note,
+                        color: Colors.amber,
+                        size: 17,
+                      ),
+                      Text(
+                        '   Style de Musique : Electro',
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Icon(
+                        Icons.queue_music,
+                        size: 17,
+                        color: Colors.blue,
+                      ),
+                      Text(
+                        '   www.soundcloud.com',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(150, 0, 0, 0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      PrimaryButton(
+                          key: new Key('register'),
+                          text: 'Let\'s Party',
+                          height: 44.0),
+                      //onPressed: validateAndSubmit),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
         ],
       ),
     );
+
+
+
+
 
     Widget musicSection = Expanded(
       child: Row(
@@ -323,22 +390,53 @@ class NightClubProfile extends StatelessWidget {
     );
 
     Widget priceSection = Container(
-      padding: const EdgeInsets.only(left :115, bottom: 20),
+      padding: const EdgeInsets.only(left: 115, bottom: 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-           PrimaryButton(
-          key: new Key('login'),
-        text: 'Let\'s Party',
-        height: 44.0,
-        //onPressed: validateAndSubmit
-        ),
+          PrimaryButton(
+            key: new Key('login'),
+            text: 'Let\'s Party',
+            height: 44.0,
+            //onPressed : ,
+          ),
         ],
       ),
     );
 
     // TODO: implement build
+
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            expandedHeight: 200.0,
+            floating: false,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text('Kelly Kelly nightClub'),
+              background: Image.asset(
+                'assets/nightClub.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SliverFillRemaining(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  infoSection,
+                  //priceSection,
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+    /*return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: DefaultTabController(
         length: 2,
@@ -346,7 +444,7 @@ class NightClubProfile extends StatelessWidget {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              expandedHeight: 175.0,
+              expandedHeight: 225.0,
               floating: false,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
@@ -368,13 +466,13 @@ class NightClubProfile extends StatelessWidget {
             children: <Widget>[
               infoSection,
             //textSection,
-            musicSection,
-            priceSection,
+
+            //priceSection,
 
             ],
           ),
-          ),
-          /*children: <Widget>[
+          ),*/
+           /*children: <Widget>[
             infoSection,
             textSection,
             //descriptionSection,
@@ -382,9 +480,9 @@ class NightClubProfile extends StatelessWidget {
             priceSection,
           ],
         ),*/
+      /*),
       ),
-      ),
-    );
+    );*/
     /*return Scaffold(
       body: Column(
         children: [
