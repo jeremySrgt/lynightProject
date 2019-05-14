@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lynight/authentification/primary_button.dart';
 import 'package:lynight/authentification/auth.dart';
-import 'auth.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title, this.auth, this.onSignIn}) : super(key: key);
@@ -200,7 +199,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     return Container(
         //height: 80.0,
         padding: const EdgeInsets.all(32.0),
-        child: new Text(_authHint,
+        child: Text(_authHint,
             key: new Key('hint'),
             style: TextStyle(fontSize: 18.0, color: Colors.grey),
             textAlign: TextAlign.center));
