@@ -43,8 +43,15 @@ class _MyHomePageState extends State<MyHomePage> {
           width: 330,
           height: 100,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(25)),
-              color: Colors.deepOrangeAccent),
+            borderRadius: BorderRadius.all(Radius.circular(25)),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Theme.of(context).primaryColor,
+                  Colors.deepOrangeAccent
+                ]),
+          ),
           alignment: Alignment.center,
           child: Container(
             width: 300,
@@ -122,9 +129,12 @@ class _SuggestionListState extends State<SuggestionList> {
                 borderRadius: BorderRadius.all(Radius.circular(100))),
           ),
         ),
-        title: Text(
-          "${suggestionList[index]}",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        title: Row(
+          children: <Widget> [
+            Text("${suggestionList[index]}",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            Icon(Icons.favorite_border, color: Colors.white,)
+          ]
         ),
         // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
 
@@ -135,7 +145,10 @@ class _SuggestionListState extends State<SuggestionList> {
           ],
         ),
         trailing:
-            Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0));
+            Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+      onTap: () {},
+
+    );
 
     Card makeCard(int index) => Card(
           color: Colors.transparent,
@@ -143,7 +156,14 @@ class _SuggestionListState extends State<SuggestionList> {
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.deepOrangeAccent,
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Theme.of(context).primaryColor,
+                      Colors.deepOrangeAccent
+                    ]),
+                //color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.all(Radius.circular(25))),
             child: makeListTile(index),
           ),
