@@ -11,7 +11,7 @@ class UserProfil extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height / 2.3,
           decoration: BoxDecoration(
-            color: Colors.redAccent,
+            color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(32),
                 bottomLeft: Radius.circular(32)),
@@ -104,7 +104,7 @@ class UserProfil extends StatelessWidget {
           leading: Icon(Icons.music_note),
           title: Text(
             "Style de musique",
-            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+            style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.0),
           ),
           subtitle: Text(
             "Electro, Rap,...",
@@ -116,7 +116,7 @@ class UserProfil extends StatelessWidget {
           leading: Icon(Icons.mail),
           title: Text(
             "Email",
-            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+            style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.0),
           ),
           subtitle: Text(
             "exemple@gmail.com",
@@ -128,7 +128,7 @@ class UserProfil extends StatelessWidget {
           leading: Icon(Icons.phone),
           title: Text(
             "Numéro",
-            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+            style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.0),
           ),
           subtitle: Text(
             "0101010101",
@@ -140,12 +140,18 @@ class UserProfil extends StatelessWidget {
           leading: Icon(Icons.music_note),
           title: Text(
             "Date de naissance",
-            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+            style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.0),
           ),
           subtitle: Text(
             "01/01/1991",
             style: TextStyle(fontSize: 15.0),
           ),
+        ),
+        RaisedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Retour'),
         ),
       ],
     ));
@@ -162,7 +168,7 @@ class SecondRoute extends StatelessWidget {
       body: Column(
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.person, color: Colors.orange,),
+            leading: Icon(Icons.person, color: Theme.of(context).accentColor,),
             title: TextField(
               decoration: InputDecoration(
                 hintText: "NOM Prénom",
@@ -170,7 +176,7 @@ class SecondRoute extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.music_note, color: Colors.orange,),
+            leading: Icon(Icons.music_note, color: Theme.of(context).accentColor,),
             title: TextField(
               decoration: InputDecoration(
                 hintText: "Style de musique",
@@ -178,7 +184,7 @@ class SecondRoute extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.email, color: Colors.orange,),
+            leading: Icon(Icons.email, color: Theme.of(context).accentColor,),
             title: TextField(
               decoration: InputDecoration(
                 hintText: "Email",
@@ -186,7 +192,7 @@ class SecondRoute extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.phone, color: Colors.orange,),
+            leading: Icon(Icons.phone, color: Theme.of(context).accentColor,),
             title: TextField(
               decoration: InputDecoration(
                 hintText: "Téléphone",
@@ -204,7 +210,7 @@ class SecondRoute extends StatelessWidget {
                 Icon(
                   Icons.save,
                   size: 35.0,
-                  color: Colors.orange,
+                  color: Theme.of(context).accentColor,
                 ),
                 Text("Sauvegarder",style: TextStyle(fontSize: 15.0)
                 )
