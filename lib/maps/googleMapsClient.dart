@@ -15,20 +15,34 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
 
   static LatLng _lastMapPosition = _center;
   static LatLng _initialMapPosition = _center;
+  static LatLng _nightClubPosition = LatLng(_center.latitude, _center.longitude);
 
   static LatLng _center = const LatLng(48.859213, 2.339756);
 
   final Set<Marker> _markers = {};
-  final Set<Marker> _initialPositionMarkers = {
+
+  
+  final Set<Marker> _addMarkerSearch={//need bdd
     Marker(
-        markerId: MarkerId(_initialMapPosition.toString()),
-        position: _initialMapPosition,
+      markerId: MarkerId(_nightClubPosition.toString()),
+      position: _nightClubPosition,
+      infoWindow: InfoWindow(
+        title: 'night club name',
+        snippet: 'address',
+      ),
+        icon: BitmapDescriptor.defaultMarker,
+    )
+  };
+
+  final Set<Marker> _initialPositionMarkers = {// initial position
+    Marker(
+      markerId: MarkerId(_initialMapPosition.toString()),
+      position: _initialMapPosition,
       infoWindow: InfoWindow(
         title: 'Ta position frère',
         snippet: 'adresse',
       ),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-
     )
   };
 
@@ -77,41 +91,47 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
         ),
         backgroundColor: Colors.deepOrange,
       ),
-      body: Stack(children: <Widget>[
-        GoogleMap(
-          myLocationEnabled: true,
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 13,
+      body: Container(
+
+        child: Stack(children: <Widget>[
+          GoogleMap(
+            myLocationEnabled: true,
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: _center,
+              zoom: 13,
+            ),
+            markers: _initialPositionMarkers.union(_markers),
+            // place un marker sur la carte
+            onCameraMove: _marksPosition, // cible la position du marker
           ),
-          markers: _initialPositionMarkers.union(_markers),
-          // place un marker sur la carte
-          onCameraMove: _marksPosition, // cible la position du marker
-        ),
-        Align(
-          alignment: Alignment.topRight, // aligne les widget en haut à gauche
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 30), // sépare distance entre bouton
-              FloatingActionButton(
-                //premier bouton qui recentre la position selon _center centre de paris
-                onPressed: _recenterCamera,
-                backgroundColor: Colors.deepOrange,
-                child: const Icon(Icons.center_focus_weak, size: 50),
-              ),
-              SizedBox(height: 30),
-              FloatingActionButton(
-                // deuxieme bouton ajoute un marker au centre de l'appli
-                onPressed: _onAddMarkerButtonPressed,
-                materialTapTargetSize: MaterialTapTargetSize.padded,
-                backgroundColor: Colors.deepOrange,
-                child: const Icon(Icons.add_location, size: 50),
-              ),
-            ],
+          Align(
+            alignment: Alignment.topRight, // aligne les widget en haut à gauche
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 30), // sépare distance entre bouton
+                FloatingActionButton(
+                  //premier bouton qui recentre la position selon _center centre de paris
+                  onPressed: _recenterCamera,
+                  backgroundColor: Colors.deepOrange,
+                  child: const Icon(Icons.center_focus_weak, size: 50),
+                ),
+                SizedBox(height: 30),
+                FloatingActionButton(
+                  // deuxieme bouton ajoute un marker au centre de l'appli
+                  onPressed: _onAddMarkerButtonPressed,
+                  materialTapTargetSize: MaterialTapTargetSize.padded,
+                  backgroundColor: Colors.deepOrange,
+                  child: const Icon(Icons.add_location, size: 50),
+                ),
+              ],
+            ),
           ),
-        ),
-      ]),
+        ]),
+        constraints: BoxConstraints(maxHeight: 300,maxWidth: double.infinity),
+      ),
+      backgroundColor: Colors.white,
+
     );
   }
 }
