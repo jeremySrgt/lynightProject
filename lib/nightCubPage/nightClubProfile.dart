@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:lynight/authentification/primary_button.dart';
 
 class NightClubProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Widget upperSection = Container(
-      padding: const EdgeInsets.all(20), //offset de 50
+    Widget infoSection = Expanded(
       child: Row(
         children: [
           Expanded(
+
             child: Column(
               crossAxisAlignment:
                   CrossAxisAlignment.start, //met dans le bon axe
               children: [
                 Container(
-                  padding: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
+                  height: 40,
+                  child: Text(
+                    'Informations\n',
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(50, 20, 0, 0),
                   child: Text(
                     'Kelly Kelly NightClub',
                     style: TextStyle(
@@ -22,7 +30,7 @@ class NightClubProfile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(bottom: 5),
+                  padding: const EdgeInsets.fromLTRB(55, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
                         CrossAxisAlignment.start, //met dans le bonne axe
@@ -41,7 +49,7 @@ class NightClubProfile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(top: 5),
+                  padding: const EdgeInsets.fromLTRB(55, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
                         CrossAxisAlignment.start, //met dans le bonne axe
@@ -61,7 +69,7 @@ class NightClubProfile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.fromLTRB(55, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -80,26 +88,80 @@ class NightClubProfile extends StatelessWidget {
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(bottom: 75),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  '50 ',
-                  style: TextStyle(
-                    color: Colors.amber,
-                    fontSize: 24,
+                Container(
+                  padding: const EdgeInsets.fromLTRB(55, 15, 0, 0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Du mercredi au samedi, de 23h à 6h du matin, \n'
+                        'nous vous proposons :\n'
+                        'strip-teases, lap dance et shows privés.\n',
+                      softWrap: true,
+                      ),
+                    ],
                   ),
                 ),
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 25,
+                Container(
+                  padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
+                  height: 50,
+                  child: Text(
+                    'Musique\n',
+                  ),
                 ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
+                  child: Row(
+                    crossAxisAlignment:
+                        CrossAxisAlignment.start, //met dans le bonne axe
+                    children: [
+                      Icon(
+                        Icons.music_note,
+                        color: Colors.amber,
+                        size: 17,
+                      ),
+                      Text(
+                        '   Style de Musique : Electro',
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Icon(
+                        Icons.queue_music,
+                        size: 17,
+                        color: Colors.blue,
+                      ),
+                      Text(
+                        '   www.soundcloud.com',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(150, 0, 0, 0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      PrimaryButton(
+                          key: new Key('register'),
+                          text: 'Let\'s Party',
+                          height: 44.0),
+                      //onPressed: validateAndSubmit),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -107,66 +169,40 @@ class NightClubProfile extends StatelessWidget {
       ),
     );
 
-    Widget textSection = Container(
-      padding: const EdgeInsets.only(bottom: 10, left: 20),
-      child: Text(
-        'Du mercredi au samedi, de 23h à 6h du matin, nous vous proposons : strip-teases, lap dance, table dance et shows privés.\n',
-        softWrap: true,
-      ),
-    );
 
-    Widget priceSection = Container(
-      padding: const EdgeInsets.only(left: 150),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const RaisedButton(
-            onPressed: null,
-            child: Text(
-              'Reserver sa place',
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.black,
+
+    // TODO: implement build
+
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            expandedHeight: 200.0,
+            floating: false,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text('Kelly Kelly nightClub'),
+              background: Image.asset(
+                'assets/nightClub.jpg',
+                fit: BoxFit.cover,
               ),
             ),
           ),
+          SliverFillRemaining(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  infoSection,
+                  //priceSection,
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
-
-    // TODO: implement build
-    return Scaffold(
-      body: Column(
-        children: [
-          Stack(children: <Widget>[
-            Hero(
-              tag: 'club',
-              child: Image.asset(
-                'assets/boite.jpg',
-                width: 500,
-                height: 250,
-                fit: BoxFit.cover, //as small as possible but take all the place
-              ),
-            ),
-            SafeArea(
-              child: FlatButton(
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.deepOrange,
-                  size: 30.0,
-                ),
-                onPressed: () {
-//                  Navigator.pushNamed(context, '/');
-                Navigator.pop(context);
-                },
-              ),
-            ),
-          ]),
-          upperSection,
-          textSection,
-          priceSection,
-        ],
-      ),
-    );
+    
   }
 }
