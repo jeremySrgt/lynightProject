@@ -184,12 +184,20 @@ class _SuggestionListState extends State<SuggestionList> {
       ),
     );
 
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Résultats"),
-      ),
-      body: makeBody,
-      /*new ListView.builder(
+    if (suggestionList.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Résultats"),
+        ),
+        body: Center(child: Text("Soit ça éxiste pas, soit t'as mal écrit")),
+      );
+    } else {
+      return new Scaffold(
+        appBar: new AppBar(
+          title: new Text("Résultats"),
+        ),
+        body: makeBody,
+        /*new ListView.builder(
             itemBuilder: (context, index) {
               return ListTile(
                 leading: Icon(Icons.domain),
@@ -198,6 +206,7 @@ class _SuggestionListState extends State<SuggestionList> {
               );
             },
             itemCount: suggestionList.length)*/
-    );
+      );
+    }
   }
 }
