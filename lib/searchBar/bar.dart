@@ -111,44 +111,44 @@ class _SuggestionListState extends State<SuggestionList> {
         clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
 
     ListTile makeListTile(int index) => ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-        leading: Container(
-          padding: EdgeInsets.only(right: 12.0),
-          decoration: new BoxDecoration(
-              border: new Border(
-                  right: new BorderSide(width: 1.0, color: Colors.white24))),
-          child: Container(
-            alignment: Alignment.center,
-            width: 55,
-            height: 55,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/nightClub.jpg'),
-                    fit: BoxFit.fill),
-                //color: Colors.redAccent,
-                borderRadius: BorderRadius.all(Radius.circular(100))),
+          contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+          leading: Container(
+            padding: EdgeInsets.only(right: 12.0),
+            decoration: new BoxDecoration(
+                border: new Border(
+                    right: new BorderSide(width: 1.0, color: Colors.white24))),
+            child: Container(
+              alignment: Alignment.center,
+              width: 55,
+              height: 55,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/nightClub.jpg'),
+                      fit: BoxFit.fill),
+                  //color: Colors.redAccent,
+                  borderRadius: BorderRadius.all(Radius.circular(100))),
+            ),
           ),
-        ),
-        title: Row(
-          children: <Widget> [
+          title: Row(children: <Widget>[
             Text("${suggestionList[index]}",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-            Icon(Icons.favorite_border, color: Colors.white,)
-          ]
-        ),
-        // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+                style: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
+            Icon(
+              Icons.favorite,
+              color: Colors.red,
+            )
+          ]),
+          // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
 
-        subtitle: Row(
-          children: <Widget>[
-            Icon(Icons.music_note, color: Colors.blueAccent),
-            Text(" Type de musique", style: TextStyle(color: Colors.white))
-          ],
-        ),
-        trailing:
-            Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
-      onTap: () {},
-
-    );
+          subtitle: Row(
+            children: <Widget>[
+              Icon(Icons.music_note, color: Colors.blueAccent),
+              Text(" Type de musique", style: TextStyle(color: Colors.white))
+            ],
+          ),
+          trailing:
+              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+        );
 
     Card makeCard(int index) => Card(
           color: Colors.transparent,
@@ -165,7 +165,11 @@ class _SuggestionListState extends State<SuggestionList> {
                     ]),
                 //color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.all(Radius.circular(25))),
-            child: makeListTile(index),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/nightClubProfile');
+                },
+                child: makeListTile(index)),
           ),
         );
 
