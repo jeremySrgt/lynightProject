@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lynight/authentification/primary_button.dart';
 
 class NightClubProfile extends StatelessWidget {
   @override
@@ -8,7 +9,7 @@ class NightClubProfile extends StatelessWidget {
         children: [
           Expanded(
             //margin: EdgeInsets.only(left: 50),
-           // width: 275,
+            // width: 275,
             //height: 150,
             /*decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -99,13 +100,23 @@ class NightClubProfile extends StatelessWidget {
                     ],
                   ),
                 ),
+                /*Container(
+                  padding: const EdgeInsets.only(bottom: 10, left: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Du mercredi au samedi, de 23h à 6h du matin, nous vous proposons : strip-teases, lap dance, table dance et shows privés.\n',
+                      ),
+                    ],
+                  ),
+                ),*/
               ],
             ),
           ),
         ],
       ),
     );
-
 
     Widget musicSection = Expanded(
       child: Row(
@@ -126,7 +137,7 @@ class NightClubProfile extends StatelessWidget {
             ),*/
             child: Column(
               crossAxisAlignment:
-              CrossAxisAlignment.start, //met dans le bon axe
+                  CrossAxisAlignment.start, //met dans le bon axe
               children: [
                 Container(
                   padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
@@ -139,7 +150,7 @@ class NightClubProfile extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
-                    CrossAxisAlignment.start, //met dans le bonne axe
+                        CrossAxisAlignment.start, //met dans le bonne axe
                     children: [
                       Icon(
                         Icons.music_note,
@@ -191,7 +202,6 @@ class NightClubProfile extends StatelessWidget {
               crossAxisAlignment:
                   CrossAxisAlignment.start, //met dans le bon axe
               children: [
-
                 Container(
                   padding: const EdgeInsets.only(top: 5),
                   child: Row(
@@ -259,6 +269,51 @@ class NightClubProfile extends StatelessWidget {
       ),
     );
 
+    Widget descriptionSection = Expanded(
+      child: Row(
+        children: [
+          Expanded(
+            //margin: EdgeInsets.fromLTRB(50, 15, 0,0),
+            //width: 275,
+            //height: 150,
+            /*decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              //color: Colors.blueGrey,
+              border: Border(
+                top: BorderSide(width: 1.0, color: Color(0xFFFF000000)),
+                left: BorderSide(width: 1.0, color: Color(0xFFFF000000)),
+                right: BorderSide(width: 1.0, color: Color(0xFFFF000000)),
+                bottom: BorderSide(width: 1.0, color: Color(0xFFFF000000)),
+              ),
+            ),*/
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              //met dans le bon axe
+              children: [
+                Container(
+                  padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
+                  height: 50,
+                  child: Text(
+                    'Description\n',
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Text(
+                    ' Du mercredi au samedi, de 23h à 6h du matin, nous vous proposons : strip-teases, lap dance, table dance et shows privés.\n',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+
     Widget textSection = Container(
       padding: const EdgeInsets.only(bottom: 10, left: 20),
       child: Text(
@@ -268,31 +323,30 @@ class NightClubProfile extends StatelessWidget {
     );
 
     Widget priceSection = Container(
-      padding: const EdgeInsets.only(left: 150),
+      padding: const EdgeInsets.only(left :115, bottom: 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const RaisedButton(
-            onPressed: null,
-            child: Text(
-              'Let\'s party',
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.black,
-              ),
-            ),
-          ),
+           PrimaryButton(
+          key: new Key('login'),
+        text: 'Let\'s Party',
+        height: 44.0,
+        //onPressed: validateAndSubmit
+        ),
         ],
       ),
     );
 
     // TODO: implement build
     return Scaffold(
-      body: NestedScrollView(
+      resizeToAvoidBottomPadding: false,
+      body: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              expandedHeight: 200.0,
+              expandedHeight: 175.0,
               floating: false,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
@@ -309,13 +363,26 @@ class NightClubProfile extends StatelessWidget {
             ),
           ];
         },
-        body: Column(
-          children: <Widget>[
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              infoSection,
+            //textSection,
+            musicSection,
+            priceSection,
+
+            ],
+          ),
+          ),
+          /*children: <Widget>[
             infoSection,
+            textSection,
+            //descriptionSection,
             musicSection,
             priceSection,
           ],
-        ),
+        ),*/
+      ),
       ),
     );
     /*return Scaffold(
