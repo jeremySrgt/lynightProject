@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
 import 'package:lynight/searchBar/bar.dart';
 import 'package:lynight/discoverPage/topClubCard.dart';
 import 'package:lynight/discoverPage/bottomClubCard.dart';
 import 'package:lynight/maps/googleMapsClient.dart';
 import 'package:lynight/authentification/auth.dart';
-
-
+import 'package:lynight/myReservations/myReservation.dart';
 
 class PrincipalPage extends StatefulWidget {
-  PrincipalPage({this.auth, this.onSignOut,this.userID});
+  PrincipalPage({this.auth, this.onSignOut});
   final BaseAuth auth;
   final VoidCallback onSignOut;
-  final String userID;
 
   void _signOut() async {
     try {
@@ -37,6 +33,8 @@ class _PrincipalPageState extends State<PrincipalPage>
     with TickerProviderStateMixin {
   String appBarTitle = 'Découvrir';
 
+  String mail = 'userMail';
+
   TabController _controller;
   //TODO changer la couleur de l'appbar en focntion de la couleur de l'element en dessous - ca fait plus joli
   //TODO par exemple dans le profil utilisateur c'est flagrant
@@ -45,6 +43,12 @@ class _PrincipalPageState extends State<PrincipalPage>
     super.initState();
     _controller = new TabController(length: 3, vsync: this);
     _controller.addListener(_handleSelected);
+    //grace a ca principalPage s'occupe de recuperer les informations de l'utilisateur actif - peut etre pas le meilleur choix mais ca fonctionne
+    widget.auth.userEmail().then((userMail) {
+      setState(() {
+        mail = userMail;
+      });
+    });
   }
 
   void _handleSelected() {
@@ -115,7 +119,7 @@ class _PrincipalPageState extends State<PrincipalPage>
                 fontSize: 34.0,
                 fontWeight: FontWeight.w500),
           ),
-          iconTheme: IconThemeData(color: Colors.deepOrange),
+          iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
           backgroundColor: Colors.white,
           elevation: 0.0,
         ),
@@ -126,7 +130,7 @@ class _PrincipalPageState extends State<PrincipalPage>
                 child: Column(
                   children: <Widget>[
                     ListTile(
-                      title: Text(widget.userID),
+                      title: Text(mail),
                     ),
                     FlatButton(
                         onPressed: widget._signOut,
@@ -143,6 +147,12 @@ class _PrincipalPageState extends State<PrincipalPage>
                 title: Text('Profil'),
                 onTap: () {
                   Navigator.pushNamed(context, '/userProfil');
+                },
+              ),
+              ListTile(
+                title: Text('Mes reservation'),
+                onTap: () {
+                  Navigator.pushNamed(context, '/myReservations');
                 },
               ),
             ],

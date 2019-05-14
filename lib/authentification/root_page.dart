@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/authentification/login_page.dart';
 import 'package:lynight/principalPage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 
 class RootPage extends StatefulWidget {
@@ -40,9 +39,6 @@ class _RootPageState extends State<RootPage> {
     });
   }
 
-  Future<String> getUserID(){
-    return widget.auth.currentUser();
-  }
 
   void _updateAuthStatus(AuthStatus status) {
     setState(() {
@@ -62,7 +58,6 @@ class _RootPageState extends State<RootPage> {
       case AuthStatus.signedIn:
         return PrincipalPage(
           auth: widget.auth,
-          userID: userMail,
           onSignOut: () => _updateAuthStatus(AuthStatus.notSignedIn)
         );
     }
