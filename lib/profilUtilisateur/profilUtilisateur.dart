@@ -63,8 +63,7 @@ class _UserProfilState extends State<UserProfil> {
                 child: Column(
                   children: <Widget>[
                     Divider(), // saut de ligne
-                    Divider(),
-                    Divider(),
+
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       // Centrer les icones et l'image sur la page
