@@ -6,6 +6,7 @@ import 'package:lynight/discoverPage/bottomClubCard.dart';
 import 'package:lynight/maps/googleMapsClient.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/widgets/slider.dart';
+import 'package:lynight/myReservations/myReservation.dart';
 
 class PrincipalPage extends StatefulWidget {
   PrincipalPage({this.auth, this.onSignOut});
@@ -123,7 +124,35 @@ class _PrincipalPageState extends State<PrincipalPage>
           backgroundColor: Colors.white,
           elevation: 0.0,
         ),
-        drawer: CustomSlider(mail,widget._signOut),
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text(mail),
+                    ),
+                    FlatButton(
+                        onPressed: widget._signOut,
+                        child: Text('Déconnexion', style: TextStyle(fontSize: 14.0, color: Colors.black))
+                    )
+                  ],
+                ),
+                decoration: BoxDecoration(
+                    border:
+                        Border(bottom: BorderSide(color: Colors.deepOrange))),
+              ),
+              //permet de ne pas display sous la bar de notif des tels
+              ListTile(
+                title: Text('Profil'),
+                onTap: () {
+                  Navigator.pushNamed(context, '/userProfil');
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

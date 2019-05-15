@@ -43,8 +43,15 @@ class _MyHomePageState extends State<MyHomePage> {
           width: 330,
           height: 100,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(25)),
-              color: Colors.deepOrangeAccent),
+            borderRadius: BorderRadius.all(Radius.circular(25)),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Theme.of(context).primaryColor,
+                  Colors.deepOrangeAccent
+                ]),
+          ),
           alignment: Alignment.center,
           child: Container(
             width: 300,
@@ -104,38 +111,44 @@ class _SuggestionListState extends State<SuggestionList> {
         clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
 
     ListTile makeListTile(int index) => ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-        leading: Container(
-          padding: EdgeInsets.only(right: 12.0),
-          decoration: new BoxDecoration(
-              border: new Border(
-                  right: new BorderSide(width: 1.0, color: Colors.white24))),
-          child: Container(
-            alignment: Alignment.center,
-            width: 55,
-            height: 55,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/nightClub.jpg'),
-                    fit: BoxFit.fill),
-                //color: Colors.redAccent,
-                borderRadius: BorderRadius.all(Radius.circular(100))),
+          contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+          leading: Container(
+            padding: EdgeInsets.only(right: 12.0),
+            decoration: new BoxDecoration(
+                border: new Border(
+                    right: new BorderSide(width: 1.0, color: Colors.white24))),
+            child: Container(
+              alignment: Alignment.center,
+              width: 55,
+              height: 55,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/nightClub.jpg'),
+                      fit: BoxFit.fill),
+                  //color: Colors.redAccent,
+                  borderRadius: BorderRadius.all(Radius.circular(100))),
+            ),
           ),
-        ),
-        title: Text(
-          "${suggestionList[index]}",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+          title: Row(children: <Widget>[
+            Text("${suggestionList[index]}",
+                style: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
+            Icon(
+              Icons.favorite,
+              color: Colors.red,
+            )
+          ]),
+          // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
 
-        subtitle: Row(
-          children: <Widget>[
-            Icon(Icons.music_note, color: Colors.blueAccent),
-            Text(" Type de musique", style: TextStyle(color: Colors.white))
-          ],
-        ),
-        trailing:
-            Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0));
+          subtitle: Row(
+            children: <Widget>[
+              Icon(Icons.music_note, color: Colors.blueAccent),
+              Text(" Type de musique", style: TextStyle(color: Colors.white))
+            ],
+          ),
+          trailing:
+              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+        );
 
     Card makeCard(int index) => Card(
           color: Colors.transparent,
@@ -143,9 +156,20 @@ class _SuggestionListState extends State<SuggestionList> {
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.deepOrangeAccent,
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Theme.of(context).primaryColor,
+                      Colors.deepOrangeAccent
+                    ]),
+                //color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.all(Radius.circular(25))),
-            child: makeListTile(index),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/nightClubProfile');
+                },
+                child: makeListTile(index)),
           ),
         );
 
@@ -160,12 +184,20 @@ class _SuggestionListState extends State<SuggestionList> {
       ),
     );
 
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Résultats"),
-      ),
-      body: makeBody,
-      /*new ListView.builder(
+    if (suggestionList.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Résultats"),
+        ),
+        body: Center(child: Text("Soit ça éxiste pas, soit t'as mal écrit")),
+      );
+    } else {
+      return new Scaffold(
+        appBar: new AppBar(
+          title: new Text("Résultats"),
+        ),
+        body: makeBody,
+        /*new ListView.builder(
             itemBuilder: (context, index) {
               return ListTile(
                 leading: Icon(Icons.domain),
@@ -174,6 +206,7 @@ class _SuggestionListState extends State<SuggestionList> {
               );
             },
             itemCount: suggestionList.length)*/
-    );
+      );
+    }
   }
 }
