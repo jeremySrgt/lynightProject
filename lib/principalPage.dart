@@ -5,6 +5,7 @@ import 'package:lynight/discoverPage/topClubCard.dart';
 import 'package:lynight/discoverPage/bottomClubCard.dart';
 import 'package:lynight/maps/googleMapsClient.dart';
 import 'package:lynight/authentification/auth.dart';
+import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/myReservations/myReservation.dart';
 
 class PrincipalPage extends StatefulWidget {
@@ -123,41 +124,16 @@ class _PrincipalPageState extends State<PrincipalPage>
           backgroundColor: Colors.white,
           elevation: 0.0,
         ),
-        drawer: Drawer(
-          child: ListView(
-            children: <Widget>[
-              DrawerHeader(
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                      title: Text(mail),
-                    ),
-                    FlatButton(
-                        onPressed: widget._signOut,
-                        child: Text('Déconnexion', style: TextStyle(fontSize: 14.0, color: Colors.black))
-                    )
-                  ],
-                ),
-                decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(color: Colors.deepOrange))),
-              ),
-              //permet de ne pas display sous la bar de notif des tels
-              ListTile(
-                title: Text('Profil'),
-                onTap: () {
-                  Navigator.pushNamed(context, '/userProfil');
-                },
-              ),
-              ListTile(
-                title: Text('Mes reservation'),
-                onTap: () {
-                  Navigator.pushNamed(context, '/myReservations');
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: CustomSlider(
+          userMail: mail,
+          signOut: widget._signOut,
+          nameFirstPage: 'Profil',
+          routeFirstPage: '/userProfil',
+          nameSecondPage: 'Mes Réservations',
+          routeSecondPage: '/myReservations',
+          nameThirdPage: 'Carte',
+          routeThirdPage: '/maps',
+        )
       ),
     );
   }
