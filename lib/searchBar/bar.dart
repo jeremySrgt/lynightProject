@@ -86,7 +86,8 @@ class SuggestionList extends StatefulWidget {
 }
 
 class _SuggestionListState extends State<SuggestionList> {
-  final clubsList = [
+  final Set<int> _saved = Set<int>();
+  static final clubsList = [
     "Wanderlust",
     "AuDD",
     "ESIEE",
@@ -98,73 +99,95 @@ class _SuggestionListState extends State<SuggestionList> {
     "Kelly Kelly NightClub"
   ];
 
-  @override
-  Widget build(BuildContext context) {
-    final suggestionList =
-        clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
+  get suggestionList => clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
 
-    ListTile makeListTile(int index) => ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-        leading: Container(
-          padding: EdgeInsets.only(right: 12.0),
-          decoration: new BoxDecoration(
-              border: new Border(
-                  right: new BorderSide(width: 1.0, color: Colors.white24))),
-          child: Container(
-            alignment: Alignment.center,
-            width: 55,
-            height: 55,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/nightClub.jpg'),
-                    fit: BoxFit.fill),
-                //color: Colors.redAccent,
-                borderRadius: BorderRadius.all(Radius.circular(100))),
-          ),
+  Widget _createCard(int index) {
+    final bool alreadySaved = _saved.contains(index);
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+      leading: Container(
+        padding: EdgeInsets.only(right: 12.0),
+        decoration: new BoxDecoration(
+            border: new Border(
+                right: new BorderSide(width: 1.0, color: Colors.white24))),
+        child: Container(
+          alignment: Alignment.center,
+          width: 55,
+          height: 55,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/nightClub.jpg'), fit: BoxFit.fill),
+              //color: Colors.redAccent,
+              borderRadius: BorderRadius.all(Radius.circular(100))),
         ),
-        title: Text(
-          "${suggestionList[index]}",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      ),
+      title: Text(
+        "${suggestionList[index]}",
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      ),
+
+      // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+
+      subtitle: Row(
+        children: <Widget>[
+          Icon(Icons.music_note, color: Colors.blueAccent),
+          Text(" Type de musique", style: TextStyle(color: Colors.white))
+        ],
+      ),
+      trailing: IconButton(
+        icon: Icon(
+          alreadySaved ? Icons.favorite : Icons.favorite_border,
+          color: alreadySaved ? Theme.of(context).primaryColor : null,
         ),
-        // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+        iconSize: 35,
+        onPressed: () {
+          setState(() {
+            if (alreadySaved) {
+              _saved.remove(index);
+            } else {
+              _saved.add(index);
+            }
+          });
+        },
+      ),
+    );
+  }
 
-        subtitle: Row(
-          children: <Widget>[
-            Icon(Icons.music_note, color: Colors.blueAccent),
-            Text(" Type de musique", style: TextStyle(color: Colors.white))
-          ],
-        ),
-        trailing:
-            Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0));
+  Widget _makeCard(int index) {
+    return Card(
+      color: Colors.transparent,
+      elevation: 8.0,
+      margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.deepOrangeAccent,
+            borderRadius: BorderRadius.all(Radius.circular(25))),
+        child: _createCard(index),
+      ),
+    );
+  }
 
-    Card makeCard(int index) => Card(
-          color: Colors.transparent,
-          elevation: 8.0,
-          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.deepOrangeAccent,
-                borderRadius: BorderRadius.all(Radius.circular(25))),
-            child: makeListTile(index),
-          ),
-        );
-
-    final makeBody = Container(
+  Widget _makeBody() {
+    return Container(
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: suggestionList.length,
         itemBuilder: (BuildContext context, int index) {
-          return makeCard(index);
+          return _makeCard(index);
         },
       ),
     );
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Résultats"),
       ),
-      body: makeBody,
+      body: _makeBody(),
+
       /*new ListView.builder(
             itemBuilder: (context, index) {
               return ListTile(
