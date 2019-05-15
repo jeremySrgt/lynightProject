@@ -124,7 +124,16 @@ class _PrincipalPageState extends State<PrincipalPage>
           backgroundColor: Colors.white,
           elevation: 0.0,
         ),
-        drawer: CustomSlider(mail, widget._signOut)
+        drawer: CustomSlider(
+          userMail: mail,
+          signOut: widget._signOut,
+          nameFirstPage: 'Profil',
+          routeFirstPage: '/userProfil',
+          nameSecondPage: 'Mes Réservations',
+          routeSecondPage: '/myReservations',
+          nameThirdPage: 'Carte',
+          routeThirdPage: '/maps',
+        )
       ),
     );
   }
