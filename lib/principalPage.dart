@@ -5,6 +5,7 @@ import 'package:lynight/discoverPage/topClubCard.dart';
 import 'package:lynight/discoverPage/bottomClubCard.dart';
 import 'package:lynight/maps/googleMapsClient.dart';
 import 'package:lynight/authentification/auth.dart';
+import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/myReservations/myReservation.dart';
 
 class PrincipalPage extends StatefulWidget {
@@ -147,12 +148,6 @@ class _PrincipalPageState extends State<PrincipalPage>
                 title: Text('Profil'),
                 onTap: () {
                   Navigator.pushNamed(context, '/userProfil');
-                },
-              ),
-              ListTile(
-                title: Text('Mes reservation'),
-                onTap: () {
-                  Navigator.pushNamed(context, '/myReservations');
                 },
               ),
             ],
