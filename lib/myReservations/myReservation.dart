@@ -32,12 +32,7 @@ class _ListPageState extends State<ListPage> {
       elevation: 0.1,
       backgroundColor: Theme.of(context).primaryColor,
       title: Text(widget.title),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.list),
-          onPressed: () {},
-        )
-      ],
+
     );
 
     final makeListTitle = ListTile(
