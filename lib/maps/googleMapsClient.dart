@@ -87,9 +87,9 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
         title: Text(
           'Map',
           style: TextStyle(
-              color: Colors.black, fontSize: 30, fontFamily: 'Montserrat'),
+              color: Theme.of(context).primaryColor, fontSize: 30, fontFamily: 'Montserrat'),
         ),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Container(
 
@@ -113,7 +113,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
                 FloatingActionButton(
                   //premier bouton qui recentre la position selon _center centre de paris
                   onPressed: _recenterCamera,
-                  backgroundColor: Colors.deepOrange,
+                  backgroundColor: Theme.of(context).primaryColor,
                   child: const Icon(Icons.center_focus_weak, size: 50),
                 ),
                 SizedBox(height: 30),
@@ -121,7 +121,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
                   // deuxieme bouton ajoute un marker au centre de l'appli
                   onPressed: _onAddMarkerButtonPressed,
                   materialTapTargetSize: MaterialTapTargetSize.padded,
-                  backgroundColor: Colors.deepOrange,
+                  backgroundColor: Theme.of(context).primaryColor,
                   child: const Icon(Icons.add_location, size: 50),
                 ),
               ],
@@ -130,7 +130,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
         ]),
         constraints: BoxConstraints(maxHeight: 300,maxWidth: double.infinity),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).accentColor,
 
     );
   }

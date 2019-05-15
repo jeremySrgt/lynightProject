@@ -48,8 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
+                  Colors.deepOrangeAccent,
                   Theme.of(context).primaryColor,
-                  Colors.deepOrangeAccent
                 ]),
           ),
           alignment: Alignment.center,
@@ -93,7 +93,16 @@ class SuggestionList extends StatefulWidget {
 }
 
 class _SuggestionListState extends State<SuggestionList> {
-  final clubsList = [
+  List clubs;
+  final Set<Club> _saved = Set<Club>(); //mémorise
+
+  @override
+  void initState() {
+    clubs = getCLub();
+    super.initState();
+  }
+
+  static final clubsList = [
     "Wanderlust",
     "AuDD",
     "ESIEE",
@@ -105,85 +114,112 @@ class _SuggestionListState extends State<SuggestionList> {
     "Kelly Kelly NightClub"
   ];
 
-  @override
-  Widget build(BuildContext context) {
-    final suggestionList =
-        clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
+  get suggestionList =>
+      clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
 
-    ListTile makeListTile(int index) => ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-          leading: Container(
-            padding: EdgeInsets.only(right: 12.0),
-            decoration: new BoxDecoration(
-                border: new Border(
-                    right: new BorderSide(width: 1.0, color: Colors.white24))),
-            child: Container(
-              alignment: Alignment.center,
-              width: 55,
-              height: 55,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/nightClub.jpg'),
-                      fit: BoxFit.fill),
-                  //color: Colors.redAccent,
-                  borderRadius: BorderRadius.all(Radius.circular(100))),
-            ),
+  Widget _makeListTile(Club club) {
+    final bool alreadySaved = _saved.contains(club);
+
+    return ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+        leading: Container(
+          padding: EdgeInsets.only(right: 12.0),
+          decoration: new BoxDecoration(
+              border: new Border(
+                  right: new BorderSide(width: 1.0, color: Colors.white24))),
+          child: Container(
+            alignment: Alignment.center,
+            width: 55,
+            height: 55,
+            decoration: BoxDecoration(
+                image: DecorationImage(image: club.clubImage, fit: BoxFit.fill),
+                //color: Colors.redAccent,
+                borderRadius: BorderRadius.all(Radius.circular(100))),
           ),
-          title: Row(children: <Widget>[
-            Text("${suggestionList[index]}",
-                style: TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold)),
-            Icon(
-              Icons.favorite,
-              color: Colors.red,
-            )
-          ]),
-          // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+        ),
+        title: Text(club.title,
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
 
-          subtitle: Row(
+        subtitle: Column(children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Icon(Icons.music_note, color: Colors.blueAccent),
-              Text(" Type de musique", style: TextStyle(color: Colors.white))
+              Icon(
+                Icons.favorite,
+                color: Colors.red,
+              ),
+              Text(club.nbLikes.toString(),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ))
             ],
           ),
-          trailing:
-              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
-        );
-
-    Card makeCard(int index) => Card(
-          color: Colors.transparent,
-          elevation: 8.0,
-          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-          child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Theme.of(context).primaryColor,
-                      Colors.deepOrangeAccent
-                    ]),
-                //color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.all(Radius.circular(25))),
-            child: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/nightClubProfile');
-                },
-                child: makeListTile(index)),
+          Row(
+            children: <Widget>[
+              Icon(Icons.music_note, color: Colors.blueAccent),
+              Text(club.songsType, style: TextStyle(color: Colors.white))
+            ],
           ),
-        );
+        ]),
+        trailing: IconButton(
+          icon: Icon(
+            alreadySaved ? Icons.favorite : Icons.favorite_border,
+            color: alreadySaved ? Colors.white : Colors.white,
+            size: 30,
+          ),
+          onPressed: () {
+            setState(() {
+              if (alreadySaved) {
+                _saved.remove(club);
+              } else {
+                _saved.add(club);
+              }
+            });
+          },
+        ));
+  }
 
-    final makeBody = Container(
+  Widget _makeCard(Club club) {
+    return Card(
+      color: Colors.transparent,
+      elevation: 12.0,
+      margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      child: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.deepOrangeAccent,
+                  Theme.of(context).primaryColor,
+                ]),
+            //color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.all(Radius.circular(25))),
+        child: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/nightClubProfile');
+            },
+            child: _makeListTile(club)),
+      ),
+    );
+  }
+
+  Widget _makeBody() {
+    return Container(
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: suggestionList.length,
         itemBuilder: (BuildContext context, int index) {
-          return makeCard(index);
+          return _makeCard(clubs[index]);
         },
       ),
     );
+  }
 
+  @override
+  Widget build(BuildContext context) {
     if (suggestionList.isEmpty) {
       return Scaffold(
         appBar: AppBar(
@@ -196,7 +232,7 @@ class _SuggestionListState extends State<SuggestionList> {
         appBar: new AppBar(
           title: new Text("Résultats"),
         ),
-        body: makeBody,
+        body: _makeBody(),
         /*new ListView.builder(
             itemBuilder: (context, index) {
               return ListTile(
@@ -209,4 +245,72 @@ class _SuggestionListState extends State<SuggestionList> {
       );
     }
   }
+}
+
+List getCLub() {
+  return [
+    Club(
+      title: "Wanderlust",
+      nbLikes: 5,
+      songsType: "HipHop, RnB",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "AuDD",
+      nbLikes: 4,
+      songsType: "QLF, Faya",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "ESIEE",
+      nbLikes: 1,
+      songsType: "Electro, HipHop",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "ChezJerem",
+      nbLikes: 0,
+      songsType: "Justin Bieber",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "Club Haussmann",
+      nbLikes: 4,
+      songsType: "Généraliste",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "BNK",
+      nbLikes: 4,
+      songsType: "Techno, Trans",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "Nuits Fauves",
+      nbLikes: 3,
+      songsType: "Techno, Trans",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "Coachella",
+      nbLikes: 5,
+      songsType: "Le feeeu",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "Kelly Kelly NightClub",
+      nbLikes: 5,
+      songsType: "Diams, Zaho",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+  ];
+}
+
+class Club {
+  String title;
+  int nbLikes;
+  String songsType;
+  AssetImage clubImage;
+
+  Club({this.title, this.nbLikes, this.songsType, this.clubImage});
 }
