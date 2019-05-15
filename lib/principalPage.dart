@@ -124,35 +124,7 @@ class _PrincipalPageState extends State<PrincipalPage>
           backgroundColor: Colors.white,
           elevation: 0.0,
         ),
-        drawer: Drawer(
-          child: ListView(
-            children: <Widget>[
-              DrawerHeader(
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                      title: Text(mail),
-                    ),
-                    FlatButton(
-                        onPressed: widget._signOut,
-                        child: Text('Déconnexion', style: TextStyle(fontSize: 14.0, color: Colors.black))
-                    )
-                  ],
-                ),
-                decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(color: Colors.deepOrange))),
-              ),
-              //permet de ne pas display sous la bar de notif des tels
-              ListTile(
-                title: Text('Profil'),
-                onTap: () {
-                  Navigator.pushNamed(context, '/userProfil');
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: CustomSlider(mail, widget._signOut)
       ),
     );
   }
