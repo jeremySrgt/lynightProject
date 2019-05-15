@@ -20,6 +20,7 @@ dependencies:
   google_maps_flutter: ^0.4.0
   firebase_auth: ^0.11.0
   firebase_core: ^0.4.0 #firebase auth require firebase core pour une raison ignore
+  cloud_firestore: ^0.11.0
   flutter:
     sdk: flutter
 
