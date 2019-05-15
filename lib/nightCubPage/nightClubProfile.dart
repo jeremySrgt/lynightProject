@@ -38,6 +38,7 @@ class NightClubProfile extends StatelessWidget {
                       Icon(
                         Icons.place,
                         size: 17,
+                        color: Theme.of(context).primaryColor,
                       ),
                       Text(
                         '   Paris 13ème ',
@@ -56,13 +57,13 @@ class NightClubProfile extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.phone,
-                        color: Colors.amber,
+                        color: Theme.of(context).primaryColor,
                         size: 17,
                       ),
                       Text(
                         '   0101010010',
                         style: TextStyle(
-                          color: Colors.grey,
+                          color: Colors.black,
                         ),
                       ),
                     ],
@@ -76,7 +77,7 @@ class NightClubProfile extends StatelessWidget {
                       Icon(
                         Icons.insert_link,
                         size: 17,
-                        color: Colors.blue,
+                        color: Theme.of(context).primaryColor,
                       ),
                       Text(
                         '   www.kellyKelly.com',
@@ -117,13 +118,13 @@ class NightClubProfile extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.music_note,
-                        color: Colors.amber,
+                        color: Theme.of(context).primaryColor,
                         size: 17,
                       ),
                       Text(
                         '   Style de Musique : Electro',
                         style: TextStyle(
-                          color: Colors.grey,
+                          color: Colors.black,
                         ),
                       ),
                     ],
@@ -137,7 +138,7 @@ class NightClubProfile extends StatelessWidget {
                       Icon(
                         Icons.queue_music,
                         size: 17,
-                        color: Colors.blue,
+                        color: Theme.of(context).primaryColor,
                       ),
                       Text(
                         '   www.soundcloud.com',
@@ -203,6 +204,6 @@ class NightClubProfile extends StatelessWidget {
         ],
       ),
     );
-    
+
   }
 }
