@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 
 class CustomSlider extends StatelessWidget{
   final String userMail;
-  Function _signOut;
+  Function signOut;
+  final String nameFirstPage;
+  final String routeFirstPage;
+  final String nameSecondPage;
+  final String routeSecondPage;
+  final String nameThirdPage;
+  final String routeThirdPage;
 
-  CustomSlider(this.userMail,this._signOut);
+  CustomSlider({this.userMail,this.signOut,this.nameFirstPage,this.routeFirstPage,this.nameSecondPage,this.routeSecondPage,this.nameThirdPage,this.routeThirdPage});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,7 @@ class CustomSlider extends StatelessWidget{
                   title: Text(userMail),
                 ),
                 FlatButton(
-                    onPressed: _signOut,
+                    onPressed: signOut,
                     child: Text('Déconnexion', style: TextStyle(fontSize: 14.0, color: Colors.black))
                 )
               ],
@@ -28,11 +34,22 @@ class CustomSlider extends StatelessWidget{
                 border:
                 Border(bottom: BorderSide(color: Colors.deepOrange))),
           ),
-          //permet de ne pas display sous la bar de notif des tels
           ListTile(
-            title: Text('Profil'),
+            title: Text(nameFirstPage),
             onTap: () {
-              Navigator.pushNamed(context, '/userProfil');
+              Navigator.pushNamed(context, routeFirstPage);
+            },
+          ),
+          ListTile(
+            title: Text(nameSecondPage),
+            onTap: () {
+              Navigator.pushNamed(context, routeSecondPage);
+            },
+          ),
+          ListTile(
+            title: Text(nameThirdPage),
+            onTap: () {
+              Navigator.pushNamed(context, routeThirdPage);
             },
           ),
         ],
