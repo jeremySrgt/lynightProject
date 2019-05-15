@@ -86,6 +86,14 @@ class SuggestionList extends StatefulWidget {
 }
 
 class _SuggestionListState extends State<SuggestionList> {
+  List clubs;
+
+  @override
+  void initState() {
+    clubs = getCLub();
+    super.initState();
+  }
+
   final clubsList = [
     "Wanderlust",
     "AuDD",
@@ -103,7 +111,7 @@ class _SuggestionListState extends State<SuggestionList> {
     final suggestionList =
         clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
 
-    ListTile makeListTile(int index) => ListTile(
+    ListTile makeListTile(Club club) => ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
           leading: Container(
             padding: EdgeInsets.only(right: 12.0),
@@ -116,14 +124,14 @@ class _SuggestionListState extends State<SuggestionList> {
               height: 55,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/nightClub.jpg'),
+                      image: club.clubImage,
                       fit: BoxFit.fill),
                   //color: Colors.redAccent,
                   borderRadius: BorderRadius.all(Radius.circular(100))),
             ),
           ),
           title: Row(children: <Widget>[
-            Text("${suggestionList[index]}",
+            Text(club.title,
                 style: TextStyle(
                     color: Colors.white, fontWeight: FontWeight.bold)),
             Icon(
@@ -133,17 +141,31 @@ class _SuggestionListState extends State<SuggestionList> {
           ]),
           // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
 
-          subtitle: Row(
-            children: <Widget>[
-              Icon(Icons.music_note, color: Colors.blueAccent),
-              Text(" Type de musique", style: TextStyle(color: Colors.white))
-            ],
-          ),
+          subtitle: Column(children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              //mainAxisSize: MainAxisSize.min,
+              children: List.generate(5, (index) {
+                return Icon(
+                  index < club.rating ? Icons.star : Icons.star_border,
+                  //Changer ici, la valeur pour un rating différent
+                  color: Colors.amber,
+                );
+              }),
+            ),
+            Row(
+              children: <Widget>[
+                Icon(Icons.music_note, color: Colors.blueAccent),
+                Text(club.songsType, style: TextStyle(color: Colors.white))
+              ],
+            ),
+          ]),
+
           trailing:
               Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
         );
 
-    Card makeCard(int index) => Card(
+    Card makeCard(Club club) => Card(
           color: Colors.transparent,
           elevation: 8.0,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -162,7 +184,7 @@ class _SuggestionListState extends State<SuggestionList> {
                 onTap: () {
                   Navigator.pushNamed(context, '/nightClubProfile');
                 },
-                child: makeListTile(index)),
+                child: makeListTile(club)),
           ),
         );
 
@@ -172,7 +194,7 @@ class _SuggestionListState extends State<SuggestionList> {
         shrinkWrap: true,
         itemCount: suggestionList.length,
         itemBuilder: (BuildContext context, int index) {
-          return makeCard(index);
+          return makeCard(clubs[index]);
         },
       ),
     );
@@ -201,4 +223,72 @@ class _SuggestionListState extends State<SuggestionList> {
             itemCount: suggestionList.length)*/
     );
   }
+}
+
+List getCLub() {
+  return [
+    Club(
+      title: "Wanderlust",
+      rating: 5,
+      songsType: "HipHop, RnB",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "AuDD",
+      rating: 4,
+      songsType: "QLF, Faya",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "ESIEE",
+      rating: 1,
+      songsType: "Electro, HipHop, Dancehall",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "ChezJerem",
+      rating: 0,
+      songsType: "Justin Bieber",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "Club Haussmann",
+      rating: 4,
+      songsType: "Généraliste",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "BNK",
+      rating: 4,
+      songsType: "Techno, Trans",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "Nuits Fauves",
+      rating: 3,
+      songsType: "Techno, Trans",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "Coachella",
+      rating: 5,
+      songsType: "Le feeeu",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+    Club(
+      title: "Kelly Kelly NightClub",
+      rating: 5,
+      songsType: "Diams, Zaho",
+      clubImage: AssetImage('assets/nightClub.jpg'),
+    ),
+  ];
+}
+
+class Club {
+  String title;
+  int rating;
+  String songsType;
+  AssetImage clubImage;
+
+  Club({this.title, this.rating, this.songsType, this.clubImage});
 }
