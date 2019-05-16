@@ -1,18 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:lynight/authentification/primary_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NightClubProfile extends StatelessWidget {
+  NightClubProfile({this.documentID});
+
+  final String documentID;
 
   @override
   Widget build(BuildContext context) {
-    Widget infoSection = Expanded(
+    return StreamBuilder(
+      stream: Firestore.instance
+          .collection('club')
+          .document(documentID)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
+        }
+        var clubData = snapshot.data;
+        return pageConstruct(clubData, context);
+      },
+    );
+  }
+
+  Widget pageConstruct(clubData, context) {
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            expandedHeight: 200.0,
+            floating: false,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(clubData['name']),
+              background: Image.asset(
+                'assets/nightClub.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SliverFillRemaining(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  infoSection(clubData, context),
+                  //priceSection,
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget infoSection(clubData, context) {
+    return Expanded(
       child: Row(
         children: [
           Flexible(
-
             child: Column(
               crossAxisAlignment:
-                  CrossAxisAlignment.start, //met dans le bon axe
+              CrossAxisAlignment.start, //met dans le bon axe
               children: [
                 Container(
                   padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
@@ -34,7 +86,7 @@ class NightClubProfile extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
-                        CrossAxisAlignment.start, //met dans le bonne axe
+                    CrossAxisAlignment.start, //met dans le bonne axe
                     children: [
                       Icon(
                         Icons.place,
@@ -54,7 +106,7 @@ class NightClubProfile extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
-                        CrossAxisAlignment.start, //met dans le bonne axe
+                    CrossAxisAlignment.start, //met dans le bonne axe
                     children: [
                       Icon(
                         Icons.phone,
@@ -94,8 +146,7 @@ class NightClubProfile extends StatelessWidget {
                   child: Container(
                     width: 375,
                     padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
-                    child:
-                    Text(
+                    child: Text(
                       'Du mercredi au samedi, de 23h à 6h du matin, nous vous proposons : ®strip-teases, lap dance et shows privés.',
                       textAlign: TextAlign.justify,
                       softWrap: true,
@@ -113,7 +164,7 @@ class NightClubProfile extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
-                        CrossAxisAlignment.start, //met dans le bonne axe
+                    CrossAxisAlignment.start, //met dans le bonne axe
                     children: [
                       Icon(
                         Icons.music_note,
@@ -167,41 +218,5 @@ class NightClubProfile extends StatelessWidget {
         ],
       ),
     );
-
-
-
-      // TODO: implement build
-
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: 200.0,
-            floating: false,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text('Kelly Kelly nightClub'),
-              background: Image.asset(
-                'assets/nightClub.jpg',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          SliverFillRemaining(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  infoSection,
-                  //priceSection,
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-
   }
 }
