@@ -205,7 +205,7 @@ class NightClubProfile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       PrimaryButton(
-                          key: new Key('register'),
+                          //key:  Key('register'),
                           text: 'Let\'s Party',
                           height: 44.0),
                       //onPressed: validateAndSubmit),
