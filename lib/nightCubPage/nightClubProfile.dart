@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lynight/authentification/primary_button.dart';
 
 class NightClubProfile extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     Widget infoSection = Expanded(

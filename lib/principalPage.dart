@@ -112,7 +112,7 @@ class _PrincipalPageState extends State<PrincipalPage>
               ),
             ),
             MyHomePage(),
-            FavoritesNightClub(),
+            GoogleMapsClient(),
           ]),
           appBar: AppBar(
             title: Text(
