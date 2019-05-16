@@ -53,7 +53,7 @@ class _UserProfilState extends State<UserProfil> {
               Container(
                 padding: EdgeInsets.only(top: 16),
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 3.1,
+                height: MediaQuery.of(context).size.height / 2.9,
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.only(
@@ -140,7 +140,7 @@ class _UserProfilState extends State<UserProfil> {
                   ],
                 ),
               ),
-              Flexible(
+              Expanded(
                 child: Container(
                   child: Column(
                     children: <Widget>[
@@ -158,7 +158,7 @@ class _UserProfilState extends State<UserProfil> {
                             Text(''),
                             Text('Musique 1 \n'),
                             Text('Musique 2 \n'),
-                            Text('Musique 3 \n'),
+                            Text('Musique 3 '),
                           ],
                         ),
                       ),
