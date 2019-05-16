@@ -7,11 +7,11 @@ import 'package:lynight/maps/googleMapsClient.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/myReservations/myReservation.dart';
-import 'package:lynight/discoverPage/test.dart';
+import 'package:lynight/searchBar/bar.dart';
+import 'package:lynight/favorites/favoritesNightClub.dart';
 
 class PrincipalPage extends StatefulWidget {
   PrincipalPage({this.auth, this.onSignOut});
-
   final BaseAuth auth;
   final VoidCallback onSignOut;
 
@@ -22,6 +22,7 @@ class PrincipalPage extends StatefulWidget {
     } catch (e) {
       print(e);
     }
+
   }
 
   @override
@@ -38,7 +39,6 @@ class _PrincipalPageState extends State<PrincipalPage>
   String mail = 'userMail';
 
   TabController _controller;
-
   //TODO changer la couleur de l'appbar en focntion de la couleur de l'element en dessous - ca fait plus joli
   //TODO par exemple dans le profil utilisateur c'est flagrant
 
@@ -112,7 +112,7 @@ class _PrincipalPageState extends State<PrincipalPage>
               ),
             ),
             MyHomePage(),
-            GoogleMapsClient(),
+            FavoritesNightClub(),
           ]),
           appBar: AppBar(
             title: Text(
@@ -134,8 +134,8 @@ class _PrincipalPageState extends State<PrincipalPage>
             routeFirstPage: '/userProfil',
             nameSecondPage: 'Mes Réservations',
             routeSecondPage: '/myReservations',
-            nameThirdPage: 'Carte',
-            routeThirdPage: '/maps',
+            nameThirdPage: 'Favoris',
+            routeThirdPage: '/favorites',
           )),
     );
   }
