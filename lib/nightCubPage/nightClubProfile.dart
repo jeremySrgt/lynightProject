@@ -7,7 +7,7 @@ class NightClubProfile extends StatelessWidget {
     Widget infoSection = Expanded(
       child: Row(
         children: [
-          Expanded(
+          Flexible(
 
             child: Column(
               crossAxisAlignment:
@@ -89,18 +89,15 @@ class NightClubProfile extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(55, 15, 0, 0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Du mercredi au samedi, de 23h à 6h du matin, \n'
-                        'nous vous proposons :\n'
-                        'strip-teases, lap dance et shows privés.\n',
+                Flexible(
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
+                    child:
+                    Text(
+                      'Du mercredi au samedi, de 23h à 6h du matin, nous vous proposons : ®strip-teases, lap dance et shows privés.',
+                      textAlign: TextAlign.justify,
                       softWrap: true,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
                 Container(
