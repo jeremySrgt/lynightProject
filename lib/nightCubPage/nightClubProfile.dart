@@ -103,10 +103,9 @@ class NightClubProfile extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+
                         Text(
-                          'Du mercredi au samedi, de 23h à 6h du matin, \n'
-                              'nous vous proposons :\n'
-                              'strip-teases, lap dance et shows privés.\n',
+                          'Du mercredi au samedi, de 23h à 6h du matin, nous vous proposons : strip-teases, lap dance et shows privés.',
                           softWrap: true,
                         ),
                       ],

@@ -99,6 +99,7 @@ class DetailPage extends StatelessWidget{
 
 
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Column(
         children: <Widget>[topContent, bottomContent],
       ),
