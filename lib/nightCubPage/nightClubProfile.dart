@@ -31,7 +31,7 @@ class NightClubProfile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(55, 15, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
                         CrossAxisAlignment.start, //met dans le bonne axe
@@ -51,7 +51,7 @@ class NightClubProfile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(55, 15, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
                         CrossAxisAlignment.start, //met dans le bonne axe
@@ -71,7 +71,7 @@ class NightClubProfile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(55, 15, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -92,6 +92,7 @@ class NightClubProfile extends StatelessWidget {
                 ),
                 Flexible(
                   child: Container(
+                    width: 375,
                     padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                     child:
                     Text(
@@ -149,9 +150,8 @@ class NightClubProfile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.fromLTRB(150, 0, 0, 0),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       PrimaryButton(
                           key: new Key('register'),
