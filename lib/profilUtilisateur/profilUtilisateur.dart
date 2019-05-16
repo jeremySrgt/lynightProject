@@ -53,7 +53,7 @@ class _UserProfilState extends State<UserProfil> {
               Container(
                 padding: EdgeInsets.only(top: 16),
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2.4,
+                height: MediaQuery.of(context).size.height / 3.1,
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.only(
@@ -62,7 +62,6 @@ class _UserProfilState extends State<UserProfil> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    Divider(), // saut de ligne
 
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -142,6 +141,7 @@ class _UserProfilState extends State<UserProfil> {
                   ],
                 ),
               ),
+              
               ListTile(
                 leading: Icon(Icons.music_note),
                 title: Text(
@@ -152,9 +152,10 @@ class _UserProfilState extends State<UserProfil> {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text('Musique 1'),
-                    Text('Musique 2'),
-                    Text('Musique 3'),
+                    Text(''),
+                    Text('Musique 1 \n'),
+                    Text('Musique 2 \n'),
+                    Text('Musique 3 \n'),
                   ],
                 ),
               ),
