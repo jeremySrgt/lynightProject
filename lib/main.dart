@@ -7,6 +7,8 @@ import 'package:lynight/maps/googleMapsClient.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/authentification/root_page.dart';
 import 'package:lynight/myReservations/myReservation.dart';
+import 'package:lynight/searchBar/bar.dart';
+
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -36,7 +38,8 @@ class _MyAppState extends State<MyApp> {
         '/nightClubProfile': (BuildContext context) => NightClubProfile(),
         '/userProfil': (BuildContext context) => UserProfil(),
         '/myReservations': (BuildContext context) => ListReservation(),
-        '/maps': (BuildContext context) => GoogleMapsClient(),
+        //'/maps': (BuildContext context) => GoogleMapsClient(),
+        '/favorites':(BuildContext context) => FavoritesNightClub(),
 
 
       },
