@@ -26,7 +26,6 @@ class DetailPage extends StatelessWidget{
                 padding: EdgeInsets.only(left: 7.0, top: 2.0),
                 child : Text(
                 reservation.date,
-                textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 20.0),
               ),
               ),

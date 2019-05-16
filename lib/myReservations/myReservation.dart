@@ -61,17 +61,24 @@ class _ListPageState extends State<ListPage> {
             Expanded(
               flex: 1,
               child: Container(
-                child: Icon(Icons.date_range,
-                    color: Theme
-                        .of(context)
-                        .primaryColor),
+                padding: EdgeInsets.only(top: 5.0),
+                child: Icon(
+                  Icons.date_range,
+                  color: Theme.of(context).primaryColor,
+                  size: 20.0
+                ),
               ),
             ),
             Expanded(
               flex: 4,
               child: Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Text('18/03', style: TextStyle(color: Colors.white)),
+                padding: EdgeInsets.only(top: 5.0),
+                child: Text(
+                  '18/03',
+                  style: TextStyle(
+                      color: Colors.white, fontSize: 16.0
+                  ),
+                ),
               ),
             )
           ],
