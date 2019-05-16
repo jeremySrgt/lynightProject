@@ -76,7 +76,7 @@ class NightClubProfile extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.fromLTRB(50, 20, 0, 0),
                   child: Text(
-                    'Kelly Kelly NightClub',
+                    clubData['name'],
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -94,7 +94,7 @@ class NightClubProfile extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                       Text(
-                        '   Paris 13ème ',
+                        clubData['adress'],
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                         ),
@@ -114,7 +114,7 @@ class NightClubProfile extends StatelessWidget {
                         size: 17,
                       ),
                       Text(
-                        '   0101010010',
+                        clubData['phone'],
                         style: TextStyle(
                           color: Colors.black,
                         ),
@@ -133,7 +133,7 @@ class NightClubProfile extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                       Text(
-                        '   www.kellyKelly.com',
+                        clubData['siteUrl'],
                         style: TextStyle(
                           color: Colors.blue,
                           fontStyle: FontStyle.italic,
@@ -172,7 +172,7 @@ class NightClubProfile extends StatelessWidget {
                         size: 17,
                       ),
                       Text(
-                        '   Style de Musique : Electro',
+                        '   Style de Musique ',
                         style: TextStyle(
                           color: Colors.black,
                         ),
@@ -191,7 +191,7 @@ class NightClubProfile extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                       Text(
-                        '   www.soundcloud.com',
+                        clubData['soundcloud'],
                         style: TextStyle(
                           color: Colors.blue,
                           fontStyle: FontStyle.italic,
