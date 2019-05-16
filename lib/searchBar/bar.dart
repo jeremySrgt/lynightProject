@@ -83,6 +83,48 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+class FavoritesNightClub extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _FavoritesNightClubState();
+  }
+}
+
+class _FavoritesNightClubState extends State<FavoritesNightClub> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+
+    final Iterable<Widget> tiles = _SuggestionListState()._saved.map(
+      (Club club) {
+        return Container(
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: _SuggestionListState()._saved.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _SuggestionListState()
+                  ._makeCard(_SuggestionListState().clubs[index]);
+            },
+          ),
+        );
+      },
+    );
+    final List<Widget> divided = ListTile.divideTiles(
+      context: context,
+      tiles: tiles,
+      color: Theme.of(context).primaryColor,
+    ).toList();
+
+    return new Scaffold(
+      body: ListView(
+        children: divided,
+      ),
+    );
+  }
+}
+
 class SuggestionList extends StatefulWidget {
   final String inputSearch;
 
@@ -94,7 +136,7 @@ class SuggestionList extends StatefulWidget {
 
 class _SuggestionListState extends State<SuggestionList> {
   List clubs;
-  final Set<Club> _saved = Set<Club>(); //mémorise
+  final Set<Club> _saved = Set<Club>();
 
   @override
   void initState() {
@@ -119,7 +161,6 @@ class _SuggestionListState extends State<SuggestionList> {
 
   Widget _makeListTile(Club club) {
     final bool alreadySaved = _saved.contains(club);
-
     return ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
         leading: Container(
@@ -176,6 +217,7 @@ class _SuggestionListState extends State<SuggestionList> {
                 _saved.add(club);
               }
             });
+            FavoritesNightClub();
           },
         ));
   }
@@ -225,7 +267,7 @@ class _SuggestionListState extends State<SuggestionList> {
         appBar: AppBar(
           title: Text("Résultats"),
         ),
-        body: Center(child: Text("Soit ça éxiste pas, soit t'as mal écrit")),
+        body: Center(child: Text("Soit ça existe pas, soit t'as mal écrit")),
       );
     } else {
       return new Scaffold(
