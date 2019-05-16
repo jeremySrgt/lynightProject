@@ -12,13 +12,7 @@ class ListReservation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Mes reservation',
-      color: Theme
-          .of(context)
-          .primaryColor,
-      home: ListPage(title: 'Mes reservations'),
-    );
+    return ListPage(title: 'Mes reservations');
   }
 }
 
@@ -43,10 +37,7 @@ class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
     final topAppBar = AppBar(
-      elevation: 0.1,
-      backgroundColor: Theme
-          .of(context)
-          .primaryColor,
+      backgroundColor: Theme.of(context).primaryColor,
       title: Text(widget.title),
     );
 

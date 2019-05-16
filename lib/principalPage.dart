@@ -6,8 +6,6 @@ import 'package:lynight/discoverPage/bottomClubCard.dart';
 import 'package:lynight/maps/googleMapsClient.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/widgets/slider.dart';
-import 'package:lynight/myReservations/myReservation.dart';
-import 'package:lynight/discoverPage/test.dart';
 
 class PrincipalPage extends StatefulWidget {
   PrincipalPage({this.auth, this.onSignOut});
@@ -105,7 +103,6 @@ class _PrincipalPageState extends State<PrincipalPage>
                   SizedBox(
                     height: 20.0,
                   ),
-//                  Test(),
                   TopClubCard(),
                   BottomClubCard(),
                 ],

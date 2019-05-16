@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lynight/nightCubPage/nightClubProfile.dart';
 
 class TopClubCard extends StatelessWidget {
   List<Widget> clubCardList(AsyncSnapshot snapshot, BuildContext context) {
@@ -31,7 +32,7 @@ class TopClubCard extends StatelessWidget {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/nightClubProfile');
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => NightClubProfile()));
                   },
                   child: Card(
                     elevation: 5.0,
