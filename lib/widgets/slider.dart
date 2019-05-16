@@ -37,19 +37,19 @@ class CustomSlider extends StatelessWidget{
           ListTile(
             title: Text(nameFirstPage),
             onTap: () {
-              Navigator.pushReplacementNamed(context, routeFirstPage);
+              Navigator.pushNamed(context, routeFirstPage);
             },
           ),
           ListTile(
             title: Text(nameSecondPage),
             onTap: () {
-              Navigator.pushReplacementNamed(context, routeSecondPage);
+              Navigator.pushNamed(context, routeSecondPage);
             },
           ),
           ListTile(
             title: Text(nameThirdPage),
             onTap: () {
-              Navigator.pushReplacementNamed(context, routeThirdPage);
+              Navigator.pushNamed(context, routeThirdPage);
             },
           ),
         ],

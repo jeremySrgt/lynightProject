@@ -139,3 +139,60 @@ class _ListPageState extends State<ListPage> {
     ];
   }
 }
+/*
+    return MaterialApp(
+      title: title,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(title),
+        ),
+        body: ListView(
+          children: <Widget>[
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+              leading: Container(
+                padding: EdgeInsets.only(right: 12.0),
+                decoration: new BoxDecoration(
+                    border: new Border(
+                        right: new BorderSide(width: 1.0, color: Colors.white24))),
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 55,
+                  height: 55,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/nightClub.jpg'),
+                          fit: BoxFit.fill),
+                      //color: Colors.redAccent,
+                      borderRadius: BorderRadius.all(Radius.circular(100))),
+                ),
+              ),
+              title: Row(children: <Widget>[
+                Text(myReservationList,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+                Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                )
+              ]),
+              // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+
+              subtitle: Row(
+                children: <Widget>[
+                  Icon(Icons.music_note, color: Colors.blueAccent),
+                  Text(" Type de musique", style: TextStyle(color: Colors.white))
+                ],
+              ),
+              trailing:
+              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+              */ /*leading: Icon(Icons.map),
+              title: Text('Map'),*/ /*
+            ),
+
+          ],
+        ),
+      ),
+    );*/
+
+//}}
