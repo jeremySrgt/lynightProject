@@ -53,7 +53,7 @@ class _UserProfilState extends State<UserProfil> {
               Container(
                 padding: EdgeInsets.only(top: 16),
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2.4,
+                height: MediaQuery.of(context).size.height / 3.1,
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.only(
@@ -62,8 +62,6 @@ class _UserProfilState extends State<UserProfil> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    Divider(), // saut de ligne
-
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       // Centrer les icones et l'image sur la page
@@ -142,59 +140,72 @@ class _UserProfilState extends State<UserProfil> {
                   ],
                 ),
               ),
-              ListTile(
-                leading: Icon(Icons.music_note),
-                title: Text(
-                  "Style de musique",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 18.0),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Musique 1'),
-                    Text('Musique 2'),
-                    Text('Musique 3'),
-                  ],
-                ),
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.mail),
-                title: Text(
-                  "Email",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 18.0),
-                ),
-                subtitle: Text(
-                  "exemple@gmail.com",
-                  style: TextStyle(fontSize: 15.0),
-                ),
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.phone),
-                title: Text(
-                  "Numéro",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 18.0),
-                ),
-                subtitle: Text(
-                  "0101010101",
-                  style: TextStyle(fontSize: 15.0),
-                ),
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.music_note),
-                title: Text(
-                  "Date de naissance",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 18.0),
-                ),
-                subtitle: Text(
-                  "01/01/1991",
-                  style: TextStyle(fontSize: 15.0),
+              Flexible(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.music_note),
+                        title: Text(
+                          "Style de musique",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 18.0),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(''),
+                            Text('Musique 1 \n'),
+                            Text('Musique 2 \n'),
+                            Text('Musique 3 \n'),
+                          ],
+                        ),
+                      ),
+                      Divider(),
+                      ListTile(
+                        leading: Icon(Icons.mail),
+                        title: Text(
+                          "Email",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 18.0),
+                        ),
+                        subtitle: Text(
+                          "exemple@gmail.com",
+                          style: TextStyle(fontSize: 15.0),
+                        ),
+                      ),
+                      Divider(),
+                      ListTile(
+                        leading: Icon(Icons.phone),
+                        title: Text(
+                          "Numéro",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 18.0),
+                        ),
+                        subtitle: Text(
+                          "0101010101",
+                          style: TextStyle(fontSize: 15.0),
+                        ),
+                      ),
+                      Divider(),
+                      ListTile(
+                        leading: Icon(Icons.music_note),
+                        title: Text(
+                          "Date de naissance",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 18.0),
+                        ),
+                        subtitle: Text(
+                          "01/01/1991",
+                          style: TextStyle(fontSize: 15.0),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
