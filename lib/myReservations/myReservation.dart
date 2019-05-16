@@ -3,23 +3,16 @@ import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/myReservations/reservation.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/myReservations/detailReservation.dart';
+import 'package:lynight/authentification/auth.dart';
 
-class ListReservation extends StatelessWidget {
-  //@override
-  // Widget build(BuildContext context) {
-  // final title = 'Mes reservations';
-  //final myReservationList = 'Kelly Kelly';
-
-  @override
-  Widget build(BuildContext context) {
-    return ListPage(title: 'Mes reservations');
-  }
-}
 
 class ListPage extends StatefulWidget {
-  ListPage({Key key, this.title}) : super(key: key);
 
-  final String title;
+
+  void _signOut() {
+
+
+  }
 
   @override
   _ListPageState createState() => _ListPageState();
@@ -38,7 +31,7 @@ class _ListPageState extends State<ListPage> {
   Widget build(BuildContext context) {
     final topAppBar = AppBar(
       backgroundColor: Theme.of(context).primaryColor,
-      title: Text(widget.title),
+      title: Text('Mes reservations'),
     );
 
     ListTile makeListTitle(Reservation reservation) =>
@@ -84,7 +77,7 @@ class _ListPageState extends State<ListPage> {
             ],
           ),
           trailing:
-          Icon(Icons.keyboard_arrow_right, color: Colors.red, size: 30.0),
+          Icon(Icons.keyboard_arrow_right, color: Colors.red, size: 25.0),
           onTap: () {
             Navigator.push(context,
             MaterialPageRoute(builder: (context) => DetailPage(reservation: reservation)),
@@ -114,19 +107,21 @@ class _ListPageState extends State<ListPage> {
     );
 
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       //backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),//gris
       appBar: topAppBar,
+
       body: makeBody,
-      /*drawer: CustomSlider(
+      drawer: CustomSlider(
         userMail: 'Lalal',
-        signOut: ,
-        nameFirstPage: 'Profil',
-        routeFirstPage: '/userProfil',
-        nameSecondPage: 'Accueil',
-        routeSecondPage: '/',
+        signOut: widget._signOut,
+        nameFirstPage: 'Accueil',
+        routeFirstPage: '/',
+        nameSecondPage: 'Profil',
+        routeSecondPage: '/userProfil',
         nameThirdPage: 'Carte',
         routeThirdPage: '/maps',
-      ),*/
+      ),
     );
   }
 
@@ -144,3 +139,60 @@ class _ListPageState extends State<ListPage> {
     ];
   }
 }
+/*
+    return MaterialApp(
+      title: title,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(title),
+        ),
+        body: ListView(
+          children: <Widget>[
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+              leading: Container(
+                padding: EdgeInsets.only(right: 12.0),
+                decoration: new BoxDecoration(
+                    border: new Border(
+                        right: new BorderSide(width: 1.0, color: Colors.white24))),
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 55,
+                  height: 55,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/nightClub.jpg'),
+                          fit: BoxFit.fill),
+                      //color: Colors.redAccent,
+                      borderRadius: BorderRadius.all(Radius.circular(100))),
+                ),
+              ),
+              title: Row(children: <Widget>[
+                Text(myReservationList,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+                Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                )
+              ]),
+              // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+
+              subtitle: Row(
+                children: <Widget>[
+                  Icon(Icons.music_note, color: Colors.blueAccent),
+                  Text(" Type de musique", style: TextStyle(color: Colors.white))
+                ],
+              ),
+              trailing:
+              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+              */ /*leading: Icon(Icons.map),
+              title: Text('Map'),*/ /*
+            ),
+
+          ],
+        ),
+      ),
+    );*/
+
+//}}
