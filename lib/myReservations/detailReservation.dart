@@ -14,20 +14,34 @@ class DetailPage extends StatelessWidget{
     final topContentText = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SizedBox(height: 120.0),
-        Icon(
-          Icons.play_arrow,
-          color: Colors.white,
-          size: 40.0,
+        SizedBox(height: 50.0),
+        Container(
+          child: Row(
+            children: <Widget>[
+              Icon(Icons.date_range,
+                color: Colors.white,
+                size: 25.0,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 7.0, top: 2.0),
+                child : Text(
+                reservation.date,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white, fontSize: 20.0),
+              ),
+              ),
+            ],
+          ),
         ),
         Container(
           width: 90.0,
-          child: new Divider(color: Colors.green),
+          child: Divider(color: Colors.green),
         ),
         SizedBox(height: 10.0),
         Text(
           reservation.title,
-          style: TextStyle(color: Colors.white, fontSize: 45.0),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white, fontSize: 35.0),
         ),
         SizedBox(height: 30.0),
 
@@ -41,7 +55,7 @@ class DetailPage extends StatelessWidget{
           height: MediaQuery.of(context).size.height * 0.5,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("boite.jpg"),
+              image: AssetImage("assets/nightClub.jpg"),
               fit: BoxFit.cover,
             ),
           ),
