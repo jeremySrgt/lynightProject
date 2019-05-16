@@ -83,59 +83,27 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class FavoritesNightClub extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _FavoritesNightClubState();
-  }
-}
-
-class _FavoritesNightClubState extends State<FavoritesNightClub> {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-
-    final Iterable<Widget> tiles = _SuggestionListState()._saved.map(
-      (Club club) {
-        return Container(
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: _SuggestionListState()._saved.length,
-            itemBuilder: (BuildContext context, int index) {
-              return _SuggestionListState()
-                  ._makeCard(_SuggestionListState().clubs[index]);
-            },
-          ),
-        );
-      },
-    );
-    final List<Widget> divided = ListTile.divideTiles(
-      context: context,
-      tiles: tiles,
-      color: Theme.of(context).primaryColor,
-    ).toList();
-
-    return new Scaffold(
-      body: ListView(
-        children: divided,
-      ),
-    );
-  }
-}
-
 class SuggestionList extends StatefulWidget {
-  final String inputSearch;
 
   SuggestionList({Key key, this.inputSearch}) : super(key: key);
 
+  final String inputSearch;
+
   @override
-  _SuggestionListState createState() => new _SuggestionListState();
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _SuggestionListState();
+  }
 }
 
 class _SuggestionListState extends State<SuggestionList> {
   List clubs;
+  /*List <String> _suggestionList;
+  List<String> suggestionList(){
+    return _suggestionList = clubsList.where((p){
+      p.startsWith(widget.inputSearch);}).toList();
+  }*/
+
   final Set<Club> _saved = Set<Club>();
 
   @override
@@ -156,8 +124,7 @@ class _SuggestionListState extends State<SuggestionList> {
     "Kelly Kelly NightClub"
   ];
 
-  get suggestionList =>
-      clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
+  //final suggestionList = clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
 
   Widget _makeListTile(Club club) {
     final bool alreadySaved = _saved.contains(club);
@@ -217,7 +184,6 @@ class _SuggestionListState extends State<SuggestionList> {
                 _saved.add(club);
               }
             });
-            FavoritesNightClub();
           },
         ));
   }
@@ -247,12 +213,12 @@ class _SuggestionListState extends State<SuggestionList> {
     );
   }
 
-  Widget _makeBody() {
+  Widget _makeBody(List<String> suggL) {
     return Container(
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: suggestionList.length,
+        itemCount: suggL.length,
         itemBuilder: (BuildContext context, int index) {
           return _makeCard(clubs[index]);
         },
@@ -262,6 +228,8 @@ class _SuggestionListState extends State<SuggestionList> {
 
   @override
   Widget build(BuildContext context) {
+    final suggestionList = clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
+
     if (suggestionList.isEmpty) {
       return Scaffold(
         appBar: AppBar(
@@ -274,7 +242,7 @@ class _SuggestionListState extends State<SuggestionList> {
         appBar: new AppBar(
           title: new Text("Résultats"),
         ),
-        body: _makeBody(),
+        body: _makeBody(suggestionList),
         /*new ListView.builder(
             itemBuilder: (context, index) {
               return ListTile(
