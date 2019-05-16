@@ -8,6 +8,7 @@ import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/myReservations/myReservation.dart';
 import 'package:lynight/searchBar/bar.dart';
+import 'package:lynight/favorites/favoritesNightClub.dart';
 
 class PrincipalPage extends StatefulWidget {
   PrincipalPage({this.auth, this.onSignOut});
