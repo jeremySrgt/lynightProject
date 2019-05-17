@@ -35,6 +35,15 @@ class CrudMethods {
     });
   }
 
+
+ createUserData(Map<String, dynamic> userDataMap) async{
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+//    print('USERID ' + user.uid);
+    DocumentReference ref = Firestore.instance.collection('user').document(user.uid);
+    return ref.setData(userDataMap, merge: true);
+    
+  }
+
   deleteData(collection, docId) {
     Firestore.instance
         .collection(collection)
