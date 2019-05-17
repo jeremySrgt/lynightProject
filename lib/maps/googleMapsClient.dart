@@ -5,8 +5,9 @@ import 'package:location/location.dart';
 import 'package:lynight/widgets/slider.dart';
 
 class GoogleMapsClient extends StatefulWidget {
-  void _signOut() {}
+  void _signOut(){
 
+}
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -45,8 +46,6 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
       icon: BitmapDescriptor.defaultMarker,
     )
   };
-
-
 
   final Set<Marker> _initialPositionMarkers = {
     // initial position
@@ -159,8 +158,8 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
         routeFirstPage: '/',
         nameSecondPage: 'Profil',
         routeSecondPage: '/userProfil',
-        nameThirdPage: 'Réservation',
-        routeThirdPage: '/myReservations',
+        nameThirdPage: 'Carte',
+        routeThirdPage: '/maps',
       ),
     );
   }

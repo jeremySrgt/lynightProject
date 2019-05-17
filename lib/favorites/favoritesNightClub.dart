@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lynight/searchBar/suggestionList.dart';
-import 'package:lynight/widgets/slider.dart';
 
 class FavoritesNightClub extends StatefulWidget {
   @override
@@ -11,7 +9,6 @@ class FavoritesNightClub extends StatefulWidget {
 }
 
 class _FavoritesNightClubState extends State<FavoritesNightClub> {
-  SuggestionList suggestionList;
 
   Widget _makeListTile() {
     return ListTile(

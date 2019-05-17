@@ -8,7 +8,7 @@ import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/myReservations/myReservation.dart';
 import 'package:lynight/favorites/favoritesNightClub.dart';
 import 'package:lynight/searchBar/searchBar.dart';
-
+import 'package:lynight/favorites/favoritesNightClub.dart';
 class PrincipalPage extends StatefulWidget {
   PrincipalPage({this.auth, this.onSignOut});
   final BaseAuth auth;
@@ -111,7 +111,7 @@ class _PrincipalPageState extends State<PrincipalPage>
               ),
             ),
             SearchBar(),
-            GoogleMapsClient(),
+            FavoritesNightClub(),
           ]),
           appBar: AppBar(
             title: Text(
@@ -133,8 +133,8 @@ class _PrincipalPageState extends State<PrincipalPage>
             routeFirstPage: '/userProfil',
             nameSecondPage: 'Mes Réservations',
             routeSecondPage: '/myReservations',
-            nameThirdPage: 'Favoris',
-            routeThirdPage: '/favorites',
+            nameThirdPage: 'Carte',
+            routeThirdPage: '/maps',
           )),
     );
   }
