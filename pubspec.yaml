@@ -17,6 +17,8 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  geoflutterfire : ^2.0.2
+  location: ^2.3.5
   google_maps_flutter: ^0.4.0
   firebase_auth: ^0.11.0
   firebase_core: ^0.4.0 #firebase auth require firebase core pour une raison ignore

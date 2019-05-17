@@ -112,7 +112,7 @@ class _PrincipalPageState extends State<PrincipalPage>
               ),
             ),
             MyHomePage(),
-            GoogleMapsClient(),
+            FavoritesNightClub(),
           ]),
           appBar: AppBar(
             title: Text(
@@ -134,8 +134,8 @@ class _PrincipalPageState extends State<PrincipalPage>
             routeFirstPage: '/userProfil',
             nameSecondPage: 'Mes Réservations',
             routeSecondPage: '/myReservations',
-            nameThirdPage: 'Favoris',
-            routeThirdPage: '/favorites',
+            nameThirdPage: 'Cartes',
+            routeThirdPage: '/maps',
           )),
     );
   }

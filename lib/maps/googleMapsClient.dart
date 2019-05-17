@@ -1,8 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:lynight/widgets/slider.dart';
 
 class GoogleMapsClient extends StatefulWidget {
+  void _signOut() {}
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -12,17 +16,25 @@ class GoogleMapsClient extends StatefulWidget {
 
 class _GoogleMapsState extends State<GoogleMapsClient> {
   Completer<GoogleMapController> _controller = Completer();
-
   static LatLng _lastMapPosition = _center;
   static LatLng _initialMapPosition = _center;
-  static LatLng _nightClubPosition = LatLng(_center.latitude, _center.longitude);
-
-  static LatLng _center = const LatLng(48.859213, 2.339756);
-
+  static LatLng _nightClubPosition =
+      LatLng(_center.latitude, _center.longitude);
+  static LatLng _center = const LatLng(48.856697, 2.3514616);
   final Set<Marker> _markers = {};
+  Location location = new Location();
 
-  
-  final Set<Marker> _addMarkerSearch={//need bdd
+  _userPosition() async {
+    GoogleMapController mapController;
+    var pos = await location.getLocation();
+    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: LatLng(pos.latitude, pos.longitude),
+      zoom: 17.0,
+    )));
+  }
+
+  final Set<Marker> _addMarkerSearch = {
+    //need bdd
     Marker(
       markerId: MarkerId(_nightClubPosition.toString()),
       position: _nightClubPosition,
@@ -30,11 +42,14 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
         title: 'night club name',
         snippet: 'address',
       ),
-        icon: BitmapDescriptor.defaultMarker,
+      icon: BitmapDescriptor.defaultMarker,
     )
   };
 
-  final Set<Marker> _initialPositionMarkers = {// initial position
+
+
+  final Set<Marker> _initialPositionMarkers = {
+    // initial position
     Marker(
       markerId: MarkerId(_initialMapPosition.toString()),
       position: _initialMapPosition,
@@ -48,7 +63,6 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
 
   static final CameraPosition _initialPosition = CameraPosition(
     target: _center,
-    tilt: 60,
     zoom: 16,
   );
 
@@ -83,24 +97,30 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text(
           'Map',
           style: TextStyle(
-              color: Theme.of(context).primaryColor, fontSize: 30, fontFamily: 'Montserrat'),
+              color: Theme.of(context).primaryColor,
+              fontSize: 30,
+              fontFamily: 'Montserrat'),
         ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Container(
-
         child: Stack(children: <Widget>[
           GoogleMap(
-            myLocationEnabled: true,
-            onMapCreated: _onMapCreated,
             initialCameraPosition: CameraPosition(
               target: _center,
-              zoom: 13,
+              zoom: 12,
             ),
+            onMapCreated: _onMapCreated,
+            myLocationEnabled: true,
+            rotateGesturesEnabled: true,
+            zoomGesturesEnabled: true,
+            scrollGesturesEnabled: true,
+            tiltGesturesEnabled: true,
             markers: _initialPositionMarkers.union(_markers),
             // place un marker sur la carte
             onCameraMove: _marksPosition, // cible la position du marker
@@ -109,14 +129,14 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
             alignment: Alignment.topRight, // aligne les widget en haut à gauche
             child: Column(
               children: <Widget>[
-                SizedBox(height: 30), // sépare distance entre bouton
+                /*SizedBox(height: 30), // sépare distance entre bouton
                 FloatingActionButton(
                   //premier bouton qui recentre la position selon _center centre de paris
-                  onPressed: _recenterCamera,
+                  onPressed: _recenterCamera(),
                   backgroundColor: Theme.of(context).primaryColor,
                   child: const Icon(Icons.center_focus_weak, size: 50),
-                ),
-                SizedBox(height: 30),
+                ),*/
+                SizedBox(height: 90),
                 FloatingActionButton(
                   // deuxieme bouton ajoute un marker au centre de l'appli
                   onPressed: _onAddMarkerButtonPressed,
@@ -128,10 +148,20 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
             ),
           ),
         ]),
-        constraints: BoxConstraints(maxHeight: 300,maxWidth: double.infinity),
+        constraints: BoxConstraints(
+            maxHeight: double.infinity, maxWidth: double.infinity),
       ),
       backgroundColor: Theme.of(context).accentColor,
-
+      drawer: CustomSlider(
+        userMail: 'Lalal',
+        signOut: widget._signOut,
+        nameFirstPage: 'Accueil',
+        routeFirstPage: '/',
+        nameSecondPage: 'Profil',
+        routeSecondPage: '/userProfil',
+        nameThirdPage: 'Réservation',
+        routeThirdPage: '/myReservations',
+      ),
     );
   }
 }
