@@ -14,7 +14,7 @@ class CustomSlider extends StatelessWidget{
 
   CrudMethods crudObj = new CrudMethods();
   UserData userData = new UserData(
-    name: "jerem",
+    name: "jeremy",
     surname: "surget",
     dob: DateTime.utc(1998,4,3),
     favorites: ["boiteID1","boiteID2"],

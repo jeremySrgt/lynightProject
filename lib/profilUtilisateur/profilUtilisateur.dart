@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/authentification/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lynight/services/crud.dart';
 
 class UserProfil extends StatefulWidget {
-  UserProfil({this.auth, this.onSignOut});
+  UserProfil({this.onSignOut});
 
-  final BaseAuth auth;
+//  final BaseAuth auth;
   final VoidCallback onSignOut;
 
+  BaseAuth auth = new Auth();
   void _signOut() async {
     try {
       await auth.signOut();
@@ -25,6 +28,22 @@ class UserProfil extends StatefulWidget {
 }
 
 class _UserProfilState extends State<UserProfil> {
+
+  String userId = 'userId';
+  CrudMethods crudObj = new CrudMethods();
+
+
+  void initState() {
+    super.initState();
+    //grace a ca principalPage s'occupe de recuperer les informations de l'utilisateur actif - peut etre pas le meilleur choix mais ca fonctionne
+    widget.auth.currentUser().then((id) {
+      setState(() {
+        userId = id;
+      });
+    });
+  }
+
+
   Widget userInfoTopSection() {
     return Container(
       padding: EdgeInsets.only(top: 16),

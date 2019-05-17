@@ -25,6 +25,14 @@ class CrudMethods {
     return await Firestore.instance.collection(collection).snapshots();
   }
 
+  getDataFromUser(userID) async {
+    return await Firestore.instance
+        .collection('user')
+        .document(userID)
+        .snapshots();
+  }
+
+
   updateData(collection, selectedDoc, newValues) {
     Firestore.instance
         .collection(collection)
