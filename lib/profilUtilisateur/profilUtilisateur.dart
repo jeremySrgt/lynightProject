@@ -25,6 +25,267 @@ class UserProfil extends StatefulWidget {
 }
 
 class _UserProfilState extends State<UserProfil> {
+
+  Widget userInfoTopSection() {
+    return Container(
+      padding: EdgeInsets.only(top: 16),
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height / 3.0,
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(32),
+            bottomLeft: Radius.circular(32)),
+      ),
+      child: Column(
+        children: <Widget>[
+          Flexible(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              // Centrer les icones et l'image sur la page
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    child: FlatButton(
+                  // Bouton pour les modifications
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SecondRoute()),
+                    );
+                  }, // renvoi vers les modifications
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    children: <Widget>[
+                      Icon(
+                        Icons.mode_edit,
+                        size: 35.0,
+                        color: Colors.white,
+                      ),
+                      Divider(),
+                      Text("Modification")
+                    ],
+                  ),
+                ),
+              ),
+                Container(
+                    child: CircleAvatar(
+                  // photo de profil
+                  backgroundImage:
+                  ExactAssetImage('assets/nightClub.jpg'),
+                  minRadius: 30,
+                  maxRadius: 70,
+                ),
+    ),
+                Container(
+                  child: FlatButton(
+                  // Bouton pour les paramètres
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ThirdRoute()),
+                    );
+                  },
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    // Replace with a Row for horizontal icon + text
+                    children: <Widget>[
+                      Icon(
+                        Icons.settings,
+                        size: 35.0,
+                        color: Colors.white,
+                      ),
+                      Divider(),
+                      Text("Paramètres")
+                    ],
+                  ),
+                ),
+                ),
+              ],
+            ),
+          ),
+/*          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            // Centrer les icones et l'image sur la page
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FlatButton(
+                // Bouton pour les modifications
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SecondRoute()),
+                  );
+                }, // renvoi vers les modifications
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                      Icons.mode_edit,
+                      size: 35.0,
+                      color: Colors.white,
+                    ),
+                    Divider(),
+                    Text("Modification")
+                  ],
+                ),
+              ),
+              CircleAvatar(
+                // photo de profil
+                backgroundImage:
+                ExactAssetImage('assets/nightClub.jpg'),
+                minRadius: 30,
+                maxRadius: 70,
+              ),
+              FlatButton(
+                // Bouton pour les paramètres
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ThirdRoute()),
+                  );
+                },
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  // Replace with a Row for horizontal icon + text
+                  children: <Widget>[
+                    Icon(
+                      Icons.settings,
+                      size: 35.0,
+                      color: Colors.white,
+                    ),
+                    Divider(),
+                    Text("Paramètres")
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Container(
+            // description de la personne
+            padding: const EdgeInsets.all(32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    'NOM Prénom',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ),
+              ],
+            ),
+          ),*/
+        ],
+      ),
+    );
+  }
+
+    Widget userBottomSection(){
+
+      return Expanded(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Flexible(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Icon(Icons.music_note),
+                        Text(
+                          "Style de musique",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 18.0),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(''),
+                            Text('Musique 1 \n'),
+                            Text('Musique 2 \n'),
+                            Text('Musique 3 '),
+                          ],
+                        ),
+                      ],
+
+                    ),
+
+                  ),
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        Icon(Icons.mail),
+                        Text(
+                          "Email",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 18.0),
+                        ),
+                        Text(
+                          "exemple@gmail.com",
+                          style: TextStyle(fontSize: 15.0),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Container(
+                      child: Column(
+                        children: <Widget>[
+                          Icon(Icons.phone),
+                          Text(
+                            "Numéro",
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 18.0),
+                          ),
+                          Text(
+                            "0101010101",
+                            style: TextStyle(fontSize: 15.0),
+                          ),
+                        ],
+                      )
+
+                  ),
+
+                  Container(
+                      child: Column(
+                        children: <Widget>[
+                          Icon(Icons.music_note),
+                          Text(
+                            "Date de naissance",
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 18.0),
+                          ),
+                          Text(
+                            "01/01/1991",
+                            style: TextStyle(fontSize: 15.0),
+                          ),
+                        ],
+                      )
+
+                  ),
+                ],
+              ),
+            ),
+          ],
+
+
+        ),
+      );
+    }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,153 +311,8 @@ class _UserProfilState extends State<UserProfil> {
         SliverFillRemaining(
           child: Column(
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(top: 16),
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2.4,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(32),
-                      bottomLeft: Radius.circular(32)),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Divider(), // saut de ligne
-
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      // Centrer les icones et l'image sur la page
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        FlatButton(
-                          // Bouton pour les modifications
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SecondRoute()),
-                            );
-                          }, // renvoi vers les modifications
-                          padding: EdgeInsets.all(10.0),
-                          child: Column(
-                            children: <Widget>[
-                              Icon(
-                                Icons.mode_edit,
-                                size: 35.0,
-                                color: Colors.white,
-                              ),
-                              Divider(),
-                              Text("Modification")
-                            ],
-                          ),
-                        ),
-                        CircleAvatar(
-                          // photo de profil
-                          backgroundImage:
-                              ExactAssetImage('assets/nightClub.jpg'),
-                          minRadius: 30,
-                          maxRadius: 70,
-                        ),
-                        FlatButton(
-                          // Bouton pour les paramètres
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ThirdRoute()),
-                            );
-                          },
-                          padding: EdgeInsets.all(10.0),
-                          child: Column(
-                            // Replace with a Row for horizontal icon + text
-                            children: <Widget>[
-                              Icon(
-                                Icons.settings,
-                                size: 35.0,
-                                color: Colors.white,
-                              ),
-                              Divider(),
-                              Text("Paramètres")
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      // description de la personne
-                      padding: const EdgeInsets.all(32),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: Text(
-                              'NOM Prénom',
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              ListTile(
-                leading: Icon(Icons.music_note),
-                title: Text(
-                  "Style de musique",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 18.0),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Musique 1'),
-                    Text('Musique 2'),
-                    Text('Musique 3'),
-                  ],
-                ),
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.mail),
-                title: Text(
-                  "Email",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 18.0),
-                ),
-                subtitle: Text(
-                  "exemple@gmail.com",
-                  style: TextStyle(fontSize: 15.0),
-                ),
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.phone),
-                title: Text(
-                  "Numéro",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 18.0),
-                ),
-                subtitle: Text(
-                  "0101010101",
-                  style: TextStyle(fontSize: 15.0),
-                ),
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.music_note),
-                title: Text(
-                  "Date de naissance",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 18.0),
-                ),
-                subtitle: Text(
-                  "01/01/1991",
-                  style: TextStyle(fontSize: 15.0),
-                ),
-              ),
+              userInfoTopSection(),
+              userBottomSection(),
             ],
           ),
         ),
