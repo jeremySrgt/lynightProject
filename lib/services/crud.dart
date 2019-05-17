@@ -25,6 +25,14 @@ class CrudMethods {
     return await Firestore.instance.collection(collection).snapshots();
   }
 
+  getDataFromUser(userID) async {
+    return await Firestore.instance
+        .collection('user')
+        .document(userID)
+        .snapshots();
+  }
+
+
   updateData(collection, selectedDoc, newValues) {
     Firestore.instance
         .collection(collection)
@@ -33,6 +41,15 @@ class CrudMethods {
         .catchError((e) {
       print(e);
     });
+  }
+
+
+ createUserData(Map<String, dynamic> userDataMap) async{
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+//    print('USERID ' + user.uid);
+    DocumentReference ref = Firestore.instance.collection('user').document(user.uid);
+    return ref.setData(userDataMap, merge: true);
+    
   }
 
   deleteData(collection, docId) {

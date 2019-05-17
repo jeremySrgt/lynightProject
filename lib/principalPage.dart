@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:lynight/searchBar/bar.dart';
 import 'package:lynight/discoverPage/topClubCard.dart';
 import 'package:lynight/discoverPage/bottomClubCard.dart';
 import 'package:lynight/maps/googleMapsClient.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/myReservations/myReservation.dart';
-import 'package:lynight/searchBar/bar.dart';
 import 'package:lynight/favorites/favoritesNightClub.dart';
+import 'package:lynight/searchBar/searchBar.dart';
 
 class PrincipalPage extends StatefulWidget {
   PrincipalPage({this.auth, this.onSignOut});
@@ -111,8 +110,8 @@ class _PrincipalPageState extends State<PrincipalPage>
                 ],
               ),
             ),
-            MyHomePage(),
-            FavoritesNightClub(),
+            SearchBar(),
+            GoogleMapsClient(),
           ]),
           appBar: AppBar(
             title: Text(
@@ -134,8 +133,8 @@ class _PrincipalPageState extends State<PrincipalPage>
             routeFirstPage: '/userProfil',
             nameSecondPage: 'Mes Réservations',
             routeSecondPage: '/myReservations',
-            nameThirdPage: 'Cartes',
-            routeThirdPage: '/maps',
+            nameThirdPage: 'Favoris',
+            routeThirdPage: '/favorites',
           )),
     );
   }
