@@ -64,7 +64,7 @@ class NightClubProfile extends StatelessWidget {
           Flexible(
             child: Column(
               crossAxisAlignment:
-                  CrossAxisAlignment.start, //met dans le bon axe
+              CrossAxisAlignment.start, //met dans le bon axe
               children: [
                 Container(
                   padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
@@ -76,7 +76,7 @@ class NightClubProfile extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.fromLTRB(50, 20, 0, 0),
                   child: Text(
-                    'Kelly Kelly NightClub',
+                    clubData['name'],
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -86,7 +86,7 @@ class NightClubProfile extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
-                        CrossAxisAlignment.start, //met dans le bonne axe
+                    CrossAxisAlignment.start, //met dans le bonne axe
                     children: [
                       Icon(
                         Icons.place,
@@ -94,7 +94,7 @@ class NightClubProfile extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                       Text(
-                        '   Paris 13ème ',
+                        clubData['adress'],
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                         ),
@@ -106,7 +106,7 @@ class NightClubProfile extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
-                        CrossAxisAlignment.start, //met dans le bonne axe
+                    CrossAxisAlignment.start, //met dans le bonne axe
                     children: [
                       Icon(
                         Icons.phone,
@@ -114,7 +114,7 @@ class NightClubProfile extends StatelessWidget {
                         size: 17,
                       ),
                       Text(
-                        '   0101010010',
+                        clubData['phone'],
                         style: TextStyle(
                           color: Colors.black,
                         ),
@@ -133,7 +133,7 @@ class NightClubProfile extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                       Text(
-                        '   www.kellyKelly.com',
+                        clubData['siteUrl'],
                         style: TextStyle(
                           color: Colors.blue,
                           fontStyle: FontStyle.italic,
@@ -164,7 +164,7 @@ class NightClubProfile extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
-                        CrossAxisAlignment.start, //met dans le bonne axe
+                    CrossAxisAlignment.start, //met dans le bonne axe
                     children: [
                       Icon(
                         Icons.music_note,
@@ -172,7 +172,7 @@ class NightClubProfile extends StatelessWidget {
                         size: 17,
                       ),
                       Text(
-                        '   Style de Musique : Electro',
+                        '   Style de Musique ',
                         style: TextStyle(
                           color: Colors.black,
                         ),
@@ -191,7 +191,7 @@ class NightClubProfile extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                       Text(
-                        '   www.soundcloud.com',
+                        clubData['soundcloud'],
                         style: TextStyle(
                           color: Colors.blue,
                           fontStyle: FontStyle.italic,
@@ -205,7 +205,7 @@ class NightClubProfile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       PrimaryButton(
-                          key: new Key('register'),
+                          //key:  Key('register'),
                           text: 'Let\'s Party',
                           height: 44.0),
                       //onPressed: validateAndSubmit),
