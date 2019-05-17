@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
         '/nightClubProfile': (BuildContext context) => NightClubProfile(),
         '/userProfil': (BuildContext context) => UserProfil(),
         '/myReservations': (BuildContext context) => ListPage(),
-        //'/maps': (BuildContext context) => GoogleMapsClient(),
+        '/maps': (BuildContext context) => GoogleMapsClient(),
         //'/favorites':(BuildContext context) => FavoritesNightClub(),
 
 
