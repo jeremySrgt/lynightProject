@@ -58,6 +58,9 @@ class NightClubProfile extends StatelessWidget {
   }
 
   Widget infoSection(clubData, context) {
+
+    List musicStyle = clubData['music'];
+
     return Expanded(
       child: Row(
         children: [
@@ -147,7 +150,7 @@ class NightClubProfile extends StatelessWidget {
                     width: 375,
                     padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                     child: Text(
-                      'Du mercredi au samedi, de 23h à 6h du matin, nous vous proposons : ®strip-teases, lap dance et shows privés.',
+                      clubData['description'],
                       textAlign: TextAlign.justify,
                       softWrap: true,
                     ),
@@ -172,7 +175,7 @@ class NightClubProfile extends StatelessWidget {
                         size: 17,
                       ),
                       Text(
-                        '   Style de Musique ',
+                        musicStyle[0],
                         style: TextStyle(
                           color: Colors.black,
                         ),
