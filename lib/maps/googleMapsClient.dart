@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:lynight/widgets/slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lynight/services/crud.dart';
 
 class GoogleMapsClient extends StatefulWidget {
-  void _signOut(){
+  void _signOut() {}
 
-}
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -16,6 +17,18 @@ class GoogleMapsClient extends StatefulWidget {
 }
 
 class _GoogleMapsState extends State<GoogleMapsClient> {
+  void placeAllMarkers() async {
+    QuerySnapshot snapshot =
+        await Firestore.instance.collection('club').getDocuments();
+    for (int i = 0; i < snapshot.documents.length; i++) {
+      _addMarkers(
+          snapshot.documents[i]['position'].latitude,
+          snapshot.documents[i]['position'].longitude,
+          snapshot.documents[i]['name'],
+          snapshot.documents[i]['description']);
+    }
+  }
+
   Completer<GoogleMapController> _controller = Completer();
   static LatLng _lastMapPosition = _center;
   static LatLng _initialMapPosition = _center;
@@ -34,31 +47,34 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
     )));
   }
 
-  final Set<Marker> _addMarkerSearch = {
+  Set<Marker> _addMarkerSearch(latitude, longitude, clubName, clubDesc) {
+    LatLng _nightClubPosition = LatLng(latitude, longitude);
     //need bdd
     Marker(
       markerId: MarkerId(_nightClubPosition.toString()),
       position: _nightClubPosition,
       infoWindow: InfoWindow(
-        title: 'night club name',
-        snippet: 'address',
+        title: clubName,
+        snippet: clubDesc,
       ),
       icon: BitmapDescriptor.defaultMarker,
-    )
-  };
+    );
+  }
 
-  final Set<Marker> _initialPositionMarkers = {
-    // initial position
-    Marker(
-      markerId: MarkerId(_initialMapPosition.toString()),
-      position: _initialMapPosition,
-      infoWindow: InfoWindow(
-        title: 'Ta position frère',
-        snippet: 'adresse',
-      ),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-    )
-  };
+  void _addMarkers(latitude, longitude, clubName, clubDesc) {
+    LatLng _nightClubPosition = LatLng(latitude, longitude);
+    setState(() {
+      _markers.add(Marker(
+        markerId: MarkerId(_nightClubPosition.toString()),
+        position: _nightClubPosition,
+        infoWindow: InfoWindow(
+          title: clubName,
+          snippet: clubDesc,
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      ));
+    });
+  }
 
   static final CameraPosition _initialPosition = CameraPosition(
     target: _center,
@@ -74,26 +90,13 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
     _lastMapPosition = position.target; // place un marker cibler au centre
   }
 
-  void _onAddMarkerButtonPressed() {
-    setState(() {
-      _markers.add(Marker(
-        markerId: MarkerId(_lastMapPosition.toString()),
-        position: _lastMapPosition,
-        infoWindow: InfoWindow(
-          title: 'la kellykelly nightbox',
-          snippet: 'cest gratuit frere \t adresse : dans ton cul ',
-        ),
-        icon: BitmapDescriptor.defaultMarker,
-      ));
-    });
-  }
-
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
   }
 
   @override
   Widget build(BuildContext context) {
+    placeAllMarkers();
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -120,7 +123,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
             zoomGesturesEnabled: true,
             scrollGesturesEnabled: true,
             tiltGesturesEnabled: true,
-            markers: _initialPositionMarkers.union(_markers),
+            markers: _markers,
             // place un marker sur la carte
             onCameraMove: _marksPosition, // cible la position du marker
           ),
@@ -136,13 +139,15 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
                   child: const Icon(Icons.center_focus_weak, size: 50),
                 ),*/
                 SizedBox(height: 90),
-                FloatingActionButton(
-                  // deuxieme bouton ajoute un marker au centre de l'appli
-                  onPressed: _onAddMarkerButtonPressed,
-                  materialTapTargetSize: MaterialTapTargetSize.padded,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  child: const Icon(Icons.add_location, size: 50),
-                ),
+//                FloatingActionButton(
+//                  // deuxieme bouton ajoute un marker au centre de l'appli
+//                  onPressed: _onAddMarkerButtonPressed,
+//                  materialTapTargetSize: MaterialTapTargetSize.padded,
+//                  backgroundColor: Theme
+//                      .of(context)
+//                      .primaryColor,
+//                  child: const Icon(Icons.add_location, size: 50),
+//                ),
               ],
             ),
           ),
@@ -158,8 +163,8 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
         routeFirstPage: '/',
         nameSecondPage: 'Profil',
         routeSecondPage: '/userProfil',
-        nameThirdPage: 'Carte',
-        routeThirdPage: '/maps',
+        nameThirdPage: 'Réservation',
+        routeThirdPage: '/myReservations',
       ),
     );
   }
