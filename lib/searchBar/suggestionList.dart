@@ -112,7 +112,7 @@ class _SuggestionListState extends State<SuggestionList> {
         ));
   }
 
-  Card _makeCard(String clubList,Club club) => Card(
+  Card makeCard(String clubList,Club club) => Card(
       color: Colors.transparent,
       elevation: 12.0,
       margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -143,7 +143,7 @@ class _SuggestionListState extends State<SuggestionList> {
         shrinkWrap: true,
         itemCount: suggestionList.length,
         itemBuilder: (BuildContext context, int index) {
-          return _makeCard(suggestionList[index],clubs[index]);
+          return makeCard(suggestionList[index],clubs[index]);
         },
       ),
     );
