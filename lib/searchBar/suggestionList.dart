@@ -32,8 +32,7 @@ class _SuggestionListState extends State<SuggestionList> {
     "Kelly Kelly NightClub"
   ];
 
-  get suggestionList =>
-      clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
+  List<String> suggestionList() => clubsList.where((p) => p.startsWith(widget.inputSearch)).toList();
 
   Widget _makeListTile(Club club) {
     final bool alreadySaved = _saved.contains(club);
@@ -128,7 +127,7 @@ class _SuggestionListState extends State<SuggestionList> {
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: suggestionList.length,
+        itemCount: suggestionList().length,
         itemBuilder: (BuildContext context, int index) {
           return _makeCard(clubs[index]);
         },
@@ -138,7 +137,7 @@ class _SuggestionListState extends State<SuggestionList> {
 
   @override
   Widget build(BuildContext context) {
-    if (suggestionList.isEmpty) {
+    if (suggestionList().isEmpty) {
       return Scaffold(
         appBar: AppBar(
           title: Text("Résultats"),
