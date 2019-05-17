@@ -155,5 +155,8 @@ class _BottomClubCardState extends State<BottomClubCard>{
         },
       );
     }
+    else {
+      return CircularProgressIndicator();
+    }
   }
 }
