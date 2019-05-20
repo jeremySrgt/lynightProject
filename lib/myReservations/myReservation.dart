@@ -124,12 +124,7 @@ class _ListPageState extends State<ListPage> {
       drawer: CustomSlider(
         userMail: 'Lalal',
         signOut: widget._signOut,
-        nameFirstPage: 'Accueil',
-        routeFirstPage: '/',
-        nameSecondPage: 'Profil',
-        routeSecondPage: '/userProfil',
-        nameThirdPage: 'Carte',
-        routeThirdPage: '/maps',
+        activePage: 'Reservations',
       ),
     );
   }

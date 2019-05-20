@@ -225,12 +225,7 @@ class _UserProfilState extends State<UserProfil> {
       drawer: CustomSlider(
         userMail: userMail,
         signOut: widget._signOut,
-        nameFirstPage: 'Accueil',
-        routeFirstPage: '/',
-        nameSecondPage: 'Mes Réservations',
-        routeSecondPage: '/myReservations',
-        nameThirdPage: 'Carte',
-        routeThirdPage: '/maps',
+        activePage: 'Profil',
       ),
       resizeToAvoidBottomPadding: false,
       body: CustomScrollView(slivers: <Widget>[

@@ -2,41 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/services/userData.dart';
 
-class CustomSlider extends StatelessWidget{
+class CustomSlider extends StatelessWidget {
   final String userMail;
   Function signOut;
-  final String nameFirstPage;
-  final String routeFirstPage;
-  final String nameSecondPage;
-  final String routeSecondPage;
-  final String nameThirdPage;
-  final String routeThirdPage;
+  final String activePage;
 
   CrudMethods crudObj = new CrudMethods();
   UserData userData = new UserData(
-    name: "jeremy",
-    surname: "surget",
-    dob: DateTime.utc(1998,4,3),
-    favorites: ["boiteID1","boiteID2"],
-    mail: "blabla@gmail.com",
-    music: ["electro","populaire"],
-    notification: true,
-    phone: "0659534318",
-    picture: "lien vers profilpicture",
-    reservation: {"boiteID":"CXeFDsER3","date":"ici un timestamp normalement"},
-    sex: true
-  );
-
-
+      name: "jeremy",
+      surname: "surget",
+      dob: DateTime.utc(1998, 4, 3),
+      favorites: ["boiteID1", "boiteID2"],
+      mail: "blabla@gmail.com",
+      music: ["electro", "populaire"],
+      notification: true,
+      phone: "0659534318",
+      picture: "lien vers profilpicture",
+      reservation: {
+        "boiteID": "CXeFDsER3",
+        "date": "ici un timestamp normalement"
+      },
+      sex: true);
 
   void _testCreateUserData() async {
     crudObj.createUserData(userData.getDataMap());
   }
 
-  CustomSlider({this.userMail,this.signOut,this.nameFirstPage,this.routeFirstPage,this.nameSecondPage,this.routeSecondPage,this.nameThirdPage,this.routeThirdPage});
+  CustomSlider({this.userMail, this.signOut, this.activePage});
 
-
-  Widget header(context){
+  Widget header(context) {
     return DrawerHeader(
       child: Column(
         children: <Widget>[
@@ -49,20 +43,21 @@ class CustomSlider extends StatelessWidget{
             subtitle: Text(userMail),
           ),
           RaisedButton(
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0)),
-              child: Text('Déconnexion', style: TextStyle(fontSize: 14.0, color: Colors.white)),
-              color: Theme.of(context).primaryColor,
-              textColor: Colors.black87,
-              onPressed: signOut),
+            elevation: 5.0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0)),
+            child: Text('Déconnexion',
+                style: TextStyle(fontSize: 14.0, color: Colors.white)),
+            color: Theme.of(context).primaryColor,
+            textColor: Colors.black87,
+            onPressed: signOut,
+          ),
         ],
       ),
       decoration: BoxDecoration(
-          border:
-          Border(bottom: BorderSide(color: Theme.of(context).primaryColor))),
+          border: Border(
+              bottom: BorderSide(color: Theme.of(context).primaryColor))),
     );
-
   }
 
   @override
@@ -72,32 +67,116 @@ class CustomSlider extends StatelessWidget{
       child: ListView(
         children: <Widget>[
           header(context),
-          FlatButton(
-              onPressed: _testCreateUserData,
-              child: Text('test create user info', style: TextStyle(fontSize: 14.0, color: Colors.black))
+          Container(
+            decoration: activePage == 'Accueil'
+                ? BoxDecoration(
+                    color: Color(0xFFebdffc),
+                    borderRadius: BorderRadius.circular(15.0))
+                : BoxDecoration(),
+            child: ListTile(
+              leading: Icon(
+                Icons.home,
+                color: activePage == 'Accueil'
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              title: Text(
+                'Accueil',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: activePage == 'Accueil'
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                ),
+              ),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/');
+              },
+            ),
           ),
-          ListTile(
-            title: Text(nameFirstPage),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, routeFirstPage);
-            },
+          Container(
+            decoration: activePage == 'Profil'
+                ? BoxDecoration(
+                    color: Color(0xFFebdffc),
+                    borderRadius: BorderRadius.circular(15.0))
+                : BoxDecoration(),
+            child: ListTile(
+              leading: Icon(
+                Icons.account_circle,
+                color: activePage == 'Profil'
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              title: Text(
+                'Profil',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: activePage == 'Profil'
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                ),
+              ),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/userProfil');
+              },
+            ),
           ),
-          ListTile(
-            title: Text(nameSecondPage),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, routeSecondPage);
-            },
+          Container(
+            decoration: activePage == 'Reservations'
+                ? BoxDecoration(
+                    color: Color(0xFFebdffc),
+                    borderRadius: BorderRadius.circular(15.0))
+                : BoxDecoration(),
+            child: ListTile(
+              leading: Icon(
+                Icons.book,
+                color: activePage == 'Reservations'
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              title: Text(
+                'Réservations',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: activePage == 'Reservations'
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                ),
+              ),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/myReservations');
+              },
+            ),
           ),
-          ListTile(
-            title: Text(nameThirdPage),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, routeThirdPage);
-            },
+          Container(
+            decoration: activePage == 'Maps'
+                ? BoxDecoration(
+                    color: Color(0xFFebdffc),
+                    borderRadius: BorderRadius.circular(15.0))
+                : BoxDecoration(),
+            child: ListTile(
+              leading: Icon(
+                Icons.streetview,
+                color: activePage == 'Maps'
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              title: Text(
+                'Carte',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: activePage == 'Maps'
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                ),
+              ),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/maps');
+              },
+            ),
           ),
         ],
       ),
     );
   }
 }
-
-

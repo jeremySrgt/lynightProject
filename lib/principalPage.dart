@@ -129,12 +129,7 @@ class _PrincipalPageState extends State<PrincipalPage>
           drawer: CustomSlider(
             userMail: mail,
             signOut: widget._signOut,
-            nameFirstPage: 'Profil',
-            routeFirstPage: '/userProfil',
-            nameSecondPage: 'Mes Réservations',
-            routeSecondPage: '/myReservations',
-            nameThirdPage: 'Carte',
-            routeThirdPage: '/maps',
+            activePage: 'Accueil',
           )),
     );
   }
