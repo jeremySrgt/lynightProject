@@ -3,6 +3,8 @@ import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lynight/services/crud.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class UserProfil extends StatefulWidget {
   UserProfil({this.onSignOut});
@@ -31,6 +33,7 @@ class _UserProfilState extends State<UserProfil> {
 
   String userId = 'userId';
   CrudMethods crudObj = new CrudMethods();
+  String userMail = 'userMail';
 
 
   void initState() {
@@ -41,10 +44,32 @@ class _UserProfilState extends State<UserProfil> {
         userId = id;
       });
     });
+    widget.auth.userEmail().then((mail) {
+      setState(() {
+        userMail = mail;
+      });
+    });
   }
 
 
-  Widget userInfoTopSection() {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: Firestore.instance
+          .collection('user')
+          .document(userId)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
+        }
+        var userData = snapshot.data;
+        return pageConstruct(userData, context);
+      },
+    );
+  }
+
+  Widget userInfoTopSection(userData) {
     return Container(
       padding: EdgeInsets.only(top: 16),
       width: MediaQuery.of(context).size.width,
@@ -125,7 +150,9 @@ class _UserProfilState extends State<UserProfil> {
     );
   }
 
-  Widget userBottomSection() {
+  Widget userBottomSection(userData) {
+    //DateTime dob = userData['DOB'];
+    //String formattedDob = DateFormat('yyyy-MM-dd').format(dob);
     return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -158,7 +185,7 @@ class _UserProfilState extends State<UserProfil> {
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
                   subtitle: Text(
-                    "exemple@gmail.com",
+                    userData['mail'],
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
@@ -170,7 +197,7 @@ class _UserProfilState extends State<UserProfil> {
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
                   subtitle: Text(
-                    "0101010101",
+                    userData['phone'],
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
@@ -182,7 +209,7 @@ class _UserProfilState extends State<UserProfil> {
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
                   subtitle: Text(
-                    "01/01/1991",
+                    'Naissance',
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
@@ -193,12 +220,10 @@ class _UserProfilState extends State<UserProfil> {
       ),
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
+ Widget pageConstruct(userData, context){
     return Scaffold(
       drawer: CustomSlider(
-        userMail: 'mail',
+        userMail: userMail,
         signOut: widget._signOut,
         nameFirstPage: 'Accueil',
         routeFirstPage: '/',
@@ -213,18 +238,19 @@ class _UserProfilState extends State<UserProfil> {
           floating: false,
           pinned: true,
           flexibleSpace: FlexibleSpaceBar(
-            title: Text('NOM Prénom'),
+            title: Text(userData['name'] + ' ' + userData['surname']),
           ),
         ),
         SliverFillRemaining(
           child: Column(
             children: <Widget>[
-              userInfoTopSection(),
-              userBottomSection(),
+              userInfoTopSection(userData),
+              userBottomSection(userData),
             ],
           ),
         ),
       ]),
     );
-  }
+ }
+
 }
