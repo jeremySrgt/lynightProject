@@ -35,28 +35,43 @@ class CustomSlider extends StatelessWidget{
 
   CustomSlider({this.userMail,this.signOut,this.nameFirstPage,this.routeFirstPage,this.nameSecondPage,this.routeSecondPage,this.nameThirdPage,this.routeThirdPage});
 
+
+  Widget header(context){
+    return DrawerHeader(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: CircleAvatar(
+              backgroundColor: Theme.of(context).primaryColor,
+              child: Text('U'),
+            ),
+            title: Text('userName'),
+            subtitle: Text(userMail),
+          ),
+          RaisedButton(
+              elevation: 5.0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0)),
+              child: Text('Déconnexion', style: TextStyle(fontSize: 14.0, color: Colors.white)),
+              color: Theme.of(context).primaryColor,
+              textColor: Colors.black87,
+              onPressed: signOut),
+        ],
+      ),
+      decoration: BoxDecoration(
+          border:
+          Border(bottom: BorderSide(color: Theme.of(context).primaryColor))),
+    );
+
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Drawer(
       child: ListView(
         children: <Widget>[
-          DrawerHeader(
-            child: Column(
-              children: <Widget>[
-                ListTile(
-                  title: Text(userMail),
-                ),
-                FlatButton(
-                    onPressed: signOut,
-                    child: Text('Déconnexion', style: TextStyle(fontSize: 14.0, color: Colors.black))
-                ),
-              ],
-            ),
-            decoration: BoxDecoration(
-                border:
-                Border(bottom: BorderSide(color: Colors.deepOrange))),
-          ),
+          header(context),
           FlatButton(
               onPressed: _testCreateUserData,
               child: Text('test create user info', style: TextStyle(fontSize: 14.0, color: Colors.black))

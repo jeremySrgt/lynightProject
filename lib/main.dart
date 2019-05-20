@@ -24,13 +24,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  final primaryColor = const Color(0xFF7854d3);
+  final accentColor = const Color(0xFF6f43e0);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          primaryColor: Colors.redAccent,
-          accentColor: Colors.blueGrey[600],
-          fontFamily: 'Comfortaa'),
+          primaryColor: primaryColor,
+          accentColor: accentColor,
+          fontFamily: 'Comfortaa',
+      ),
       //home: AuthPage(),
       routes: {
         '/': (BuildContext context) => RootPage(auth: Auth(),),
