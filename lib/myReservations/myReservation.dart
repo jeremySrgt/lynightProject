@@ -136,7 +136,34 @@ class _ListPageState extends State<ListPage> {
 
   List getReservations() {
     return [
-      Reservation(title: 'Kelly Kelly', date: '18/02'),
+      Reservation(
+          title: 'Kelly Kelly',
+          date: '18/02'
+      ),
+      Reservation(
+        title: 'Jeremy\'s night club',
+        date: '03/04',
+      ),
+      Reservation(
+        title: 'Sysy\' club',
+        date: '15/05',
+      ),
+      Reservation(
+          title: 'Kelly Kelly',
+          date: '18/02'
+      ),
+      Reservation(
+        title: 'Jeremy\'s night club',
+        date: '03/04',
+      ),
+      Reservation(
+        title: 'Sysy\' club',
+        date: '15/05',
+      ),
+      Reservation(
+          title: 'Kelly Kelly',
+          date: '18/02'
+      ),
       Reservation(
         title: 'Jeremy\'s night club',
         date: '03/04',
