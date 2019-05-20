@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lynight/searchBar/Club.dart';
+import 'package:lynight/nightCubPage/nightClubProfile.dart';
 
 void main() => runApp(SearchBar());
 
@@ -96,60 +97,53 @@ class _SearchBar extends State<SearchBar> with SearchDelegate<String> {
     return ListView.builder(
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
-        return InkWell(
-          onTap: () {
-            /*Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => DetailPage(detail: suggestion[index],))
-              );*/
-          },
-          child: Card(
-            color: Colors.transparent,
-            elevation: 12.0,
-            margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+        return Card(
+          color: Colors.transparent,
+          elevation: 12.0,
+          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+          child: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.deepOrangeAccent,
+                      Theme.of(context).primaryColor,
+                    ]),
+                //color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.all(Radius.circular(25))),
             child: Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.deepOrangeAccent,
-                        Theme.of(context).primaryColor,
-                      ]),
-                  //color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.all(Radius.circular(25))),
-              child: Container(
-                padding:
-                    EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0, bottom: 5),
-                child: Column(children: [
-                  ListTile(
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(100.0),
-                      child: Container(
-                        padding: EdgeInsets.only(top: 2.0),
-                        width: 60.0,
-                        height: 150.0,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                          image: suggestionList[index].clubImage,
-                          fit: BoxFit.fill,
-                        )),
-                      ),
+              padding:
+                  EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0, bottom: 5),
+              child: Column(children: [
+                ListTile(
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(100.0),
+                    child: Container(
+                      padding: EdgeInsets.only(top: 2.0),
+                      width: 60.0,
+                      height: 150.0,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                        image: suggestionList[index].clubImage,
+                        fit: BoxFit.fill,
+                      )),
                     ),
-                    title: Text(suggestionList[index].title,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold)),
-                    subtitle: Row(
-                      children: <Widget>[
-                        Icon(Icons.music_note, color: Colors.blue,),
-                        Text(suggestionList[index].songsType,
-                        style: TextStyle(color: Colors.white, fontSize: 14.0)),
-                      ]),
-                    trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
                   ),
-                ]),
-              ),
+                  title: Text(suggestionList[index].title,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold)),
+                  subtitle: Row(
+                    children: <Widget>[
+                      Icon(Icons.music_note, color: Colors.blue,),
+                      Text(suggestionList[index].songsType,
+                      style: TextStyle(color: Colors.white, fontSize: 14.0)),
+                    ]),
+                  trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
+                ),
+              ]),
             ),
           ),
         );
