@@ -21,7 +21,6 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
   static LatLng _center = LatLng(48.856697, 2.3514616);
   final Set<Marker> _markers = {};
   Location location = new Location();
-  LatLng _userPos = _center;
 
   void placeAllMarkers() async {
     QuerySnapshot snapshot =
@@ -89,7 +88,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
         child: Stack(children: <Widget>[
           GoogleMap(
             initialCameraPosition: CameraPosition(
-              target: _userPos,
+              target: _center,
               zoom: 13,
             ),
             onMapCreated: _onMapCreated,
