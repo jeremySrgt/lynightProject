@@ -52,24 +52,26 @@ class _UserProfilState extends State<UserProfil> {
   }
 
   void _openModalBottomSheet(context) {
-    showModalBottomSheet(context: context, builder: (context) {
-      return Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Color(0xFF737373)),
-          color: Color(0xFF737373),
-        ),
-        child: Container(
-          child: SelectProfilPicture(),
-          decoration: BoxDecoration(
-            color: Theme.of(context).canvasColor,
-            borderRadius: BorderRadius.only(
-              topLeft: const Radius.circular(25.0),
-              topRight: const Radius.circular(25.0),
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xFF737373)),
+              color: Color(0xFF737373),
             ),
-          ),
-        ),
-      );
-    });
+            child: Container(
+              child: SelectProfilPicture(),
+              decoration: BoxDecoration(
+                color: Theme.of(context).canvasColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(25.0),
+                  topRight: const Radius.circular(25.0),
+                ),
+              ),
+            ),
+          );
+        });
   }
 
   @override
@@ -387,7 +389,9 @@ class _UserProfilState extends State<UserProfil> {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(userData['name'] + ' ' + userData['surname']),
+              title: userData['name'] == ""
+                  ? Text(userMail)
+                  : Text(userData['name'] + ' ' + userData['surname']),
             ),
           ),
           SliverList(
