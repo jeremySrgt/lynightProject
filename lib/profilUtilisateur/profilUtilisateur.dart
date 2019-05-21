@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:lynight/profilUtilisateur/selectProfilPicture.dart';
 
 class UserProfil extends StatefulWidget {
   UserProfil({this.onSignOut});
@@ -283,8 +284,8 @@ class _UserProfilState extends State<UserProfil> {
                                       child: TextFormField(
                                         decoration: InputDecoration(
                                             hintText: 'Numéro de téléphone'
-                                            keyboardType: TextInputType.number,
                                         ),
+                                        keyboardType: TextInputType.number,
                                       ),
                                     ),
                                     Padding(
@@ -297,7 +298,6 @@ class _UserProfilState extends State<UserProfil> {
                                             _formKey.currentState.save();
                                           }
                                         },
-                                        onPressed: () {},
                                       ),
                                     )
                                   ],
