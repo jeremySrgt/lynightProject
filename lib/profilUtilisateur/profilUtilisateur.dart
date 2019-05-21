@@ -69,7 +69,7 @@ class _UserProfilState extends State<UserProfil> {
     return Container(
       padding: EdgeInsets.only(top: 16),
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 3.0,
+      height: MediaQuery.of(context).size.height / 3.4,
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.only(
@@ -84,58 +84,11 @@ class _UserProfilState extends State<UserProfil> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  child: FlatButton(
-                    // Bouton pour les modifications
-                    onPressed: () {
-                      /*Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SecondRoute()),
-                      );*/
-                    }, // renvoi vers les modifications
-                    padding: EdgeInsets.all(10.0),
-                    child: Column(
-                      children: <Widget>[
-                        Icon(
-                          Icons.mode_edit,
-                          size: 35.0,
-                          color: Colors.white,
-                        ),
-                        Divider(),
-                        Text("Modification")
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
                   child: CircleAvatar(
                     // photo de profil
                     backgroundImage: ExactAssetImage('assets/nightClub.jpg'),
                     minRadius: 30,
-                    maxRadius: 70,
-                  ),
-                ),
-                Container(
-                  child: FlatButton(
-                    // Bouton pour les paramètres
-                    onPressed: () {
-                      /* Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ThirdRoute()),
-                      );*/
-                    },
-                    padding: EdgeInsets.all(10.0),
-                    child: Column(
-                      // Replace with a Row for horizontal icon + text
-                      children: <Widget>[
-                        Icon(
-                          Icons.settings,
-                          size: 35.0,
-                          color: Colors.white,
-                        ),
-                        Divider(),
-                        Text("Paramètres")
-                      ],
-                    ),
+                    maxRadius: 80,
                   ),
                 ),
               ],
@@ -147,6 +100,7 @@ class _UserProfilState extends State<UserProfil> {
   }
 
   Widget userBottomSection(userData) {
+    final _formKey = GlobalKey<FormState>();
     //DateTime dob = userData['DOB'];
     //String formattedDob = DateFormat('yyyy-MM-dd').format(dob);
     return Container(
@@ -165,6 +119,60 @@ class _UserProfilState extends State<UserProfil> {
                     "Style de musique \n",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Musique 1'
+                                        ) ,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Musique 2'
+                                        ) ,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Musique 3'
+                                        ) ,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RaisedButton(
+                                        child: Text("Valider"),
+                                        onPressed: () {
+                                          if (_formKey.currentState.validate()) {
+                                            _formKey.currentState.save();
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
                   ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,6 +193,44 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Adresse mail'
+                                        ) ,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RaisedButton(
+                                        child: Text("Valider"),
+                                        onPressed: () {
+                                          if (_formKey.currentState.validate()) {
+                                            _formKey.currentState.save();
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                  ),
                   subtitle: Text(
                     userData['mail'],
                     style: TextStyle(fontSize: 15.0),
@@ -198,6 +244,44 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Numéro de téléphone'
+                                        ) ,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RaisedButton(
+                                        child: Text("Valider"),
+                                        onPressed: () {
+                                          if (_formKey.currentState.validate()) {
+                                            _formKey.currentState.save();
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                  ),
                   subtitle: Text(
                     userData['phone'],
                     style: TextStyle(fontSize: 15.0),
@@ -210,6 +294,44 @@ class _UserProfilState extends State<UserProfil> {
                     "Date de naissance\n",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Date de naissance'
+                                        ) ,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RaisedButton(
+                                        child: Text("Valider"),
+                                        onPressed: () {
+                                          if (_formKey.currentState.validate()) {
+                                            _formKey.currentState.save();
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
                   ),
                   subtitle: Text(
                     'Naissance',
