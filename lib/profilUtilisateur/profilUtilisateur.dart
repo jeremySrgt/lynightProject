@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:lynight/profilUtilisateur/selectProfilPicture.dart';
 
 class UserProfil extends StatefulWidget {
   UserProfil({this.onSignOut});
@@ -31,6 +32,8 @@ class UserProfil extends StatefulWidget {
 }
 
 class _UserProfilState extends State<UserProfil> {
+
+
   String userId = 'userId';
   CrudMethods crudObj = new CrudMethods();
   String userMail = 'userMail';
@@ -54,7 +57,7 @@ class _UserProfilState extends State<UserProfil> {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream:
-          Firestore.instance.collection('user').document(userId).snapshots(),
+      Firestore.instance.collection('user').document(userId).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
@@ -68,10 +71,18 @@ class _UserProfilState extends State<UserProfil> {
   Widget userInfoTopSection(userData) {
     return Container(
       padding: EdgeInsets.only(top: 16),
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 3.4,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height / 3.4,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Theme
+            .of(context)
+            .primaryColor,
         borderRadius: BorderRadius.only(
             bottomRight: Radius.circular(32), bottomLeft: Radius.circular(32)),
       ),
@@ -84,11 +95,17 @@ class _UserProfilState extends State<UserProfil> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  child: CircleAvatar(
-                    // photo de profil
-                    backgroundImage: ExactAssetImage('assets/nightClub.jpg'),
-                    minRadius: 30,
-                    maxRadius: 80,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => SelectProfilPicture()));
+                    },
+                    child: CircleAvatar(
+                      // photo de profil
+                      backgroundImage: NetworkImage(userData['picture']),
+                      minRadius: 30,
+                      maxRadius: 80,
+                    ),
                   ),
                 ),
               ],
@@ -118,7 +135,9 @@ class _UserProfilState extends State<UserProfil> {
                   title: Text(
                     "Style de musique \n",
                     style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 18.0),
+                        color: Theme
+                            .of(context)
+                            .primaryColor, fontSize: 18.0),
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
@@ -137,7 +156,7 @@ class _UserProfilState extends State<UserProfil> {
                                       child: TextFormField(
                                         decoration: InputDecoration(
                                             hintText: 'Musique 1'
-                                        ) ,
+                                        ),
                                       ),
                                     ),
                                     Padding(
@@ -145,7 +164,7 @@ class _UserProfilState extends State<UserProfil> {
                                       child: TextFormField(
                                         decoration: InputDecoration(
                                             hintText: 'Musique 2'
-                                        ) ,
+                                        ),
                                       ),
                                     ),
                                     Padding(
@@ -153,7 +172,7 @@ class _UserProfilState extends State<UserProfil> {
                                       child: TextFormField(
                                         decoration: InputDecoration(
                                             hintText: 'Musique 3'
-                                        ) ,
+                                        ),
                                       ),
                                     ),
                                     Padding(
@@ -161,7 +180,8 @@ class _UserProfilState extends State<UserProfil> {
                                       child: RaisedButton(
                                         child: Text("Valider"),
                                         onPressed: () {
-                                          if (_formKey.currentState.validate()) {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             _formKey.currentState.save();
                                           }
                                         },
@@ -191,7 +211,9 @@ class _UserProfilState extends State<UserProfil> {
                   title: Text(
                     "Email\n",
                     style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 18.0),
+                        color: Theme
+                            .of(context)
+                            .primaryColor, fontSize: 18.0),
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
@@ -210,7 +232,7 @@ class _UserProfilState extends State<UserProfil> {
                                       child: TextFormField(
                                         decoration: InputDecoration(
                                             hintText: 'Adresse mail'
-                                        ) ,
+                                        ),
                                       ),
                                     ),
                                     Padding(
@@ -218,7 +240,8 @@ class _UserProfilState extends State<UserProfil> {
                                       child: RaisedButton(
                                         child: Text("Valider"),
                                         onPressed: () {
-                                          if (_formKey.currentState.validate()) {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             _formKey.currentState.save();
                                           }
                                         },
@@ -242,7 +265,9 @@ class _UserProfilState extends State<UserProfil> {
                   title: Text(
                     "Numéro\n",
                     style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 18.0),
+                        color: Theme
+                            .of(context)
+                            .primaryColor, fontSize: 18.0),
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
@@ -261,7 +286,7 @@ class _UserProfilState extends State<UserProfil> {
                                       child: TextFormField(
                                         decoration: InputDecoration(
                                             hintText: 'Numéro de téléphone'
-                                        ) ,
+                                        ),
                                       ),
                                     ),
                                     Padding(
@@ -269,7 +294,8 @@ class _UserProfilState extends State<UserProfil> {
                                       child: RaisedButton(
                                         child: Text("Valider"),
                                         onPressed: () {
-                                          if (_formKey.currentState.validate()) {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             _formKey.currentState.save();
                                           }
                                         },
@@ -293,7 +319,9 @@ class _UserProfilState extends State<UserProfil> {
                   title: Text(
                     "Date de naissance\n",
                     style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 18.0),
+                        color: Theme
+                            .of(context)
+                            .primaryColor, fontSize: 18.0),
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
@@ -312,7 +340,7 @@ class _UserProfilState extends State<UserProfil> {
                                       child: TextFormField(
                                         decoration: InputDecoration(
                                             hintText: 'Date de naissance'
-                                        ) ,
+                                        ),
                                       ),
                                     ),
                                     Padding(
@@ -320,7 +348,8 @@ class _UserProfilState extends State<UserProfil> {
                                       child: RaisedButton(
                                         child: Text("Valider"),
                                         onPressed: () {
-                                          if (_formKey.currentState.validate()) {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             _formKey.currentState.save();
                                           }
                                         },
