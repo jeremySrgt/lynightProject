@@ -1,24 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:lynight/searchBar/Club.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lynight/searchBar/SearchService.dart';
 
 void main() => runApp(SearchBar());
 
 class SearchBar extends StatefulWidget {
-  final List<Club> clubData;
-
-  SearchBar({this.clubData});
-
   @override
   _SearchBar createState() => _SearchBar();
 }
 
 class _SearchBar extends State<SearchBar> with SearchDelegate<String> {
+  var queryResultSet = [];
+  var tempSearchStore = [];
+
   List<Club> clubs;
   final _inpuController = new TextEditingController();
   FocusNode _focus = new FocusNode();
   bool hasFocus;
   String inputValue;
+
+  initiateSearch(value) {
+    if (value.length == 0) {
+      setState(() {
+        queryResultSet = [];
+        tempSearchStore = [];
+      });
+    }
+
+    var capitalizedValue =
+        value.substring(0, 1).toUpperCase() + value.substring(1);
+
+    if (queryResultSet.length == 0 && value.length == 1) {
+      SearchService().searchByName(value).then((QuerySnapshot docs) {
+        for (int i = 0; i < docs.documents.length; ++i) {
+          queryResultSet.add(docs.documents[i].data);
+        }
+      });
+    } else {
+      tempSearchStore = [];
+      queryResultSet.forEach((element) {
+        if (element['businessName'].startsWith(capitalizedValue)) {
+          setState(() {
+            tempSearchStore.add(element);
+          });
+        }
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -90,9 +120,9 @@ class _SearchBar extends State<SearchBar> with SearchDelegate<String> {
   Widget buildSuggestions(BuildContext context) {
     query = inputValue;
     final suggestionList = query.isEmpty
-        ? clubs
-        : clubs.where((c) => c.title.toLowerCase().startsWith(query)).toList();
-    print(suggestionList);
+        ? queryResultSet
+        : tempSearchStore;
+    print(queryResultSet);
 
     return ListView.builder(
       scrollDirection: Axis.vertical,
@@ -130,7 +160,7 @@ class _SearchBar extends State<SearchBar> with SearchDelegate<String> {
                       )),
                     ),
                   ),
-                  title: Text(suggestionList[index].title,
+                  title: Text(suggestionList[index]['name'],
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20.0,
