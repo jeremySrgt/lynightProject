@@ -18,8 +18,7 @@ class GoogleMapsClient extends StatefulWidget {
 
 class _GoogleMapsState extends State<GoogleMapsClient> {
   Completer<GoogleMapController> _controller = Completer();
-  static LatLng _lastMapPosition = _center;
-  static LatLng _center = const LatLng(48.856697, 2.3514616);
+  static LatLng _center = LatLng(48.856697, 2.3514616);
   final Set<Marker> _markers = {};
   Location location = new Location();
 
@@ -36,7 +35,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
     }
   }
 
-  void _addMarkers(latitude, longitude, clubName, clubDesc,clubID) {
+  void _addMarkers(latitude, longitude, clubName, clubDesc, clubID) {
     LatLng _nightClubPosition = LatLng(latitude, longitude);
     setState(() {
       _markers.add(Marker(
@@ -45,9 +44,13 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
         infoWindow: InfoWindow(
           title: clubName,
           snippet: clubDesc,
-          onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>NightClubProfile(
-              documentID: clubID,)));
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => NightClubProfile(
+                          documentID: clubID,
+                        )));
           },
         ),
         icon: BitmapDescriptor.defaultMarker,
@@ -56,16 +59,16 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
   }
 
   Future<void> _userPosition() async {
-    GoogleMapController mapController= await _controller.future;
+    GoogleMapController mapController = await _controller.future;
     var pos = await location.getLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(pos.latitude, pos.longitude),
-      zoom: 17.0,
+      zoom: 18.0,
     )));
   }
 
   void _onMapCreated(GoogleMapController controller) {
-
+    location.requestPermission();
     _controller.complete(controller);
   }
 
@@ -74,15 +77,10 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
     placeAllMarkers();
     // TODO: implement build
     return Scaffold(
-
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text(
-          'Map',
-          style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 30,
-              fontFamily: 'Montserrat'),
+          'Carte',
         ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
@@ -91,22 +89,20 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
           GoogleMap(
             initialCameraPosition: CameraPosition(
               target: _center,
-              zoom: 14,
+              zoom: 13,
             ),
-
             onMapCreated: _onMapCreated,
-            myLocationEnabled: false,
+            myLocationEnabled: true,
             rotateGesturesEnabled: true,
             zoomGesturesEnabled: true,
             scrollGesturesEnabled: true,
-            tiltGesturesEnabled: true,
             markers: _markers,
           ),
           Align(
             alignment: Alignment.topRight, // aligne les widget en haut à gauche
             child: Column(
               children: <Widget>[
-                SizedBox(height: 30), // sépare distance entre bouton
+                SizedBox(height: 3), // sépare distance entre bouton
                 FloatingActionButton(
                   //premier bouton qui recentre la position selon _center centre de paris
                   onPressed: _userPosition,
@@ -127,7 +123,6 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
             ),
           ),
         ]),
-
         constraints: BoxConstraints(
             maxHeight: double.infinity, maxWidth: double.infinity),
       ),
