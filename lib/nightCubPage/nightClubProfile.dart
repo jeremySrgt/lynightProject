@@ -24,41 +24,237 @@ class NightClubProfile extends StatelessWidget {
     );
   }
 
-  Widget pageConstruct(clubData, context) {
+  Widget pageConstruct(clubData, context){
+    List musicStyle = clubData['music'];
+
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            expandedHeight: 200.0,
             floating: false,
             pinned: true,
+            title: Text('SliverAppBar'),
+            backgroundColor: Theme.of(context).primaryColor,
+            expandedHeight: 250.0,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(clubData['name']),
-              background: Image.asset(
-                'assets/nightClub.jpg',
-                fit: BoxFit.cover,
-              ),
+              background: Image.asset('assets/nightClub.jpg', fit: BoxFit.cover),
             ),
           ),
-          SliverFillRemaining(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  infoSection(clubData, context),
-                  //priceSection,
-                ],
-              ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Container(height: 25),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                  child: Text(
+                    'Informations',
+                    style: TextStyle(fontSize: 23) ,
+                  ),
+                ),
+                Container(height: 25),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                  child: Text(
+                    clubData['name'],
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(50, 25, 0, 0),
+                  child: Row(
+                    crossAxisAlignment:
+                    CrossAxisAlignment.start, //met dans le bonne axe
+                    children: [
+                      Icon(
+                        Icons.place,
+                        size: 19,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      Text(
+                        '  ' + clubData['adress'],
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(50, 25, 0, 0),
+                  child: Row(
+                    crossAxisAlignment:
+                    CrossAxisAlignment.start, //met dans le bonne axe
+                    children: [
+                      Icon(
+                        Icons.phone,
+                        color: Theme.of(context).primaryColor,
+                        size: 19,
+                      ),
+                      Text(
+                        '  ' + clubData['phone'],
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(50, 25, 0, 0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Icon(
+                        Icons.insert_link,
+                        size: 19,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      Text(
+                        '  ' + clubData['siteUrl'],
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Container(
+                    width: 375,
+                  padding: const EdgeInsets.fromLTRB(50, 25, 0, 0),
+                    child: Text(
+                      clubData['description'],
+                      textAlign: TextAlign.justify,
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                Container(height: 25),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                  child: Text(
+                    'Musique\n',
+                    style: TextStyle(
+                      fontSize: 23,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                  child: Row(
+                    crossAxisAlignment:
+                    CrossAxisAlignment.start, //met dans le bonne axe
+                    children: [
+                      Icon(
+                        Icons.music_note,
+                        color: Theme.of(context).primaryColor,
+                        size: 19,
+                      ),
+                      Text(
+                        '  ' + musicStyle[0] +', ' + musicStyle[1] + ', ' + musicStyle[2],
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(50, 25, 0, 0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Icon(
+                        Icons.queue_music,
+                        size: 19,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      Text(
+                        '  ' + clubData['soundcloud'],
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      PrimaryButton(
+                        //key:  Key('register'),
+                          text: 'Let\'s Party',
+                          height: 44.0),
+                      //onPressed: validateAndSubmit),
+                    ],
+                  ),
+                ),
+                Container(height: 30),
+              ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
-  Widget infoSection(clubData, context) {
+/*
+  Widget pageConstruct(clubData, context) {
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      body: Container(
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              expandedHeight: 200.0,
+              floating: false,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                title: Text(
+                  clubData['name'],
+                  textAlign: TextAlign.center,
+                ),
+                background: Image.asset(
+                  'assets/nightClub.jpg',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SliverFillRemaining(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    infoSection(clubData, context),
+                    //priceSection,
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+        constraints: BoxConstraints(
+            maxHeight: double.infinity,
+            maxWidth: double.infinity
+        ),
+      ),
 
+    );
+  }
+
+  Widget infoSection(clubData, context) {
     List musicStyle = clubData['music'];
 
     return Expanded(
@@ -67,7 +263,7 @@ class NightClubProfile extends StatelessWidget {
           Flexible(
             child: Column(
               crossAxisAlignment:
-              CrossAxisAlignment.start, //met dans le bon axe
+                  CrossAxisAlignment.start, //met dans le bon axe
               children: [
                 Container(
                   padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
@@ -89,7 +285,7 @@ class NightClubProfile extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
-                    CrossAxisAlignment.start, //met dans le bonne axe
+                        CrossAxisAlignment.start, //met dans le bonne axe
                     children: [
                       Icon(
                         Icons.place,
@@ -97,7 +293,7 @@ class NightClubProfile extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                       Text(
-                        clubData['adress'],
+                        '  ' + clubData['adress'],
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                         ),
@@ -109,7 +305,7 @@ class NightClubProfile extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
-                    CrossAxisAlignment.start, //met dans le bonne axe
+                        CrossAxisAlignment.start, //met dans le bonne axe
                     children: [
                       Icon(
                         Icons.phone,
@@ -117,7 +313,7 @@ class NightClubProfile extends StatelessWidget {
                         size: 17,
                       ),
                       Text(
-                        clubData['phone'],
+                        '  ' + clubData['phone'],
                         style: TextStyle(
                           color: Colors.black,
                         ),
@@ -136,7 +332,7 @@ class NightClubProfile extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                       Text(
-                        clubData['siteUrl'],
+                        '  ' + clubData['siteUrl'],
                         style: TextStyle(
                           color: Colors.blue,
                           fontStyle: FontStyle.italic,
@@ -167,7 +363,7 @@ class NightClubProfile extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(50, 15, 0, 0),
                   child: Row(
                     crossAxisAlignment:
-                    CrossAxisAlignment.start, //met dans le bonne axe
+                        CrossAxisAlignment.start, //met dans le bonne axe
                     children: [
                       Icon(
                         Icons.music_note,
@@ -175,7 +371,7 @@ class NightClubProfile extends StatelessWidget {
                         size: 17,
                       ),
                       Text(
-                        musicStyle[0],
+                        '  ' + musicStyle[0],
                         style: TextStyle(
                           color: Colors.black,
                         ),
@@ -194,7 +390,7 @@ class NightClubProfile extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                       Text(
-                        clubData['soundcloud'],
+                        '  ' + clubData['soundcloud'],
                         style: TextStyle(
                           color: Colors.blue,
                           fontStyle: FontStyle.italic,
@@ -214,6 +410,30 @@ class NightClubProfile extends StatelessWidget {
                       //onPressed: validateAndSubmit),
                     ],
                   ),
+                ),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      PrimaryButton(
+                        //key:  Key('register'),
+                          text: 'Let\'s Party',
+                          height: 44.0),
+                      //onPressed: validateAndSubmit),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      PrimaryButton(
+                        //key:  Key('register'),
+                          text: 'Let\'s Party',
+                          height: 44.0),
+                      //onPressed: validateAndSubmit),
+                    ],
+                  ),
                 )
               ],
             ),
@@ -221,5 +441,5 @@ class NightClubProfile extends StatelessWidget {
         ],
       ),
     );
-  }
+  }*/
 }

@@ -83,7 +83,7 @@ class _BottomClubCardState extends State<BottomClubCard>{
                   padding: const EdgeInsets.only(left: 30.0),
                   child: Text(
                     'Recommandé',
-                    style: TextStyle(fontSize: 23.0),
+                    style: TextStyle(fontSize: 23.0, color: Theme.of(context).accentColor),
                   ),
                 ),
               ],

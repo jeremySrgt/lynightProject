@@ -135,12 +135,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
       drawer: CustomSlider(
         userMail: 'Lalal',
         signOut: widget._signOut,
-        nameFirstPage: 'Accueil',
-        routeFirstPage: '/',
-        nameSecondPage: 'Profil',
-        routeSecondPage: '/userProfil',
-        nameThirdPage: 'Réservation',
-        routeThirdPage: '/myReservations',
+        activePage: 'Maps',
       ),
     );
   }

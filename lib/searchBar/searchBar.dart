@@ -40,17 +40,17 @@ class _SearchBar extends State<SearchBar> with SearchDelegate<String> {
       resizeToAvoidBottomPadding: false,
       body: SafeArea(
         child: Container(
-          color: Colors.transparent,
+          color: Colors.white,
           child: Column(children: [
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
-                color: Colors.white30,
+                color: Colors.white,
               ),
               child: ListTile(
                 leading: Icon(
                   Icons.search,
-                  color: Colors.grey[600],
+                  color: Theme.of(context).accentColor,
                 ),
                 title: TextFormField(
                   controller: _inpuController,
@@ -60,7 +60,7 @@ class _SearchBar extends State<SearchBar> with SearchDelegate<String> {
                   decoration: InputDecoration(
                       hintText: "Turn up",
                       hintStyle:
-                          TextStyle(color: Colors.grey[600], fontSize: 18.0),
+                          TextStyle(color: Theme.of(context).accentColor, fontSize: 18.0),
                       border: InputBorder.none),
                 ),
               ),
@@ -112,7 +112,7 @@ class _SearchBar extends State<SearchBar> with SearchDelegate<String> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Colors.deepOrangeAccent,
+                        Theme.of(context).accentColor,
                         Theme.of(context).primaryColor,
                       ]),
                   //color: Theme.of(context).primaryColor,

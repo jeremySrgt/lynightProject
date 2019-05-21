@@ -124,19 +124,41 @@ class _ListPageState extends State<ListPage> {
       drawer: CustomSlider(
         userMail: 'Lalal',
         signOut: widget._signOut,
-        nameFirstPage: 'Accueil',
-        routeFirstPage: '/',
-        nameSecondPage: 'Profil',
-        routeSecondPage: '/userProfil',
-        nameThirdPage: 'Carte',
-        routeThirdPage: '/maps',
+        activePage: 'Reservations',
       ),
     );
   }
 
   List getReservations() {
     return [
-      Reservation(title: 'Kelly Kelly', date: '18/02'),
+      Reservation(
+          title: 'Kelly Kelly',
+          date: '18/02'
+      ),
+      Reservation(
+        title: 'Jeremy\'s night club',
+        date: '03/04',
+      ),
+      Reservation(
+        title: 'Sysy\' club',
+        date: '15/05',
+      ),
+      Reservation(
+          title: 'Kelly Kelly',
+          date: '18/02'
+      ),
+      Reservation(
+        title: 'Jeremy\'s night club',
+        date: '03/04',
+      ),
+      Reservation(
+        title: 'Sysy\' club',
+        date: '15/05',
+      ),
+      Reservation(
+          title: 'Kelly Kelly',
+          date: '18/02'
+      ),
       Reservation(
         title: 'Jeremy\'s night club',
         date: '03/04',
