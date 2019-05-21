@@ -13,6 +13,7 @@ class UserProfil extends StatefulWidget {
   final VoidCallback onSignOut;
 
   BaseAuth auth = new Auth();
+
   void _signOut() async {
     try {
       await auth.signOut();
@@ -30,11 +31,9 @@ class UserProfil extends StatefulWidget {
 }
 
 class _UserProfilState extends State<UserProfil> {
-
   String userId = 'userId';
   CrudMethods crudObj = new CrudMethods();
   String userMail = 'userMail';
-
 
   void initState() {
     super.initState();
@@ -51,14 +50,11 @@ class _UserProfilState extends State<UserProfil> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Firestore.instance
-          .collection('user')
-          .document(userId)
-          .snapshots(),
+      stream:
+          Firestore.instance.collection('user').document(userId).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
@@ -73,7 +69,7 @@ class _UserProfilState extends State<UserProfil> {
     return Container(
       padding: EdgeInsets.only(top: 16),
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 3.0,
+      height: MediaQuery.of(context).size.height / 3.4,
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.only(
@@ -88,58 +84,11 @@ class _UserProfilState extends State<UserProfil> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  child: FlatButton(
-                  // Bouton pour les modifications
-                  onPressed: () {
-                    /*Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SecondRoute()),
-                      );*/
-                  }, // renvoi vers les modifications
-                  padding: EdgeInsets.all(10.0),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.mode_edit,
-                        size: 35.0,
-                        color: Colors.white,
-                      ),
-                      Divider(),
-                      Text("Modification")
-                    ],
-                  ),
-                ),
-                ),
-                Container(
                   child: CircleAvatar(
                     // photo de profil
                     backgroundImage: ExactAssetImage('assets/nightClub.jpg'),
                     minRadius: 30,
-                    maxRadius: 70,
-                  ),
-                ),
-                Container(
-                  child: FlatButton(
-                    // Bouton pour les paramètres
-                    onPressed: () {
-                      /* Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ThirdRoute()),
-                      );*/
-                    },
-                    padding: EdgeInsets.all(10.0),
-                    child: Column(
-                      // Replace with a Row for horizontal icon + text
-                      children: <Widget>[
-                        Icon(
-                          Icons.settings,
-                          size: 35.0,
-                          color: Colors.white,
-                        ),
-                        Divider(),
-                        Text("Paramètres")
-                      ],
-                    ),
+                    maxRadius: 80,
                   ),
                 ),
               ],
@@ -151,21 +100,79 @@ class _UserProfilState extends State<UserProfil> {
   }
 
   Widget userBottomSection(userData) {
+    final _formKey = GlobalKey<FormState>();
     //DateTime dob = userData['DOB'];
     //String formattedDob = DateFormat('yyyy-MM-dd').format(dob);
-    return Expanded(
+    return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Flexible(
             child: Column(
               children: <Widget>[
+                Container(
+                  height: 20,
+                ),
                 ListTile(
                   leading: Icon(Icons.music_note),
                   title: Text(
-                    "Style de musique",
+                    "Style de musique \n",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Musique 1'
+                                        ) ,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Musique 2'
+                                        ) ,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Musique 3'
+                                        ) ,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RaisedButton(
+                                        child: Text("Valider"),
+                                        onPressed: () {
+                                          if (_formKey.currentState.validate()) {
+                                            _formKey.currentState.save();
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
                   ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,45 +180,198 @@ class _UserProfilState extends State<UserProfil> {
                       Text(''),
                       Text('Musique 1 \n'),
                       Text('Musique 2 \n'),
+                      Text('Musique 2 \n'),
                       Text('Musique 3 '),
                     ],
                   ),
                 ),
+                Container(height: 20),
                 ListTile(
                   leading: Icon(Icons.mail),
                   title: Text(
-                    "Email",
+                    "Email\n",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Adresse mail'
+                                        ) ,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RaisedButton(
+                                        child: Text("Valider"),
+                                        onPressed: () {
+                                          if (_formKey.currentState.validate()) {
+                                            _formKey.currentState.save();
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
                   ),
                   subtitle: Text(
                     userData['mail'],
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
+                Container(height: 20),
                 ListTile(
                   leading: Icon(Icons.phone),
                   title: Text(
-                    "Numéro",
+                    "Numéro\n",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Numéro de téléphone'
+                                        ) ,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RaisedButton(
+                                        child: Text("Valider"),
+                                        onPressed: () {
+                                          if (_formKey.currentState.validate()) {
+                                            _formKey.currentState.save();
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
                   ),
                   subtitle: Text(
                     userData['phone'],
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
+                Container(height: 20),
                 ListTile(
                   leading: Icon(Icons.music_note),
                   title: Text(
-                    "Date de naissance",
+                    "Date de naissance\n",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Date de naissance'
+                                        ) ,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RaisedButton(
+                                        child: Text("Valider"),
+                                        onPressed: () {
+                                          if (_formKey.currentState.validate()) {
+                                            _formKey.currentState.save();
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
                   ),
                   subtitle: Text(
                     'Naissance',
                     style: TextStyle(fontSize: 15.0),
                   ),
+                ),
+                Container(height: 20),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget pageConstruct(userData, context) {
+    return Scaffold(
+      drawer: CustomSlider(
+        userMail: userMail,
+        signOut: widget._signOut,
+        activePage: 'Profil',
+      ),
+      resizeToAvoidBottomPadding: false,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            floating: false,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(userData['name'] + ' ' + userData['surname']),
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Container(
+                  child: userInfoTopSection(userData),
+                ),
+                Container(
+                  child: userBottomSection(userData),
                 ),
               ],
             ),
@@ -220,37 +380,18 @@ class _UserProfilState extends State<UserProfil> {
       ),
     );
   }
- Widget pageConstruct(userData, context){
-    return Scaffold(
-      drawer: CustomSlider(
-        userMail: userMail,
-        signOut: widget._signOut,
-        nameFirstPage: 'Accueil',
-        routeFirstPage: '/',
-        nameSecondPage: 'Mes Réservations',
-        routeSecondPage: '/myReservations',
-        nameThirdPage: 'Carte',
-        routeThirdPage: '/maps',
-      ),
-      resizeToAvoidBottomPadding: false,
-      body: CustomScrollView(slivers: <Widget>[
-        SliverAppBar(
-          floating: false,
-          pinned: true,
-          flexibleSpace: FlexibleSpaceBar(
-            title: Text(userData['name'] + ' ' + userData['surname']),
-          ),
-        ),
-        SliverFillRemaining(
-          child: Column(
-            children: <Widget>[
-              userInfoTopSection(userData),
-              userBottomSection(userData),
-            ],
-          ),
-        ),
-      ]),
-    );
- }
-
 }
+
+/*
+CustomScrollView(slivers: <Widget>[
+
+SliverFillRemaining(
+child: Column(
+children: <Widget>[
+userInfoTopSection(userData),
+userBottomSection(userData),
+],
+),
+),
+]),
+*/
