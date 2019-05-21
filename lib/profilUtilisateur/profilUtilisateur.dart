@@ -136,35 +136,28 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Musique 1'
-                                        ) ,
+                                            hintText: 'Musique 1'),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Musique 2'
-                                        ) ,
+                                            hintText: 'Musique 2'),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Musique 3'
-                                        ) ,
+                                            hintText: 'Musique 3'),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: RaisedButton(
                                         child: Text("Valider"),
-                                        onPressed: () {
-                                          if (_formKey.currentState.validate()) {
-                                            _formKey.currentState.save();
-                                          }
-                                        },
+                                        onPressed: () {},
                                       ),
                                     )
                                   ],
@@ -209,19 +202,14 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Adresse mail'
-                                        ) ,
+                                            hintText: 'Adresse mail'),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: RaisedButton(
                                         child: Text("Valider"),
-                                        onPressed: () {
-                                          if (_formKey.currentState.validate()) {
-                                            _formKey.currentState.save();
-                                          }
-                                        },
+                                        onPressed: () {},
                                       ),
                                     )
                                   ],
@@ -260,19 +248,15 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Numéro de téléphone'
-                                        ) ,
+                                            hintText: 'Numéro de téléphone'),
+                                        keyboardType: TextInputType.number,
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: RaisedButton(
                                         child: Text("Valider"),
-                                        onPressed: () {
-                                          if (_formKey.currentState.validate()) {
-                                            _formKey.currentState.save();
-                                          }
-                                        },
+                                        onPressed: () {},
                                       ),
                                     )
                                   ],
@@ -311,19 +295,14 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Date de naissance'
-                                        ) ,
+                                            hintText: 'Date de naissance'),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: RaisedButton(
                                         child: Text("Valider"),
-                                        onPressed: () {
-                                          if (_formKey.currentState.validate()) {
-                                            _formKey.currentState.save();
-                                          }
-                                        },
+                                        onPressed: () {},
                                       ),
                                     )
                                   ],
@@ -381,17 +360,3 @@ class _UserProfilState extends State<UserProfil> {
     );
   }
 }
-
-/*
-CustomScrollView(slivers: <Widget>[
-
-SliverFillRemaining(
-child: Column(
-children: <Widget>[
-userInfoTopSection(userData),
-userBottomSection(userData),
-],
-),
-),
-]),
-*/
