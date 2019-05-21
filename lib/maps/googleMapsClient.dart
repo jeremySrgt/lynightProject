@@ -56,7 +56,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
   }
 
   Future<void> _userPosition() async {
-    GoogleMapController mapController;
+    GoogleMapController mapController= await _controller.future;
     var pos = await location.getLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(pos.latitude, pos.longitude),
@@ -64,26 +64,8 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
     )));
   }
 
-  Future<bool> testPermission() async {
-    bool _serviceEnabled = await location.serviceEnabled();
-    bool _requestService = await location.requestService();
-    bool _hasPermission = await location.hasPermission();
-    bool _requestPermission = await location.requestPermission();
-  }
-
-  Future<void> _recenterCamera() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-      target: _center,
-      zoom: 16,
-    )));
-  }
-
-  void _marksPosition(CameraPosition position) {
-    _lastMapPosition = position.target; // place un marker cibler au centre
-  }
-
   void _onMapCreated(GoogleMapController controller) {
+
     _controller.complete(controller);
   }
 
@@ -92,6 +74,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
     placeAllMarkers();
     // TODO: implement build
     return Scaffold(
+
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text(
@@ -112,13 +95,12 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
             ),
 
             onMapCreated: _onMapCreated,
-            myLocationEnabled: true,
+            myLocationEnabled: false,
             rotateGesturesEnabled: true,
             zoomGesturesEnabled: true,
             scrollGesturesEnabled: true,
             tiltGesturesEnabled: true,
             markers: _markers,
-            //onCameraMove: _marksPosition,
           ),
           Align(
             alignment: Alignment.topRight, // aligne les widget en haut à gauche
@@ -131,7 +113,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
                   backgroundColor: Theme.of(context).primaryColor,
                   child: const Icon(Icons.center_focus_weak, size: 50),
                 ),
-                SizedBox(height: 90),
+                SizedBox(height: 30),
 //                FloatingActionButton(
 //                  // deuxieme bouton ajoute un marker au centre de l'appli
 //                  onPressed: _onAddMarkerButtonPressed,
@@ -145,6 +127,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
             ),
           ),
         ]),
+
         constraints: BoxConstraints(
             maxHeight: double.infinity, maxWidth: double.infinity),
       ),
