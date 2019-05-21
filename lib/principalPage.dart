@@ -73,7 +73,7 @@ class _PrincipalPageState extends State<PrincipalPage>
       child: TabBar(
           controller: _controller,
           unselectedLabelColor: Colors.black,
-          labelColor: Colors.deepOrange,
+          labelColor: Theme.of(context).primaryColor,
           indicatorColor: Colors.white,
           tabs: [
             Tab(
@@ -117,7 +117,7 @@ class _PrincipalPageState extends State<PrincipalPage>
             title: Text(
               appBarTitle,
               style: TextStyle(
-                  color: Colors.deepOrange,
+                  color: Theme.of(context).primaryColor,
                   fontFamily: 'Montserrat',
                   fontSize: 34.0,
                   fontWeight: FontWeight.w500),
@@ -129,12 +129,7 @@ class _PrincipalPageState extends State<PrincipalPage>
           drawer: CustomSlider(
             userMail: mail,
             signOut: widget._signOut,
-            nameFirstPage: 'Profil',
-            routeFirstPage: '/userProfil',
-            nameSecondPage: 'Mes Réservations',
-            routeSecondPage: '/myReservations',
-            nameThirdPage: 'Carte',
-            routeThirdPage: '/maps',
+            activePage: 'Accueil',
           )),
     );
   }

@@ -13,6 +13,7 @@ class UserProfil extends StatefulWidget {
   final VoidCallback onSignOut;
 
   BaseAuth auth = new Auth();
+
   void _signOut() async {
     try {
       await auth.signOut();
@@ -30,11 +31,9 @@ class UserProfil extends StatefulWidget {
 }
 
 class _UserProfilState extends State<UserProfil> {
-
   String userId = 'userId';
   CrudMethods crudObj = new CrudMethods();
   String userMail = 'userMail';
-
 
   void initState() {
     super.initState();
@@ -51,14 +50,11 @@ class _UserProfilState extends State<UserProfil> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Firestore.instance
-          .collection('user')
-          .document(userId)
-          .snapshots(),
+      stream:
+          Firestore.instance.collection('user').document(userId).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
@@ -89,26 +85,26 @@ class _UserProfilState extends State<UserProfil> {
               children: <Widget>[
                 Container(
                   child: FlatButton(
-                  // Bouton pour les modifications
-                  onPressed: () {
-                    /*Navigator.push(
+                    // Bouton pour les modifications
+                    onPressed: () {
+                      /*Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => SecondRoute()),
                       );*/
-                  }, // renvoi vers les modifications
-                  padding: EdgeInsets.all(10.0),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.mode_edit,
-                        size: 35.0,
-                        color: Colors.white,
-                      ),
-                      Divider(),
-                      Text("Modification")
-                    ],
+                    }, // renvoi vers les modifications
+                    padding: EdgeInsets.all(10.0),
+                    child: Column(
+                      children: <Widget>[
+                        Icon(
+                          Icons.mode_edit,
+                          size: 35.0,
+                          color: Colors.white,
+                        ),
+                        Divider(),
+                        Text("Modification")
+                      ],
+                    ),
                   ),
-                ),
                 ),
                 Container(
                   child: CircleAvatar(
@@ -153,17 +149,20 @@ class _UserProfilState extends State<UserProfil> {
   Widget userBottomSection(userData) {
     //DateTime dob = userData['DOB'];
     //String formattedDob = DateFormat('yyyy-MM-dd').format(dob);
-    return Expanded(
+    return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Flexible(
             child: Column(
               children: <Widget>[
+                Container(
+                  height: 20,
+                ),
                 ListTile(
                   leading: Icon(Icons.music_note),
                   title: Text(
-                    "Style de musique",
+                    "Style de musique \n",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
@@ -173,14 +172,16 @@ class _UserProfilState extends State<UserProfil> {
                       Text(''),
                       Text('Musique 1 \n'),
                       Text('Musique 2 \n'),
+                      Text('Musique 2 \n'),
                       Text('Musique 3 '),
                     ],
                   ),
                 ),
+                Container(height: 20),
                 ListTile(
                   leading: Icon(Icons.mail),
                   title: Text(
-                    "Email",
+                    "Email\n",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
@@ -189,10 +190,11 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
+                Container(height: 20),
                 ListTile(
                   leading: Icon(Icons.phone),
                   title: Text(
-                    "Numéro",
+                    "Numéro\n",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
@@ -201,10 +203,11 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
+                Container(height: 20),
                 ListTile(
                   leading: Icon(Icons.music_note),
                   title: Text(
-                    "Date de naissance",
+                    "Date de naissance\n",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
@@ -213,6 +216,7 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
+                Container(height: 20),
               ],
             ),
           ),
@@ -220,37 +224,52 @@ class _UserProfilState extends State<UserProfil> {
       ),
     );
   }
- Widget pageConstruct(userData, context){
+
+  Widget pageConstruct(userData, context) {
     return Scaffold(
       drawer: CustomSlider(
         userMail: userMail,
         signOut: widget._signOut,
-        nameFirstPage: 'Accueil',
-        routeFirstPage: '/',
-        nameSecondPage: 'Mes Réservations',
-        routeSecondPage: '/myReservations',
-        nameThirdPage: 'Carte',
-        routeThirdPage: '/maps',
+        activePage: 'Profil',
       ),
       resizeToAvoidBottomPadding: false,
-      body: CustomScrollView(slivers: <Widget>[
-        SliverAppBar(
-          floating: false,
-          pinned: true,
-          flexibleSpace: FlexibleSpaceBar(
-            title: Text(userData['name'] + ' ' + userData['surname']),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            floating: false,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(userData['name'] + ' ' + userData['surname']),
+            ),
           ),
-        ),
-        SliverFillRemaining(
-          child: Column(
-            children: <Widget>[
-              userInfoTopSection(userData),
-              userBottomSection(userData),
-            ],
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Container(
+                  child: userInfoTopSection(userData),
+                ),
+                Container(
+                  child: userBottomSection(userData),
+                ),
+              ],
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
- }
-
+  }
 }
+
+/*
+CustomScrollView(slivers: <Widget>[
+
+SliverFillRemaining(
+child: Column(
+children: <Widget>[
+userInfoTopSection(userData),
+userBottomSection(userData),
+],
+),
+),
+]),
+*/
