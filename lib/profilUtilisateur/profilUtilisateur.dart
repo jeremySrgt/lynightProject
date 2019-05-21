@@ -54,7 +54,7 @@ class _UserProfilState extends State<UserProfil> {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream:
-          Firestore.instance.collection('user').document(userId).snapshots(),
+      Firestore.instance.collection('user').document(userId).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
@@ -68,10 +68,18 @@ class _UserProfilState extends State<UserProfil> {
   Widget userInfoTopSection(userData) {
     return Container(
       padding: EdgeInsets.only(top: 16),
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 3.4,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height / 3.4,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Theme
+            .of(context)
+            .primaryColor,
         borderRadius: BorderRadius.only(
             bottomRight: Radius.circular(32), bottomLeft: Radius.circular(32)),
       ),
@@ -84,11 +92,17 @@ class _UserProfilState extends State<UserProfil> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  child: CircleAvatar(
-                    // photo de profil
-                    backgroundImage: ExactAssetImage('assets/nightClub.jpg'),
-                    minRadius: 30,
-                    maxRadius: 80,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => SelectProfilPicture()));
+                    },
+                    child: CircleAvatar(
+                      // photo de profil
+                      backgroundImage: NetworkImage(userData['picture']),
+                      minRadius: 30,
+                      maxRadius: 80,
+                    ),
                   ),
                 ),
               ],
@@ -118,7 +132,9 @@ class _UserProfilState extends State<UserProfil> {
                   title: Text(
                     "Style de musique \n",
                     style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 18.0),
+                        color: Theme
+                            .of(context)
+                            .primaryColor, fontSize: 18.0),
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
@@ -136,28 +152,36 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Musique 1'),
+                                            hintText: 'Musique 1'
+                                        ),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Musique 2'),
+                                            hintText: 'Musique 2'
+                                        ),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Musique 3'),
+                                            hintText: 'Musique 3'
+                                        ),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: RaisedButton(
                                         child: Text("Valider"),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            _formKey.currentState.save();
+                                          }
+                                        },
                                       ),
                                     )
                                   ],
@@ -184,7 +208,9 @@ class _UserProfilState extends State<UserProfil> {
                   title: Text(
                     "Email\n",
                     style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 18.0),
+                        color: Theme
+                            .of(context)
+                            .primaryColor, fontSize: 18.0),
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
@@ -202,14 +228,20 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Adresse mail'),
+                                            hintText: 'Adresse mail'
+                                        ),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: RaisedButton(
                                         child: Text("Valider"),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            _formKey.currentState.save();
+                                          }
+                                        },
                                       ),
                                     )
                                   ],
@@ -230,7 +262,9 @@ class _UserProfilState extends State<UserProfil> {
                   title: Text(
                     "Numéro\n",
                     style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 18.0),
+                        color: Theme
+                            .of(context)
+                            .primaryColor, fontSize: 18.0),
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
@@ -248,14 +282,21 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Numéro de téléphone'),
-                                        keyboardType: TextInputType.number,
+                                            hintText: 'Numéro de téléphone'
+                                            keyboardType: TextInputType.number,
+                                        ),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: RaisedButton(
                                         child: Text("Valider"),
+                                        onPressed: () {
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            _formKey.currentState.save();
+                                          }
+                                        },
                                         onPressed: () {},
                                       ),
                                     )
@@ -295,14 +336,19 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Date de naissance'),
+                                            hintText: 'Date de naissance'
+                                        ) ,
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: RaisedButton(
                                         child: Text("Valider"),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          if (_formKey.currentState.validate()) {
+                                            _formKey.currentState.save();
+                                          }
+                                        },
                                       ),
                                     )
                                   ],
@@ -360,3 +406,17 @@ class _UserProfilState extends State<UserProfil> {
     );
   }
 }
+
+/*
+CustomScrollView(slivers: <Widget>[
+
+SliverFillRemaining(
+child: Column(
+children: <Widget>[
+userInfoTopSection(userData),
+userBottomSection(userData),
+],
+),
+),
+]),
+*/

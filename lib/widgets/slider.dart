@@ -25,7 +25,7 @@ class CustomSlider extends StatelessWidget {
       sex: true);
 
   void _testCreateUserData() async {
-    crudObj.createUserData(userData.getDataMap());
+    crudObj.createOrUpdateUserData(userData.getDataMap());
   }
 
   CustomSlider({this.userMail, this.signOut, this.activePage});
