@@ -145,7 +145,7 @@ class _UserProfilState extends State<UserProfil> {
                 ListTile(
                   leading: Icon(Icons.music_note),
                   title: Text(
-                    "Style de musique \n",
+                    "Style de musique",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
@@ -204,11 +204,9 @@ class _UserProfilState extends State<UserProfil> {
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(''),
-                      Text('Musique 1 \n'),
-                      Text('Musique 2 \n'),
-                      Text('Musique 2 \n'),
-                      Text('Musique 3 '),
+                      Text('Musique 1'),
+                      Text('Musique 2'),
+                      Text('Musique 3'),
                     ],
                   ),
                 ),
@@ -216,7 +214,7 @@ class _UserProfilState extends State<UserProfil> {
                 ListTile(
                   leading: Icon(Icons.mail),
                   title: Text(
-                    "Email\n",
+                    "Email",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
@@ -267,7 +265,7 @@ class _UserProfilState extends State<UserProfil> {
                 ListTile(
                   leading: Icon(Icons.phone),
                   title: Text(
-                    "Numéro\n",
+                    "Numéro",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
@@ -317,9 +315,9 @@ class _UserProfilState extends State<UserProfil> {
                 ),
                 Container(height: 20),
                 ListTile(
-                  leading: Icon(Icons.music_note),
+                  leading: Icon(Icons.date_range),
                   title: Text(
-                    "Date de naissance\n",
+                    "Date de naissance",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
