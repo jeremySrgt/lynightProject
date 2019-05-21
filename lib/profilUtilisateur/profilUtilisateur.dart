@@ -132,8 +132,11 @@ class _UserProfilState extends State<UserProfil> {
 
   Widget userBottomSection(userData) {
     final _formKey = GlobalKey<FormState>();
-    //DateTime dob = userData['DOB'];
-    //String formattedDob = DateFormat('yyyy-MM-dd').format(dob);
+    Timestamp dob = userData['DOB'];
+    print(dob);
+    DateTime date = dob.toDate();
+    print(date);
+//    String formattedDob = DateFormat('yyyy-MM-dd').format(dob);
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -362,7 +365,7 @@ class _UserProfilState extends State<UserProfil> {
                     },
                   ),
                   subtitle: Text(
-                    'Naissance',
+                    DateFormat('dd/MM/yyyy').format(userData['DOB'].toDate()),
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
