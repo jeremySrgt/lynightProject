@@ -9,8 +9,10 @@ import 'package:lynight/myReservations/myReservation.dart';
 import 'package:lynight/favorites/favoritesNightClub.dart';
 import 'package:lynight/searchBar/searchBar.dart';
 import 'package:lynight/favorites/favoritesNightClub.dart';
+
 class PrincipalPage extends StatefulWidget {
   PrincipalPage({this.auth, this.onSignOut});
+
   final BaseAuth auth;
   final VoidCallback onSignOut;
 
@@ -21,7 +23,6 @@ class PrincipalPage extends StatefulWidget {
     } catch (e) {
       print(e);
     }
-
   }
 
   @override
@@ -38,6 +39,7 @@ class _PrincipalPageState extends State<PrincipalPage>
   String mail = 'userMail';
 
   TabController _controller;
+
   //TODO changer la couleur de l'appbar en focntion de la couleur de l'element en dessous - ca fait plus joli
   //TODO par exemple dans le profil utilisateur c'est flagrant
 
@@ -95,42 +97,42 @@ class _PrincipalPageState extends State<PrincipalPage>
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-          backgroundColor: Colors.white,
-          bottomNavigationBar: bottomNavigation(),
-          body: TabBarView(controller: _controller, children: [
-            SafeArea(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 20.0,
-                  ),
-//                  Test(),
-                  TopClubCard(),
-                  BottomClubCard(),
-                ],
-              ),
+        backgroundColor: Colors.white,
+        bottomNavigationBar: bottomNavigation(),
+        body: TabBarView(controller: _controller, children: [
+          SafeArea(
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 20.0,
+                ),
+                TopClubCard(),
+                BottomClubCard(),
+              ],
             ),
-            SearchBar(),
-            FavoritesNightClub(),
-          ]),
-          appBar: AppBar(
-            title: Text(
-              appBarTitle,
-              style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontFamily: 'Montserrat',
-                  fontSize: 34.0,
-                  fontWeight: FontWeight.w500),
-            ),
-            iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-            backgroundColor: Colors.white,
-            elevation: 0.0,
           ),
-          drawer: CustomSlider(
-            userMail: mail,
-            signOut: widget._signOut,
-            activePage: 'Accueil',
-          )),
+          SearchBar(),
+          FavoritesNightClub(),
+        ]),
+        appBar: AppBar(
+          title: Text(
+            appBarTitle,
+            style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontFamily: 'Montserrat',
+                fontSize: 34.0,
+                fontWeight: FontWeight.w500),
+          ),
+          iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+        ),
+        drawer: CustomSlider(
+          userMail: mail,
+          signOut: widget._signOut,
+          activePage: 'Accueil',
+        ),
+      ),
     );
   }
 }
