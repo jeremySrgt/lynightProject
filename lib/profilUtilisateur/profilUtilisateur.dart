@@ -51,11 +51,32 @@ class _UserProfilState extends State<UserProfil> {
     });
   }
 
+  void _openModalBottomSheet(context) {
+    showModalBottomSheet(context: context, builder: (context) {
+      return Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Color(0xFF737373)),
+          color: Color(0xFF737373),
+        ),
+        child: Container(
+          child: SelectProfilPicture(),
+          decoration: BoxDecoration(
+            color: Theme.of(context).canvasColor,
+            borderRadius: BorderRadius.only(
+              topLeft: const Radius.circular(25.0),
+              topRight: const Radius.circular(25.0),
+            ),
+          ),
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream:
-      Firestore.instance.collection('user').document(userId).snapshots(),
+          Firestore.instance.collection('user').document(userId).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
@@ -69,18 +90,10 @@ class _UserProfilState extends State<UserProfil> {
   Widget userInfoTopSection(userData) {
     return Container(
       padding: EdgeInsets.only(top: 16),
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
-      height: MediaQuery
-          .of(context)
-          .size
-          .height / 3.4,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height / 3.4,
       decoration: BoxDecoration(
-        color: Theme
-            .of(context)
-            .primaryColor,
+        color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.only(
             bottomRight: Radius.circular(32), bottomLeft: Radius.circular(32)),
       ),
@@ -95,8 +108,9 @@ class _UserProfilState extends State<UserProfil> {
                 Container(
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => SelectProfilPicture()));
+//                      Navigator.push(context, MaterialPageRoute(
+//                          builder: (context) => SelectProfilPicture()));
+                      _openModalBottomSheet(context);
                     },
                     child: CircleAvatar(
                       // photo de profil
@@ -133,9 +147,7 @@ class _UserProfilState extends State<UserProfil> {
                   title: Text(
                     "Style de musique \n",
                     style: TextStyle(
-                        color: Theme
-                            .of(context)
-                            .primaryColor, fontSize: 18.0),
+                        color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
@@ -153,24 +165,21 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Musique 1'
-                                        ),
+                                            hintText: 'Musique 1'),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Musique 2'
-                                        ),
+                                            hintText: 'Musique 2'),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Musique 3'
-                                        ),
+                                            hintText: 'Musique 3'),
                                       ),
                                     ),
                                     Padding(
@@ -209,9 +218,7 @@ class _UserProfilState extends State<UserProfil> {
                   title: Text(
                     "Email\n",
                     style: TextStyle(
-                        color: Theme
-                            .of(context)
-                            .primaryColor, fontSize: 18.0),
+                        color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
@@ -229,8 +236,7 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Adresse mail'
-                                        ),
+                                            hintText: 'Adresse mail'),
                                       ),
                                     ),
                                     Padding(
@@ -263,9 +269,7 @@ class _UserProfilState extends State<UserProfil> {
                   title: Text(
                     "Numéro\n",
                     style: TextStyle(
-                        color: Theme
-                            .of(context)
-                            .primaryColor, fontSize: 18.0),
+                        color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.edit),
@@ -283,8 +287,7 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Numéro de téléphone'
-                                        ),
+                                            hintText: 'Numéro de téléphone'),
                                         keyboardType: TextInputType.number,
                                       ),
                                     ),
@@ -336,8 +339,7 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Date de naissance'
-                                        ) ,
+                                            hintText: 'Date de naissance'),
                                       ),
                                     ),
                                     Padding(
@@ -345,7 +347,8 @@ class _UserProfilState extends State<UserProfil> {
                                       child: RaisedButton(
                                         child: Text("Valider"),
                                         onPressed: () {
-                                          if (_formKey.currentState.validate()) {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             _formKey.currentState.save();
                                           }
                                         },
