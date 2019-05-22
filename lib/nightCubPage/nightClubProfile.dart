@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lynight/authentification/primary_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lynight/nightCubPage/carousel.dart';
+import 'package:lynight/services/clubPictures.dart';
 
 class NightClubProfile extends StatelessWidget {
   NightClubProfile({this.documentID});
@@ -289,10 +290,16 @@ class NightClubProfile extends StatelessWidget {
                  child: Row(
                    mainAxisAlignment: MainAxisAlignment.center,
                    children: <Widget>[
-                     PrimaryButton(
-                       //key:  Key('register'),
-                         text: 'Let\'s Party',
-                         height: 60.0),
+                   RaisedButton(
+                   elevation: 5.0,
+                   shape: RoundedRectangleBorder(
+                       borderRadius: BorderRadius.circular(30.0)),
+                   child: Text('Let\'s Party',
+                       style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                   color: Theme.of(context).primaryColor,
+                   textColor: Colors.black87,
+                   onPressed: (){},
+                 ),
                      //onPressed: validateAndSubmit),
                    ],
                  ),

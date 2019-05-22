@@ -8,25 +8,7 @@ class CustomSlider extends StatelessWidget {
   final String activePage;
 
   CrudMethods crudObj = new CrudMethods();
-  UserData userData = new UserData(
-      name: "jeremy",
-      surname: "surget",
-      dob: DateTime.utc(1998, 4, 3),
-      favorites: ["boiteID1", "boiteID2"],
-      mail: "blabla@gmail.com",
-      music: ["electro", "populaire"],
-      notification: true,
-      phone: "0659534318",
-      picture: "lien vers profilpicture",
-      reservation: {
-        "boiteID": "CXeFDsER3",
-        "date": "ici un timestamp normalement"
-      },
-      sex: true);
 
-  void _testCreateUserData() async {
-    crudObj.createOrUpdateUserData(userData.getDataMap());
-  }
 
   CustomSlider({this.userMail, this.signOut, this.activePage});
 
@@ -46,10 +28,15 @@ class CustomSlider extends StatelessWidget {
             elevation: 5.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0)),
-            child: Text('Déconnexion',
-                style: TextStyle(fontSize: 14.0, color: Colors.white)),
-            color: Theme.of(context).primaryColor,
-            textColor: Colors.black87,
+            child: Text(
+              'Déconnexion',
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Color(0xFFef0000),
+              ),
+            ),
+            color: Color(0xFFffb2b2),
+            textColor: Theme.of(context).primaryColor,
             onPressed: signOut,
           ),
         ],
