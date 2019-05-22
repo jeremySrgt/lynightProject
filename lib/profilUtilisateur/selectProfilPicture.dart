@@ -23,8 +23,15 @@ class _SelectProfilPictureState extends State<SelectProfilPicture> {
     crudObj.createOrUpdateUserData(userMap);
   }
 
-  Future getImage() async {
+  Future getImageFromGallery() async {
     var tempImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      newProfilPic = tempImage;
+    });
+  }
+
+  Future getImageFromCamera() async {
+    var tempImage = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       newProfilPic = tempImage;
     });
@@ -32,8 +39,7 @@ class _SelectProfilPictureState extends State<SelectProfilPicture> {
 
   uploadImage() async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    final StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child('profilePics/${user.uid}.jpg');
+    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('profilePics/${user.uid}.jpg');
     final StorageUploadTask task = firebaseStorageRef.putFile(newProfilPic);
     if (task.isInProgress) {
       setState(() {
@@ -99,18 +105,39 @@ class _SelectProfilPictureState extends State<SelectProfilPicture> {
               ],
             ),
           ),
-          RaisedButton(
-            elevation: 5.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
-            ),
-            child: Icon(
-              Icons.folder,
-              color: Theme.of(context).primaryColor,
-            ),
-            color: Color(0xFFebdffc),
-            textColor: Colors.black87,
-            onPressed: getImage,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              RaisedButton(
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: Icon(
+                  Icons.folder,
+                  color: Theme.of(context).primaryColor,
+                ),
+                color: Color(0xFFebdffc),
+                textColor: Colors.black87,
+                onPressed: getImageFromGallery,
+              ),
+              SizedBox(
+                width: 25,
+              ),
+              RaisedButton(
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: Icon(
+                  Icons.camera_alt,
+                  color: Theme.of(context).primaryColor,
+                ),
+                color: Color(0xFFebdffc),
+                textColor: Colors.black87,
+                onPressed: getImageFromCamera,
+              ),
+            ],
           ),
         ],
       ),
