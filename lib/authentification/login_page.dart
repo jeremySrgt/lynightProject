@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lynight/authentification/primary_button.dart';
 import 'package:lynight/authentification/auth.dart';
+import 'package:lynight/services/crud.dart';
+import 'package:lynight/services/userData.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title, this.auth, this.onSignIn}) : super(key: key);
@@ -19,12 +21,26 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   static final formKey = new GlobalKey<FormState>();
   final TextEditingController _passwordTextController = TextEditingController();
 
+  CrudMethods crudObj = new CrudMethods();
+  UserData userData = new UserData(
+    name: "",
+    surname: "",
+    dob: DateTime.now(),
+    favorites: [],
+    mail: "",
+    music: [],
+    notification: true,
+    phone: "",
+    picture: "",
+    reservation: {},
+    sex: true,
+  );
+
   String _email;
   String _password;
   FormType _formType = FormType.login;
   String _authHint = '';
   bool _isLoading = false;
-
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -49,6 +65,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           _isLoading = false;
         });
         widget.onSignIn();
+        if (_formType == FormType.register) {
+          crudObj.createOrUpdateUserData(userData.getDataMap());
+        }
       } catch (e) {
         setState(() {
           _isLoading = false;

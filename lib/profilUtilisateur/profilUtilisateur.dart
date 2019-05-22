@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:lynight/profilUtilisateur/selectProfilPicture.dart';
 
 class UserProfil extends StatefulWidget {
   UserProfil({this.onSignOut});
@@ -50,6 +51,29 @@ class _UserProfilState extends State<UserProfil> {
     });
   }
 
+  void _openModalBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xFF737373)),
+              color: Color(0xFF737373),
+            ),
+            child: Container(
+              child: SelectProfilPicture(),
+              decoration: BoxDecoration(
+                color: Theme.of(context).canvasColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(25.0),
+                  topRight: const Radius.circular(25.0),
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -84,11 +108,18 @@ class _UserProfilState extends State<UserProfil> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  child: CircleAvatar(
-                    // photo de profil
-                    backgroundImage: ExactAssetImage('assets/nightClub.jpg'),
-                    minRadius: 30,
-                    maxRadius: 80,
+                  child: GestureDetector(
+                    onTap: () {
+//                      Navigator.push(context, MaterialPageRoute(
+//                          builder: (context) => SelectProfilPicture()));
+                      _openModalBottomSheet(context);
+                    },
+                    child: CircleAvatar(
+                      // photo de profil
+                      backgroundImage: NetworkImage(userData['picture']),
+                      minRadius: 30,
+                      maxRadius: 80,
+                    ),
                   ),
                 ),
               ],
@@ -101,8 +132,11 @@ class _UserProfilState extends State<UserProfil> {
 
   Widget userBottomSection(userData) {
     final _formKey = GlobalKey<FormState>();
-    //DateTime dob = userData['DOB'];
-    //String formattedDob = DateFormat('yyyy-MM-dd').format(dob);
+    Timestamp dob = userData['DOB'];
+    print(dob);
+    DateTime date = dob.toDate();
+    print(date);
+//    String formattedDob = DateFormat('yyyy-MM-dd').format(dob);
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -116,7 +150,7 @@ class _UserProfilState extends State<UserProfil> {
                 ListTile(
                   leading: Icon(Icons.music_note),
                   title: Text(
-                    "Style de musique \n",
+                    "Style de musique",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
@@ -136,24 +170,21 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Musique 1'
-                                        ) ,
+                                            hintText: 'Musique 1'),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Musique 2'
-                                        ) ,
+                                            hintText: 'Musique 2'),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Musique 3'
-                                        ) ,
+                                            hintText: 'Musique 3'),
                                       ),
                                     ),
                                     Padding(
@@ -161,7 +192,8 @@ class _UserProfilState extends State<UserProfil> {
                                       child: RaisedButton(
                                         child: Text("Valider"),
                                         onPressed: () {
-                                          if (_formKey.currentState.validate()) {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             _formKey.currentState.save();
                                           }
                                         },
@@ -177,11 +209,9 @@ class _UserProfilState extends State<UserProfil> {
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(''),
-                      Text('Musique 1 \n'),
-                      Text('Musique 2 \n'),
-                      Text('Musique 2 \n'),
-                      Text('Musique 3 '),
+                      Text('Musique 1'),
+                      Text('Musique 2'),
+                      Text('Musique 3'),
                     ],
                   ),
                 ),
@@ -189,7 +219,7 @@ class _UserProfilState extends State<UserProfil> {
                 ListTile(
                   leading: Icon(Icons.mail),
                   title: Text(
-                    "Email\n",
+                    "Email",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
@@ -209,8 +239,7 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Adresse mail'
-                                        ) ,
+                                            hintText: 'Adresse mail'),
                                       ),
                                     ),
                                     Padding(
@@ -218,7 +247,8 @@ class _UserProfilState extends State<UserProfil> {
                                       child: RaisedButton(
                                         child: Text("Valider"),
                                         onPressed: () {
-                                          if (_formKey.currentState.validate()) {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             _formKey.currentState.save();
                                           }
                                         },
@@ -240,7 +270,7 @@ class _UserProfilState extends State<UserProfil> {
                 ListTile(
                   leading: Icon(Icons.phone),
                   title: Text(
-                    "Numéro\n",
+                    "Numéro",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
@@ -260,8 +290,8 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Numéro de téléphone'
-                                        ) ,
+                                            hintText: 'Numéro de téléphone'),
+                                        keyboardType: TextInputType.number,
                                       ),
                                     ),
                                     Padding(
@@ -269,7 +299,8 @@ class _UserProfilState extends State<UserProfil> {
                                       child: RaisedButton(
                                         child: Text("Valider"),
                                         onPressed: () {
-                                          if (_formKey.currentState.validate()) {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             _formKey.currentState.save();
                                           }
                                         },
@@ -289,9 +320,9 @@ class _UserProfilState extends State<UserProfil> {
                 ),
                 Container(height: 20),
                 ListTile(
-                  leading: Icon(Icons.music_note),
+                  leading: Icon(Icons.date_range),
                   title: Text(
-                    "Date de naissance\n",
+                    "Date de naissance",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
                   ),
@@ -311,8 +342,7 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Date de naissance'
-                                        ) ,
+                                            hintText: 'Date de naissance'),
                                       ),
                                     ),
                                     Padding(
@@ -320,7 +350,8 @@ class _UserProfilState extends State<UserProfil> {
                                       child: RaisedButton(
                                         child: Text("Valider"),
                                         onPressed: () {
-                                          if (_formKey.currentState.validate()) {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             _formKey.currentState.save();
                                           }
                                         },
@@ -334,7 +365,7 @@ class _UserProfilState extends State<UserProfil> {
                     },
                   ),
                   subtitle: Text(
-                    'Naissance',
+                    DateFormat('dd/MM/yyyy').format(userData['DOB'].toDate()),
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
@@ -361,7 +392,9 @@ class _UserProfilState extends State<UserProfil> {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(userData['name'] + ' ' + userData['surname']),
+              title: userData['name'] == ""
+                  ? Text(userMail)
+                  : Text(userData['name'] + ' ' + userData['surname']),
             ),
           ),
           SliverList(
