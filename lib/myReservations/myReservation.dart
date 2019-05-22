@@ -97,7 +97,7 @@ class _ListPageState extends State<ListPage> {
     Card makeCard(Reservation reservation) =>
         Card(
           elevation: 8.0,
-          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
             decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
             child: makeListTitle(reservation),
