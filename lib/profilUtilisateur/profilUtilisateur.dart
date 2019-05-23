@@ -168,54 +168,81 @@ class _UserProfilState extends State<UserProfil> {
                                   children: <Widget>[
                                     Padding(
                                       padding: const EdgeInsets.all(1.0),
-                                      child: Row(
+                                      child: Column(
                                         children: <Widget>[
-                                          RaisedButton(
-                                            child: Text("Electro"),
-                                            onPressed: () {},
+                                        Container(
+                                          child: Row(
+                                            children: <Widget>[
+                                              RaisedButton(
+                                                child: Text("Pop"),
+                                                onPressed: () {},
+                                              ),
+                                              Container(
+                                                width: 5,
+                                              ),
+                                              RaisedButton(
+                                                child: Text("Chill"),
+                                                onPressed: () {},
+                                              ),
+                                              Container(
+                                                width: 5,
+                                              ),
+                                              RaisedButton(
+                                                child: Text("Hip-Hop"),
+                                                onPressed: () {},
+                                              ),
+                                            ],
                                           ),
+                                        ),
+                                          Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                RaisedButton(
+                                                  child: Text("Electro"),
+                                                  onPressed: () {},
+                                                ),
 
-                                          Container(
-                                            width: 5,
-                                          ),
-                                          RaisedButton(
-                                            child: Text("Rap"),
-                                            onPressed: () {},
-                                          ),
-                                          Container(
-                                            width: 5,
-                                          ),
-                                          RaisedButton(
-                                            child: Text("RnB"),
-                                            onPressed: () {},
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 5,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(1.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          RaisedButton(
-                                            child: Text("Electro"),
-                                            onPressed: () {},
+                                                Container(
+                                                  width: 5,
+                                                ),
+                                                RaisedButton(
+                                                  child: Text("Rap"),
+                                                  onPressed: () {},
+                                                ),
+                                                Container(
+                                                  width: 5,
+                                                ),
+                                                RaisedButton(
+                                                  child: Text("RnB"),
+                                                  onPressed: () {},
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                           Container(
-                                            width: 5,
-                                          ),
-                                          RaisedButton(
-                                            child: Text("Rap"),
-                                            onPressed: () {},
-                                          ),
-                                          Container(
-                                            width: 5,
-                                          ),
-                                          RaisedButton(
-                                            child: Text("RnB"),
-                                            onPressed: () {},
+                                            child: Row(
+                                              children: <Widget>[
+                                                RaisedButton(
+                                                  child: Text("House"),
+                                                  onPressed: () {},
+                                                ),
+
+                                                Container(
+                                                  width: 5,
+                                                ),
+                                                RaisedButton(
+                                                  child: Text("Dub"),
+                                                  onPressed: () {},
+                                                ),
+                                                Container(
+                                                  width: 5,
+                                                ),
+                                                RaisedButton(
+                                                  child: Text(""),
+                                                  onPressed: () {},
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
