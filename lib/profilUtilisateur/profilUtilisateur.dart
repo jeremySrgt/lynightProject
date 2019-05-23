@@ -415,16 +415,3 @@ class _UserProfilState extends State<UserProfil> {
   }
 }
 
-/*
-CustomScrollView(slivers: <Widget>[
-
-SliverFillRemaining(
-child: Column(
-children: <Widget>[
-userInfoTopSection(userData),
-userBottomSection(userData),
-],
-),
-),
-]),
-*/
