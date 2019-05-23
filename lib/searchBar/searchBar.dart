@@ -13,6 +13,7 @@ class _SearchBarState extends State<SearchBar> {
   var queryResultSet = [];
   var tempSearchStore = [];
   var resultID = [];
+  var tempID = [];
   var i =0;
 
   initiateSearch(value) {
@@ -21,42 +22,39 @@ class _SearchBarState extends State<SearchBar> {
         queryResultSet = [];
         tempSearchStore = [];
         resultID = [];
+        tempID = [];
       });
     }
 
     var capitalizedValue =
-        value.substring(0, 1).toUpperCase() + value.substring(1);
+        value.substring(0, 1).toUpperCase() + value.substring(1).toUpperCase();
 
     if (queryResultSet.length == 0 && value.length == 1) {
       SearchService().searchByName(value).then((QuerySnapshot docs) {
         for (int i = 0; i < docs.documents.length; ++i) {
-          queryResultSet.add(docs.documents[i].documentID);
-          //resultID.add(docs.documents[i].documentID);
+          queryResultSet.add(docs.documents[i].data);
+          resultID.add(docs.documents[i].documentID);
         }
       });
     } else {
       tempSearchStore = [];
+      tempID = [];
       List tempList = [];
-      queryResultSet.forEach((element) {
-        DocumentReference data = Firestore.instance.collection('club').document(element);
-        Stream querySnapshot = data.snapshots();
-        querySnapshot.forEach((el){
-          tempList.add(el);
-        });
-        if (tempList[0].startsWith(capitalizedValue)) {
+      for (int j = 0; j < queryResultSet.length; j++) {
+        if (queryResultSet[j]['name'].startsWith(capitalizedValue)) {
           setState(() {
-            tempSearchStore.add(element);
+            tempSearchStore.add(queryResultSet[j]);
+            tempID.add(resultID[j]);
           });
         }
-        i = i+1;
-      });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     String inputSearch;
-    print(tempSearchStore);
+    print(tempID);
     return new Scaffold(
         resizeToAvoidBottomPadding: false,
         body: SafeArea(
@@ -111,15 +109,16 @@ class _SearchBarState extends State<SearchBar> {
                                           begin: Alignment.topLeft,
                                           end: Alignment.bottomRight,
                                           colors: [
-                                            Theme.of(context).accentColor,
-                                            Theme.of(context).primaryColor,
+                                            Colors.blue,
+                                            Colors.deepPurpleAccent,
+                                            Colors.purple
                                           ]),
                                       //color: Theme.of(context).primaryColor,
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(25))),
                                   child: GestureDetector(
                                     onTap: () {
-                                      Navigator.push(context,MaterialPageRoute(builder: (context) => NightClubProfile(documentID:resultID[i])));
+                                      Navigator.push(context,MaterialPageRoute(builder: (context) => NightClubProfile(documentID:tempID[index])));
                                     },
                                     child: Container(
                                       padding: EdgeInsets.only(
