@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lynight/authentification/primary_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lynight/nightCubPage/carousel.dart';
+import 'package:lynight/services/clubPictures.dart';
 import 'package:simple_slider/simple_slider.dart';
 import 'package:lynight/nightCubPage/carousel.dart';
 import 'package:lynight/services/clubPictures.dart';
