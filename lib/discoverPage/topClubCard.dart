@@ -1,8 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/services/crud.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:lynight/services/clubPictures.dart';
 
 class TopClubCard extends StatefulWidget {
   @override
@@ -46,6 +50,14 @@ class _TopClubCardState extends State<TopClubCard> {
                   itemCount: snapshot.data.documents.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, i) {
+                    Map<String,dynamic> clubDataMap;
+
+                    String currentClubId = snapshot.data.documents[i].documentID;
+//                    print(snapshot.data.documents[i].data);
+                    clubDataMap = snapshot.data.documents[i].data;
+//                    print(clubDataMap['pictures']);
+                    
+
                     return Container(
                       width: 330.0,
                       child: Padding(
@@ -56,8 +68,8 @@ class _TopClubCardState extends State<TopClubCard> {
                               children: <Widget>[
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(11.0),
-                                  child: Image.asset(
-                                    './assets/boite.jpg',
+                                  child: Image.network(
+                                    clubDataMap['pictures'][0],
                                     fit: BoxFit.cover,
                                     height: 240.0,
                                     width: 300.0,
@@ -72,7 +84,7 @@ class _TopClubCardState extends State<TopClubCard> {
                               ),
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.push(context,MaterialPageRoute(builder: (context) => NightClubProfile(documentID:snapshot.data.documents[i].documentID)));
+                                  Navigator.push(context,MaterialPageRoute(builder: (context) => NightClubProfile(documentID:currentClubId)));
                                 },
                                 child: Card(
                                   elevation: 5.0,
@@ -104,7 +116,7 @@ class _TopClubCardState extends State<TopClubCard> {
                                                 child:
                                                     Icon(Icons.chevron_right),
                                                 onPressed: () {
-                                                  Navigator.push(context,MaterialPageRoute(builder: (context) => NightClubProfile(documentID:snapshot.data.documents[i].documentID)));
+                                                  Navigator.push(context,MaterialPageRoute(builder: (context) => NightClubProfile(documentID:currentClubId)));
                                                 },
                                               ),
                                             ),

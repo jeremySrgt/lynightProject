@@ -132,11 +132,6 @@ class _UserProfilState extends State<UserProfil> {
 
   Widget userBottomSection(userData) {
     final _formKey = GlobalKey<FormState>();
-    Timestamp dob = userData['DOB'];
-    print(dob);
-    DateTime date = dob.toDate();
-    print(date);
-//    String formattedDob = DateFormat('yyyy-MM-dd').format(dob);
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
