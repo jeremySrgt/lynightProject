@@ -62,6 +62,14 @@ class _MyCheckboxState extends State<MyCheckbox>{
     );
   }
 
+  _ocelectro(bool value){
+    setState(() {
+      electro = value;
+    });
+    crudObj.createOrUpdateUserData({'music':{'electro':electro}});
+
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -91,6 +99,11 @@ class _MyCheckboxState extends State<MyCheckbox>{
             checkbox('trans', trans),
           ],
         ),
+        Row(
+          children: <Widget>[
+            Checkbox(value: electro, onChanged: _ocelectro)
+          ],
+        )
       ],
     );
   }
