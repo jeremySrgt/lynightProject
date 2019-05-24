@@ -6,6 +6,7 @@ import 'package:lynight/services/clubPictures.dart';
 import 'package:simple_slider/simple_slider.dart';
 import 'package:lynight/nightCubPage/carousel.dart';
 import 'package:lynight/services/clubPictures.dart';
+import 'package:lynight/nightCubPage/sumUpPage.dart';
 
 class NightClubProfile extends StatelessWidget {
   NightClubProfile({this.documentID});
@@ -325,7 +326,9 @@ class NightClubProfile extends StatelessWidget {
                        style: TextStyle(color: Colors.white, fontSize: 20.0)),
                    color: Theme.of(context).primaryColor,
                    textColor: Colors.black87,
-                   onPressed: (){},
+                   onPressed: (){
+                     Navigator.pushReplacementNamed(context, '/sumUpPage');
+                   },
                  ),
                      //onPressed: validateAndSubmit),
                    ],
