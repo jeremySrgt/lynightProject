@@ -14,6 +14,7 @@ class _SearchBarState extends State<SearchBar> {
   var tempSearchStore = [];
   var resultID = [];
   var tempID = [];
+  List musicType;
   var i =0;
 
   initiateSearch(value) {
@@ -27,7 +28,7 @@ class _SearchBarState extends State<SearchBar> {
     }
 
     var capitalizedValue =
-        value.substring(0, 1).toUpperCase() + value.substring(1).toUpperCase();
+        value.substring(0, 1).toUpperCase() + value.substring(1);
 
     if (queryResultSet.length == 0 && value.length == 1) {
       SearchService().searchByName(value).then((QuerySnapshot docs) {
@@ -39,9 +40,8 @@ class _SearchBarState extends State<SearchBar> {
     } else {
       tempSearchStore = [];
       tempID = [];
-      List tempList = [];
       for (int j = 0; j < queryResultSet.length; j++) {
-        if (queryResultSet[j]['name'].startsWith(capitalizedValue)) {
+        if (queryResultSet[j]['name'].toUpperCase().startsWith(capitalizedValue.toUpperCase())) {
           setState(() {
             tempSearchStore.add(queryResultSet[j]);
             tempID.add(resultID[j]);
@@ -104,10 +104,11 @@ class _SearchBarState extends State<SearchBar> {
                               margin: new EdgeInsets.symmetric(
                                   horizontal: 10.0, vertical: 6.0),
                               child: Container(
+                                height: 100,
                                   decoration: BoxDecoration(
                                       gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
+                                          begin: Alignment.bottomRight,
+                                          end: Alignment.topLeft,
                                           colors: [
                                             Colors.blue,
                                             Colors.deepPurpleAccent,
@@ -120,48 +121,47 @@ class _SearchBarState extends State<SearchBar> {
                                     onTap: () {
                                       Navigator.push(context,MaterialPageRoute(builder: (context) => NightClubProfile(documentID:tempID[index])));
                                     },
-                                    child: Container(
-                                      padding: EdgeInsets.only(
-                                          left: 5.0,
-                                          right: 5.0,
-                                          top: 5.0,
-                                          bottom: 5),
-                                      child: Column(children: [
-                                        ListTile(
-                                          leading: ClipRRect(
-                                            borderRadius:
-                                            BorderRadius.circular(100.0),
-                                            child: Container(
-                                              padding: EdgeInsets.only(top: 2.0),
-                                              width: 60.0,
-                                              height: 150.0,
-                                              decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    image: AssetImage('assets/nightClub.jpg'),
-                                                    fit: BoxFit.fill,
-                                                  )),
+                                    child: Center(
+                                      child: Container(
+                                        height: 80,
+                                        padding: EdgeInsets.only(
+                                            left: 5.0,
+                                            right: 5.0,
+                                            top: 2.0,
+                                            bottom: 1),
+                                        child: Column(children: [
+                                          ListTile(
+                                            leading: ClipRRect(
+                                              borderRadius:
+                                              BorderRadius.circular(100.0),
+                                              child: Image.network(
+                                                tempSearchStore[index]['pictures'][0],
+                                                fit: BoxFit.cover,
+                                                width: 60.0,
+                                                height: 150.0,
+                                              ),
                                             ),
-                                          ),
-                                          title: Text(
-                                              tempSearchStore[index]['name'],
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20.0,
-                                                  fontWeight: FontWeight.bold)),
-                                          subtitle: Row(children: <Widget>[
-                                            Icon(
-                                              Icons.music_note,
-                                              color: Colors.blue,
-                                            ),
-                                            Text(tempSearchStore[index]['music'].toString(),
+                                            title: Text(
+                                                tempSearchStore[index]['name'],
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontSize: 14.0)),
-                                          ]),
-                                          trailing: Icon(Icons.arrow_forward_ios,
-                                              color: Colors.white),
-                                        ),
-                                      ]),
+                                                    fontSize: 20.0,
+                                                    fontWeight: FontWeight.bold)),
+                                            subtitle: Row(children: <Widget>[
+                                              Icon(
+                                                Icons.music_note,
+                                                color: Colors.blue,
+                                              ),
+                                              Text(tempSearchStore[index]['music'].toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 14.0)),
+                                            ]),
+                                            trailing: Icon(Icons.arrow_forward_ios,
+                                                color: Colors.white),
+                                          ),
+                                        ]),
+                                      ),
                                     ),
                                   )),
                             );

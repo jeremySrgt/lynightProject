@@ -8,6 +8,7 @@ import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/authentification/root_page.dart';
 import 'package:lynight/myReservations/myReservation.dart';
 import 'package:lynight/favorites/favoritesNightClub.dart';
+import 'package:lynight/nightCubPage/sumUpPage.dart';
 
 
 void main() {
@@ -44,6 +45,7 @@ class _MyAppState extends State<MyApp> {
         '/userProfil': (BuildContext context) => UserProfil(),
         '/myReservations': (BuildContext context) => ListPage(),
         '/maps': (BuildContext context) => GoogleMapsClient(),
+        '/sumUpPage': (BuildContext context) => SumUp(),
         //'/favorites':(BuildContext context) => FavoritesNightClub(),
 
 
