@@ -30,7 +30,7 @@ class NightClubProfile extends StatelessWidget {
     var length = clubData['pictures'].length;
     print(length);
     List<String> urlTab = [];
-    //i<= 3 pour eviter de charger plus que 4 images de la base 
+    //i<= 3 pour eviter de charger plus que 4 images de la base
     for(int i = 0;i<length && i<=3 ;i++){
       urlTab.insert(i,clubData['pictures'][i]);
     }
@@ -49,6 +49,8 @@ class NightClubProfile extends StatelessWidget {
       ),
     );
   }
+
+    
 
   Widget nightClubProfileInfo(clubData, context){
     List musicStyle = clubData['music'];
@@ -96,11 +98,12 @@ class NightClubProfile extends StatelessWidget {
       ),
     );
 
-    final music2 = Container(
+    final music2 = musicStyle[2] != null ? Container(
       alignment: FractionalOffset.center,
       height: 30,
       width: 80,
-      child: Text(
+      child:
+      Text(
           musicStyle[2],
           textAlign: TextAlign.center,
       ),
@@ -110,7 +113,7 @@ class NightClubProfile extends StatelessWidget {
         border: Border.all(color: Colors.black),
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
-    );
+    ) : Container();
 
     return Container(
       child: Row(
