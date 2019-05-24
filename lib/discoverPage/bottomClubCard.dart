@@ -111,12 +111,18 @@ class _BottomClubCardState extends State<BottomClubCard>{
                 itemCount: snapshot.data.documents.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context,i){
+
+                  Map<String,dynamic> clubDataMap;
+
+                  String currentClubId = snapshot.data.documents[i].documentID;
+                  clubDataMap = snapshot.data.documents[i].data;
+
                   return Container(
                     child: Padding(
                       padding: EdgeInsets.only(left: 25.0, top: 10.0, bottom: 10.0),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(context,MaterialPageRoute(builder: (context) => NightClubProfile(documentID:snapshot.data.documents[i].documentID)));
+                          Navigator.push(context,MaterialPageRoute(builder: (context) => NightClubProfile(documentID:currentClubId)));
                         },
                         child: Card(
                           elevation: 8.0,
@@ -126,8 +132,8 @@ class _BottomClubCardState extends State<BottomClubCard>{
                                 borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(8.0),
                                     topLeft: Radius.circular(8.0)),
-                                child: Image.asset(
-                                  './assets/boite.jpg',
+                                child: Image.network(
+                                  clubDataMap['pictures'][0],
                                   fit: BoxFit.cover,
                                   height: 115,
                                   width: 120.0,

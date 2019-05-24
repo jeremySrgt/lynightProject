@@ -53,10 +53,7 @@ class _TopClubCardState extends State<TopClubCard> {
                     Map<String,dynamic> clubDataMap;
 
                     String currentClubId = snapshot.data.documents[i].documentID;
-//                    print(snapshot.data.documents[i].data);
                     clubDataMap = snapshot.data.documents[i].data;
-//                    print(clubDataMap['pictures']);
-                    
 
                     return Container(
                       width: 330.0,
