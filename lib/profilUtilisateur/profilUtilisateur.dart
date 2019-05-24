@@ -6,6 +6,7 @@ import 'package:lynight/services/crud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:lynight/profilUtilisateur/selectProfilPicture.dart';
+import 'package:lynight/profilUtilisateur/checkbox.dart';
 
 class UserProfil extends StatefulWidget {
   UserProfil({this.onSignOut});
@@ -35,6 +36,21 @@ class _UserProfilState extends State<UserProfil> {
   String userId = 'userId';
   CrudMethods crudObj = new CrudMethods();
   String userMail = 'userMail';
+  
+  String _phoneNumber;
+  String _name;
+  String _surname;
+
+  bool _notificationValue = true;
+
+
+  void _onChangedNotification(bool value){
+    setState(() {
+      _notificationValue = value;
+    });
+    crudObj.createOrUpdateUserData({'notification':_notificationValue});
+  }
+
 
   void initState() {
     super.initState();
@@ -72,6 +88,24 @@ class _UserProfilState extends State<UserProfil> {
             ),
           );
         });
+  }
+
+
+  String validateEmail(String value) {
+    if (value.isEmpty ||
+        !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+            .hasMatch(value)) {
+      return 'Saisissez un e-mail valide';
+    }
+    else
+      return null;
+  }
+
+  String validatePhone(String value) {
+    if (value.length != 10)
+      return 'Veuillez entrer un numéro valide';
+    else
+      return null;
   }
 
   @override
@@ -143,7 +177,184 @@ class _UserProfilState extends State<UserProfil> {
                   height: 20,
                 ),
                 ListTile(
-                  leading: Icon(Icons.music_note),
+                  leading: Icon(Icons.person,color: Theme.of(context).accentColor,),
+                  title: Text(
+                    "Prénom",
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor, fontSize: 18.0),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Prénom'),
+                                        onSaved: (value) => _name = value,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RaisedButton(
+                                        child: Text("Valider"),
+                                        onPressed: () {
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            _formKey.currentState.save();
+                                            crudObj.createOrUpdateUserData({'name':_name});
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                  ),
+                  subtitle: Text(
+                    userData['name'],
+                    style: TextStyle(fontSize: 15.0),
+                  ),
+                ),
+                Container(height: 20),
+                ListTile(
+                  leading: Icon(Icons.supervisor_account,color: Theme.of(context).accentColor,),
+                  title: Text(
+                    "Nom",
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor, fontSize: 18.0),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            hintText: 'Nom'),
+                                        onSaved: (value) => _surname = value,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RaisedButton(
+                                        child: Text("Valider"),
+                                        onPressed: () {
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            _formKey.currentState.save();
+                                            crudObj.createOrUpdateUserData({'surname':_surname});
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                  ),
+                  subtitle: Text(
+                    userData['surname'],
+                    style: TextStyle(fontSize: 15.0),
+                  ),
+                ),
+                Container(height: 20),
+                ListTile(
+                  leading: Icon(Icons.mail,color: Theme.of(context).accentColor,),
+                  title: Text(
+                    'Mail',
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor, fontSize: 18.0),
+                  ),
+                  subtitle: Text(
+                    userMail,
+                    style: TextStyle(fontSize: 15.0),
+                  ),
+                ),
+                Container(height: 20),
+                ListTile(
+                  leading: Icon(Icons.phone,color: Theme.of(context).accentColor,),
+                  title: Text(
+                    "Numéro",
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor, fontSize: 18.0),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        validator: validatePhone,
+                                        decoration: InputDecoration(
+                                            hintText: 'Numéro de téléphone'),
+                                        keyboardType: TextInputType.number,
+                                        onSaved: (value) => _phoneNumber = value,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: RaisedButton(
+                                        child: Text("Valider"),
+                                        onPressed: () {
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            _formKey.currentState.save();
+                                            crudObj.createOrUpdateUserData({'phone':_phoneNumber});
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                  ),
+                  subtitle: Text(
+                    userData['phone'],
+                    style: TextStyle(fontSize: 15.0),
+                  ),
+                ),
+                Container(height: 20),
+                ListTile(
+                  leading: Icon(Icons.music_note,color: Theme.of(context).accentColor,),
                   title: Text(
                     "Style de musique",
                     style: TextStyle(
@@ -165,81 +376,9 @@ class _UserProfilState extends State<UserProfil> {
                                       padding: const EdgeInsets.all(1.0),
                                       child: Column(
                                         children: <Widget>[
-                                        Container(
-                                          child: Row(
-                                            children: <Widget>[
-                                              RaisedButton(
-                                                child: Text("Pop"),
-                                                onPressed: () {},
-                                              ),
-                                              Container(
-                                                width: 5,
-                                              ),
-                                              RaisedButton(
-                                                child: Text("Chill"),
-                                                onPressed: () {},
-                                              ),
-                                              Container(
-                                                width: 5,
-                                              ),
-                                              RaisedButton(
-                                                child: Text("Hip-Hop"),
-                                                onPressed: () {},
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                          Container(
-                                            child: Row(
-                                              children: <Widget>[
-                                                RaisedButton(
-                                                  child: Text("Electro"),
-                                                  onPressed: () {},
-                                                ),
-
-                                                Container(
-                                                  width: 5,
-                                                ),
-                                                RaisedButton(
-                                                  child: Text("Rap"),
-                                                  onPressed: () {},
-                                                ),
-                                                Container(
-                                                  width: 5,
-                                                ),
-                                                RaisedButton(
-                                                  child: Text("RnB"),
-                                                  onPressed: () {},
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            child: Row(
-                                              children: <Widget>[
-                                                RaisedButton(
-                                                  child: Text("House"),
-                                                  onPressed: () {},
-                                                ),
-
-                                                Container(
-                                                  width: 5,
-                                                ),
-                                                RaisedButton(
-                                                  child: Text("Dub"),
-                                                  onPressed: () {},
-                                                ),
-                                                Container(
-                                                  width: 5,
-                                                ),
-                                                RaisedButton(
-                                                  child: Text(""),
-                                                  onPressed: () {},
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                          MyCheckbox()
                                         ],
+
                                       ),
                                     ),
                                     Padding(
@@ -271,156 +410,13 @@ class _UserProfilState extends State<UserProfil> {
                   ),
                 ),
                 Container(height: 20),
+
                 ListTile(
-                  leading: Icon(Icons.mail),
-                  title: Text(
-                    "Email",
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 18.0),
-                  ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              content: Form(
-                                key: _formKey,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        validator: validateEmail,
-                                        decoration: InputDecoration(
-                                            hintText: 'Adresse mail'),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: RaisedButton(
-                                        child: Text("Valider"),
-                                        onPressed: () {
-                                          if (_formKey.currentState
-                                              .validate()) {
-                                            _formKey.currentState.save();
-                                          }
-                                        },
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          });
-                    },
-                  ),
-                  subtitle: Text(
-                    userData['mail'],
-                    style: TextStyle(fontSize: 15.0),
-                  ),
-                ),
-                Container(height: 20),
-                ListTile(
-                  leading: Icon(Icons.phone),
-                  title: Text(
-                    "Numéro",
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 18.0),
-                  ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              content: Form(
-                                key: _formKey,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        validator: validatePhone,
-                                        decoration: InputDecoration(
-                                            hintText: 'Numéro de téléphone'),
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: RaisedButton(
-                                        child: Text("Valider"),
-                                        onPressed: () {
-                                          if (_formKey.currentState
-                                              .validate()) {
-                                            _formKey.currentState.save();
-                                          }
-                                        },
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          });
-                    },
-                  ),
-                  subtitle: Text(
-                    userData['phone'],
-                    style: TextStyle(fontSize: 15.0),
-                  ),
-                ),
-                Container(height: 20),
-                ListTile(
-                  leading: Icon(Icons.date_range),
+                  leading: Icon(Icons.date_range,color: Theme.of(context).accentColor,),
                   title: Text(
                     "Date de naissance",
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18.0),
-                  ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              content: Form(
-                                key: _formKey,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        validator: validateEmail,
-                                        decoration: InputDecoration(
-                                            hintText: 'Date de naissance'),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: RaisedButton(
-                                        child: Text("Valider"),
-                                        onPressed: () {
-                                          if (_formKey.currentState
-                                              .validate()) {
-                                            _formKey.currentState.save();
-                                          }
-                                        },
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          });
-                    },
                   ),
                   subtitle: Text(
                     DateFormat('dd/MM/yyyy').format(userData['DOB'].toDate()),
@@ -428,6 +424,15 @@ class _UserProfilState extends State<UserProfil> {
                   ),
                 ),
                 Container(height: 20),
+                ListTile(
+                  leading: Icon(Icons.notifications,color: Theme.of(context).accentColor,),
+                  title: Text(
+                    "Notification",
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor, fontSize: 18.0),
+                  ),
+                  trailing: Switch(value: _notificationValue, onChanged: _onChangedNotification),
+                ),
               ],
             ),
           ),
@@ -436,22 +441,6 @@ class _UserProfilState extends State<UserProfil> {
     );
   }
 
-  String validateEmail(String value) {
-    Pattern pattern =
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
-    if (!regex.hasMatch(value))
-      return 'Veuillez entrer un adresse valide';
-    else
-      return null;
-  }
-
-  String validatePhone(String value) {
-    if (value.length != 10)
-      return 'Veuillez entrer un numéro valide';
-    else
-      return null;
-  }
 
   Widget pageConstruct(userData, context) {
     return Scaffold(

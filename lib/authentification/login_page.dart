@@ -67,6 +67,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         widget.onSignIn();
         if (_formType == FormType.register) {
           crudObj.createOrUpdateUserData(userData.getDataMap());
+//          crudObj.createOrUpdateUserData({'mail':_email});
         }
       } catch (e) {
         setState(() {

@@ -99,7 +99,7 @@ class _SelectProfilPictureState extends State<SelectProfilPicture> {
                 Container(
                   margin: EdgeInsets.only(top: 20.0),
                   child: newProfilPic == null
-                      ? Text('sélectionnes une image')
+                      ? Text('sélectionne une image')
                       : enableUpload(),
                 )
               ],
