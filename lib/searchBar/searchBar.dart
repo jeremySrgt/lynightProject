@@ -27,7 +27,7 @@ class _SearchBarState extends State<SearchBar> {
     }
 
     var capitalizedValue =
-        value.substring(0, 1).toUpperCase() + value.substring(1).toUpperCase();
+        value.substring(0, 1).toUpperCase() + value.substring(1);
 
     if (queryResultSet.length == 0 && value.length == 1) {
       SearchService().searchByName(value).then((QuerySnapshot docs) {
@@ -39,9 +39,8 @@ class _SearchBarState extends State<SearchBar> {
     } else {
       tempSearchStore = [];
       tempID = [];
-      List tempList = [];
       for (int j = 0; j < queryResultSet.length; j++) {
-        if (queryResultSet[j]['name'].startsWith(capitalizedValue)) {
+        if (queryResultSet[j]['name'].toUpperCase().startsWith(capitalizedValue.toUpperCase())) {
           setState(() {
             tempSearchStore.add(queryResultSet[j]);
             tempID.add(resultID[j]);
