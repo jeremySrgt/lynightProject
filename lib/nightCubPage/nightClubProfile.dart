@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lynight/authentification/primary_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lynight/nightCubPage/carousel.dart';
 import 'package:lynight/services/clubPictures.dart';
 import 'package:simple_slider/simple_slider.dart';
 import 'package:lynight/nightCubPage/carousel.dart';
@@ -32,18 +30,21 @@ class NightClubProfile extends StatelessWidget {
   }
 
   Widget carouselPictureNightClubProfile(clubData, context) {
+    var length = clubData['pictures'].length;
+    print(length);
+    List<String> urlTab = [];
+    //i<= 3 pour eviter de charger plus que 4 images de la base
+    for(int i = 0;i<length && i<=3 ;i++){
+      urlTab.insert(i,clubData['pictures'][i]);
+    }
     return Container(
       height: 230,
       width: 300,
       child: PageView(
         children: <Widget>[
           ImageSliderWidget(
-            imageUrls: [
-              'https://edm.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_768/MTYwMTQwMjIxMzUzNTY4MTE2/cielo.jpg',
-              'https://cdn.vox-cdn.com/thumbor/Q9avlr0ZUyAHKJwS4BbJWeJzICQ=/0x0:3000x2000/1200x800/filters:focal(1260x760:1740x1240)/cdn.vox-cdn.com/uploads/chorus_image/image/58757193/circle_nightclub.0.jpg',
-              'https://www.como.gov/fire/wp-content/uploads/sites/26/2016/05/Marquee-Nightclub.jpg',
-              'https://www.discoverlosangeles.com/sites/default/files/styles/hero/public/media/nightlife/create_nightclub.jpg?h=a1e1a043&itok=3mpmMKc2'
-            ],
+            imageUrls:
+            urlTab,
             imageBorderRadius: BorderRadius.circular(8.0),
           ),
         ],
@@ -51,6 +52,8 @@ class NightClubProfile extends StatelessWidget {
       ),
     );
   }
+
+
 
   Widget nightClubProfileInfo(clubData, context){
     List musicStyle = clubData['music'];
@@ -98,11 +101,12 @@ class NightClubProfile extends StatelessWidget {
       ),
     );
 
-    final music2 = Container(
+    final music2 = musicStyle[2] != null ? Container(
       alignment: FractionalOffset.center,
       height: 30,
       width: 80,
-      child: Text(
+      child:
+      Text(
           musicStyle[2],
           textAlign: TextAlign.center,
       ),
@@ -112,7 +116,7 @@ class NightClubProfile extends StatelessWidget {
         border: Border.all(color: Colors.black),
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
-    );
+    ) : Container();
 
     return Container(
       child: Row(
@@ -314,6 +318,7 @@ class NightClubProfile extends StatelessWidget {
                    ),
                  ),
                ),
+               Container(height: 25),
                Container(
                  child: Row(
                    mainAxisAlignment: MainAxisAlignment.center,

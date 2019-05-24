@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/widgets.dart';
+import 'package:lynight/authentification/auth.dart';
+import 'package:lynight/nightCubPage/nightClubProfile.dart';
+import 'package:lynight/services/crud.dart';
 
 class FavoritesNightClub extends StatefulWidget {
+  final BaseAuth auth = new Auth();
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -9,101 +16,124 @@ class FavoritesNightClub extends StatefulWidget {
 }
 
 class _FavoritesNightClubState extends State<FavoritesNightClub> {
+  String userId = 'userId';
 
-  Widget _makeListTile() {
+  CrudMethods crudObj = new CrudMethods();
+
+  Map<String, dynamic> data;
+
+  void initState() {
+    super.initState();
+    widget.auth.currentUser().then((id) {
+      setState(() {
+        userId = id;
+      });
+    });
+  }
+
+  ListTile _createFavoritesCard(titre, music, clubID) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+      contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       leading: Container(
         padding: EdgeInsets.only(right: 12.0),
-        decoration: new BoxDecoration(
-            border: new Border(
-                right: new BorderSide(width: 1.0, color: Colors.white24))),
-        child: Container(
-          alignment: Alignment.center,
-          width: 55,
-          height: 55,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/nightClub.jpg'), fit: BoxFit.fill),
-              //color: Colors.redAccent,
-              borderRadius: BorderRadius.all(Radius.circular(100))),
-        ),
+        decoration: BoxDecoration(
+            border: Border(
+          right: BorderSide(width: 1.0, color: Theme.of(context).primaryColor),
+        )),
+        child: Icon(Icons.music_note, color: Theme.of(context).primaryColor),
       ),
-      title: Text("KellyKellyNightClub",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
-
-      subtitle: Column(children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Icon(
-              Icons.favorite,
-              color: Colors.red,
+      title: Text(
+        titre,
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      ),
+      subtitle: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 4,
+            child: Padding(
+              padding: EdgeInsets.only(top: 5.0),
+              child: Row(
+                children: <Widget>[
+                  Text(music),
+                ],
+              ),
             ),
-            Text("3",
-                style: TextStyle(
-                  color: Colors.white,
-                ))
-          ],
-        ),
-        Row(
-          children: <Widget>[
-            Icon(Icons.music_note, color: Colors.blueAccent),
-            Text("Electro", style: TextStyle(color: Colors.white))
-          ],
-        ),
-      ]),
+          )
+        ],
+      ),
+      trailing: Icon(Icons.keyboard_arrow_right, color: Colors.red, size: 25.0),
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => NightClubProfile(
+                      documentID: clubID,
+                    )));
+      },
     );
   }
 
-  Card makeCard() => Card(
-        color: Colors.transparent,
-        elevation: 12.0,
-        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-        child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Colors.deepOrangeAccent,
-                    Theme.of(context).primaryColor,
-                  ]),
-              //color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.all(Radius.circular(25))),
-          child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, '/nightClubProfile');
-              },
-              child: _makeListTile()),
-        ),
-      );
-
-  Widget _makeBody() {
-    return Container(
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: 2,
-        itemBuilder: (BuildContext context, int index) {
-          return makeCard();
-        },
+  Card makeCard(titre, music, clubID) {
+    return Card(
+      elevation: 8.0,
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      child: Container(
+        decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+        child: _createFavoritesCard(titre, music, clubID),
       ),
     );
+  }
+
+  Widget _clubList(clubID) {
+    return StreamBuilder(
+      stream:
+          Firestore.instance.collection('club').document(clubID).snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
+        }
+        for (int i = 0; i < snapshot.data['music'].length; i++) {
+          return makeCard(
+              snapshot.data['name'],
+              snapshot.data['music'][i],
+              clubID);
+        }
+      },
+    );
+  }
+
+  Widget favoritesList(userData) {
+    if (userData['favoris'].length <= 0) {
+      return Container(
+        child: Text("Pas de fav bg"),
+      );
+    } else {
+      return Container(
+        child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: userData['favoris'].length,
+          itemBuilder: (BuildContext context, int index) {
+            return _clubList(userData['favoris'][index]);
+          },
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    return StreamBuilder(
+      stream:
+          Firestore.instance.collection('user').document(userId).snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
+        }
 
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      body: Card(
-          color: Colors.transparent,
-          elevation: 12.0,
-          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-          child: makeCard()),
+        var userData = snapshot.data;
+        return favoritesList(userData);
+      },
     );
   }
 }

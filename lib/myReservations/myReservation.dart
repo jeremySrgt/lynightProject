@@ -6,12 +6,28 @@ import 'package:lynight/myReservations/detailReservation.dart';
 import 'package:lynight/authentification/auth.dart';
 
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lynight/services/crud.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+import 'package:lynight/profilUtilisateur/selectProfilPicture.dart';
+
+
 class ListPage extends StatefulWidget {
+  ListPage({this.onSignOut});
 
+//  final BaseAuth auth;
+  final VoidCallback onSignOut;
 
-  void _signOut() {
+  BaseAuth auth = new Auth();
 
-
+  void _signOut() async {
+    try {
+      await auth.signOut();
+      onSignOut();
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -20,11 +36,24 @@ class ListPage extends StatefulWidget {
 
 class _ListPageState extends State<ListPage> {
   List reservations;
+  String userId = 'userId';
+  CrudMethods crudObj = new CrudMethods();
+  String userMail = 'userMail';
 
   @override
   void initState() {
     reservations = getReservations();
     super.initState();
+    widget.auth.currentUser().then((id) {
+      setState(() {
+        userId = id;
+      });
+    });
+    widget.auth.userEmail().then((mail) {
+      setState(() {
+        userMail = mail;
+      });
+    });
   }
 
   @override
@@ -122,7 +151,7 @@ class _ListPageState extends State<ListPage> {
 
       body: makeBody,
       drawer: CustomSlider(
-        userMail: 'Lalal',
+        userMail: userMail,
         signOut: widget._signOut,
         activePage: 'Reservations',
       ),
