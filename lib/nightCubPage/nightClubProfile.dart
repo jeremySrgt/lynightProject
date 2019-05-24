@@ -30,7 +30,8 @@ class NightClubProfile extends StatelessWidget {
     var length = clubData['pictures'].length;
     print(length);
     List<String> urlTab = [];
-    for(int i = 0;i<length;i++){
+    //i<= 3 pour eviter de charger plus que 4 images de la base 
+    for(int i = 0;i<length && i<=3 ;i++){
       urlTab.insert(i,clubData['pictures'][i]);
     }
     return Container(
