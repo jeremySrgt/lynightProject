@@ -162,24 +162,84 @@ class _UserProfilState extends State<UserProfil> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
                                     Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                            hintText: 'Musique 1'),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                            hintText: 'Musique 2'),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                            hintText: 'Musique 3'),
+                                      padding: const EdgeInsets.all(1.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                        Container(
+                                          child: Row(
+                                            children: <Widget>[
+                                              RaisedButton(
+                                                child: Text("Pop"),
+                                                onPressed: () {},
+                                              ),
+                                              Container(
+                                                width: 5,
+                                              ),
+                                              RaisedButton(
+                                                child: Text("Chill"),
+                                                onPressed: () {},
+                                              ),
+                                              Container(
+                                                width: 5,
+                                              ),
+                                              RaisedButton(
+                                                child: Text("Hip-Hop"),
+                                                onPressed: () {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                          Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                RaisedButton(
+                                                  child: Text("Electro"),
+                                                  onPressed: () {},
+                                                ),
+
+                                                Container(
+                                                  width: 5,
+                                                ),
+                                                RaisedButton(
+                                                  child: Text("Rap"),
+                                                  onPressed: () {},
+                                                ),
+                                                Container(
+                                                  width: 5,
+                                                ),
+                                                RaisedButton(
+                                                  child: Text("RnB"),
+                                                  onPressed: () {},
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                RaisedButton(
+                                                  child: Text("House"),
+                                                  onPressed: () {},
+                                                ),
+
+                                                Container(
+                                                  width: 5,
+                                                ),
+                                                RaisedButton(
+                                                  child: Text("Dub"),
+                                                  onPressed: () {},
+                                                ),
+                                                Container(
+                                                  width: 5,
+                                                ),
+                                                RaisedButton(
+                                                  child: Text(""),
+                                                  onPressed: () {},
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     Padding(
@@ -233,6 +293,7 @@ class _UserProfilState extends State<UserProfil> {
                                     Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
+                                        validator: validateEmail,
                                         decoration: InputDecoration(
                                             hintText: 'Adresse mail'),
                                       ),
@@ -284,6 +345,7 @@ class _UserProfilState extends State<UserProfil> {
                                     Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
+                                        validator: validatePhone,
                                         decoration: InputDecoration(
                                             hintText: 'Numéro de téléphone'),
                                         keyboardType: TextInputType.number,
@@ -336,6 +398,7 @@ class _UserProfilState extends State<UserProfil> {
                                     Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: TextFormField(
+                                        validator: validateEmail,
                                         decoration: InputDecoration(
                                             hintText: 'Date de naissance'),
                                       ),
@@ -371,6 +434,23 @@ class _UserProfilState extends State<UserProfil> {
         ],
       ),
     );
+  }
+
+  String validateEmail(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value))
+      return 'Veuillez entrer un adresse valide';
+    else
+      return null;
+  }
+
+  String validatePhone(String value) {
+    if (value.length != 10)
+      return 'Veuillez entrer un numéro valide';
+    else
+      return null;
   }
 
   Widget pageConstruct(userData, context) {
@@ -409,17 +489,3 @@ class _UserProfilState extends State<UserProfil> {
     );
   }
 }
-
-/*
-CustomScrollView(slivers: <Widget>[
-
-SliverFillRemaining(
-child: Column(
-children: <Widget>[
-userInfoTopSection(userData),
-userBottomSection(userData),
-],
-),
-),
-]),
-*/

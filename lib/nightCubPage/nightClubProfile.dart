@@ -3,6 +3,9 @@ import 'package:lynight/authentification/primary_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lynight/nightCubPage/carousel.dart';
 import 'package:lynight/services/clubPictures.dart';
+import 'package:simple_slider/simple_slider.dart';
+import 'package:lynight/nightCubPage/carousel.dart';
+import 'package:lynight/services/clubPictures.dart';
 
 class NightClubProfile extends StatelessWidget {
   NightClubProfile({this.documentID});
@@ -27,9 +30,24 @@ class NightClubProfile extends StatelessWidget {
     );
   }
 
-  Widget carouselPictureNightClubProfile(clubData) {
+  Widget carouselPictureNightClubProfile(clubData, context) {
     return Container(
-      child: ImageCarousel(),
+      height: 230,
+      width: 300,
+      child: PageView(
+        children: <Widget>[
+          ImageSliderWidget(
+            imageUrls: [
+              'https://edm.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_768/MTYwMTQwMjIxMzUzNTY4MTE2/cielo.jpg',
+              'https://cdn.vox-cdn.com/thumbor/Q9avlr0ZUyAHKJwS4BbJWeJzICQ=/0x0:3000x2000/1200x800/filters:focal(1260x760:1740x1240)/cdn.vox-cdn.com/uploads/chorus_image/image/58757193/circle_nightclub.0.jpg',
+              'https://www.como.gov/fire/wp-content/uploads/sites/26/2016/05/Marquee-Nightclub.jpg',
+              'https://www.discoverlosangeles.com/sites/default/files/styles/hero/public/media/nightlife/create_nightclub.jpg?h=a1e1a043&itok=3mpmMKc2'
+            ],
+            imageBorderRadius: BorderRadius.circular(8.0),
+          ),
+        ],
+        scrollDirection: Axis.horizontal,
+      ),
     );
   }
 
@@ -48,9 +66,12 @@ class NightClubProfile extends StatelessWidget {
     final music0 = Container(
       alignment: FractionalOffset.center,
       height: 30,
-      width: 70,
-      child: Text(musicStyle[0]),
-      margin: EdgeInsets.only(left: 15.0),
+      width: 80,
+      child: Text(
+          musicStyle[0],
+        textAlign: TextAlign.center,
+      ),
+      margin: EdgeInsets.only(left: 8.0),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: Colors.black),
@@ -63,9 +84,12 @@ class NightClubProfile extends StatelessWidget {
     final music1 = Container(
       alignment: FractionalOffset.center,
       height: 30,
-      width: 70,
-      child: Text(musicStyle[1]),
-      margin: EdgeInsets.only(left: 15.0),
+      width: 80,
+      child: Text(
+          musicStyle[1],
+        textAlign: TextAlign.center,
+      ),
+      margin: EdgeInsets.only(left: 8.0),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: Colors.black),
@@ -76,9 +100,12 @@ class NightClubProfile extends StatelessWidget {
     final music2 = Container(
       alignment: FractionalOffset.center,
       height: 30,
-      width: 70,
-      child: Text(musicStyle[2]),
-      margin: EdgeInsets.only(left: 15.0),
+      width: 80,
+      child: Text(
+          musicStyle[2],
+          textAlign: TextAlign.center,
+      ),
+      margin: EdgeInsets.only(left: 8.0),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: Colors.black),
@@ -339,7 +366,7 @@ class NightClubProfile extends StatelessWidget {
             delegate: SliverChildListDelegate(
               [
                 Container(
-                  child: carouselPictureNightClubProfile(clubData),
+                  child: carouselPictureNightClubProfile(clubData, context),
                 ),
                 Container(
                   child: nightClubProfileInfo(clubData, context),
