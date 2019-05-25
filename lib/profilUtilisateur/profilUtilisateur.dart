@@ -65,6 +65,12 @@ class _UserProfilState extends State<UserProfil> {
         userMail = mail;
       });
     });
+    crudObj.getDataFromUserFromDocument().then((value){ // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+      Map<String,dynamic> dataMap = value.data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
+      setState(() {
+      _notificationValue = dataMap['notification'];
+      });
+    });
   }
 
   void _openModalBottomSheet(context) {
