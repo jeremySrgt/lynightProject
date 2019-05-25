@@ -21,6 +21,7 @@ class _CustomSliderState extends State<CustomSlider>{
 
   CrudMethods crudObj = new CrudMethods();
   String name = 'UserName';
+  String profilPicture = 'https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46';
 
   void initState() {
     super.initState();
@@ -29,20 +30,25 @@ class _CustomSliderState extends State<CustomSlider>{
       Map<String,dynamic> dataMap = value.data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
       setState(() {
         name = dataMap['name'];
+        profilPicture = dataMap['picture'];
       });
     });
   }
 
   Widget header(context) {
+
+    //peut etre faire du drawer hearder un streamBuilder pour eviter les chargement de la photo de profil a chaque ouverture du drawer
     return DrawerHeader(
       child: Column(
         children: <Widget>[
           ListTile(
             leading: CircleAvatar(
-              backgroundColor: Theme.of(context).primaryColor,
-              child: Text('U'),
+              // photo de profil
+              backgroundImage: NetworkImage(profilPicture),
+              minRadius: 25,
+              maxRadius: 25,
             ),
-            title: Text(name),
+            title: name == '' ? Text('Pas de prénom'): Text(name),
             subtitle: Text(widget.userMail),
           ),
           RaisedButton(

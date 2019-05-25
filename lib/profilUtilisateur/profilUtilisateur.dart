@@ -165,6 +165,9 @@ class _UserProfilState extends State<UserProfil> {
   }
 
   Widget userBottomSection(userData) {
+
+    Map<dynamic,dynamic> musicMap = userData['music'];
+
     final _formKey = GlobalKey<FormState>();
     return Container(
       child: Row(
@@ -373,9 +376,12 @@ class _UserProfilState extends State<UserProfil> {
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text('Musique 1'),
-                      Text('Musique 2'),
-                      Text('Musique 3'),
+                      musicMap['electro'] == true ? Text('Electro') : Container(),
+                      musicMap['populaire'] == true ? Text('Populaire') : Container(),
+                      musicMap['rap'] == true ? Text('Rap') : Container(),
+                      musicMap['rnb'] == true ? Text('RnB') : Container(),
+                      musicMap['rock'] == true ? Text('Rock') : Container(),
+                      musicMap['trans'] == true ? Text('Psytrance') : Container(),
                     ],
                   ),
                 ),

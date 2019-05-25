@@ -71,7 +71,7 @@ class _MyCheckboxState extends State<MyCheckbox> {
                   rock = value;
                 });
                 break;
-              case "trans":
+              case "psytrance":
                 setState(() {
                   trans = value;
                 });
@@ -126,7 +126,7 @@ class _MyCheckboxState extends State<MyCheckbox> {
             SizedBox(
               width: 20,
             ),
-            checkbox('trans', trans),
+            checkbox('psytrance', trans),
           ],
         ),
       ],
