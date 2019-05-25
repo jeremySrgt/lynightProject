@@ -25,10 +25,17 @@ class CrudMethods {
     return await Firestore.instance.collection(collection).snapshots();
   }
 
-  getDataFromUser(userID) async {
+
+  getDataFromUserFromDocument() async{
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    return await Firestore.instance.collection('user').document(user.uid).get();
+  }
+
+  getDataFromUser() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
     return await Firestore.instance
         .collection('user')
-        .document(userID)
+        .document(user.uid)
         .snapshots();
   }
 

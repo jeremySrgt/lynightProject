@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lynight/authentification/primary_button.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/services/userData.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title, this.auth, this.onSignIn}) : super(key: key);
@@ -22,22 +24,10 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   final TextEditingController _passwordTextController = TextEditingController();
 
   CrudMethods crudObj = new CrudMethods();
-  UserData userData = new UserData(
-    name: "",
-    surname: "",
-    dob: DateTime.now(),
-    favorites: [],
-    mail: "",
-    music: [],
-    notification: true,
-    phone: "",
-    picture: "",
-    reservation: {},
-    sex: true,
-  );
 
   String _email;
   String _password;
+  DateTime dob;
   FormType _formType = FormType.login;
   String _authHint = '';
   bool _isLoading = false;
@@ -66,8 +56,20 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         });
         widget.onSignIn();
         if (_formType == FormType.register) {
+          UserData userData = new UserData(
+            name: "",
+            surname: "",
+            dob: dob,
+            favoris: [],
+            mail: _email,
+            music: {},
+            notification: true,
+            phone: "",
+            picture: "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
+            reservation: [],
+            sex: true,
+          );
           crudObj.createOrUpdateUserData(userData.getDataMap());
-//          crudObj.createOrUpdateUserData({'mail':_email});
         }
       } catch (e) {
         setState(() {
@@ -169,6 +171,38 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     );
   }
 
+  Widget _showDatePicker() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+      child: Row(
+        children: <Widget>[
+          Icon(Icons.date_range,color: Colors.grey,),
+          FlatButton(
+            onPressed: () {
+              DatePicker.showDatePicker(
+                context,
+                showTitleActions: true,
+                minTime: DateTime(1968, 1, 1),
+                maxTime: DateTime(2030, 6, 7),
+                onConfirm: (date) {
+                  setState(() {
+                    dob = date;
+                  });
+                },
+                currentTime: DateTime.now(),
+                locale: LocaleType.fr,
+              );
+            },
+            child: Text(
+              dob == null ? 'Date de naissance' : DateFormat('dd/MM/yyyy').format(dob),
+              style: TextStyle(color: Colors.grey[600],fontSize: 16.0),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget submitWidgets() {
     switch (_formType) {
       case FormType.login:
@@ -236,6 +270,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             _formType == FormType.register
                 ? _builConfirmPasswordTextField()
                 : Container(),
+            _formType == FormType.register ? _showDatePicker() : Container(),
             SizedBox(
               height: 10.0,
             ),

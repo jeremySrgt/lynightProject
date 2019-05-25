@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lynight/services/crud.dart';
 
-
-class MyCheckbox extends StatefulWidget{
+class MyCheckbox extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -10,10 +9,8 @@ class MyCheckbox extends StatefulWidget{
   }
 }
 
-
-class _MyCheckboxState extends State<MyCheckbox>{
+class _MyCheckboxState extends State<MyCheckbox> {
   CrudMethods crudObj = new CrudMethods();
-
 
   bool electro = false;
   bool rap = false;
@@ -23,7 +20,22 @@ class _MyCheckboxState extends State<MyCheckbox>{
   bool trans = false;
 
 
+  void initState() {
+    super.initState();
 
+    crudObj.getDataFromUserFromDocument().then((value){ // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+      Map<String,dynamic> dataMap = value.data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
+      Map<dynamic, dynamic> musicMap = dataMap['music'];
+      setState(() {
+        electro = musicMap['electro'];
+        rap = musicMap['rap'];
+        rnb = musicMap['rnb'];
+        populaire = musicMap['populaire'];
+        rock = musicMap['rock'];
+        trans = musicMap['trans'];
+      });
+    });
+  }
 
   Widget checkbox(String title, bool boolValue) {
     return Column(
@@ -33,53 +45,67 @@ class _MyCheckboxState extends State<MyCheckbox>{
         Checkbox(
           value: boolValue,
           onChanged: (bool value) {
-            setState(() {
-              switch (title) {
-                case "electro":
+            switch (title) {
+              case "electro":
+                setState(() {
                   electro = value;
-                  break;
-                case "rap":
+                });
+                break;
+              case "rap":
+                setState(() {
                   rap = value;
-                  break;
-                case "rnb":
+                });
+                break;
+              case "rnb":
+                setState(() {
                   rnb = value;
-                  break;
-                case "populaire":
+                });
+                break;
+              case "populaire":
+                setState(() {
                   populaire = value;
-                  break;
-                case "rock":
+                });
+                break;
+              case "rock":
+                setState(() {
                   rock = value;
-                  break;
-                case "trans":
+                });
+                break;
+              case "trans":
+                setState(() {
                   trans = value;
-                  break;
-              }
-            });
-            crudObj.createOrUpdateUserData({'music':{'electro':electro}});
+                });
+                break;
+            }
           },
         )
       ],
     );
   }
 
-  _ocelectro(bool value){
-    setState(() {
-      electro = value;
+  _sendInfoToFireStore() {
+    crudObj.createOrUpdateUserData({
+      'music': {
+        'electro': electro,
+        'populaire': populaire,
+        'rap': rap,
+        'rnb': rnb,
+        'rock': rock,
+        'trans': trans,
+      }
     });
-    crudObj.createOrUpdateUserData({'music':{'electro':electro}});
-
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
+  Widget _checkboxStyle() {
     return Column(
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             checkbox('electro', electro),
-            SizedBox(width: 20,),
+            SizedBox(
+              width: 20,
+            ),
             checkbox('populaire', populaire),
           ],
         ),
@@ -87,7 +113,9 @@ class _MyCheckboxState extends State<MyCheckbox>{
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             checkbox('rap', rap),
-            SizedBox(width: 20,),
+            SizedBox(
+              width: 20,
+            ),
             checkbox('rnb', rnb),
           ],
         ),
@@ -95,16 +123,50 @@ class _MyCheckboxState extends State<MyCheckbox>{
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             checkbox('rock', rock),
-            SizedBox(width: 20,),
+            SizedBox(
+              width: 20,
+            ),
             checkbox('trans', trans),
           ],
         ),
-        Row(
-          children: <Widget>[
-            Checkbox(value: electro, onChanged: _ocelectro)
-          ],
-        )
       ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+
+    return AlertDialog(
+      content: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(1.0),
+              child: Column(
+                children: <Widget>[
+                  _checkboxStyle(),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RaisedButton(
+                child: Text("Valider"),
+                onPressed: () {
+                  if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
+                  }
+                  _sendInfoToFireStore();
+                  Navigator.pop(context);
+                },
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

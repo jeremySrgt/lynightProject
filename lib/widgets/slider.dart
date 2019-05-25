@@ -2,15 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/services/userData.dart';
 
-class CustomSlider extends StatelessWidget {
+class CustomSlider extends StatefulWidget {
   final String userMail;
   Function signOut;
   final String activePage;
 
-  CrudMethods crudObj = new CrudMethods();
-
-
   CustomSlider({this.userMail, this.signOut, this.activePage});
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _CustomSliderState();
+  }
+}
+
+
+class _CustomSliderState extends State<CustomSlider>{
+
+  CrudMethods crudObj = new CrudMethods();
+  String name = 'UserName';
+
+  void initState() {
+    super.initState();
+
+    crudObj.getDataFromUserFromDocument().then((value){ // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+      Map<String,dynamic> dataMap = value.data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
+      setState(() {
+        name = dataMap['name'];
+      });
+    });
+  }
 
   Widget header(context) {
     return DrawerHeader(
@@ -21,8 +42,8 @@ class CustomSlider extends StatelessWidget {
               backgroundColor: Theme.of(context).primaryColor,
               child: Text('U'),
             ),
-            title: Text('userName'),
-            subtitle: Text(userMail),
+            title: Text(name),
+            subtitle: Text(widget.userMail),
           ),
           RaisedButton(
             elevation: 5.0,
@@ -37,7 +58,7 @@ class CustomSlider extends StatelessWidget {
             ),
             color: Color(0xFFffb2b2),
             textColor: Theme.of(context).primaryColor,
-            onPressed: signOut,
+            onPressed: widget.signOut,
           ),
         ],
       ),
@@ -55,7 +76,7 @@ class CustomSlider extends StatelessWidget {
         children: <Widget>[
           header(context),
           Container(
-            decoration: activePage == 'Accueil'
+            decoration: widget.activePage == 'Accueil'
                 ? BoxDecoration(
                     color: Color(0xFFebdffc),
                     borderRadius: BorderRadius.circular(15.0))
@@ -63,7 +84,7 @@ class CustomSlider extends StatelessWidget {
             child: ListTile(
               leading: Icon(
                 Icons.home,
-                color: activePage == 'Accueil'
+                color: widget.activePage == 'Accueil'
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -71,7 +92,7 @@ class CustomSlider extends StatelessWidget {
                 'Accueil',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: activePage == 'Accueil'
+                  color: widget.activePage == 'Accueil'
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
@@ -82,7 +103,7 @@ class CustomSlider extends StatelessWidget {
             ),
           ),
           Container(
-            decoration: activePage == 'Profil'
+            decoration: widget.activePage == 'Profil'
                 ? BoxDecoration(
                     color: Color(0xFFebdffc),
                     borderRadius: BorderRadius.circular(15.0))
@@ -90,7 +111,7 @@ class CustomSlider extends StatelessWidget {
             child: ListTile(
               leading: Icon(
                 Icons.account_circle,
-                color: activePage == 'Profil'
+                color: widget.activePage == 'Profil'
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -98,7 +119,7 @@ class CustomSlider extends StatelessWidget {
                 'Profil',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: activePage == 'Profil'
+                  color: widget.activePage == 'Profil'
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
@@ -109,7 +130,7 @@ class CustomSlider extends StatelessWidget {
             ),
           ),
           Container(
-            decoration: activePage == 'Reservations'
+            decoration: widget.activePage == 'Reservations'
                 ? BoxDecoration(
                     color: Color(0xFFebdffc),
                     borderRadius: BorderRadius.circular(15.0))
@@ -117,7 +138,7 @@ class CustomSlider extends StatelessWidget {
             child: ListTile(
               leading: Icon(
                 Icons.book,
-                color: activePage == 'Reservations'
+                color: widget.activePage == 'Reservations'
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -125,7 +146,7 @@ class CustomSlider extends StatelessWidget {
                 'Réservations',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: activePage == 'Reservations'
+                  color: widget.activePage == 'Reservations'
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
@@ -136,7 +157,7 @@ class CustomSlider extends StatelessWidget {
             ),
           ),
           Container(
-            decoration: activePage == 'Maps'
+            decoration: widget.activePage == 'Maps'
                 ? BoxDecoration(
                     color: Color(0xFFebdffc),
                     borderRadius: BorderRadius.circular(15.0))
@@ -144,7 +165,7 @@ class CustomSlider extends StatelessWidget {
             child: ListTile(
               leading: Icon(
                 Icons.streetview,
-                color: activePage == 'Maps'
+                color: widget.activePage == 'Maps'
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -152,7 +173,7 @@ class CustomSlider extends StatelessWidget {
                 'Carte',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: activePage == 'Maps'
+                  color: widget.activePage == 'Maps'
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),

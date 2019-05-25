@@ -9,7 +9,7 @@ class UserData {
       this.dob,
       this.sex,
       this.music,
-      this.favorites,
+      this.favoris,
       this.notification,
       this.picture,
       this.reservation});
@@ -20,11 +20,11 @@ class UserData {
   final String phone;
   final DateTime dob;
   final bool sex;
-  final List<String> music;
-  final List<String> favorites;
+  final Map<dynamic,dynamic> music;
+  final List<String> favoris;
   final bool notification;
   final String picture;
-  final Map<String, dynamic> reservation;
+  final List<String> reservation;
 
   Map<String,dynamic> getDataMap(){
     return {
@@ -35,7 +35,7 @@ class UserData {
       "DOB":dob,
       "sex":sex,
       "music":music,
-      "favoris":favorites,
+      "favoris":favoris,
       "notification":notification,
       "picture":picture,
       "reservation":reservation
