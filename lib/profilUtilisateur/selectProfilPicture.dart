@@ -61,8 +61,8 @@ class _SelectProfilPictureState extends State<SelectProfilPicture> {
         children: <Widget>[
           Image.file(
             newProfilPic,
-            height: 300,
-            width: 300,
+            height: 200,
+            width: 200,
           ),
           _isLoading == false
               ? Container(
