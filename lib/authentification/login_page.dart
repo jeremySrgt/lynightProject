@@ -5,6 +5,7 @@ import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/services/userData.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title, this.auth, this.onSignIn}) : super(key: key);
@@ -31,6 +32,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   FormType _formType = FormType.login;
   String _authHint = '';
   bool _isLoading = false;
+  bool userSex = true;
+
+  int _radioValue = 0;
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -72,9 +76,10 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             },
             notification: true,
             phone: "",
-            picture: "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
+            picture:
+                "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
             reservation: [],
-            sex: true,
+            sex: userSex,
           );
           crudObj.createOrUpdateUserData(userData.getDataMap());
         }
@@ -183,7 +188,10 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: Row(
         children: <Widget>[
-          Icon(Icons.date_range,color: Colors.grey,),
+          Icon(
+            Icons.date_range,
+            color: Colors.grey,
+          ),
           FlatButton(
             onPressed: () {
               DatePicker.showDatePicker(
@@ -201,10 +209,56 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               );
             },
             child: Text(
-              dob == null ? 'Date de naissance' : DateFormat('dd/MM/yyyy').format(dob),
-              style: TextStyle(color: Colors.grey[600],fontSize: 16.0),
+              dob == null
+                  ? 'Date de naissance'
+                  : DateFormat('dd/MM/yyyy').format(dob),
+              style: TextStyle(color: Colors.grey[600], fontSize: 16.0),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  void _handleRadioValueChange(int value) {
+    setState(() {
+      _radioValue = value;
+
+      switch (_radioValue) {
+        case 0:
+          userSex = true;
+          break;
+        case 1:
+          userSex = false;
+          break;
+      }
+    });
+  }
+
+  Widget _showGenderSelect() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 3.0, 0.0, 0.0),
+      child: Row(
+        children: <Widget>[
+          Icon(
+            FontAwesomeIcons.venusMars,
+            color: Colors.grey,
+          ),
+          Radio(
+            value: 0,
+            groupValue: _radioValue,
+            onChanged: _handleRadioValueChange,
+          ),
+          Text(
+            'Homme',
+            style: TextStyle(color: Colors.grey[600]),
+          ),
+          Radio(
+            value: 1,
+            groupValue: _radioValue,
+            onChanged: _handleRadioValueChange,
+          ),
+          Text('Femme', style: TextStyle(color: Colors.grey[600])),
         ],
       ),
     );
@@ -281,6 +335,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             SizedBox(
               height: 10.0,
             ),
+            _formType == FormType.register ? _showGenderSelect() : Container(),
             _isLoading == false ? submitWidgets() : _showCircularProgress()
           ],
         ));

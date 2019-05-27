@@ -27,6 +27,7 @@ dependencies:
   firebase_storage: ^3.0.0
   image_picker: ^0.6.0+4
   flutter_datetime_picker: ^1.2.1
+  font_awesome_flutter: ^8.2.0
   intl: ^0.15.7
   flutter:
     sdk: flutter
