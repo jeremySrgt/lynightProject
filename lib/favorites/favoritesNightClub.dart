@@ -74,7 +74,7 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
     );
   }
 
-  Card makeCard(picture, titre, music, clubID) {
+  Card _makeCard(picture, titre, music, clubID) {
     return Card(
       elevation: 8.0,
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -93,9 +93,7 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
         }
-        print('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
-        print(snapshot.data['musics']);
-        return makeCard(snapshot.data['pictures'][0], snapshot.data['name'],
+        return _makeCard(snapshot.data['pictures'][0], snapshot.data['name'],
             snapshot.data['musics'], clubID);
       },
     );
@@ -129,7 +127,6 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
         }
-
         var userData = snapshot.data;
         return favoritesList(userData);
       },

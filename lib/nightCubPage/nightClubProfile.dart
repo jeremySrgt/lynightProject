@@ -7,22 +7,20 @@ import 'package:lynight/services/clubPictures.dart';
 import 'package:lynight/nightCubPage/sumUpPage.dart';
 import 'package:lynight/services/crud.dart';
 
-class NightClubProfile extends StatefulWidget{
+class NightClubProfile extends StatefulWidget {
   NightClubProfile({this.documentID});
 
   final String documentID;
 
-
   @override
   State<StatefulWidget> createState() {
-
     // TODO: implement createState
     return _NightClubProfile();
   }
 }
 
 class _NightClubProfile extends State<NightClubProfile> {
-
+  String userId = 'userId';
   CrudMethods crudObj = new CrudMethods();
 
   bool electro = false;
@@ -32,18 +30,22 @@ class _NightClubProfile extends State<NightClubProfile> {
   bool rock = false;
   bool trans = false;
 
+  List favorites;
 
-  void initState(){
+  void initState() {
     super.initState();
-    setState(() {
 
+    crudObj.getDataFromUserFromDocument().then((value) {// correspond à await Firestore.instance.collection('user').document(user.uid).get();
+      Map<String, dynamic> dataMap = value.data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
+      List<dynamic> favoritesAll = dataMap['favoris'];
+      setState(() {
+        favorites = favoritesAll;
+      });
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return StreamBuilder(
       stream: Firestore.instance
           .collection('club')
@@ -57,15 +59,14 @@ class _NightClubProfile extends State<NightClubProfile> {
         return pageConstruct(clubData, context);
       },
     );
-
   }
 
   Widget carouselPictureNightClubProfile(clubData, context) {
     var length = clubData['pictures'].length;
     List<String> urlTab = [];
     //i<= 3 pour eviter de charger plus que 4 images de la base
-    for(int i = 0;i<length && i<=3 ;i++){
-      urlTab.insert(i,clubData['pictures'][i]);
+    for (int i = 0; i < length && i <= 3; i++) {
+      urlTab.insert(i, clubData['pictures'][i]);
     }
     return Container(
       height: 230,
@@ -73,8 +74,7 @@ class _NightClubProfile extends State<NightClubProfile> {
       child: PageView(
         children: <Widget>[
           ImageSliderWidget(
-            imageUrls:
-            urlTab,
+            imageUrls: urlTab,
             imageBorderRadius: BorderRadius.circular(8.0),
           ),
         ],
@@ -83,15 +83,9 @@ class _NightClubProfile extends State<NightClubProfile> {
     );
   }
 
-
-
-  Widget nightClubProfileInfo(clubData, context){
-
-
+  Widget nightClubProfileInfo(clubData, context) {
     Map<dynamic, dynamic> musicMap = clubData['musics'];
-
-
-
+    bool alreadySaved = favorites.contains(widget.documentID);
 
     List musicStyle = clubData['music'];
     final linkUrlWebsite = Container(
@@ -108,7 +102,7 @@ class _NightClubProfile extends State<NightClubProfile> {
       height: 30,
       width: 80,
       child: Text(
-          musicStyle[0],
+        musicStyle[0],
         textAlign: TextAlign.center,
       ),
       margin: EdgeInsets.only(left: 8.0),
@@ -126,7 +120,7 @@ class _NightClubProfile extends State<NightClubProfile> {
       height: 30,
       width: 80,
       child: Text(
-          musicStyle[1],
+        musicStyle[1],
         textAlign: TextAlign.center,
       ),
       margin: EdgeInsets.only(left: 8.0),
@@ -137,266 +131,292 @@ class _NightClubProfile extends State<NightClubProfile> {
       ),
     );
 
-    final music2 = musicStyle[2] != null ? Container(
-      alignment: FractionalOffset.center,
-      height: 30,
-      width: 80,
-      child:
-      Text(
-          musicStyle[2],
-          textAlign: TextAlign.center,
-      ),
-      margin: EdgeInsets.only(left: 8.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.black),
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-      ),
-    ) : Container();
+    final music2 = musicStyle[2] != null
+        ? Container(
+            alignment: FractionalOffset.center,
+            height: 30,
+            width: 80,
+            child: Text(
+              musicStyle[2],
+              textAlign: TextAlign.center,
+            ),
+            margin: EdgeInsets.only(left: 8.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
+          )
+        : Container();
 
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Flexible(
-           child: Column(
-             children: <Widget>[
-               Container(
-                 alignment: Alignment.center,
-                 height: 125,
-                 child: Container(
-                   alignment: Alignment.center,
-                   decoration: BoxDecoration(
-                     color: Colors.white70,
-                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                     boxShadow: [
-                       BoxShadow(
-                         color: Colors.grey,
-                         offset: Offset(2.0, 5.0),
-                         blurRadius: 10.0,
-                       )
-                     ],
-                   ),
-                   margin: EdgeInsets.only(top: 10),
-                   height: 120,
-                   width: 350,
-                   child: Container(
-                     child: Row(
-                       children: <Widget>[
-                         Container(
-                           alignment: Alignment.center,
-                           width: 60,
-                           child: Icon(
-                             Icons.description,
-                             size: 35,
-                             color: Theme.of(context).primaryColor,
-                           ),
-                         ),
-                         VerticalDivider(),
-                         Container(
-                           alignment: FractionalOffset.center,
-                           margin: EdgeInsets.only(left: 10.0),
-                           height: 100,
-                           child: Text(
-                             'AU PIED DE L’ARC DE TRIOMPHE, SUR LA PRESTIGIEUSE AVENUE FOCH,'
-                                 'LE DUPLEX VOUS OUVRE SES PORTES TOUS LES JOURS À PARTIR DE 23H30. '
-                                 'UN LIEU TOTALEMENT REPENSÉ ET RÉNOVÉ .',
-                             style: TextStyle(fontSize: 13),
-                             textAlign: TextAlign.justify,
-                           ),
-                           width: 250,
-                         ),
-                       ],
-                     ),
-                   ),
-                 ),
-               ),
-               Container(height: 10),
-               Container(
-                 alignment: FractionalOffset.center,
-                 height: 100,
-                 child: Container(
-                   decoration: BoxDecoration(
-                     color: Colors.white70,
-                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                     boxShadow: [
-                       BoxShadow(
-                         color: Colors.grey,
-                         offset: Offset(2.0, 5.0),
-                         blurRadius: 10.0,
-                       )
-                     ],
-                   ),
-                   margin: EdgeInsets.only(top: 10),
-                   height: 80,
-                   width: 350,
-                   child: Container(
-                     child: Row(
-                       children: <Widget>[
-                         Container(
-                           alignment: FractionalOffset.center,
-                           width: 60,
-                           child: Icon(
-                             Icons.music_note,
-                             size: 35,
-                             color: Theme.of(context).primaryColor,
-                           ),
-                         ),
-                         VerticalDivider(),
-                         Container(
-                           alignment: FractionalOffset.center,
-                           height: 60,
-                           color: Colors.white10,
-                           width: 270,
-                           child: Row(
-                             children: <Widget>[
-                               musicMap['electro'] == true ? Text('Electro') : Container(),
-                               musicMap['populaire'] == true ? Text('Populaire') : Container(),
-                               musicMap['rap'] == true ? Text('Rap') : Container(),
-                               musicMap['rnb'] == true ? Text('RnB') : Container(),
-                               musicMap['rock'] == true ? Text('Rock') : Container(),
-                               musicMap['trans'] == true ? Text('Psytrance') : Container(),
-                             ],
-                           ),
-                         ),
-                       ],
-                     ),
-                   ),
-                 ),
-               ),
-               Container(
-                 alignment: FractionalOffset.center,
-                 height: 110,
-                 child: Container(
-                   decoration: BoxDecoration(
-                     color: Colors.white70,
-                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                     boxShadow: [
-                       BoxShadow(
-                         color: Colors.grey,
-                         offset: Offset(2.0, 5.0),
-                         blurRadius: 10.0,
-                       )
-                     ],
-                   ),
-                   margin: EdgeInsets.only(top: 10),
-                   height: 80,
-                   width: 350,
-                   child: Container(
-                     child: Row(
-                       children: <Widget>[
-                         Container(
-                           alignment: FractionalOffset.center,
-                           width: 60,
-                           child: Icon(
-                             Icons.contacts,
-                             size: 35,
-                             color: Theme.of(context).primaryColor,
-                           ),
-                         ),
-                         VerticalDivider(),
-                         Container(
-                             alignment: FractionalOffset.centerLeft,
-                             height: 60,
-                             color: Colors.white10,
-                             width: 270,
-                             child: Text(clubData['adress'] +
-                                 '\n' +
-                                 '\n' +
-                                 clubData['phone'])),
-                       ],
-                     ),
-                   ),
-                 ),
-               ),
-               Container(
-                 alignment: FractionalOffset.center,
-                 height: 95,
-                 child: Container(
-                   decoration: BoxDecoration(
-                     color: Colors.white70,
-                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                     boxShadow: [
-                       BoxShadow(
-                         color: Colors.grey,
-                         offset: Offset(2.0, 5.0),
-                         blurRadius: 10.0,
-                       )
-                     ],
-                   ),
-                   margin: EdgeInsets.only(top: 10),
-                   height: 80,
-                   width: 350,
-                   child: Container(
-                     child: Row(
-                       children: <Widget>[
-                         Container(
-                           alignment: FractionalOffset.center,
-                           width: 60,
-                           child: Icon(
-                             Icons.link,
-                             size: 35,
-                             color: Theme.of(context).primaryColor,
-                           ),
-                         ),
-                         VerticalDivider(),
-                         Container(
-                           alignment: FractionalOffset.center,
-                           margin: EdgeInsets.only(top: 5.0),
-                           height: 60,
-                           color: Colors.white10,
-                           width: 270,
-                           child: Row(
-                             children: <Widget>[
-                               linkUrlWebsite,
-                             ],
-                           ),
-                         ),
-                       ],
-                     ),
-                   ),
-                 ),
-               ),
-               Container(height: 25),
-               Container(
-                 child: Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: <Widget>[
-                   RaisedButton(
-                   elevation: 5.0,
-                   shape: RoundedRectangleBorder(
-                       borderRadius: BorderRadius.circular(30.0)),
-                   child: Text('Let\'s Party',
-                       style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                   color: Theme.of(context).primaryColor,
-                   textColor: Colors.black87,
-                   onPressed: (){
-                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SumUp(clubId: widget.documentID,)));
-                   },
-                 ),
-                     //onPressed: validateAndSubmit),
-                   ],
-                 ),
-               ),
-               Container(height: 30),
-
-             ],
-           ),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.center,
+                  height: 125,
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.white70,
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(2.0, 5.0),
+                          blurRadius: 10.0,
+                        )
+                      ],
+                    ),
+                    margin: EdgeInsets.only(top: 10),
+                    height: 120,
+                    width: 350,
+                    child: Container(
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.center,
+                            width: 60,
+                            child: Icon(
+                              Icons.description,
+                              size: 35,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          VerticalDivider(),
+                          Container(
+                            alignment: FractionalOffset.center,
+                            margin: EdgeInsets.only(left: 10.0),
+                            height: 100,
+                            child: Text(
+                              'AU PIED DE L’ARC DE TRIOMPHE, SUR LA PRESTIGIEUSE AVENUE FOCH,'
+                                  'LE DUPLEX VOUS OUVRE SES PORTES TOUS LES JOURS À PARTIR DE 23H30. '
+                                  'UN LIEU TOTALEMENT REPENSÉ ET RÉNOVÉ .',
+                              style: TextStyle(fontSize: 13),
+                              textAlign: TextAlign.justify,
+                            ),
+                            width: 250,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(height: 10),
+                Container(
+                  alignment: FractionalOffset.center,
+                  height: 100,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white70,
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(2.0, 5.0),
+                          blurRadius: 10.0,
+                        )
+                      ],
+                    ),
+                    margin: EdgeInsets.only(top: 10),
+                    height: 80,
+                    width: 350,
+                    child: Container(
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            alignment: FractionalOffset.center,
+                            width: 60,
+                            child: Icon(
+                              Icons.music_note,
+                              size: 35,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          VerticalDivider(),
+                          Container(
+                            alignment: FractionalOffset.center,
+                            height: 60,
+                            color: Colors.white10,
+                            width: 270,
+                            child: Row(
+                              children: <Widget>[
+                                musicMap['electro'] == true
+                                    ? Text('Electro')
+                                    : Container(),
+                                musicMap['populaire'] == true
+                                    ? Text('Populaire')
+                                    : Container(),
+                                musicMap['rap'] == true
+                                    ? Text('Rap')
+                                    : Container(),
+                                musicMap['rnb'] == true
+                                    ? Text('RnB')
+                                    : Container(),
+                                musicMap['rock'] == true
+                                    ? Text('Rock')
+                                    : Container(),
+                                musicMap['trans'] == true
+                                    ? Text('Psytrance')
+                                    : Container(),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: FractionalOffset.center,
+                  height: 110,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white70,
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(2.0, 5.0),
+                          blurRadius: 10.0,
+                        )
+                      ],
+                    ),
+                    margin: EdgeInsets.only(top: 10),
+                    height: 80,
+                    width: 350,
+                    child: Container(
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            alignment: FractionalOffset.center,
+                            width: 60,
+                            child: Icon(
+                              Icons.contacts,
+                              size: 35,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          VerticalDivider(),
+                          Container(
+                              alignment: FractionalOffset.centerLeft,
+                              height: 60,
+                              color: Colors.white10,
+                              width: 270,
+                              child: Text(clubData['adress'] +
+                                  '\n' +
+                                  '\n' +
+                                  clubData['phone'])),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: FractionalOffset.center,
+                  height: 95,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white70,
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(2.0, 5.0),
+                          blurRadius: 10.0,
+                        )
+                      ],
+                    ),
+                    margin: EdgeInsets.only(top: 10),
+                    height: 80,
+                    width: 350,
+                    child: Container(
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            alignment: FractionalOffset.center,
+                            width: 60,
+                            child: Icon(
+                              Icons.link,
+                              size: 35,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          VerticalDivider(),
+                          Container(
+                            alignment: FractionalOffset.center,
+                            margin: EdgeInsets.only(top: 5.0),
+                            height: 60,
+                            color: Colors.white10,
+                            width: 270,
+                            child: Row(
+                              children: <Widget>[
+                                linkUrlWebsite,
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(height: 25),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      RaisedButton(
+                        elevation: 5.0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)),
+                        child: Text('Let\'s Party',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 20.0)),
+                        color: Theme.of(context).primaryColor,
+                        textColor: Colors.black87,
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SumUp(
+                                        clubId: widget.documentID,
+                                      )));
+                        },
+                      ),
+                      RaisedButton(
+                        elevation: 5.0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)),
+                        child: Icon(
+                          alreadySaved ? Icons.favorite : Icons.favorite_border,
+                          color: alreadySaved ? Colors.red : Colors.red,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            if(alreadySaved){
+                            }else{
+                            }
+                          });
+                        },
+                      ),
+                      //onPressed: validateAndSubmit),
+                    ],
+                  ),
+                ),
+                Container(height: 30),
+              ],
+            ),
           )
         ],
       ),
     );
-
-
-
-
-
   }
 
-
   Widget pageConstruct(clubData, context) {
-
-
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -404,9 +424,7 @@ class _NightClubProfile extends State<NightClubProfile> {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                clubData['name']
-              ),
+              title: Text(clubData['name']),
             ),
           ),
           SliverList(
@@ -424,7 +442,5 @@ class _NightClubProfile extends State<NightClubProfile> {
         ],
       ),
     );
-
-
-    }
   }
+}
