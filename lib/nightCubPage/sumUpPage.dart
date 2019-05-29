@@ -35,8 +35,25 @@ class _SumUpState extends State<SumUp> {
   DateTime selectedDate = DateTime.now();
   GlobalKey globalKey = new GlobalKey();
   CrudMethods crudObj = CrudMethods();
+  List reservation;
   var formatByte;
   var qrImage;
+
+
+
+  void initState() {
+    super.initState();
+    //permet de choper la liste de toute les reservations
+    crudObj.getDataFromUserFromDocument().then((value){ // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+      Map<String,dynamic> dataMap = value.data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
+      List reservationList = dataMap['reservation'];
+      print(reservationList);
+      setState(() {
+        reservation = reservationList;
+      });
+    });
+  }
+
 
   Future<Uint8List> _getWidgetImage() async {
     try {
@@ -87,15 +104,20 @@ class _SumUpState extends State<SumUp> {
 //    Navigator.pop(context);
   }
 
-  addReservationToProfil(reservationUrl) {
-    Map<String, dynamic> userMap = {
-      'reservation': {
-        'boiteID': widget.clubId,
-        'date': selectedDate,
-        'qrcode': reservationUrl
-      }
+  addReservationToProfil(reservationUrl) async{
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    Map<String,dynamic> reservationInfo = {
+      'boiteID': widget.clubId,
+      'date': selectedDate,
+      'qrcode': reservationUrl
     };
-    crudObj.createOrUpdateUserData(userMap);
+
+    var mutableListOfReservation = new List.from(reservation);
+
+    mutableListOfReservation.add(reservationInfo);
+
+    Firestore.instance.collection('user').document(user.uid).updateData({"reservation": mutableListOfReservation });
+//    crudObj.createOrUpdateUserData(userMap);
   }
 
   Future<Null> _selectDate(BuildContext context) async {
