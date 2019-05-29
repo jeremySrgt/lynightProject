@@ -22,7 +22,7 @@ class _SumUpState extends State<SumUp> {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(2019 ),
+        firstDate: DateTime(2019),
         lastDate: DateTime(2030));
     if (picked != null && picked != selectedDate)
       setState(() {
@@ -61,9 +61,7 @@ class _SumUpState extends State<SumUp> {
 
   Widget userBottomSection(clubData, context) {
     return Container(
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
+      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         Flexible(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
