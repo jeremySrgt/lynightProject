@@ -50,10 +50,17 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
           Icons.music_note,
           color: Colors.blue,
         ),
-        Text(
-          music.toString(),
-          style: TextStyle(color: Colors.white, fontSize: 14.0),
-        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            music['electro'] == true ? Text('Electro/') : Container(),
+            music['populaire'] == true ? Text('Populaire/') : Container(),
+            music['rap'] == true ? Text('Rap/') : Container(),
+            music['rnb'] == true ? Text('RnB/') : Container(),
+            music['rock'] == true ? Text('Rock/') : Container(),
+            music['trans'] == true ? Text('Psytrance/') : Container(),
+          ],
+        )
       ]),
       trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
       onTap: () {
@@ -86,8 +93,10 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
         }
+        print('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+        print(snapshot.data['musics']);
         return makeCard(snapshot.data['pictures'][0], snapshot.data['name'],
-            snapshot.data['music'], clubID);
+            snapshot.data['musics'], clubID);
       },
     );
   }
