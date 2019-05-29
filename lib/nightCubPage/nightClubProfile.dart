@@ -5,19 +5,49 @@ import 'package:simple_slider/simple_slider.dart';
 import 'package:lynight/nightCubPage/carousel.dart';
 import 'package:lynight/services/clubPictures.dart';
 import 'package:lynight/nightCubPage/sumUpPage.dart';
+import 'package:lynight/services/crud.dart';
 
-class NightClubProfile extends StatelessWidget {
+class NightClubProfile extends StatefulWidget{
   NightClubProfile({this.documentID});
-
 
   final String documentID;
 
+
+  @override
+  State<StatefulWidget> createState() {
+
+    // TODO: implement createState
+    return _NightClubProfile();
+  }
+}
+
+class _NightClubProfile extends State<NightClubProfile> {
+
+  CrudMethods crudObj = new CrudMethods();
+
+  bool electro = false;
+  bool rap = false;
+  bool rnb = false;
+  bool populaire = false;
+  bool rock = false;
+  bool trans = false;
+
+
+  void initState(){
+    super.initState();
+    setState(() {
+
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
     return StreamBuilder(
       stream: Firestore.instance
           .collection('club')
-          .document(documentID)
+          .document(widget.documentID)
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
@@ -27,6 +57,7 @@ class NightClubProfile extends StatelessWidget {
         return pageConstruct(clubData, context);
       },
     );
+
   }
 
   Widget carouselPictureNightClubProfile(clubData, context) {
@@ -55,8 +86,14 @@ class NightClubProfile extends StatelessWidget {
 
 
   Widget nightClubProfileInfo(clubData, context){
-    List musicStyle = clubData['music'];
 
+
+    Map<dynamic, dynamic> musicMap = clubData['musics'];
+
+
+
+
+    List musicStyle = clubData['music'];
     final linkUrlWebsite = Container(
       margin: EdgeInsets.only(top: 10.0, left: 5.0),
       height: 60,
@@ -213,9 +250,12 @@ class NightClubProfile extends StatelessWidget {
                            width: 270,
                            child: Row(
                              children: <Widget>[
-                               music0,
-                               music1,
-                               music2,
+                               musicMap['electro'] == true ? Text('Electro') : Container(),
+                               musicMap['populaire'] == true ? Text('Populaire') : Container(),
+                               musicMap['rap'] == true ? Text('Rap') : Container(),
+                               musicMap['rnb'] == true ? Text('RnB') : Container(),
+                               musicMap['rock'] == true ? Text('Rock') : Container(),
+                               musicMap['trans'] == true ? Text('Psytrance') : Container(),
                              ],
                            ),
                          ),
@@ -331,7 +371,7 @@ class NightClubProfile extends StatelessWidget {
                    color: Theme.of(context).primaryColor,
                    textColor: Colors.black87,
                    onPressed: (){
-                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SumUp(clubId: documentID,)));
+                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SumUp(clubId: widget.documentID,)));
                    },
                  ),
                      //onPressed: validateAndSubmit),

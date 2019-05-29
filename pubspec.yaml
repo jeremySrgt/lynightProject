@@ -39,6 +39,7 @@ dependencies:
   carousel_pro: ^0.0.1
   simple_slider: ^0.0.1
   cupertino_icons: ^0.1.2
+  collection: any
 
 dev_dependencies:
   flutter_test:
