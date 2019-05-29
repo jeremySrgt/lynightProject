@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -12,11 +14,16 @@ import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'dart:async';
 import 'package:lynight/qrCode/qrCodeGeneration.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image/image.dart' as I;
 
 class SumUp extends StatefulWidget {
   final clubId;
 
   SumUp({this.clubId});
+
 
   @override
   State<StatefulWidget> createState() {
@@ -29,6 +36,7 @@ class _SumUpState extends State<SumUp> {
   GlobalKey globalKey = new GlobalKey();
   CrudMethods crudObj = CrudMethods();
   var formatByte;
+  var qrImage;
 
   Future<Uint8List> _getWidgetImage() async {
     try {
@@ -37,15 +45,57 @@ class _SumUpState extends State<SumUp> {
       var image = await boundary.toImage();
       ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
       Uint8List pngBytes = byteData.buffer.asUint8List();
-      var bs64 = base64Encode(pngBytes);
-      print(bs64);
+      I.Image imgFile = I.decodeImage(pngBytes);
+//      var test = I.encodePng(imgFile);
+
+      final Directory systemTempDir = Directory.systemTemp;
+      final File file = await new File('${systemTempDir.path}/tempimage.png').create();
+      file.writeAsBytes(pngBytes);
+
+//      var bs64 = base64Encode(pngBytes);
       print(pngBytes);
       setState(() {
         formatByte = pngBytes;
+        qrImage = file;
       });
+      uploadQrCodeToFirestore();
+
+
     } catch (exception) {
       print(exception.toString());
     }
+  }
+
+  uploadQrCodeToFirestore() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    var random = new Random();
+    final StorageReference firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child('reservations/${user.uid}/${random.nextInt(9999)}.png');
+    final StorageUploadTask task = firebaseStorageRef.putFile(qrImage);
+    if (task.isInProgress) {
+//      setState(() {
+//        _isLoading = true;
+//      });
+    }
+    var downloadUrl = await (await task.onComplete).ref.getDownloadURL();
+    var url = downloadUrl.toString();
+    addReservationToProfil(url);
+    setState(() {
+//      _isLoading = false;
+    });
+//    Navigator.pop(context);
+  }
+
+  addReservationToProfil(reservationUrl) {
+    Map<String, dynamic> userMap = {
+      'reservation': {
+        'boiteID': widget.clubId,
+        'date': selectedDate,
+        'qrcode': reservationUrl
+      }
+    };
+    crudObj.createOrUpdateUserData(userMap);
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -139,28 +189,30 @@ class _SumUpState extends State<SumUp> {
   Widget _buttonGenerateQrCode() {
     return Column(
       children: <Widget>[
-        Opacity(
-          opacity: 1.0,
-          child: Column(
-            children: [
-              RepaintBoundary(
-                key: globalKey,
-                child: QrImage(
-                  data: "jeremy",
-                  size: 200.0,
-                  version: 8,
-                  backgroundColor: Colors.white,
-                ),
-              )
-            ],
+        Stack(children: <Widget>[
+          Opacity(
+            opacity: 0.1,
+            child: Column(
+              children: [
+                RepaintBoundary(
+                  key: globalKey,
+                  child: QrImage(
+                    data: "jeremy",
+                    size: 200.0,
+                    version: 8,
+                    backgroundColor: Colors.white,
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-        RaisedButton(
-          onPressed: () {
-            _getWidgetImage();
-          },
-          child: Text('generer QR code'),
-        )
+          RaisedButton(
+            onPressed: () {
+              _getWidgetImage();
+            },
+            child: Text('generer QR code'),
+          )
+        ]),
       ],
     );
   }
@@ -176,7 +228,6 @@ class _SumUpState extends State<SumUp> {
           children: <Widget>[
             userBottomSection(clubData, context),
             _buttonGenerateQrCode(),
-            formatByte == null ? Container() : Image.memory(formatByte),
           ],
         ),
       ),
