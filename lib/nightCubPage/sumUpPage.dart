@@ -25,7 +25,6 @@ class SumUp extends StatefulWidget {
 
   SumUp({this.clubId});
 
-
   @override
   State<StatefulWidget> createState() {
     return _SumUpState();
@@ -42,13 +41,17 @@ class _SumUpState extends State<SumUp> {
   var formatByte;
   var qrImage;
 
-
+  final Shader linearGradient = LinearGradient(
+    colors: <Color>[Colors.pink, Colors.deepPurple],
+  ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
 
   void initState() {
     super.initState();
     //permet de choper la liste de toute les reservations
-    crudObj.getDataFromUserFromDocument().then((value){ // correspond à await Firestore.instance.collection('user').document(user.uid).get();
-      Map<String,dynamic> dataMap = value.data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
+    crudObj.getDataFromUserFromDocument().then((value) {
+      // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+      Map<String, dynamic> dataMap = value
+          .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
       List reservationList = dataMap['reservation'];
       print(reservationList);
       setState(() {
@@ -56,7 +59,6 @@ class _SumUpState extends State<SumUp> {
       });
     });
   }
-
 
   Future<Uint8List> _getWidgetImage() async {
     try {
@@ -69,7 +71,8 @@ class _SumUpState extends State<SumUp> {
 //      var test = I.encodePng(imgFile);
 
       final Directory systemTempDir = Directory.systemTemp;
-      final File file = await new File('${systemTempDir.path}/tempimage.png').create();
+      final File file =
+          await new File('${systemTempDir.path}/tempimage.png').create();
       file.writeAsBytes(pngBytes);
 
 //      var bs64 = base64Encode(pngBytes);
@@ -79,8 +82,6 @@ class _SumUpState extends State<SumUp> {
         qrImage = file;
       });
       uploadQrCodeToFirestore();
-
-
     } catch (exception) {
       print(exception.toString());
     }
@@ -107,9 +108,9 @@ class _SumUpState extends State<SumUp> {
 //    Navigator.pop(context);
   }
 
-  addReservationToProfil(reservationUrl) async{
+  addReservationToProfil(reservationUrl) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    Map<String,dynamic> reservationInfo = {
+    Map<String, dynamic> reservationInfo = {
       'boiteID': widget.clubId,
       'date': selectedDate,
       'qrcode': reservationUrl
@@ -119,7 +120,10 @@ class _SumUpState extends State<SumUp> {
 
     mutableListOfReservation.add(reservationInfo);
 
-    Firestore.instance.collection('user').document(user.uid).updateData({"reservation": mutableListOfReservation });
+    Firestore.instance
+        .collection('user')
+        .document(user.uid)
+        .updateData({"reservation": mutableListOfReservation});
 //    crudObj.createOrUpdateUserData(userMap);
   }
 
@@ -164,7 +168,7 @@ class _SumUpState extends State<SumUp> {
               Container(
                 alignment: FractionalOffset.center,
 //                margin: EdgeInsets.only(left: 10.0),
-                height: 300,
+                height: 400,
                 width: 300,
                 child: Column(
                   children: <Widget>[
@@ -174,6 +178,8 @@ class _SumUpState extends State<SumUp> {
                         clubData['name'],
                         style: TextStyle(
                           fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                            foreground: Paint()..shader = linearGradient
                         ),
                       ),
                     ),
@@ -183,7 +189,8 @@ class _SumUpState extends State<SumUp> {
                     Container(
                       padding: EdgeInsets.only(top: 16),
                       width: MediaQuery.of(context).size.width,
-                      height: 200,
+                      height: 300,
+
                       decoration: BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -197,6 +204,24 @@ class _SumUpState extends State<SumUp> {
                       ),
                       child: Column(
                         children: <Widget>[
+                          ListTile(
+                            leading: Icon(Icons.description),
+                            title: Text("Description",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 18.0),
+                            ),
+                            subtitle: Container(
+                                alignment: FractionalOffset.centerLeft,
+                                child: Text(
+                                  clubData['description'],
+                                  style: TextStyle(fontSize: 15.0),
+                                )
+                            ),
+                          ),
+                          Container(
+                            height: 10,
+                          ),
                           ListTile(
                             leading: Icon(Icons.access_time),
                             title: Text(
