@@ -31,7 +31,6 @@ class NightClubProfile extends StatelessWidget {
 
   Widget carouselPictureNightClubProfile(clubData, context) {
     var length = clubData['pictures'].length;
-    print(length);
     List<String> urlTab = [];
     //i<= 3 pour eviter de charger plus que 4 images de la base
     for(int i = 0;i<length && i<=3 ;i++){
@@ -332,7 +331,7 @@ class NightClubProfile extends StatelessWidget {
                    color: Theme.of(context).primaryColor,
                    textColor: Colors.black87,
                    onPressed: (){
-                     Navigator.pushReplacementNamed(context, '/sumUpPage');
+                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SumUp(clubId: documentID,)));
                    },
                  ),
                      //onPressed: validateAndSubmit),

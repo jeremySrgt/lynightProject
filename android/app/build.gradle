@@ -38,7 +38,7 @@ android {
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner" //changer a cause du bug
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner" //changer a cause du bug
         multiDexEnabled true //ajouter pour resoudre bug
     }
 
@@ -60,7 +60,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1' //changer a cause du bug
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1' //changer a cause du bug
     implementation 'com.google.firebase:firebase-core:16.0.9' //firebase
-    implementation 'com.android.support:multidex:1.0.3' //firstore pour resoudre bug
+    implementation 'androidx.multidex:multidex:2.0.1' //firstore pour resoudre bug
 }
 
 apply plugin: 'com.google.gms.google-services' // firebase utilise
