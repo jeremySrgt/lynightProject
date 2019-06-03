@@ -18,6 +18,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
 import 'package:image/image.dart' as I;
 
 class SumUp extends StatefulWidget {
@@ -40,6 +41,7 @@ class _SumUpState extends State<SumUp> {
   var qrImage;
   bool generationClicked = false;
   bool renderReady = false;
+  bool _isLoading = false;
 
   void initState() {
     super.initState();
@@ -91,17 +93,18 @@ class _SumUpState extends State<SumUp> {
         .child('reservations/${user.uid}/${random.nextInt(9999)}.png');
     final StorageUploadTask task = firebaseStorageRef.putFile(qrImage);
     if (task.isInProgress) {
-//      setState(() {
-//        _isLoading = true;
-//      });
+      setState(() {
+        _isLoading = true;
+      });
     }
     var downloadUrl = await (await task.onComplete).ref.getDownloadURL();
     var url = downloadUrl.toString();
     addReservationToProfil(url);
+//    test(context);
     setState(() {
-//      _isLoading = false;
+      _isLoading = false;
     });
-//    Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   addReservationToProfil(reservationUrl) async {
@@ -137,7 +140,7 @@ class _SumUpState extends State<SumUp> {
 
   @override
   Widget build(BuildContext context) {
-    return pageConstruct(widget.clubName, context);
+    return pageConstruct(context);
   }
 
   Widget userBottomSection(context) {
@@ -230,7 +233,45 @@ class _SumUpState extends State<SumUp> {
     );
   }
 
-  Widget pageConstruct(clubData, context) {
+  test(context) {
+    sleep(Duration(milliseconds: 5000));
+  }
+
+  Widget _showLoadingQr(context) {
+//    test(context);
+    return Opacity(
+      opacity: 0.7,
+      child: Container(
+        color: Theme.of(context).primaryColor,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 60),
+          //pas responsive du tout
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              LinearPercentIndicator(
+                width: 300.0,
+                lineHeight: 15.0,
+                animation: true,
+                animationDuration: 1050,
+                percent: 1.0,
+                progressColor: Colors.red,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 50, top: 7),
+                child: Text(
+                  'Generation QR Code',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget pageConstruct(context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
@@ -247,39 +288,16 @@ class _SumUpState extends State<SumUp> {
                   children: <Widget>[
                     _showQrGenerating(),
                     Container(
-                      height: 100,
-                      width: 100,
-                      color: Colors.red,
+                      height: 200,
+                      width: 200,
+                      color: Colors.black,
                     ),
                   ],
                 ),
               ],
             ),
           ),
-          Opacity(
-            opacity: 0.7,
-            child: Container(
-              color: Theme.of(context).primaryColor,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 60),//pas responsive du tout
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    LinearPercentIndicator(
-                      width: 300.0,
-                      lineHeight: 15.0,
-                      percent: 0.4,
-                      progressColor: Colors.red,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 50),
-                      child: Text('Generation QR Code'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
+          generationClicked == true ? _showLoadingQr(context) : Container(),
         ],
       ),
     );
