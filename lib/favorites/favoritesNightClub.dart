@@ -17,9 +17,7 @@ class FavoritesNightClub extends StatefulWidget {
 
 class _FavoritesNightClubState extends State<FavoritesNightClub> {
   String userId = 'userId';
-
   CrudMethods crudObj = new CrudMethods();
-
   Map<String, dynamic> data;
 
   void initState() {
@@ -31,37 +29,40 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
     });
   }
 
-  ListTile _createFavoritesCard(titre, music, clubID) {
+  ListTile _createFavoritesCard(picture, titre, music, clubID) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      leading: Container(
-        padding: EdgeInsets.only(right: 12.0),
-        decoration: BoxDecoration(
-            border: Border(
-          right: BorderSide(width: 1.0, color: Theme.of(context).primaryColor),
-        )),
-        child: Icon(Icons.music_note, color: Theme.of(context).primaryColor),
+      leading: ClipRRect(
+        borderRadius: BorderRadius.circular(100.0),
+        child: Image.network(
+          picture,
+          fit: BoxFit.cover,
+          width: 60.0,
+          height: 60.0,
+        ),
       ),
-      title: Text(
-        titre,
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-      ),
-      subtitle: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 4,
-            child: Padding(
-              padding: EdgeInsets.only(top: 5.0),
-              child: Row(
-                children: <Widget>[
-                  Text(music),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-      trailing: Icon(Icons.keyboard_arrow_right, color: Colors.red, size: 25.0),
+      title: Text(titre,
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold)),
+      subtitle: Row(children: <Widget>[
+        Icon(
+          Icons.music_note,
+          color: Colors.blue,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            music['electro'] == true ? Text('Electro/') : Container(),
+            music['populaire'] == true ? Text('Populaire/') : Container(),
+            music['rap'] == true ? Text('Rap/') : Container(),
+            music['rnb'] == true ? Text('RnB/') : Container(),
+            music['rock'] == true ? Text('Rock/') : Container(),
+            music['trans'] == true ? Text('Psytrance/') : Container(),
+          ],
+        )
+      ]),
+      trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
       onTap: () {
         Navigator.push(
             context,
@@ -73,13 +74,13 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
     );
   }
 
-  Card makeCard(titre, music, clubID) {
+  Card _makeCard(picture, titre, music, clubID) {
     return Card(
       elevation: 8.0,
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: Container(
         decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
-        child: _createFavoritesCard(titre, music, clubID),
+        child: _createFavoritesCard(picture, titre, music, clubID),
       ),
     );
   }
@@ -92,12 +93,8 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
         }
-        for (int i = 0; i < snapshot.data['music'].length; i++) {
-          return makeCard(
-              snapshot.data['name'],
-              snapshot.data['music'][i],
-              clubID);
-        }
+        return _makeCard(snapshot.data['pictures'][0], snapshot.data['name'],
+            snapshot.data['musics'], clubID);
       },
     );
   }
@@ -130,7 +127,6 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
         }
-
         var userData = snapshot.data;
         return favoritesList(userData);
       },
