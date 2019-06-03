@@ -29,6 +29,7 @@ class _NightClubProfile extends State<NightClubProfile> {
   bool populaire = false;
   bool rock = false;
   bool trans = false;
+  bool alreadySaved = false;
 
   List favorites;
 
@@ -42,6 +43,7 @@ class _NightClubProfile extends State<NightClubProfile> {
       List<dynamic> favoritesAll = dataMap['favoris'];
       setState(() {
         favorites = dataMap['favoris'];
+        alreadySaved = favorites.contains(widget.documentID);
       });
     });
   }
@@ -105,7 +107,6 @@ class _NightClubProfile extends State<NightClubProfile> {
 
   Widget nightClubProfileInfo(clubData, context) {
     Map<dynamic, dynamic> musicMap = clubData['musics'];
-    bool alreadySaved = favorites.contains(widget.documentID);
 
     List musicStyle = clubData['music'];
     final linkUrlWebsite = Container(
@@ -417,13 +418,14 @@ class _NightClubProfile extends State<NightClubProfile> {
                         ),
                         onPressed: () {
                           setState(() {
-                            if(alreadySaved){
+                            if (alreadySaved) {
                               removeFavorites();
-                            }else{
+                              alreadySaved = false;
+                            } else {
                               addFavorites();
+                              alreadySaved = true;
                             }
                           });
-
                         },
                       ),
                       //onPressed: validateAndSubmit),
