@@ -30,6 +30,7 @@ dependencies:
   font_awesome_flutter: ^8.2.0
   qr_flutter: ^2.0.0
   image: ^2.1.3
+  percent_indicator: ^2.0.0
   intl: ^0.15.7
   flutter:
     sdk: flutter
