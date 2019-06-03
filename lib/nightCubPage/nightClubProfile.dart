@@ -35,11 +35,13 @@ class _NightClubProfile extends State<NightClubProfile> {
   void initState() {
     super.initState();
 
-    crudObj.getDataFromUserFromDocument().then((value) {// correspond à await Firestore.instance.collection('user').document(user.uid).get();
-      Map<String, dynamic> dataMap = value.data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
+    crudObj.getDataFromUserFromDocument().then((value) {
+      // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+      Map<String, dynamic> dataMap = value
+          .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
       List<dynamic> favoritesAll = dataMap['favoris'];
       setState(() {
-        favorites = favoritesAll;
+        favorites = dataMap['favoris'];
       });
     });
   }
@@ -59,6 +61,24 @@ class _NightClubProfile extends State<NightClubProfile> {
         return pageConstruct(clubData, context);
       },
     );
+  }
+
+  addFavorites() {
+    List favoritesListTemp = new List.from(favorites);
+    favoritesListTemp.add(widget.documentID);
+    Map<String, dynamic> test = {
+      'favoris': favoritesListTemp,
+    };
+    crudObj.createOrUpdateUserData(test);
+  }
+
+  removeFavorites() {
+    List favoritesListTemp = new List.from(favorites);
+    favoritesListTemp.remove(widget.documentID);
+    Map<String, dynamic> test = {
+      'favoris': favoritesListTemp,
+    };
+    crudObj.createOrUpdateUserData(test);
   }
 
   Widget carouselPictureNightClubProfile(clubData, context) {
@@ -398,9 +418,12 @@ class _NightClubProfile extends State<NightClubProfile> {
                         onPressed: () {
                           setState(() {
                             if(alreadySaved){
+                              removeFavorites();
                             }else{
+                              addFavorites();
                             }
                           });
+
                         },
                       ),
                       //onPressed: validateAndSubmit),

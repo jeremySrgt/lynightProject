@@ -102,7 +102,9 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
   Widget favoritesList(userData) {
     if (userData['favoris'].length <= 0) {
       return Container(
-        child: Text("Pas de fav bg"),
+        child: Center(
+          child: Text("Pas de fav bg"),
+        ),
       );
     } else {
       return Container(
