@@ -17,13 +17,13 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:image/image.dart' as I;
 
 class SumUp extends StatefulWidget {
-  final clubId;
+  final String clubName;
 
-  SumUp({this.clubId});
-
+  SumUp({this.clubName});
 
   @override
   State<StatefulWidget> createState() {
@@ -38,22 +38,23 @@ class _SumUpState extends State<SumUp> {
   List reservation;
   var formatByte;
   var qrImage;
-
-
+  bool generationClicked = false;
+  bool renderReady = false;
 
   void initState() {
     super.initState();
     //permet de choper la liste de toute les reservations
-    crudObj.getDataFromUserFromDocument().then((value){ // correspond à await Firestore.instance.collection('user').document(user.uid).get();
-      Map<String,dynamic> dataMap = value.data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
+    crudObj.getDataFromUserFromDocument().then((value) {
+      // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+      Map<String, dynamic> dataMap = value
+          .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
       List reservationList = dataMap['reservation'];
-      print(reservationList);
+//      print(reservationList);
       setState(() {
         reservation = reservationList;
       });
     });
   }
-
 
   Future<Uint8List> _getWidgetImage() async {
     try {
@@ -66,7 +67,8 @@ class _SumUpState extends State<SumUp> {
 //      var test = I.encodePng(imgFile);
 
       final Directory systemTempDir = Directory.systemTemp;
-      final File file = await new File('${systemTempDir.path}/tempimage.png').create();
+      final File file =
+          await new File('${systemTempDir.path}/tempimage.png').create();
       file.writeAsBytes(pngBytes);
 
 //      var bs64 = base64Encode(pngBytes);
@@ -76,8 +78,6 @@ class _SumUpState extends State<SumUp> {
         qrImage = file;
       });
       uploadQrCodeToFirestore();
-
-
     } catch (exception) {
       print(exception.toString());
     }
@@ -104,10 +104,10 @@ class _SumUpState extends State<SumUp> {
 //    Navigator.pop(context);
   }
 
-  addReservationToProfil(reservationUrl) async{
+  addReservationToProfil(reservationUrl) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    Map<String,dynamic> reservationInfo = {
-      'boiteID': widget.clubId,
+    Map<String, dynamic> reservationInfo = {
+      'boiteID': widget.clubName,
       'date': selectedDate,
       'qrcode': reservationUrl
     };
@@ -116,7 +116,10 @@ class _SumUpState extends State<SumUp> {
 
     mutableListOfReservation.add(reservationInfo);
 
-    Firestore.instance.collection('user').document(user.uid).updateData({"reservation": mutableListOfReservation });
+    Firestore.instance
+        .collection('user')
+        .document(user.uid)
+        .updateData({"reservation": mutableListOfReservation});
 //    crudObj.createOrUpdateUserData(userMap);
   }
 
@@ -134,22 +137,10 @@ class _SumUpState extends State<SumUp> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: Firestore.instance
-          .collection('club')
-          .document(widget.clubId)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        }
-        var clubData = snapshot.data;
-        return pageConstruct(clubData, context);
-      },
-    );
+    return pageConstruct(widget.clubName, context);
   }
 
-  Widget userBottomSection(clubData, context) {
+  Widget userBottomSection(context) {
     return Container(
       margin: EdgeInsets.only(top: 30.0),
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
@@ -167,7 +158,7 @@ class _SumUpState extends State<SumUp> {
                     Container(
                       padding: const EdgeInsets.only(bottom: 8),
                       child: Text(
-                        clubData['name'],
+                        widget.clubName,
                         style: TextStyle(
                           fontSize: 20.0,
                         ),
@@ -209,33 +200,33 @@ class _SumUpState extends State<SumUp> {
   }
 
   Widget _buttonGenerateQrCode() {
-    return Column(
-      children: <Widget>[
-        Stack(children: <Widget>[
-          Opacity(
-            opacity: 0.1,
-            child: Column(
-              children: [
-                RepaintBoundary(
-                  key: globalKey,
-                  child: QrImage(
-                    data: "jeremy",
-                    size: 200.0,
-                    version: 8,
-                    backgroundColor: Colors.white,
-                  ),
-                )
-              ],
+    return RaisedButton(
+      onPressed: () {
+        setState(() {
+          generationClicked = true;
+        });
+        _getWidgetImage();
+      },
+      child: Text('generer QR code'),
+    );
+  }
+
+  _showQrGenerating() {
+    return Opacity(
+      opacity: 0.1,
+      child: Column(
+        children: [
+          RepaintBoundary(
+            key: globalKey,
+            child: QrImage(
+              data: "jeremy",
+              size: 200.0,
+              version: 8,
+              backgroundColor: Colors.white,
             ),
-          ),
-          RaisedButton(
-            onPressed: () {
-              _getWidgetImage();
-            },
-            child: Text('generer QR code'),
           )
-        ]),
-      ],
+        ],
+      ),
     );
   }
 
@@ -245,13 +236,51 @@ class _SumUpState extends State<SumUp> {
       appBar: AppBar(
         title: Text('Réservation'),
       ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            userBottomSection(clubData, context),
-            _buttonGenerateQrCode(),
-          ],
-        ),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            child: Column(
+              children: <Widget>[
+                userBottomSection(context),
+                _buttonGenerateQrCode(),
+                Stack(
+                  children: <Widget>[
+                    _showQrGenerating(),
+                    Container(
+                      height: 100,
+                      width: 100,
+                      color: Colors.red,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Opacity(
+            opacity: 0.7,
+            child: Container(
+              color: Theme.of(context).primaryColor,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 60),//pas responsive du tout
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    LinearPercentIndicator(
+                      width: 300.0,
+                      lineHeight: 15.0,
+                      percent: 0.4,
+                      progressColor: Colors.red,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 50),
+                      child: Text('Generation QR Code'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

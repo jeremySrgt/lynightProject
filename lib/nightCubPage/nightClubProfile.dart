@@ -383,7 +383,7 @@ class _NightClubProfile extends State<NightClubProfile> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SumUp(
-                                        clubId: widget.documentID,
+                                        clubName: clubData['name'],
                                       )));
                         },
                       ),
