@@ -443,6 +443,7 @@ class _NightClubProfile extends State<NightClubProfile> {
 
   Widget pageConstruct(clubData, context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
