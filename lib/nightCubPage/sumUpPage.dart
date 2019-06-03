@@ -65,7 +65,6 @@ class _SumUpState extends State<SumUp> {
     });
   }
 
-
   Future<Uint8List> _getWidgetImage() async {
     try {
       RenderRepaintBoundary boundary =
@@ -88,8 +87,6 @@ class _SumUpState extends State<SumUp> {
         qrImage = file;
       });
       uploadQrCodeToFirestore();
-
-
     } catch (exception) {
       print(exception.toString());
     }
@@ -133,7 +130,6 @@ class _SumUpState extends State<SumUp> {
         .collection('user')
         .document(user.uid)
         .updateData({"reservation": mutableListOfReservation});
-//    crudObj.createOrUpdateUserData(userMap);
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -174,10 +170,9 @@ class _SumUpState extends State<SumUp> {
                       child: Text(
                         widget.clubName,
                         style: TextStyle(
-                          fontSize: 30.0,
+                            fontSize: 30.0,
                             fontWeight: FontWeight.bold,
-                            foreground: Paint()..shader = linearGradient
-                        ),
+                            foreground: Paint()..shader = linearGradient),
                       ),
                     ),
                     Container(
@@ -187,7 +182,6 @@ class _SumUpState extends State<SumUp> {
                       padding: EdgeInsets.only(top: 16),
                       width: MediaQuery.of(context).size.width,
                       height: 300,
-
                       decoration: BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -213,9 +207,7 @@ class _SumUpState extends State<SumUp> {
                               alignment: FractionalOffset.centerLeft,
                               child: Column(
                                 children: <Widget>[
-                                  Text(
-                                      'Date choisie: ' +
-                                          dateFormat.format(selectedDate),
+                                  Text(dateFormat.format(selectedDate),
                                       style: TextStyle(
                                         fontSize: 15.0,
                                       )),
@@ -237,27 +229,6 @@ class _SumUpState extends State<SumUp> {
                                 ],
                               ),
                             ),
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          ListTile(
-                            leading: Icon(Icons.info),
-                            title: Text(
-                              "Informations utiles",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 18.0),
-                            ),
-                            subtitle: Container(
-                                alignment: FractionalOffset.centerLeft,
-                                child: Text(
-                                  clubData['adress'] +
-                                      '\n' +
-                                      '\n' +
-                                      clubData['phone'],
-                                  style: TextStyle(fontSize: 15.0),
-                                )),
                           ),
                         ],
                       ),
@@ -343,6 +314,7 @@ class _SumUpState extends State<SumUp> {
 
   Widget pageConstruct(context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Réservation'),
@@ -360,7 +332,7 @@ class _SumUpState extends State<SumUp> {
                     Container(
                       height: 200,
                       width: 200,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                   ],
                 ),

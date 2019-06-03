@@ -119,7 +119,6 @@ class _PrincipalPageState extends State<PrincipalPage>
             appBarTitle,
             style: TextStyle(
                 color: Theme.of(context).primaryColor,
-                fontFamily: 'Montserrat',
                 fontSize: 34.0,
                 fontWeight: FontWeight.w500),
           ),

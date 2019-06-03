@@ -57,6 +57,7 @@ class _SearchBarState extends State<SearchBar> {
     print(tempID);
     return new Scaffold(
         resizeToAvoidBottomPadding: false,
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: Container(
             color: Colors.transparent,
