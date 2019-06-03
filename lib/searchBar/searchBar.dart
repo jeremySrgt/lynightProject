@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lynight/searchBar/searchService.dart';
-import 'package:lynight/services/crud.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 
 class SearchBar extends StatefulWidget {
