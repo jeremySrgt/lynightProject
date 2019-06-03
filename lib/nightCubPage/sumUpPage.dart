@@ -4,6 +4,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:lynight/authentification/primary_button.dart';
@@ -33,6 +34,8 @@ class SumUp extends StatefulWidget {
 }
 
 class _SumUpState extends State<SumUp> {
+  final DateFormat dateFormat = DateFormat('dd-MM-yyyy');
+
   DateTime selectedDate = DateTime.now();
   GlobalKey globalKey = new GlobalKey();
   CrudMethods crudObj = CrudMethods();
@@ -131,7 +134,7 @@ class _SumUpState extends State<SumUp> {
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(2019),
-        lastDate: DateTime(2030));
+        lastDate: DateTime(2100));
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
@@ -146,16 +149,17 @@ class _SumUpState extends State<SumUp> {
   Widget userBottomSection(context) {
     return Container(
       margin: EdgeInsets.only(top: 30.0),
-      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+      child:
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
         Flexible(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
                 alignment: FractionalOffset.center,
-                margin: EdgeInsets.only(left: 10.0),
-                height: 200,
-                width: 250,
+//                margin: EdgeInsets.only(left: 10.0),
+                height: 300,
+                width: 300,
                 child: Column(
                   children: <Widget>[
                     Container(
@@ -163,31 +167,87 @@ class _SumUpState extends State<SumUp> {
                       child: Text(
                         widget.clubName,
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 30.0,
                         ),
                       ),
                     ),
                     Container(
-                      height: 10,
+                      height: 20,
                     ),
-                    ListTile(
-                      leading: Icon(Icons.access_time),
-                      title: Text(
-                        "Date",
-                        style: TextStyle(fontSize: 16.0),
+                    Container(
+                      padding: EdgeInsets.only(top: 16),
+                      width: MediaQuery.of(context).size.width,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.white70,
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(2.0, 5.0),
+                            blurRadius: 10.0,
+                          )
+                        ],
                       ),
-                      subtitle: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      child: Column(
                         children: <Widget>[
-                          Text("${selectedDate.toLocal()}"),
-                          SizedBox(
-                            height: 1.0,
+                          ListTile(
+                            leading: Icon(Icons.access_time),
+                            title: Text(
+                              "Date",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 18.0),
+                            ),
+                            subtitle: Container(
+                              alignment: FractionalOffset.centerLeft,
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                      'Date choisie: ' +
+                                          dateFormat.format(selectedDate),
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                      )),
+                                  RaisedButton(
+                                    elevation: 5.0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                    child: Text('Choisir une date',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.0)),
+                                    color: Theme.of(context).primaryColor,
+                                    textColor: Colors.black87,
+                                    onPressed: () {
+                                      _selectDate(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          RaisedButton(
-                            onPressed: () {
-                              _selectDate(context);
-                            },
-                            child: Text('Select date'),
+                          Container(
+                            height: 10,
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.info),
+                            title: Text(
+                              "Informations utiles",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 18.0),
+                            ),
+                            subtitle: Container(
+                                alignment: FractionalOffset.centerLeft,
+                                child: Text(
+                                  clubData['adress'] +
+                                      '\n' +
+                                      '\n' +
+                                      clubData['phone'],
+                                  style: TextStyle(fontSize: 15.0),
+                                )),
                           ),
                         ],
                       ),
