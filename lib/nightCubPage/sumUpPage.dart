@@ -34,6 +34,8 @@ class SumUp extends StatefulWidget {
 }
 
 class _SumUpState extends State<SumUp> {
+  String _value = null;
+  List<String> _values = List<String>();
   final DateFormat dateFormat = DateFormat('dd-MM-yyyy');
 
   DateTime selectedDate = DateTime.now();
@@ -140,7 +142,7 @@ class _SumUpState extends State<SumUp> {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(2019),
+        firstDate: DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day),
         lastDate: DateTime(2100));
     if (picked != null && picked != selectedDate)
       setState(() {
@@ -165,7 +167,7 @@ class _SumUpState extends State<SumUp> {
               Container(
                 alignment: FractionalOffset.center,
 //                margin: EdgeInsets.only(left: 10.0),
-                height: 400,
+                height: 250,
                 width: 300,
                 child: Column(
                   children: <Widget>[
@@ -174,10 +176,9 @@ class _SumUpState extends State<SumUp> {
                       child: Text(
                         widget.clubName,
                         style: TextStyle(
-                          fontSize: 30.0,
+                            fontSize: 30.0,
                             fontWeight: FontWeight.bold,
-                            foreground: Paint()..shader = linearGradient
-                        ),
+                            foreground: Paint()..shader = linearGradient),
                       ),
                     ),
                     Container(
@@ -186,8 +187,7 @@ class _SumUpState extends State<SumUp> {
                     Container(
                       padding: EdgeInsets.only(top: 16),
                       width: MediaQuery.of(context).size.width,
-                      height: 300,
-
+                      height: 150,
                       decoration: BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -237,27 +237,6 @@ class _SumUpState extends State<SumUp> {
                                 ],
                               ),
                             ),
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          ListTile(
-                            leading: Icon(Icons.info),
-                            title: Text(
-                              "Informations utiles",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 18.0),
-                            ),
-                            subtitle: Container(
-                                alignment: FractionalOffset.centerLeft,
-                                child: Text(
-                                  clubData['adress'] +
-                                      '\n' +
-                                      '\n' +
-                                      clubData['phone'],
-                                  style: TextStyle(fontSize: 15.0),
-                                )),
                           ),
                         ],
                       ),
