@@ -53,12 +53,12 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            music['electro'] == true ? Text('Electro/') : Container(),
-            music['populaire'] == true ? Text('Populaire/') : Container(),
-            music['rap'] == true ? Text('Rap/') : Container(),
-            music['rnb'] == true ? Text('RnB/') : Container(),
-            music['rock'] == true ? Text('Rock/') : Container(),
-            music['trans'] == true ? Text('Psytrance/') : Container(),
+            music['electro'] == true ? Text('Electro ') : Container(),
+            music['populaire'] == true ? Text('Populaire ') : Container(),
+            music['rap'] == true ? Text('Rap ') : Container(),
+            music['rnb'] == true ? Text('RnB ') : Container(),
+            music['rock'] == true ? Text('Rock ') : Container(),
+            music['trans'] == true ? Text('Psytrans ') : Container(),
           ],
         )
       ]),
