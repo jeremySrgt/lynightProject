@@ -48,23 +48,6 @@ class _NightClubProfile extends State<NightClubProfile> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: Firestore.instance
-          .collection('club')
-          .document(widget.documentID)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        }
-        var clubData = snapshot.data;
-        return pageConstruct(clubData, context);
-      },
-    );
-  }
-
   addFavorites() {
     List favoritesListTemp = new List.from(favorites);
     favoritesListTemp.add(widget.documentID);
@@ -81,6 +64,28 @@ class _NightClubProfile extends State<NightClubProfile> {
       'favoris': favoritesListTemp,
     };
     crudObj.createOrUpdateUserData(test);
+  }
+
+  Widget favoriteButton() {
+    return RaisedButton(
+      elevation: 5.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      child: Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : Colors.red,
+      ),
+      onPressed: () {
+        setState(() {
+          if (alreadySaved) {
+            removeFavorites();
+            alreadySaved = false;
+          } else {
+            addFavorites();
+            alreadySaved = true;
+          }
+        });
+      },
+    );
   }
 
   Widget carouselPictureNightClubProfile(clubData, context) {
@@ -215,8 +220,8 @@ class _NightClubProfile extends State<NightClubProfile> {
                             height: 100,
                             child: Text(
                               'AU PIED DE L’ARC DE TRIOMPHE, SUR LA PRESTIGIEUSE AVENUE FOCH,'
-                                  'LE DUPLEX VOUS OUVRE SES PORTES TOUS LES JOURS À PARTIR DE 23H30. '
-                                  'UN LIEU TOTALEMENT REPENSÉ ET RÉNOVÉ .',
+                              'LE DUPLEX VOUS OUVRE SES PORTES TOUS LES JOURS À PARTIR DE 23H30. '
+                              'UN LIEU TOTALEMENT REPENSÉ ET RÉNOVÉ .',
                               style: TextStyle(fontSize: 13),
                               textAlign: TextAlign.justify,
                             ),
@@ -408,26 +413,7 @@ class _NightClubProfile extends State<NightClubProfile> {
                                       )));
                         },
                       ),
-                      RaisedButton(
-                        elevation: 5.0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0)),
-                        child: Icon(
-                          alreadySaved ? Icons.favorite : Icons.favorite_border,
-                          color: alreadySaved ? Colors.red : Colors.red,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            if (alreadySaved) {
-                              removeFavorites();
-                              alreadySaved = false;
-                            } else {
-                              addFavorites();
-                              alreadySaved = true;
-                            }
-                          });
-                        },
-                      ),
+                      favoriteButton(),
                       //onPressed: validateAndSubmit),
                     ],
                   ),
@@ -467,6 +453,23 @@ class _NightClubProfile extends State<NightClubProfile> {
           ),
         ],
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: Firestore.instance
+          .collection('club')
+          .document(widget.documentID)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
+        }
+        var clubData = snapshot.data;
+        return pageConstruct(clubData, context);
+      },
     );
   }
 }
