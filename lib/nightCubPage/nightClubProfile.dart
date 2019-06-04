@@ -400,7 +400,7 @@ class _NightClubProfile extends State<NightClubProfile> {
                         color: Theme.of(context).primaryColor,
                         textColor: Colors.black87,
                         onPressed: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SumUp(

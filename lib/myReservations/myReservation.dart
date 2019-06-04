@@ -90,7 +90,6 @@ class _ListPageState extends State<ListPage> {
   }
 
   Widget _makeListTile(oneReservationMap) {
-    print(oneReservationMap['date']);
     Timestamp reservationDate = oneReservationMap['date'];
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -130,11 +129,11 @@ class _ListPageState extends State<ListPage> {
       ),
       trailing: Icon(Icons.keyboard_arrow_right, color: Colors.purple, size: 25.0),
       onTap: () {
-//            Navigator.push(
-//              context,
-//              MaterialPageRoute(
-//                  builder: (context) => DetailPage(reservation: reservation)),
-//            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DetailPage(reservation: oneReservationMap)),
+            );
       },
     );
   }

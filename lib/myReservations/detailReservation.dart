@@ -1,16 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lynight/myReservations/myReservation.dart';
 import 'package:lynight/myReservations/reservation.dart';
 
+class DetailPage extends StatelessWidget {
+  final Map<dynamic, dynamic> reservation;
 
-class DetailPage extends StatelessWidget{
-  final Reservation reservation;
-
-  DetailPage({Key key, this.reservation}) : super(key: key);
+  DetailPage({this.reservation});
 
   @override
   Widget build(BuildContext context) {
-
+    Timestamp reservationDate = reservation['date'];
     final topContentText = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -18,32 +19,34 @@ class DetailPage extends StatelessWidget{
         Container(
           child: Row(
             children: <Widget>[
-              Icon(Icons.date_range,
+              Icon(
+                Icons.date_range,
                 color: Colors.white,
                 size: 25.0,
               ),
               Padding(
                 padding: EdgeInsets.only(left: 7.0, top: 2.0),
-                child : Text(
-                reservation.date,
-                style: TextStyle(color: Colors.white, fontSize: 20.0),
-              ),
+                child: Text(
+                  DateFormat('dd/MM/yyyy').format(reservationDate.toDate()),
+                  style: TextStyle(color: Colors.white, fontSize: 20.0),
+                ),
               ),
             ],
           ),
         ),
         Container(
-          width: 90.0,
-          child: Divider(color: Colors.green),
+          width: 100.0,
+          child: Divider(
+            color: Colors.white,
+          ),
         ),
         SizedBox(height: 10.0),
         Text(
-          reservation.title,
+          reservation['boiteID'],
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white, fontSize: 35.0),
         ),
         SizedBox(height: 30.0),
-
       ],
     );
 
@@ -54,7 +57,7 @@ class DetailPage extends StatelessWidget{
           height: MediaQuery.of(context).size.height * 0.5,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/nightClub.jpg"),
+              image: AssetImage("assets/festival.jpg"),
               fit: BoxFit.cover,
             ),
           ),
@@ -63,7 +66,7 @@ class DetailPage extends StatelessWidget{
           height: MediaQuery.of(context).size.height * 0.5,
           padding: EdgeInsets.all(40.0),
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, .9)),
+          decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, .8)),
           child: Center(
             child: topContentText,
           ),
@@ -79,17 +82,14 @@ class DetailPage extends StatelessWidget{
           ),
         )
       ],
-
     );
 
     final readButton = Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.0),
-        child: RaisedButton(
-          onPressed: () => {},
-          color: Color.fromRGBO(58, 66, 86, 1.0),
-          child:
-          Text("QR Code maggl", style: TextStyle(color: Colors.white)),
-        ));
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      child: Image.network(
+        reservation['qrcode'],
+      ),
+    );
 
     final bottomContentText = Text(
       'QR Code',
@@ -108,16 +108,12 @@ class DetailPage extends StatelessWidget{
       ),
     );
 
-
-
-
     return Scaffold(
       resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[topContent, bottomContent],
       ),
     );
   }
-
 }
-
