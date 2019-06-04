@@ -139,6 +139,11 @@ class _ListPageState extends State<ListPage> {
   }
 
   Widget _makeBody(userReservationList) {
+    if(userReservationList.isEmpty){
+      return Center(
+        child: Text('Aucune réservation',style: TextStyle(fontSize: 20.0),),
+      );
+    }
     return Container(
       child: ListView.builder(
         scrollDirection: Axis.vertical,
@@ -154,7 +159,6 @@ class _ListPageState extends State<ListPage> {
   Widget pageConstruct(userReservationList, context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      //backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),//gris
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,

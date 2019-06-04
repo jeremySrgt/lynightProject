@@ -66,7 +66,7 @@ class DetailPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.5,
           padding: EdgeInsets.all(40.0),
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, .8)),
+          decoration: BoxDecoration(color: Color.fromRGBO(82, 0, 154, .7)),
           child: Center(
             child: topContentText,
           ),
