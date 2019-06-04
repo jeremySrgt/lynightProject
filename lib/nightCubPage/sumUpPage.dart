@@ -182,7 +182,7 @@ class _SumUpState extends State<SumUp> {
                       Container(
                         padding: EdgeInsets.only(top: 16),
                         width: MediaQuery.of(context).size.width,
-                        height: 150,
+                        height: 120,
                         decoration: BoxDecoration(
                           color: Colors.white70,
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -199,7 +199,7 @@ class _SumUpState extends State<SumUp> {
                             ListTile(
                               leading: Icon(Icons.access_time),
                               title: Text(
-                                "Date",
+                                  DateFormat('dd/MM/yyyy').format(selectedDate),
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 18.0),
@@ -208,10 +208,6 @@ class _SumUpState extends State<SumUp> {
                                 alignment: FractionalOffset.centerLeft,
                                 child: Column(
                                   children: <Widget>[
-                                    Text(dateFormat.format(selectedDate),
-                                        style: TextStyle(
-                                          fontSize: 15.0,
-                                        )),
                                     RaisedButton(
                                       elevation: 5.0,
                                       shape: RoundedRectangleBorder(
@@ -290,7 +286,7 @@ class _SumUpState extends State<SumUp> {
           RepaintBoundary(
             key: globalKey,
             child: QrImage(
-              data: "jeremy",
+              data: "${widget.clubName} - ${DateFormat('dd/MM/yyyy').format(selectedDate)}",
               size: 200.0,
               version: 8,
               backgroundColor: Colors.white,
