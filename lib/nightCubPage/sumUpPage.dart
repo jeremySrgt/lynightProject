@@ -265,17 +265,6 @@ class _SumUpState extends State<SumUp> {
         },
       ),
     );
-//    return PrimaryButton(
-//      key: new Key('login'),
-//      text: 'C\'est ok !',
-//      height: 44.0,
-//      onPressed: () {
-//        setState(() {
-//          generationClicked = true;
-//        });
-//        _getWidgetImage();
-//      },
-//    );
   }
 
   _showQrGenerating() {
