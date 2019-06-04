@@ -20,6 +20,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
+import 'package:lynight/authentification/primary_button.dart';
 import 'package:image/image.dart' as I;
 
 class SumUp extends StatefulWidget {
@@ -107,7 +108,6 @@ class _SumUpState extends State<SumUp> {
     var downloadUrl = await (await task.onComplete).ref.getDownloadURL();
     var url = downloadUrl.toString();
     addReservationToProfil(url);
-//    test(context);
     setState(() {
       _isLoading = false;
     });
@@ -150,109 +150,136 @@ class _SumUpState extends State<SumUp> {
   }
 
   Widget userBottomSection(context) {
-    return Container(
-      margin: EdgeInsets.only(top: 30.0),
-      child:
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                alignment: FractionalOffset.center,
+    return Padding(
+      padding: EdgeInsets.only(top: 150.0),
+      child: Container(
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  alignment: FractionalOffset.center,
 //                margin: EdgeInsets.only(left: 10.0),
-                height: 400,
-                width: 300,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Text(
-                        widget.clubName,
-                        style: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
-                            foreground: Paint()..shader = linearGradient),
+//                  height: 400, //ne pas definir de height permet au container de prendre seulement la place qu'il a besoin et pas plus
+                  width: 300,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          widget.clubName,
+                          style: TextStyle(
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
+                              foreground: Paint()..shader = linearGradient),
+                        ),
                       ),
-                    ),
-                    Container(
-                      height: 20,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 16),
-                      width: MediaQuery.of(context).size.width,
-                      height: 300,
-                      decoration: BoxDecoration(
-                        color: Colors.white70,
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(2.0, 5.0),
-                            blurRadius: 10.0,
-                          )
-                        ],
+                      SizedBox(
+                        height: 20.0,
                       ),
-                      child: Column(
-                        children: <Widget>[
-                          ListTile(
-                            leading: Icon(Icons.access_time),
-                            title: Text(
-                              "Date",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 18.0),
-                            ),
-                            subtitle: Container(
-                              alignment: FractionalOffset.centerLeft,
-                              child: Column(
-                                children: <Widget>[
-                                  Text(dateFormat.format(selectedDate),
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                      )),
-                                  RaisedButton(
-                                    elevation: 5.0,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
-                                    child: Text('Choisir une date',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.0)),
+                      Container(
+                        padding: EdgeInsets.only(top: 16),
+                        width: MediaQuery.of(context).size.width,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.white70,
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              offset: Offset(2.0, 5.0),
+                              blurRadius: 10.0,
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            ListTile(
+                              leading: Icon(Icons.access_time),
+                              title: Text(
+                                "Date",
+                                style: TextStyle(
                                     color: Theme.of(context).primaryColor,
-                                    textColor: Colors.black87,
-                                    onPressed: () {
-                                      _selectDate(context);
-                                    },
-                                  ),
-                                ],
+                                    fontSize: 18.0),
+                              ),
+                              subtitle: Container(
+                                alignment: FractionalOffset.centerLeft,
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(dateFormat.format(selectedDate),
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                        )),
+                                    RaisedButton(
+                                      elevation: 5.0,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5.0)),
+                                      child: Text('Choisir une date',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16.0)),
+                                      color: Theme.of(context).primaryColor,
+                                      textColor: Colors.black87,
+                                      onPressed: () {
+                                        _selectDate(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      _buttonGenerateQrCode(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 
   Widget _buttonGenerateQrCode() {
-    return RaisedButton(
-      onPressed: () {
-        setState(() {
-          generationClicked = true;
-        });
-        _getWidgetImage();
-      },
-      child: Text('generer QR code'),
+    return SizedBox(
+      height: 40.0,
+      width: 200,
+      child: RaisedButton(
+        elevation: 5.0,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        child:
+            Text('C\'est ok !', style: TextStyle(color: Colors.white, fontSize: 20.0)),
+        color: Theme.of(context).primaryColor,
+        textColor: Colors.black87,
+        onPressed: () {
+          setState(() {
+            generationClicked = true;
+          });
+          _getWidgetImage();
+        },
+      ),
     );
+//    return PrimaryButton(
+//      key: new Key('login'),
+//      text: 'C\'est ok !',
+//      height: 44.0,
+//      onPressed: () {
+//        setState(() {
+//          generationClicked = true;
+//        });
+//        _getWidgetImage();
+//      },
+//    );
   }
 
   _showQrGenerating() {
@@ -274,12 +301,7 @@ class _SumUpState extends State<SumUp> {
     );
   }
 
-  test(context) {
-    sleep(Duration(milliseconds: 5000));
-  }
-
   Widget _showLoadingQr(context) {
-//    test(context);
     return Opacity(
       opacity: 0.7,
       child: Container(
@@ -325,14 +347,17 @@ class _SumUpState extends State<SumUp> {
             child: Column(
               children: <Widget>[
                 userBottomSection(context),
-                _buttonGenerateQrCode(),
+                SizedBox(
+                  height: 12,
+                ),
                 Stack(
                   children: <Widget>[
                     _showQrGenerating(),
                     Container(
                       height: 200,
                       width: 200,
-                      color: Colors.white,
+                      color: Colors
+                          .white, // mettre Colors.red permet de voir ou est placé le qr code invisible, pratique pour debug en fonction des differentes taille de portable
                     ),
                   ],
                 ),
