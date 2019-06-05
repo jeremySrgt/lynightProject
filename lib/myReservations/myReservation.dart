@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/myReservations/reservation.dart';
@@ -10,6 +12,7 @@ import 'package:lynight/services/crud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:lynight/profilUtilisateur/selectProfilPicture.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ListPage extends StatefulWidget {
   ListPage({this.onSignOut});
@@ -77,7 +80,7 @@ class _ListPageState extends State<ListPage> {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream:
-      Firestore.instance.collection('user').document(userId).snapshots(),
+          Firestore.instance.collection('user').document(userId).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
@@ -97,8 +100,8 @@ class _ListPageState extends State<ListPage> {
         padding: EdgeInsets.only(right: 12.0),
         decoration: BoxDecoration(
             border: Border(
-              right: BorderSide(width: 1.0, color: Colors.white),
-            )),
+          right: BorderSide(width: 1.0, color: Colors.white),
+        )),
         child: Icon(Icons.music_note, color: Colors.white),
       ),
       title: Text(
@@ -111,8 +114,7 @@ class _ListPageState extends State<ListPage> {
             flex: 1,
             child: Container(
               padding: EdgeInsets.only(top: 5.0),
-              child: Icon(Icons.date_range,
-                  color: Colors.white, size: 20.0),
+              child: Icon(Icons.date_range, color: Colors.white, size: 20.0),
             ),
           ),
           Expanded(
@@ -127,8 +129,8 @@ class _ListPageState extends State<ListPage> {
           )
         ],
       ),
-      trailing: Icon(
-          Icons.keyboard_arrow_right, color: Colors.purple, size: 25.0),
+      trailing:
+          Icon(Icons.keyboard_arrow_right, color: Colors.purple, size: 25.0),
       onTap: () {
         Navigator.push(
           context,
@@ -140,9 +142,15 @@ class _ListPageState extends State<ListPage> {
   }
 
   Widget _makeBody(userReservationList) {
+    var mutableListOfReservation = new List.from(userReservationList);
+    final SlidableController slidableController = SlidableController();
+
     if (userReservationList.isEmpty) {
       return Center(
-        child: Text('Aucune réservation', style: TextStyle(fontSize: 20.0),),
+        child: Text(
+          'Aucune réservation',
+          style: TextStyle(fontSize: 20.0),
+        ),
       );
     }
     return Container(
@@ -151,19 +159,57 @@ class _ListPageState extends State<ListPage> {
         shrinkWrap: true,
         itemCount: userReservationList.length,
         itemBuilder: (BuildContext context, int index) {
-          final resa = userReservationList[index]['qrcode'];
-          return Dismissible(
-              key: Key(resa),
-              onDismissed: (direction) {
+          var date = DateFormat('dd/MM/yyyy').format(userReservationList[index]['date'].toDate());
+          return Slidable(
+            controller: slidableController,
+            key: Key(Random().nextInt(1000).toString() +
+                userReservationList[index]['date'].toString()),
+            actionPane: SlidableScrollActionPane(),
+            actionExtentRatio: 0.25,
+            secondaryActions: <Widget>[
+              IconSlideAction(
+                caption: 'Supprimer',
+                color: Colors.red,
+                icon: Icons.delete,
+                onTap: () {
+                  setState(() {
+                    mutableListOfReservation.removeAt(index);
+                    Firestore.instance
+                        .collection('user')
+                        .document(userId)
+                        .updateData({"reservation": mutableListOfReservation});
+                  });
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text("${userReservationList[index]['boiteID']} du $date Supprimé"),
+                      action: SnackBarAction(
+                        label: 'annuler',
+                        textColor: Colors.white,
+                        onPressed: () {
+                          setState(() {
+                            mutableListOfReservation.insert(index, userReservationList[index]);
+                            Firestore.instance
+                                .collection('user')
+                                .document(userId)
+                                .updateData({"reservation": mutableListOfReservation});
+                          });
+                        },
+                      )));
+                },
+              ),
+            ],
+            dismissal: SlidableDismissal(
+              child: SlidableDrawerDismissal(),
+              onDismissed: (actionType) {
                 setState(() {
-                  //
+                  mutableListOfReservation.removeAt(index);
+                  Firestore.instance
+                      .collection('user')
+                      .document(userId)
+                      .updateData({"reservation": mutableListOfReservation});
                 });
-                Scaffold.of(context)
-                    .showSnackBar(
-                    SnackBar(content: Text("reservation supprimée")));
               },
-              background: Container(color: Colors.red),
-              child: _makeCard(userReservationList[index])
+            ),
+            child: _makeCard(mutableListOfReservation[index]),
           );
         },
       ),
@@ -175,12 +221,9 @@ class _ListPageState extends State<ListPage> {
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme
-            .of(context)
-            .primaryColor,
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text('Mes reservations'),
       ),
-
       body: _makeBody(userReservationList),
       drawer: CustomSlider(
         userMail: userMail,
