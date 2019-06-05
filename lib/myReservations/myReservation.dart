@@ -59,14 +59,14 @@ class _ListPageState extends State<ListPage> {
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       child: Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.bottomRight,
-                end: Alignment.topLeft,
-                colors: [Colors.blue, Colors.deepPurpleAccent, Colors.purple]),
-            //color: Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.all(
-              Radius.circular(25),
-            ),
+          gradient: LinearGradient(
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
+              colors: [Colors.blue, Colors.deepPurpleAccent, Colors.purple]),
+          //color: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(25),
+          ),
         ),
         child: _makeListTile(oneReservationMap),
       ),
@@ -77,7 +77,7 @@ class _ListPageState extends State<ListPage> {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream:
-          Firestore.instance.collection('user').document(userId).snapshots(),
+      Firestore.instance.collection('user').document(userId).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return CircularProgressIndicator();
@@ -97,8 +97,8 @@ class _ListPageState extends State<ListPage> {
         padding: EdgeInsets.only(right: 12.0),
         decoration: BoxDecoration(
             border: Border(
-          right: BorderSide(width: 1.0, color: Colors.white),
-        )),
+              right: BorderSide(width: 1.0, color: Colors.white),
+            )),
         child: Icon(Icons.music_note, color: Colors.white),
       ),
       title: Text(
@@ -127,21 +127,22 @@ class _ListPageState extends State<ListPage> {
           )
         ],
       ),
-      trailing: Icon(Icons.keyboard_arrow_right, color: Colors.purple, size: 25.0),
+      trailing: Icon(
+          Icons.keyboard_arrow_right, color: Colors.purple, size: 25.0),
       onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => DetailPage(reservation: oneReservationMap)),
-            );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => DetailPage(reservation: oneReservationMap)),
+        );
       },
     );
   }
 
   Widget _makeBody(userReservationList) {
-    if(userReservationList.isEmpty){
+    if (userReservationList.isEmpty) {
       return Center(
-        child: Text('Aucune réservation',style: TextStyle(fontSize: 20.0),),
+        child: Text('Aucune réservation', style: TextStyle(fontSize: 20.0),),
       );
     }
     return Container(
@@ -150,7 +151,20 @@ class _ListPageState extends State<ListPage> {
         shrinkWrap: true,
         itemCount: userReservationList.length,
         itemBuilder: (BuildContext context, int index) {
-          return _makeCard(userReservationList[index]);
+          final resa = userReservationList[index]['qrcode'];
+          return Dismissible(
+              key: Key(resa),
+              onDismissed: (direction) {
+                setState(() {
+                  //
+                });
+                Scaffold.of(context)
+                    .showSnackBar(
+                    SnackBar(content: Text("reservation supprimée")));
+              },
+              background: Container(color: Colors.red),
+              child: _makeCard(userReservationList[index])
+          );
         },
       ),
     );
@@ -161,7 +175,9 @@ class _ListPageState extends State<ListPage> {
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme
+            .of(context)
+            .primaryColor,
         title: Text('Mes reservations'),
       ),
 
