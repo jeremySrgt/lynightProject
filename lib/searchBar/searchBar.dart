@@ -23,6 +23,13 @@ class _SearchBarState extends State<SearchBar> {
   var allClubsDisplay = [];
   var allClubID = [];
 
+  bool electro = false;
+  bool rap = false;
+  bool rnb = false;
+  bool populaire = false;
+  bool rock = false;
+  bool trans = false;
+
   final strController = TextEditingController();
 
   @override
@@ -139,6 +146,8 @@ class _SearchBarState extends State<SearchBar> {
                   scrollDirection: Axis.vertical,
                   itemCount: allClubsDisplay.length,
                   itemBuilder: (context, index) {
+                    Map<dynamic, dynamic> musicMap = allClubsDisplay[index]['musics'];
+
                     return Card(
                       color: Colors.transparent,
                       elevation: 12.0,
@@ -193,12 +202,22 @@ class _SearchBarState extends State<SearchBar> {
                                         Icons.music_note,
                                         color: Colors.blue,
                                       ),
-                                      Text(
-                                          allClubsDisplay[index]['music']
-                                              .toString(),
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14.0)),
+                                      Row(
+                                        children: <Widget>[
+                                          musicMap['electro'] == true
+                                              ? Text('Electro ', style: TextStyle(color: Colors.white),)
+                                              : Container(),
+                                          musicMap['populaire'] == true
+                                              ? Text('Populaire ', style: TextStyle(color: Colors.white),)
+                                              : Container(),
+                                          musicMap['rap'] == true ? Text('Rap ', style: TextStyle(color: Colors.white),) : Container(),
+                                          musicMap['rnb'] == true ? Text('RnB ', style: TextStyle(color: Colors.white),) : Container(),
+                                          musicMap['rock'] == true ? Text('Rock ', style: TextStyle(color: Colors.white),) : Container(),
+                                          musicMap['trans'] == true
+                                              ? Text('Psytrans ', style: TextStyle(color: Colors.white),)
+                                              : Container(),
+                                        ],
+                                      )
                                     ]),
                                     trailing: Icon(Icons.arrow_forward_ios,
                                         color: Colors.white),
@@ -247,6 +266,8 @@ class _SearchBarState extends State<SearchBar> {
                 scrollDirection: Axis.vertical,
                 itemCount: tempSearchStore.length,
                 itemBuilder: (context, index) {
+                  Map<dynamic, dynamic> musicMap = tempSearchStore[index]['musics'];
+
                   return Card(
                     color: Colors.transparent,
                     elevation: 12.0,
@@ -300,12 +321,22 @@ class _SearchBarState extends State<SearchBar> {
                                       Icons.music_note,
                                       color: Colors.blue,
                                     ),
-                                    Text(
-                                        tempSearchStore[index]['music']
-                                            .toString(),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14.0)),
+                                    Row(
+                                      children: <Widget>[
+                                        musicMap['electro'] == true
+                                            ? Text('Electro ', style: TextStyle(color: Colors.white),)
+                                            : Container(),
+                                        musicMap['populaire'] == true
+                                            ? Text('Populaire ', style: TextStyle(color: Colors.white),)
+                                            : Container(),
+                                        musicMap['rap'] == true ? Text('Rap ', style: TextStyle(color: Colors.white),) : Container(),
+                                        musicMap['rnb'] == true ? Text('RnB ', style: TextStyle(color: Colors.white),) : Container(),
+                                        musicMap['rock'] == true ? Text('Rock ', style: TextStyle(color: Colors.white),) : Container(),
+                                        musicMap['trans'] == true
+                                            ? Text('Psytrans ', style: TextStyle(color: Colors.white),)
+                                            : Container(),
+                                      ],
+                                    )
                                   ]),
                                   trailing: Icon(Icons.arrow_forward_ios,
                                       color: Colors.white),
