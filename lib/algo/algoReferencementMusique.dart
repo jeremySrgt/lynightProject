@@ -60,17 +60,9 @@ class AlgoMusicReference {
     for(int i=0; i<= 2; i++) {
       if (dataClubFromBDD != null) {
         var clubI = dataClubFromBDD[i].data;
-        //print('--------------------------------------------------');
-        //print(clubI);
-        //print(clubMap);
-        /*print('--------------------------------------------------');
-        //print(clubI);
-        print('--------------------------------------------------');
-        print('Club i : ');*/
-        //print(clubI);
+
         listClubFromDatabase.add(clubI);
-        //print(clubI[i]);
-        //print(listClubFromDatabase);
+
       }
     }
     print(listClubFromDatabase.length);
@@ -82,25 +74,15 @@ class AlgoMusicReference {
     Map<dynamic, dynamic> clubMap;
     if(getClubMusic() != null) {
       for (int i = 0; i < getClubMusic().length; i++) {
-        print('Valur de ghetClubMusic');
-        print(getClubMusic());
+
         List clubMusicList = getClubMusic();
         var club1 = clubMusicList[i];
-        print(clubMusicList[i]);
-        //print('valeur club1 vide en theorie');
-        //print(club1);
-        print('******************');
-        print('nom du club traité');
-        print(club1['name']);
-        //print(club1);
+
         clubMap = club1['musics'];
-        print('Club Map : ');
-        print(clubMap);
-        //print('++++++++++++++');
+
         listMapMusicClub.add(clubMap);
       }
-      print('valeur de retrou de getLMusqicsofClubMap');
-      print(listMapMusicClub);
+
       return listMapMusicClub;
 
     }
@@ -114,14 +96,11 @@ class AlgoMusicReference {
         var clubName;
         clubName = getClubMusic()[i];
         clubNameForReal = clubName['name'];
-        //print('nom du club');
-        //print(clubNameForReal);
+
         listNameClub.add(clubNameForReal);
-        print('Liste des noms 1 par 1 enb théorie');
-        print(listNameClub[i]);
+
       }
-      print('Affichage de la liste dans getClubName');
-      print(listNameClub);
+
       return listNameClub;
 
     }
@@ -145,25 +124,13 @@ class AlgoMusicReference {
 
 
     for (int i = 0; i < getMusic.length ; i++) {
-      print('getMusic for');
-      print(getMusic);
+
 
       if (getMusic != null) {
-        print('GetMusic if');
-        print(getMusic);
+
         Map<dynamic, dynamic> mapOfMusicFromList = getMusic[i];
         List<String> nameOfClubList = getClubName();
-        print(nameOfClubList[0]);
-        print('Liste des noms de club : ');
-        print(nameOfClubList);
-        print('1 par 1 le retour de getMusicOfClubMap en theorie');
-        print(mapOfMusicFromList);
-        print('--------------------------------------------------');
-        print('Valeur de user : ');
-        print(mapOfUserMusics);
-        print('--------------------------------------------------');
-        print('getMusicofClubMap');
-        print(getMusic);
+
 
         if ( (mapOfUserMusics['populaire'] == mapOfMusicFromList['populaire']) && (mapOfUserMusics['populaire'] == true) ) {
           print('debut de la boucle de verif de style de music');
