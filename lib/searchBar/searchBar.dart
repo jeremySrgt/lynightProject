@@ -94,14 +94,14 @@ class _SearchBarState extends State<SearchBar> {
         backgroundColor: Colors.white,
         body: SafeArea(
           child: Container(
-            color: Colors.transparent,
+            color: Colors.white,
             child: Column(children: [
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     color: Colors.white,
-                    border: Border.all(color: Theme.of(context).accentColor)),
+                    border: Border.all(color: Colors.deepPurpleAccent)),
                 child: ListTile(
                   leading: Icon(
                     Icons.search,
@@ -157,12 +157,11 @@ class _SearchBarState extends State<SearchBar> {
                           height: 100,
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                  begin: Alignment.bottomRight,
-                                  end: Alignment.topLeft,
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
                                   colors: [
-                                    Colors.blue,
-                                    Colors.deepPurpleAccent,
-                                    Colors.purple
+                                    Color.fromRGBO(	212, 63, 141, 1),
+                                    Color.fromRGBO(		2, 80, 197, 1)
                                   ]),
                               //color: Theme.of(context).primaryColor,
                               borderRadius:

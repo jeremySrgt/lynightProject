@@ -83,11 +83,20 @@ class _PrincipalPageState extends State<PrincipalPage>
 
   Widget bottomNavigation() {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromRGBO(	212, 63, 141, 1),
+                Color.fromRGBO(		2, 80, 197, 1)
+              ]),
+          //color: Theme.of(context).primaryColor,
+         ),
       child: TabBar(
           controller: _controller,
-          unselectedLabelColor: Colors.black,
-          labelColor: Theme.of(context).primaryColor,
+          unselectedLabelColor: Colors.white,
+          labelColor: Colors.white,
           indicatorColor: Colors.white,
           tabs: [
             Tab(
