@@ -7,6 +7,8 @@ import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:lynight/services/clubPictures.dart';
+import 'package:lynight/algo/algoReferencementMusique.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class TopClubCard extends StatefulWidget {
   @override
@@ -17,7 +19,9 @@ class TopClubCard extends StatefulWidget {
 }
 
 class _TopClubCardState extends State<TopClubCard> {
+
   CrudMethods crudObj = new CrudMethods();
+  AlgoMusicReference algoTest = new AlgoMusicReference(user: 'AzqV0Q3rcHQiE97XRC8XtGme78y1', mapOfUserMusics: {'populaire': true, 'rap': false, 'rock': true, 'electro': false, 'rnb': false, 'trans': true});
   Stream club;
 
   @override
@@ -37,7 +41,9 @@ class _TopClubCardState extends State<TopClubCard> {
     );
   }
 
+
   Widget clubList() {
+    algoTest.compareMusic();
     if (club != null) {
       return StreamBuilder(
         stream: club,

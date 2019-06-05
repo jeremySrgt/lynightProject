@@ -21,7 +21,6 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
   static LatLng _center = LatLng(48.856697, 2.3514616);
   final Set<Marker> _markers = {};
   Location location = new Location();
-
   void placeAllMarkers() async {
     QuerySnapshot snapshot =
         await Firestore.instance.collection('club').getDocuments();
