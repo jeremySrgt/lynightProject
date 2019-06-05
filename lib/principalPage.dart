@@ -4,6 +4,7 @@ import 'package:lynight/discoverPage/topClubCard.dart';
 import 'package:lynight/discoverPage/bottomClubCard.dart';
 import 'package:lynight/maps/googleMapsClient.dart';
 import 'package:lynight/authentification/auth.dart';
+import 'package:lynight/services/crud.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/myReservations/myReservation.dart';
 import 'package:lynight/favorites/favoritesNightClub.dart';
@@ -40,6 +41,9 @@ class _PrincipalPageState extends State<PrincipalPage>
 
   TabController _controller;
 
+  CrudMethods crudObj = new CrudMethods();
+  Map<dynamic, dynamic> mapOfUserMusic;
+
   //TODO changer la couleur de l'appbar en focntion de la couleur de l'element en dessous - ca fait plus joli
   //TODO par exemple dans le profil utilisateur c'est flagrant
 
@@ -51,6 +55,14 @@ class _PrincipalPageState extends State<PrincipalPage>
     widget.auth.userEmail().then((userMail) {
       setState(() {
         mail = userMail;
+      });
+    });
+
+    crudObj.getDataFromUserFromDocument().then((value){
+      Map<dynamic, dynamic> userMap = value.data;
+      Map<dynamic, dynamic> userMusic = userMap['music'];
+      setState(() {
+        mapOfUserMusic = userMusic;
       });
     });
   }
@@ -71,11 +83,20 @@ class _PrincipalPageState extends State<PrincipalPage>
 
   Widget bottomNavigation() {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromRGBO(	212, 63, 141, 1),
+                Color.fromRGBO(		2, 80, 197, 1)
+              ]),
+          //color: Theme.of(context).primaryColor,
+         ),
       child: TabBar(
           controller: _controller,
-          unselectedLabelColor: Colors.black,
-          labelColor: Theme.of(context).primaryColor,
+          unselectedLabelColor: Colors.white,
+          labelColor: Colors.white,
           indicatorColor: Colors.white,
           tabs: [
             Tab(
@@ -106,7 +127,7 @@ class _PrincipalPageState extends State<PrincipalPage>
                 SizedBox(
                   height: 20.0,
                 ),
-                TopClubCard(),
+                TopClubCard(musicMap: mapOfUserMusic),
                 BottomClubCard(),
               ],
             ),
