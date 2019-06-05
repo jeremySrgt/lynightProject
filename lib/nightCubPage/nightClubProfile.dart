@@ -67,24 +67,32 @@ class _NightClubProfile extends State<NightClubProfile> {
   }
 
   Widget favoriteButton() {
-    return RaisedButton(
-      elevation: 5.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      child: Icon(
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : Colors.red,
+    return Container(
+      width: 60,
+      child: RaisedButton(
+        elevation: 5.0,
+        shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: Theme.of(context).primaryColor,
+            ),
+            borderRadius: BorderRadius.circular(30.0)),
+        color: Colors.white,
+        child: Icon(
+          alreadySaved ? Icons.favorite : Icons.favorite_border,
+          color: alreadySaved ? Colors.red : Colors.red,
+        ),
+        onPressed: () {
+          setState(() {
+            if (alreadySaved) {
+              removeFavorites();
+              alreadySaved = false;
+            } else {
+              addFavorites();
+              alreadySaved = true;
+            }
+          });
+        },
       ),
-      onPressed: () {
-        setState(() {
-          if (alreadySaved) {
-            removeFavorites();
-            alreadySaved = false;
-          } else {
-            addFavorites();
-            alreadySaved = true;
-          }
-        });
-      },
     );
   }
 
@@ -97,7 +105,7 @@ class _NightClubProfile extends State<NightClubProfile> {
     }
     return Container(
       height: 230,
-      width: 300,
+      width: double.infinity,
       child: PageView(
         children: <Widget>[
           ImageSliderWidget(
@@ -122,74 +130,18 @@ class _NightClubProfile extends State<NightClubProfile> {
       ),
     );
 
-
-    Widget nightClubInformation(){
+    Widget nightClubDescription() {
       return Container(
         alignment: FractionalOffset.center,
-        height: 110,
+        height: 100,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white70,
+            color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey,
-                offset: Offset(2.0, 5.0),
-                blurRadius: 10.0,
-              )
-            ],
+            border: Border.all(color: Theme.of(context).primaryColor),
           ),
           margin: EdgeInsets.only(top: 10),
-          height: 80,
-          width: 350,
-          child: Container(
-            child: Row(
-              children: <Widget>[
-                Container(
-                  alignment: FractionalOffset.center,
-                  width: 60,
-                  child: Icon(
-                    Icons.contacts,
-                    size: 35,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                VerticalDivider(),
-                Container(
-                    alignment: FractionalOffset.centerLeft,
-                    height: 60,
-                    color: Colors.white10,
-                    width: 270,
-                    child: Text(clubData['adress'] +
-                        '\n' +
-                        '\n' +
-                        clubData['phone'])),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-
-    Widget nightClubDescription(){
-      return Container(
-        alignment: Alignment.center,
-        height: 125,
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: Colors.white70,
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey,
-                offset: Offset(2.0, 5.0),
-                blurRadius: 10.0,
-              )
-            ],
-          ),
-          margin: EdgeInsets.only(top: 10),
-          height: 120,
+          height: 100,
           width: 350,
           child: Container(
             child: Row(
@@ -205,17 +157,13 @@ class _NightClubProfile extends State<NightClubProfile> {
                 ),
                 VerticalDivider(),
                 Container(
-                  alignment: FractionalOffset.center,
-                  margin: EdgeInsets.only(left: 10.0),
+                  alignment: FractionalOffset.centerLeft,
                   height: 100,
-                  child: Text(
-                    'AU PIED DE L’ARC DE TRIOMPHE, SUR LA PRESTIGIEUSE AVENUE FOCH,'
-                        'LE DUPLEX VOUS OUVRE SES PORTES TOUS LES JOURS À PARTIR DE 23H30. '
-                        'UN LIEU TOTALEMENT REPENSÉ ET RÉNOVÉ .',
-                    style: TextStyle(fontSize: 13),
-                    textAlign: TextAlign.justify,
-                  ),
                   width: 250,
+                  child: Text(
+                    clubData['description'],
+
+                  ),
                 ),
               ],
             ),
@@ -224,24 +172,18 @@ class _NightClubProfile extends State<NightClubProfile> {
       );
     }
 
-    Widget nightClubMusic(){
+    Widget nightClubMusic() {
       return Container(
         alignment: FractionalOffset.center,
         height: 100,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white70,
+            color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey,
-                offset: Offset(2.0, 5.0),
-                blurRadius: 10.0,
-              )
-            ],
+            border: Border.all(color: Theme.of(context).primaryColor),
           ),
           margin: EdgeInsets.only(top: 10),
-          height: 80,
+          height: 100,
           width: 350,
           child: Container(
             child: Row(
@@ -269,17 +211,11 @@ class _NightClubProfile extends State<NightClubProfile> {
                       musicMap['populaire'] == true
                           ? Text('Populaire ')
                           : Container(),
-                      musicMap['rap'] == true
-                          ? Text('Rap ')
-                          : Container(),
-                      musicMap['rnb'] == true
-                          ? Text('RnB ')
-                          : Container(),
-                      musicMap['rock'] == true
-                          ? Text('Rock ')
-                          : Container(),
+                      musicMap['rap'] == true ? Text('Rap ') : Container(),
+                      musicMap['rnb'] == true ? Text('RnB ') : Container(),
+                      musicMap['rock'] == true ? Text('Rock ') : Container(),
                       musicMap['trans'] == true
-                          ? Text('Psytrans ')
+                          ? Text('Psytrance ')
                           : Container(),
                     ],
                   ),
@@ -291,24 +227,58 @@ class _NightClubProfile extends State<NightClubProfile> {
       );
     }
 
-    Widget nightClubLink(){
+    Widget nightClubInformation() {
+      return Container(
+        alignment: FractionalOffset.center,
+        height: 110,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+            border: Border.all(color: Theme.of(context).primaryColor),
+          ),
+          margin: EdgeInsets.only(top: 10),
+          height: 100,
+          width: 350,
+          child: Container(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  alignment: FractionalOffset.center,
+                  width: 60,
+                  child: Icon(
+                    Icons.contacts,
+                    size: 35,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                VerticalDivider(),
+                Container(
+                    alignment: FractionalOffset.centerLeft,
+                    height: 60,
+                    color: Colors.white10,
+                    width: 270,
+                    child: Text(
+                        clubData['adress'] + '\n' + '\n' + clubData['phone'])),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    Widget nightClubLink() {
       return Container(
         alignment: FractionalOffset.center,
         height: 95,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white70,
+            color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey,
-                offset: Offset(2.0, 5.0),
-                blurRadius: 10.0,
-              )
-            ],
+            border: Border.all(color: Theme.of(context).primaryColor),
           ),
           margin: EdgeInsets.only(top: 10),
-          height: 80,
+          height: 100,
           width: 350,
           child: Container(
             child: Row(
@@ -342,18 +312,21 @@ class _NightClubProfile extends State<NightClubProfile> {
       );
     }
 
-    Widget nightClubLetsParty(){
+    Widget nightClubLetsParty() {
       return Container(
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            favoriteButton(),
+            SizedBox(
+              height: 10,
+            ),
             RaisedButton(
               elevation: 5.0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0)),
               child: Text('Let\'s Party',
-                  style:
-                  TextStyle(color: Colors.white, fontSize: 20.0)),
+                  style: TextStyle(color: Colors.white, fontSize: 20.0)),
               color: Theme.of(context).primaryColor,
               textColor: Colors.black87,
               onPressed: () {
@@ -361,11 +334,10 @@ class _NightClubProfile extends State<NightClubProfile> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => SumUp(
-                          clubName: clubData['name'],
-                        )));
+                              clubName: clubData['name'],
+                            )));
               },
             ),
-            favoriteButton(),
             //onPressed: validateAndSubmit),
           ],
         ),
@@ -380,15 +352,15 @@ class _NightClubProfile extends State<NightClubProfile> {
             child: Column(
               children: <Widget>[
                 nightClubDescription(),
-                Container(height: 10),
+                SizedBox(height: 10),
                 nightClubMusic(),
-                Container(height: 10),
+                SizedBox(height: 10),
                 nightClubInformation(),
-                Container(height: 10),
+                SizedBox(height: 10),
                 nightClubLink(),
-                Container(height: 25),
+                SizedBox(height: 10),
                 nightClubLetsParty(),
-                Container(height: 30),
+                SizedBox(height: 30),
               ],
             ),
           )
@@ -399,7 +371,6 @@ class _NightClubProfile extends State<NightClubProfile> {
 
   Widget pageConstruct(clubData, context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -413,10 +384,24 @@ class _NightClubProfile extends State<NightClubProfile> {
             delegate: SliverChildListDelegate(
               [
                 Container(
-                  child: carouselPictureNightClubProfile(clubData, context),
-                ),
-                Container(
-                  child: nightClubProfileInfo(clubData, context),
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                    stops: [0.1, 0.5, 0.7, 0.9],
+                    colors: [
+                      Colors.deepPurple[50],
+                      Colors.deepPurple[200],
+                      Colors.deepPurple[400],
+                      Color(0xFF7854d3),
+                    ],
+                  )),
+                  child: Column(
+                    children: <Widget>[
+                      carouselPictureNightClubProfile(clubData, context),
+                      nightClubProfileInfo(clubData, context),
+                    ],
+                  ),
                 ),
               ],
             ),

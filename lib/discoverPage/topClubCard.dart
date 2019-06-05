@@ -11,6 +11,9 @@ import 'package:lynight/algo/algoReferencementMusique.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class TopClubCard extends StatefulWidget {
+
+  final musicMap;
+  TopClubCard({this.musicMap});
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -21,18 +24,31 @@ class TopClubCard extends StatefulWidget {
 class _TopClubCardState extends State<TopClubCard> {
 
   CrudMethods crudObj = new CrudMethods();
-  AlgoMusicReference algoTest = new AlgoMusicReference(user: 'AzqV0Q3rcHQiE97XRC8XtGme78y1', mapOfUserMusics: {'populaire': true, 'rap': false, 'rock': true, 'electro': false, 'rnb': false, 'trans': true});
+  Map<dynamic, dynamic> mapOfUserMusic;
   Stream club;
+  Map<dynamic,dynamic> testMap;
+  List<String> clubSelected;
+  List<DocumentSnapshot> dataClubFromBDD;
+  //AlgoMusicReference algoTest = new AlgoMusicReference();
+
 
   @override
   void initState() {
+    super.initState();
     crudObj.getData('club').then((results) {
       setState(() {
         club = results;
       });
     });
-    super.initState();
+
+    crudObj.getDataFromClubFromDocument().then((value){ // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+      setState(() {
+      dataClubFromBDD = value.documents;
+      });
+    });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +58,21 @@ class _TopClubCardState extends State<TopClubCard> {
   }
 
 
+  test(){
+    setState(() {
+      AlgoMusicReference algoTest = new AlgoMusicReference(mapOfUserMusics: widget.musicMap, snapClub: dataClubFromBDD);
+      clubSelected = algoTest.compareMusic();
+    });
+  }
+
+
   Widget clubList() {
-    algoTest.compareMusic();
+    test();
+    //print('qsdklqjsmdlksqjdmlkqjmdklqj');
+    //print(dataClubFromBDD);
+    print('CLUBSLEECT');
+    print(clubSelected);
+
     if (club != null) {
       return StreamBuilder(
         stream: club,
@@ -51,6 +80,7 @@ class _TopClubCardState extends State<TopClubCard> {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return CircularProgressIndicator();
+
             default:
               return ListView.builder(
                   itemCount: snapshot.data.documents.length,
