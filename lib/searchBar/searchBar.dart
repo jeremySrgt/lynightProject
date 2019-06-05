@@ -9,13 +9,19 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  var queryResultSet = [];
-  var tempSearchStore = [];
+  var queryResultSet = []; //Ajoute les data et ID en fonction du searchkey
   var resultID = [];
+
+  var tempSearchStore =
+      []; //Ajoute les data et les ID en fonction de ce qui suit le searchkey
   var tempID = [];
-  List musicType;
-  var i =0;
-  bool emptyL;
+
+  bool nameClubEmpty = false;
+  List<String> nameClub = [];
+
+  var allClubs = Firestore.instance.collection('club').getDocuments();
+  var allClubsDisplay = [];
+  var allClubID = [];
 
   final strController = TextEditingController();
 
@@ -27,13 +33,22 @@ class _SearchBarState extends State<SearchBar> {
   }
 
   initiateSearch(value) {
-    if (value.length == 0) {
+    //Est appelé lorsque l'on tape qqch dans la searchBar
+    if (strController.text.length == 0) {
       setState(() {
         queryResultSet = [];
         tempSearchStore = [];
         resultID = [];
         tempID = [];
-        emptyL = false;
+        nameClub = [];
+        allClubsDisplay = [];
+        allClubID = [];
+      });
+      allClubs.then((QuerySnapshot docs) {
+        for (int l = 0; l < docs.documents.length; l++) {
+          allClubsDisplay.add(docs.documents[l].data);
+          allClubID.add(docs.documents[l].documentID);
+        }
       });
     }
 
@@ -47,28 +62,26 @@ class _SearchBarState extends State<SearchBar> {
     } else {
       tempSearchStore = [];
       tempID = [];
-      emptyL = false;
+      setState(() {
+        nameClub = [];
+      });
       for (int j = 0; j < queryResultSet.length; j++) {
-        if (queryResultSet[j]['name'].toUpperCase().contains(value.toUpperCase())) {
+        if (queryResultSet[j]['name']
+            .toUpperCase()
+            .contains(value.toUpperCase())) {
           setState(() {
             tempSearchStore.add(queryResultSet[j]);
             tempID.add(resultID[j]);
+            nameClub.add(queryResultSet[j]['name']);
           });
         }
-        else {
-          setState(() {
-            tempSearchStore.add("TAGRANDMERE");
-          });
-        }
-        print("ID = " + tempSearchStore.toString());
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    String val;
-    print(strController.text);
+    String val = "";
     return new Scaffold(
         resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.white,
@@ -77,15 +90,11 @@ class _SearchBarState extends State<SearchBar> {
             color: Colors.transparent,
             child: Column(children: [
               Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: 10.0, vertical: 6.0),
+                margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: Colors.white,
-                  border: Border.all(
-                    color: Theme.of(context).accentColor
-                  )
-                ),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: Colors.white,
+                    border: Border.all(color: Theme.of(context).accentColor)),
                 child: ListTile(
                   leading: Icon(
                     Icons.search,
@@ -94,124 +103,41 @@ class _SearchBarState extends State<SearchBar> {
                   title: TextField(
                     controller: strController,
                     onChanged: (val) {
-                      initiateSearch(val);
+                      initiateSearch(strController.text);
                       //inputSearch = val;
                     },
                     maxLines: 1,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         hintText: "Turn up",
-                        hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 16.5),
+                        hintStyle:
+                            TextStyle(color: Colors.grey, fontSize: 16.5),
                         border: InputBorder.none),
                   ),
                 ),
               ),
-              resultSearch()
-              /*Expanded(
-                  child: Container(
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: tempSearchStore.length,
-                          itemBuilder: (context, index) {
-                            if(strController.text.length >= 12 && tempID.isNotEmpty) {
-                              return Card(
-                                color: Colors.transparent,
-                                elevation: 12.0,
-                                margin: new EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 6.0),
-                                child: Container(
-                                    height: 100,
-                                    decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                            begin: Alignment.bottomRight,
-                                            end: Alignment.topLeft,
-                                            colors: [
-                                              Colors.blue,
-                                              Colors.deepPurpleAccent,
-                                              Colors.purple
-                                            ]),
-                                        //color: Theme.of(context).primaryColor,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(25))),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    NightClubProfile(
-                                                        documentID: tempID[index])));
-                                      },
-                                      child: Center(
-                                        child: Container(
-                                          height: 80,
-                                          padding: EdgeInsets.only(
-                                              left: 5.0,
-                                              right: 5.0,
-                                              top: 2.0,
-                                              bottom: 1),
-                                          child: Column(children: [
-                                            ListTile(
-                                              leading: ClipRRect(
-                                                borderRadius:
-                                                BorderRadius.circular(100.0),
-                                                child: Image.network(
-                                                  tempSearchStore[index]['pictures'][0],
-                                                  fit: BoxFit.cover,
-                                                  width: 60.0,
-                                                  height: 150.0,
-                                                ),
-                                              ),
-                                              title: Text(
-                                                  tempSearchStore[index]['name'],
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 20.0,
-                                                      fontWeight: FontWeight
-                                                          .bold)),
-                                              subtitle: Row(children: <Widget>[
-                                                Icon(
-                                                  Icons.music_note,
-                                                  color: Colors.blue,
-                                                ),
-                                                Text(
-                                                    tempSearchStore[index]['music']
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 14.0)),
-                                              ]),
-                                              trailing: Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  color: Colors.white),
-                                            ),
-                                          ]),
-                                        ),
-                                      ),
-                                    )),
-                              );
-                            }
-                            else if (strController.text.length >= 1) {
-                              return Text("yayaya");
-                            }
-
-                          })))*/,
+              resultSearch(),
             ]),
           ),
         ));
   }
 
   Widget resultSearch() {
-    if (strController.text.length >= 1 && tempSearchStore.contains("TAGRANDMERE")){
-        return Text("yayayayapopo");
-    }
-    else {
+    if (strController.text.length == 0) {
+      //initiateSearch(strController.text);
+      if (allClubsDisplay.isEmpty) {
+        allClubs.then((QuerySnapshot docs) {
+          for (int l = 0; l < docs.documents.length; l++) {
+            allClubsDisplay.add(docs.documents[l].data);
+            allClubID.add(docs.documents[l].documentID);
+          }
+        });
+      }
       return Expanded(
           child: Container(
               child: ListView.builder(
                   scrollDirection: Axis.vertical,
-                  itemCount: tempSearchStore.length,
+                  itemCount: allClubsDisplay.length,
                   itemBuilder: (context, index) {
                     return Card(
                       color: Colors.transparent,
@@ -230,57 +156,51 @@ class _SearchBarState extends State<SearchBar> {
                                     Colors.purple
                                   ]),
                               //color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(25))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25))),
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.push(context,
+                              Navigator.push(
+                                  context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          NightClubProfile(
-                                              documentID: tempID[index])));
+                                      builder: (context) => NightClubProfile(
+                                          documentID: allClubID[index])));
                             },
                             child: Center(
                               child: Container(
                                 height: 80,
                                 padding: EdgeInsets.only(
-                                    left: 5.0,
-                                    right: 5.0,
-                                    top: 2.0,
-                                    bottom: 1),
+                                    left: 5.0, right: 5.0, top: 2.0, bottom: 1),
                                 child: Column(children: [
                                   ListTile(
                                     leading: ClipRRect(
                                       borderRadius:
-                                      BorderRadius.circular(100.0),
+                                          BorderRadius.circular(100.0),
                                       child: Image.network(
-                                        tempSearchStore[index]['pictures'][0],
+                                        allClubsDisplay[index]['pictures'][0],
                                         fit: BoxFit.cover,
                                         width: 60.0,
                                         height: 150.0,
                                       ),
                                     ),
-                                    title: Text(
-                                        tempSearchStore[index]['name'],
+                                    title: Text(allClubsDisplay[index]['name'],
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20.0,
-                                            fontWeight: FontWeight
-                                                .bold)),
+                                            fontWeight: FontWeight.bold)),
                                     subtitle: Row(children: <Widget>[
                                       Icon(
                                         Icons.music_note,
                                         color: Colors.blue,
                                       ),
                                       Text(
-                                          tempSearchStore[index]['music']
+                                          allClubsDisplay[index]['music']
                                               .toString(),
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 14.0)),
                                     ]),
-                                    trailing: Icon(
-                                        Icons.arrow_forward_ios,
+                                    trailing: Icon(Icons.arrow_forward_ios,
                                         color: Colors.white),
                                   ),
                                 ]),
@@ -290,6 +210,111 @@ class _SearchBarState extends State<SearchBar> {
                     );
                   })));
     }
-  }
+    if (strController.text.length >= 1) {
+      setState(() {
+        allClubsDisplay = [];
+        allClubID = [];
+      });
+    }
 
+
+    setState(() {
+      nameClubEmpty = false;
+    });
+
+
+    if (strController.text.length >= 1 && nameClub.isEmpty) {
+      setState(() {
+        nameClubEmpty = true;
+      });
+    }
+    if (nameClubEmpty == true) {
+      return Expanded(
+          child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              child: Text(
+                "Soit t'as mal écrit, soit a éxiste pas",
+                style: TextStyle(
+                  color: Colors.blueGrey,
+                ),
+              )));
+    }
+
+
+    return Expanded(
+        child: Container(
+            child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: tempSearchStore.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    color: Colors.transparent,
+                    elevation: 12.0,
+                    margin: new EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 6.0),
+                    child: Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.bottomRight,
+                                end: Alignment.topLeft,
+                                colors: [
+                                  Colors.blue,
+                                  Colors.deepPurpleAccent,
+                                  Colors.purple
+                                ]),
+                            //color: Theme.of(context).primaryColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(25))),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NightClubProfile(
+                                        documentID: tempID[index])));
+                          },
+                          child: Center(
+                            child: Container(
+                              height: 80,
+                              padding: EdgeInsets.only(
+                                  left: 5.0, right: 5.0, top: 2.0, bottom: 1),
+                              child: Column(children: [
+                                ListTile(
+                                  leading: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    child: Image.network(
+                                      tempSearchStore[index]['pictures'][0],
+                                      fit: BoxFit.cover,
+                                      width: 60.0,
+                                      height: 150.0,
+                                    ),
+                                  ),
+                                  title: Text(tempSearchStore[index]['name'],
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold)),
+                                  subtitle: Row(children: <Widget>[
+                                    Icon(
+                                      Icons.music_note,
+                                      color: Colors.blue,
+                                    ),
+                                    Text(
+                                        tempSearchStore[index]['music']
+                                            .toString(),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14.0)),
+                                  ]),
+                                  trailing: Icon(Icons.arrow_forward_ios,
+                                      color: Colors.white),
+                                ),
+                              ]),
+                            ),
+                          ),
+                        )),
+                  );
+                }))); //Retourne la listView normale (en tapant dans la recherche)
+  }
 }
