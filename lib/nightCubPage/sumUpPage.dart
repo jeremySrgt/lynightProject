@@ -36,7 +36,6 @@ class SumUp extends StatefulWidget {
 
 class _SumUpState extends State<SumUp> {
   final DateFormat dateFormat = DateFormat('dd-MM-yyyy');
-
   DateTime selectedDate = DateTime.now();
   GlobalKey globalKey = new GlobalKey();
   CrudMethods crudObj = CrudMethods();
@@ -136,8 +135,10 @@ class _SumUpState extends State<SumUp> {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day),
+        firstDate: DateTime(
+            DateTime.now().year, DateTime.now().month, DateTime.now().day),
         lastDate: DateTime(2100));
+
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
@@ -199,7 +200,7 @@ class _SumUpState extends State<SumUp> {
                             ListTile(
                               leading: Icon(Icons.access_time),
                               title: Text(
-                                  DateFormat('dd/MM/yyyy').format(selectedDate),
+                                DateFormat('dd/MM/yyyy').format(selectedDate),
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 18.0),
@@ -253,8 +254,8 @@ class _SumUpState extends State<SumUp> {
         elevation: 5.0,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        child:
-            Text('C\'est ok !', style: TextStyle(color: Colors.white, fontSize: 20.0)),
+        child: Text('C\'est ok !',
+            style: TextStyle(color: Colors.white, fontSize: 20.0)),
         color: Theme.of(context).primaryColor,
         textColor: Colors.black87,
         onPressed: () {
@@ -275,7 +276,8 @@ class _SumUpState extends State<SumUp> {
           RepaintBoundary(
             key: globalKey,
             child: QrImage(
-              data: "${widget.clubName} - ${DateFormat('dd/MM/yyyy').format(selectedDate)}",
+              data:
+                  "${widget.clubName} - ${DateFormat('dd/MM/yyyy').format(selectedDate)}",
               size: 200.0,
               version: 8,
               backgroundColor: Colors.white,
