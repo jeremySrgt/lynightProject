@@ -58,7 +58,7 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
             music['rap'] == true ? Text('Rap ') : Container(),
             music['rnb'] == true ? Text('RnB ') : Container(),
             music['rock'] == true ? Text('Rock ') : Container(),
-            music['trans'] == true ? Text('Psytrans ') : Container(),
+            music['trans'] == true ? Text('Psytrance ') : Container(),
           ],
         )
       ]),
