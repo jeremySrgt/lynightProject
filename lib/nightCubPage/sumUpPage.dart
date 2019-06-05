@@ -136,7 +136,7 @@ class _SumUpState extends State<SumUp> {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(2019),
+        firstDate: DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day),
         lastDate: DateTime(2100));
     if (picked != null && picked != selectedDate)
       setState(() {
