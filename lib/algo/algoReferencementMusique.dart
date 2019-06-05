@@ -144,7 +144,7 @@ class AlgoMusicReference {
     print('==================');
 
 
-    for (int i = 0; i < 3 ; i++) {
+    for (int i = 0; i < getMusic.length ; i++) {
       print('getMusic for');
       print(getMusic);
 
@@ -181,7 +181,39 @@ class AlgoMusicReference {
             print('Valur après ajout de electro');
             print(bestClub);
           }else{
-            print('Valeur de bestclub quoi quil arrive');
+            if((mapOfUserMusics['rap'] == mapOfMusicFromList['rap']) && (mapOfUserMusics['rap'] == true)) {
+              print('*****************');
+              print('ils aiment le rap tout les 2 ');
+              bestClub.add(nameOfClubList[i]);
+              print('Valur après ajout de rap');
+              print(bestClub);
+            }else{
+              if((mapOfUserMusics['rnb'] == mapOfMusicFromList['rnb']) && (mapOfUserMusics['rnb'] == true)) {
+                print('*****************');
+                print('ils aiment le rnb tout les 2 ');
+                bestClub.add(nameOfClubList[i]);
+                print('Valur après ajout de rnb');
+                print(bestClub);
+              }else{
+                if((mapOfUserMusics['rock'] == mapOfMusicFromList['rock']) && (mapOfUserMusics['rock'] == true)) {
+                  print('*****************');
+                  print('ils aiment le rock tout les 2 ');
+                  bestClub.add(nameOfClubList[i]);
+                  print('Valur après ajout de rock');
+                  print(bestClub);
+                }else{
+                  if((mapOfUserMusics['trans'] == mapOfMusicFromList['trans']) && (mapOfUserMusics['trans'] == true)) {
+                    print('*****************');
+                    print('ils aiment la trans tout les 2 ');
+                    bestClub.add(nameOfClubList[i]);
+                    print('Valur après ajout de trans');
+                    print(bestClub);
+                  }
+                }
+              }
+
+            }
+              print('Valeur de bestclub quoi quil arrive');
             print(bestClub);
             print('il aime ni electro ni populaire');
           }

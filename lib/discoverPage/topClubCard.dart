@@ -21,7 +21,7 @@ class TopClubCard extends StatefulWidget {
 class _TopClubCardState extends State<TopClubCard> {
 
   CrudMethods crudObj = new CrudMethods();
-  AlgoMusicReference algoTest = new AlgoMusicReference(user: 'AzqV0Q3rcHQiE97XRC8XtGme78y1', mapOfUserMusics: {'populaire': true, 'rap': false, 'rock': true, 'electro': true, 'rnb': false, 'trans': true});
+  AlgoMusicReference algoTest = new AlgoMusicReference(user: 'AzqV0Q3rcHQiE97XRC8XtGme78y1', mapOfUserMusics: {'populaire': true, 'rap': false, 'rock': false, 'electro': true, 'rnb': false, 'trans': false});
   Stream club;
 
   @override
