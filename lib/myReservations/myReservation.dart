@@ -38,6 +38,7 @@ class ListPage extends StatefulWidget {
 class _ListPageState extends State<ListPage> {
   String userId = 'userId';
   String userMail = 'userMail';
+  List reservation = [];
   CrudMethods crudObj = new CrudMethods();
 
   @override
@@ -51,6 +52,14 @@ class _ListPageState extends State<ListPage> {
     widget.auth.userEmail().then((mail) {
       setState(() {
         userMail = mail;
+      });
+    });
+
+    crudObj.getDataFromUserFromDocument().then((value) {
+      Map<String, dynamic> dataMap = value.data;
+      List reservationList = dataMap['reservation'];
+      setState(() {
+        reservation = reservationList;
       });
     });
   }
@@ -78,18 +87,20 @@ class _ListPageState extends State<ListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream:
-          Firestore.instance.collection('user').document(userId).snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        }
-        var userData = snapshot.data;
-        List<dynamic> userReservationList = userData['reservation'];
-        return pageConstruct(userReservationList, context);
-      },
-    );
+
+//    return StreamBuilder(
+//      stream:
+//          Firestore.instance.collection('user').document(userId).snapshots(),
+//      builder: (context, snapshot) {
+//        if (!snapshot.hasData) {
+//          return CircularProgressIndicator();
+//        }
+//        var userData = snapshot.data;
+//        List<dynamic> userReservationList = userData['reservation'];
+//        return pageConstruct(userReservationList, context);
+//      },
+//    );
+    return pageConstruct(reservation, context);
   }
 
   Widget _makeListTile(oneReservationMap) {
@@ -142,7 +153,7 @@ class _ListPageState extends State<ListPage> {
   }
 
   Widget _makeBody(userReservationList) {
-    var mutableListOfReservation = new List.from(userReservationList);
+    var mutableListOfReservation = new List.from(reservation);
     final SlidableController slidableController = SlidableController();
 
     if (userReservationList.isEmpty) {
@@ -157,13 +168,14 @@ class _ListPageState extends State<ListPage> {
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: userReservationList.length,
+        itemCount: reservation.length,
         itemBuilder: (BuildContext context, int index) {
-          var date = DateFormat('dd/MM/yyyy').format(userReservationList[index]['date'].toDate());
+          var date = DateFormat('dd/MM/yyyy')
+              .format(reservation[index]['date'].toDate());
           return Slidable(
             controller: slidableController,
             key: Key(Random().nextInt(1000).toString() +
-                userReservationList[index]['date'].toString()),
+                reservation[index]['date'].toString()),
             actionPane: SlidableScrollActionPane(),
             actionExtentRatio: 0.25,
             secondaryActions: <Widget>[
@@ -173,25 +185,29 @@ class _ListPageState extends State<ListPage> {
                 icon: Icons.delete,
                 onTap: () {
                   setState(() {
-                    mutableListOfReservation.removeAt(index);
-                    Firestore.instance
-                        .collection('user')
-                        .document(userId)
-                        .updateData({"reservation": mutableListOfReservation});
+                    reservation =  List.from(reservation)..removeAt(index);
                   });
+                  Firestore.instance
+                      .collection('user')
+                      .document(userId)
+                      .updateData({"reservation": reservation});
+
                   Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text("${userReservationList[index]['boiteID']} du $date Supprimé"),
+                      content: Text(
+                          "${mutableListOfReservation[index]['boiteID']} du $date Supprimé"),
                       action: SnackBarAction(
                         label: 'annuler',
                         textColor: Colors.white,
                         onPressed: () {
                           setState(() {
-                            mutableListOfReservation.insert(index, userReservationList[index]);
-                            Firestore.instance
-                                .collection('user')
-                                .document(userId)
-                                .updateData({"reservation": mutableListOfReservation});
+                            reservation =  List.from(reservation)..insert(
+                                index, mutableListOfReservation[index]);
                           });
+                          Firestore.instance
+                              .collection('user')
+                              .document(userId)
+                              .updateData(
+                              {"reservation": reservation});
                         },
                       )));
                 },
@@ -201,15 +217,34 @@ class _ListPageState extends State<ListPage> {
               child: SlidableDrawerDismissal(),
               onDismissed: (actionType) {
                 setState(() {
-                  mutableListOfReservation.removeAt(index);
-                  Firestore.instance
-                      .collection('user')
-                      .document(userId)
-                      .updateData({"reservation": mutableListOfReservation});
+                  reservation =  List.from(reservation)..removeAt(index);
                 });
+                Firestore.instance
+                    .collection('user')
+                    .document(userId)
+                    .updateData({"reservation": reservation});
+
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                        "${mutableListOfReservation[index]['boiteID']} du $date Supprimé"),
+                    action: SnackBarAction(
+                      label: 'annuler',
+                      textColor: Colors.white,
+                      onPressed: () {
+                        setState(() {
+                          reservation =  List.from(reservation)..insert(
+                              index, mutableListOfReservation[index]);
+                        });
+                        Firestore.instance
+                            .collection('user')
+                            .document(userId)
+                            .updateData(
+                            {"reservation": reservation});
+                      },
+                    )));
               },
             ),
-            child: _makeCard(mutableListOfReservation[index]),
+            child: _makeCard(reservation[index]),
           );
         },
       ),
