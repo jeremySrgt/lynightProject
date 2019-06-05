@@ -15,7 +15,6 @@ import 'package:lynight/nightCubPage/nightClubProfile.dart';
 class AlgoMusicReference {
   CrudMethods crudObj = new CrudMethods();
   Stream club;
-  final user;
   Map<dynamic, dynamic> mapOfUserMusics;
   bool electro = false;
   bool rap = false;
@@ -25,11 +24,12 @@ class AlgoMusicReference {
   bool trans = false;
 
   List<DocumentSnapshot> dataClubFromBDD;
+  final snapClub;
 
 
   AlgoMusicReference({
-    this.user,
-    this.mapOfUserMusics
+    this.mapOfUserMusics,
+    this.snapClub,
   });
 
   Map<dynamic, dynamic> test = {} ;
@@ -55,11 +55,13 @@ class AlgoMusicReference {
 
     });
 
+    //print(dataClubFromBDD);
+
     var listClubFromDatabase = [];
 
-    for(int i=0; i<= 2; i++) {
-      if (dataClubFromBDD != null) {
-        var clubI = dataClubFromBDD[i].data;
+    for(int i=0; i<= 3; i++) {
+      if (snapClub != null) {
+        var clubI = snapClub[i].data;
 
         listClubFromDatabase.add(clubI);
 
@@ -182,7 +184,7 @@ class AlgoMusicReference {
             }
               print('Valeur de bestclub quoi quil arrive');
             print(bestClub);
-            print('il aime ni electro ni populaire');
+            print('Le club ' + nameOfClubList[i] + 'a aucun son en commun avec le user');
           }
         }
         print('--------------------------------------------------');
