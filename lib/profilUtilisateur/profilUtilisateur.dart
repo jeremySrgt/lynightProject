@@ -186,7 +186,7 @@ class _UserProfilState extends State<UserProfil> {
                   height: 20,
                 ),
                 ListTile(
-                  leading: Icon(Icons.person,color: Theme.of(context).accentColor,),
+                  leading: Icon(Icons.person,color: Theme.of(context).accentColor,  size: 35,),
                   title: Text(
                     "Prénom",
                     style: TextStyle(
@@ -239,8 +239,11 @@ class _UserProfilState extends State<UserProfil> {
                   ),
                 ),
                 Container(height: 20),
+
+                Divider(),
+
                 ListTile(
-                  leading: Icon(Icons.supervisor_account,color: Theme.of(context).accentColor,),
+                  leading: Icon(Icons.supervisor_account,color: Theme.of(context).accentColor,  size: 35,),
                   title: Text(
                     "Nom",
                     style: TextStyle(
@@ -293,8 +296,9 @@ class _UserProfilState extends State<UserProfil> {
                   ),
                 ),
                 Container(height: 20),
+                Divider(),
                 ListTile(
-                  leading: Icon(Icons.mail,color: Theme.of(context).accentColor,),
+                  leading: Icon(Icons.mail,color: Theme.of(context).accentColor,  size: 35,),
                   title: Text(
                     'Mail',
                     style: TextStyle(
@@ -306,8 +310,9 @@ class _UserProfilState extends State<UserProfil> {
                   ),
                 ),
                 Container(height: 20),
+                Divider(),
                 ListTile(
-                  leading: Icon(Icons.phone,color: Theme.of(context).accentColor,),
+                  leading: Icon(Icons.phone,color: Theme.of(context).accentColor,  size: 35,),
                   title: Text(
                     "Numéro",
                     style: TextStyle(
@@ -362,8 +367,9 @@ class _UserProfilState extends State<UserProfil> {
                   ),
                 ),
                 Container(height: 20),
+                Divider(),
                 ListTile(
-                  leading: Icon(Icons.music_note,color: Theme.of(context).accentColor,),
+                  leading: Icon(Icons.music_note,color: Theme.of(context).accentColor,  size: 35,),
                   title: Text(
                     "Style de musique",
                     style: TextStyle(
@@ -392,9 +398,10 @@ class _UserProfilState extends State<UserProfil> {
                   ),
                 ),
                 Container(height: 20),
+                Divider(),
 
                 ListTile(
-                  leading: Icon(Icons.date_range,color: Theme.of(context).accentColor,),
+                  leading: Icon(Icons.date_range,color: Theme.of(context).accentColor,  size: 35,),
                   title: Text(
                     "Date de naissance",
                     style: TextStyle(
@@ -406,8 +413,10 @@ class _UserProfilState extends State<UserProfil> {
                   ),
                 ),
                 Container(height: 20),
+                Divider(),
+
                 ListTile(
-                  leading: Icon(Icons.notifications,color: Theme.of(context).accentColor,),
+                  leading: Icon(Icons.notifications,color: Theme.of(context).accentColor,  size: 35,),
                   title: Text(
                     "Notification",
                     style: TextStyle(
