@@ -128,7 +128,7 @@ class _PrincipalPageState extends State<PrincipalPage>
                   height: 20.0,
                 ),
                 TopClubCard(musicMap: mapOfUserMusic),
-                BottomClubCard(),
+                BottomClubCard(musicMap: mapOfUserMusic),
               ],
             ),
           ),
