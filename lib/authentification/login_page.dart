@@ -35,6 +35,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   bool userSex = true;
 
   int _radioValue = 0;
+  Color dobColor = Colors.grey[600];
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -202,6 +203,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 onConfirm: (date) {
                   setState(() {
                     dob = date;
+                    dobColor = Colors.grey[600];
                   });
                 },
                 currentTime: DateTime.now(),
@@ -212,7 +214,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               dob == null
                   ? 'Date de naissance'
                   : DateFormat('dd/MM/yyyy').format(dob),
-              style: TextStyle(color: Colors.grey[600], fontSize: 16.0),
+              style: TextStyle(color: dobColor, fontSize: 16.0),
             ),
           ),
         ],
@@ -271,10 +273,11 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           shrinkWrap: true,
           children: <Widget>[
             PrimaryButton(
-                key: new Key('login'),
-                text: 'Connexion',
-                height: 44.0,
-                onPressed: validateAndSubmit),
+              key: new Key('login'),
+              text: 'Connexion',
+              height: 44.0,
+              onPressed: validateAndSubmit,
+            ),
             FlatButton(
                 key: new Key('need-account'),
                 child: Text("Créer un compte"),
@@ -286,10 +289,21 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           shrinkWrap: true,
           children: <Widget>[
             PrimaryButton(
-                key: new Key('register'),
-                text: 'Créer',
-                height: 44.0,
-                onPressed: validateAndSubmit),
+              key: new Key('register'),
+              text: 'Créer',
+              height: 44.0,
+              onPressed: (){
+                if(dob == null){
+                  validateAndSave();
+                  setState(() {
+                    dobColor = Colors.red[700];
+                  });
+                }
+                else{
+                  validateAndSubmit();
+                }
+              }
+            ),
             FlatButton(
                 key: new Key('need-login'),
                 child: Text("Déjà un compte ? Se connecter"),
