@@ -5,9 +5,22 @@ import 'package:location/location.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
+import 'package:lynight/authentification/auth.dart';
 
 class GoogleMapsClient extends StatefulWidget {
-  void _signOut() {}
+
+  GoogleMapsClient({this.onSignOut});
+  final VoidCallback onSignOut;
+  final BaseAuth auth = new Auth();
+
+  void _signOut() async{
+    try {
+      await auth.signOut();
+      onSignOut();
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   State<StatefulWidget> createState() {
@@ -21,6 +34,18 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
   static LatLng _center = LatLng(48.856697, 2.3514616);
   final Set<Marker> _markers = {};
   Location location = new Location();
+  String userMail = 'userMail';
+
+  @override
+  void initState() {
+    super.initState();
+    widget.auth.userEmail().then((mail) {
+      setState(() {
+        userMail = mail;
+      });
+    });
+  }
+
   void placeAllMarkers() async {
     QuerySnapshot snapshot =
         await Firestore.instance.collection('club').getDocuments();
@@ -127,7 +152,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
       ),
       backgroundColor: Theme.of(context).accentColor,
       drawer: CustomSlider(
-        userMail: 'Lalal',
+        userMail: userMail,
         signOut: widget._signOut,
         activePage: 'Maps',
       ),
