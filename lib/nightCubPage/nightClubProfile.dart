@@ -330,14 +330,15 @@ class _NightClubProfile extends State<NightClubProfile> {
                   _launchSite();
                 },
               ),
-              InkWell(
-                splashColor: Colors.white,
-                child: Text(clubData['soundcloud'] + '\n',
-                    style: TextStyle(color: Colors.black)),
-                onTap: () {
-                  _launchSoundCloud();
-                },
-              ),
+              //plus de soucloud
+//              InkWell(
+//                splashColor: Colors.white,
+//                child: Text(clubData['soundcloud'] + '\n',
+//                    style: TextStyle(color: Colors.black)),
+//                onTap: () {
+//                  _launchSoundCloud();
+//                },
+//              ),
             ],
           ),
         ),

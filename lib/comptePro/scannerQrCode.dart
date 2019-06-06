@@ -55,7 +55,7 @@ class _ScannerQrCodeState extends State<ScannerQrCode> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text('Mes reservations'),
+        title: Text('Scanner'),
       ),
       body: Center(
         child: Text('hello scanner'),
