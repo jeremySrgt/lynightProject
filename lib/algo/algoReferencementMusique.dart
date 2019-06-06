@@ -26,58 +26,45 @@ class AlgoMusicReference {
   List<DocumentSnapshot> dataClubFromBDD;
   final snapClub;
 
-
+  // On demande une map des music de l'utilisateur et la snapshot
   AlgoMusicReference({
     this.mapOfUserMusics,
     this.snapClub,
   });
 
-  Map<dynamic, dynamic> test = {} ;
+  Map<dynamic, dynamic> test = {};
 
-  getUserMusic(){
-     crudObj.getDataFromUserFromDocument().then((value){ // correspond à await Firestore.instance.collection('user').document(user.uid).get();
-      Map<String,dynamic> dataMap = value.data; // retourne la Map des données de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
-
-      print('---------mmmmmmmm-----------------------------------------');
-      print(dataMap['music']);
-      print('-----------mmmmmm---------------------------------------');
-      Map<dynamic, dynamic> userMusic = dataMap['music'];
-      test.addAll(userMusic);
-      return userMusic;
-
-    });
-  }
-
-  getClubMusic(){
-    crudObj.getDataFromClubFromDocument().then((value){ // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+  //retourne une liste contenant une map de chaque club
+  //Faut changer la valeur de la boucle for sur lequel ça tourne
+  getClubMusic() {
+    crudObj.getDataFromClubFromDocument().then((value) {
+      // correspond à await Firestore.instance.collection('user').document(user.uid).get();
       dataClubFromBDD = value.documents;
-
-
     });
 
     //print(dataClubFromBDD);
 
     var listClubFromDatabase = [];
 
-    for(int i=0; i<= 3; i++) {
+    for (int i = 0; i <= 3; i++) {
       if (snapClub != null) {
         var clubI = snapClub[i].data;
-        print(snapClub[i].documentID);
+        //print(snapClub[i].documentID);
 
         listClubFromDatabase.add(clubI);
-
       }
     }
-    print(listClubFromDatabase.length);
+    //print(listClubFromDatabase.length);
     return listClubFromDatabase;
   }
 
-  getMusicsOfClubMap(){
+  // retourne une list de map des music de l'utilisateur
+  // forme = [{populaire : true, electro : ...}, {...},...]
+  getMusicsOfClubMap() {
     var listMapMusicClub = [];
     Map<dynamic, dynamic> clubMap;
-    if(getClubMusic() != null) {
+    if (getClubMusic() != null) {
       for (int i = 0; i < getClubMusic().length; i++) {
-
         List clubMusicList = getClubMusic();
         var club1 = clubMusicList[i];
 
@@ -87,121 +74,129 @@ class AlgoMusicReference {
       }
 
       return listMapMusicClub;
-
     }
   }
 
-  getClubName(){
+  // retourne une liste de String comportant tout les noms des club
+  getClubName() {
     List<String> listNameClub = [];
-    if(getClubMusic() != null){
+    if (getClubMusic() != null) {
       var clubNameForReal;
-      for(int i=0; i<getClubMusic().length; i++){
+      for (int i = 0; i < getClubMusic().length; i++) {
         var clubName;
         clubName = getClubMusic()[i];
         clubNameForReal = clubName['name'];
 
         listNameClub.add(clubNameForReal);
-
       }
 
       return listNameClub;
-
     }
   }
 
-
-
-
-
-
+  // Compare les 2 map
   List<String> compareMusic() {
     final List<String> bestClub = []; //club retenu pour la liste à retourner
 
-    print('==================');
-    print('Valru de getMusic : ');
-    print(getMusicsOfClubMap());
-    List<dynamic> getMusic = [{populaire: true, rap: false, rock: true, electro: false, rnb: false, trans: true}, {populaire: false, rap: false, rock: false, electro: true, rnb : true, trans: true}, {populaire: false, rap: true, rock: true, electro: true, rnb: true, trans: false}];
+    //print('==================');
+    //print('Valeur de getMusic : ');
+    //print(getMusicsOfClubMap());
+    List<dynamic> getMusic = [
+      {
+        populaire: true,
+        rap: false,
+        rock: true,
+        electro: false,
+        rnb: false,
+        trans: true
+      },
+      {
+        populaire: false,
+        rap: false,
+        rock: false,
+        electro: true,
+        rnb: true,
+        trans: true
+      },
+      {
+        populaire: false,
+        rap: true,
+        rock: true,
+        electro: true,
+        rnb: true,
+        trans: false
+      }
+    ];
     getMusic = getMusicsOfClubMap();
-    print(getMusic);
-    print('==================');
+    //print(getMusic);
+    //print('==================');
 
-
-    for (int i = 0; i < getMusic.length ; i++) {
-
-
-      if(mapOfUserMusics != null) {
+    // Va boucler sur la taille de la liste complete
+    for (int i = 0; i < getMusic.length; i++) {
+      if (mapOfUserMusics != null) {
         if (getMusic != null) {
           Map<dynamic, dynamic> mapOfMusicFromList = getMusic[i];
           List<String> nameOfClubList = getClubName();
 
+          // Va verifier tout les style de musique d'abord si ils ont là même valeur et ensuite si il retourne true
+          // Si c'est le cas on va l'ajouter à la liste qui sera retourné
 
-          if ((mapOfUserMusics['populaire'] ==
-              mapOfMusicFromList['populaire']) &&
-              (mapOfUserMusics['populaire'] == true)) {
-            print('debut de la boucle de verif de style de music');
-            print('*********************');
-            print('Les deux il kiffe populaire');
+          if ((mapOfUserMusics['populaire'] == mapOfMusicFromList['populaire']) && (mapOfUserMusics['populaire'] == true)) {
+            //print('debut de la boucle de verif de style de music');
+            //print('*********************');
+            //print('Les deux il kiffe populaire');
             bestClub.add(snapClub[i].documentID);
-            print('Valur après ajout de populaire');
-            print(bestClub);
+            //print('Valur après ajout de populaire');
+            //print(bestClub);
             //return bestClub;
           } else {
-            if ((mapOfUserMusics['electro'] == mapOfMusicFromList['electro']) &&
-                (mapOfUserMusics['electro'] == true)) {
-              print('*****************');
-              print('ils aiment le electro tout les 2 ');
+            if ((mapOfUserMusics['electro'] == mapOfMusicFromList['electro']) && (mapOfUserMusics['electro'] == true)) {
+              //print('*****************');
+              //print('ils aiment le electro tout les 2 ');
               bestClub.add(snapClub[i].documentID);
-              print('Valur après ajout de electro');
-              print(bestClub);
+              //print('Valur après ajout de electro');
+              //print(bestClub);
             } else {
-              if ((mapOfUserMusics['rap'] == mapOfMusicFromList['rap']) &&
-                  (mapOfUserMusics['rap'] == true)) {
-                print('*****************');
-                print('ils aiment le rap tout les 2 ');
+              if ((mapOfUserMusics['rap'] == mapOfMusicFromList['rap']) && (mapOfUserMusics['rap'] == true)) {
+                //print('*****************');
+                //print('ils aiment le rap tout les 2 ');
                 bestClub.add(snapClub[i].documentID);
-                print('Valur après ajout de rap');
-                print(bestClub);
+                //print('Valur après ajout de rap');
+                //print(bestClub);
               } else {
-                if ((mapOfUserMusics['rnb'] == mapOfMusicFromList['rnb']) &&
-                    (mapOfUserMusics['rnb'] == true)) {
-                  print('*****************');
-                  print('ils aiment le rnb tout les 2 ');
+                if ((mapOfUserMusics['rnb'] == mapOfMusicFromList['rnb']) && (mapOfUserMusics['rnb'] == true)) {
+                  //print('*****************');
+                  //print('ils aiment le rnb tout les 2 ');
                   bestClub.add(snapClub[i].documentID);
-                  print('Valur après ajout de rnb');
-                  print(bestClub);
+                  //print('Valur après ajout de rnb');
+                  //print(bestClub);
                 } else {
-                  if ((mapOfUserMusics['rock'] == mapOfMusicFromList['rock']) &&
-                      (mapOfUserMusics['rock'] == true)) {
-                    print('*****************');
-                    print('ils aiment le rock tout les 2 ');
+                  if ((mapOfUserMusics['rock'] == mapOfMusicFromList['rock']) && (mapOfUserMusics['rock'] == true)) {
+                    //print('*****************');
+                    //print('ils aiment le rock tout les 2 ');
                     bestClub.add(snapClub[i].documentID);
-                    print('Valur après ajout de rock');
-                    print(bestClub);
+                    //print('Valur après ajout de rock');
+                    //print(bestClub);
                   } else {
-                    if ((mapOfUserMusics['trans'] ==
-                        mapOfMusicFromList['trans']) &&
-                        (mapOfUserMusics['trans'] == true)) {
-                      print('*****************');
-                      print('ils aiment la trans tout les 2 ');
+                    if ((mapOfUserMusics['trans'] == mapOfMusicFromList['trans']) && (mapOfUserMusics['trans'] == true)) {
+                      //print('*****************');
+                      //print('ils aiment la trans tout les 2 ');
                       bestClub.add(snapClub[i].documentID);
-                      print('Valur après ajout de trans');
-                      print(bestClub);
+                      //print('Valur après ajout de trans');
+                      //print(bestClub);
                     }
                   }
                 }
               }
-              print('Valeur de bestclub quoi quil arrive');
-              print(bestClub);
-              print('Le club ' + nameOfClubList[i] +
-                  'a aucun son en commun avec le user');
+              //print('Valeur de bestclub quoi quil arrive');
+              //print(bestClub);
+              //print('Le club ' +nameOfClubList[i] +'a aucun son en commun avec le user');
             }
           }
           print('--------------------------------------------------');
         }
       }
-
     }
     return bestClub;
-
   }
 }

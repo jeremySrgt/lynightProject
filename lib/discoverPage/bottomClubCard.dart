@@ -44,6 +44,7 @@ class _BottomClubCardState extends State<BottomClubCard>{
   }
 
 
+  // Méthode qui apelle l'algo en lui donnant la musicMap et une List<DocumentSnapshot>
   test(){
     setState(() {
       AlgoMusicReference algoTest = new AlgoMusicReference(mapOfUserMusics: widget.musicMap, snapClub: dataClubFromBDD);
@@ -82,16 +83,17 @@ class _BottomClubCardState extends State<BottomClubCard>{
 
   Widget clubList(){
     test();
-    print('prrrrrrrrrrrrint selected');
-    print(clubSelected);
+    //print('prrrrrrrrrrrrint selected');
+    //print(clubSelected);
     List displayNightClub = [];
     List displayNightClubID = [];
     if(club != null){
       return StreamBuilder(
         stream: club,
         builder: (context, snapshot) {
-          print('entrer dans le stream builder ');
-          if((clubSelected) != null) {
+          //print('entrer dans le stream builder ');
+          // On cherche sur chaque club et on compare chaque club existant dans la base avec les club retourné de l'algo
+          if((clubSelected) != null && snapshot.data !=null) {
             for (int i = 0; i < clubSelected.length; i++) {
               for (int j = 0; j < snapshot.data.documents.length; j++) {
                 if (snapshot.data.documents[j].documentID == clubSelected[i]) {
@@ -100,12 +102,12 @@ class _BottomClubCardState extends State<BottomClubCard>{
                 }
               }
             }
-            print('La liste de club ::::::');
-            print(displayNightClub.length);
-            print(displayNightClub);
+            //print('La liste de club ::::::');
+            //print(displayNightClub.length);
+            //print(displayNightClub);
 
           }
-          print('sortie de la big bpucle');
+          //print('sortie de la big bpucle');
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return CircularProgressIndicator();
@@ -117,7 +119,7 @@ class _BottomClubCardState extends State<BottomClubCard>{
 
                   Map<String,dynamic> clubDataMap;
 
-                  String currentClubId = displayNightClubID[i];//modifier car ca ne donne pas l'id du bon club pour cliquer dessus !!!!!!
+                  String currentClubId = displayNightClubID[i];//recharge la page avec les recommandé adapté avec l'algo
                   clubDataMap = displayNightClub[i];
 
                   return Container(
