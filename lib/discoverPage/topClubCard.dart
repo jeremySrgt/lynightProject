@@ -58,16 +58,16 @@ class _TopClubCardState extends State<TopClubCard> {
   }
 
 
-  test(){
-    setState(() {
-      AlgoMusicReference algoTest = new AlgoMusicReference(mapOfUserMusics: widget.musicMap, snapClub: dataClubFromBDD);
-      clubSelected = algoTest.compareMusic();
-    });
-  }
+//  test(){
+//    setState(() {
+//      AlgoMusicReference algoTest = new AlgoMusicReference(mapOfUserMusics: widget.musicMap, snapClub: dataClubFromBDD);
+//      clubSelected = algoTest.compareMusic();
+//    });
+//  }
 
 
   Widget clubList() {
-    test();
+    //test();
     //print('qsdklqjsmdlksqjdmlkqjmdklqj');
     //print(dataClubFromBDD);
     print('CLUBSLEECT');
@@ -139,7 +139,7 @@ class _TopClubCardState extends State<TopClubCard> {
                                               subtitle: Text(snapshot
                                                   .data
                                                   .documents[i]
-                                                  .data['description']),
+                                                  .data['description'],overflow: TextOverflow.ellipsis,),
                                             ),
                                             Container(
                                               alignment: Alignment.bottomRight,
