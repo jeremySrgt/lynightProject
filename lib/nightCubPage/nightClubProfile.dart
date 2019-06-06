@@ -33,8 +33,9 @@ class _NightClubProfile extends State<NightClubProfile> {
   bool alreadySaved = false;
   List favorites;
 
-  /* bool descriptionRoll = false;
-  Widget descriptionSubtitle; */
+  bool descriptionRoll = false;
+  Widget descriptionSubtitle;
+
   void initState() {
     super.initState();
 
@@ -70,33 +71,21 @@ class _NightClubProfile extends State<NightClubProfile> {
   }
 
   Widget favoriteButton() {
-    return Container(
-      width: 60,
-      child: RaisedButton(
-        elevation: 5.0,
-        shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: Theme.of(context).primaryColor,
-            ),
-            borderRadius: BorderRadius.circular(30.0)),
-        color: Colors.white,
-        child: Icon(
-          alreadySaved ? Icons.favorite : Icons.favorite_border,
-          color: alreadySaved ? Colors.red : Colors.red,
-        ),
-        onPressed: () {
-          setState(() {
-            if (alreadySaved) {
-              removeFavorites();
-              alreadySaved = false;
-            } else {
-              addFavorites();
-              alreadySaved = true;
-            }
-          });
-        },
-      ),
-    );
+    return IconButton(icon: Icon(
+      alreadySaved ? Icons.favorite : Icons.favorite_border,
+      color: alreadySaved ? Colors.red : Colors.red,
+      size: 35,
+    ), onPressed: () {
+      setState(() {
+        if (alreadySaved) {
+          removeFavorites();
+          alreadySaved = false;
+        } else {
+          addFavorites();
+          alreadySaved = true;
+        }
+      });
+    });
   }
 
   Widget carouselPictureNightClubProfile(clubData, context) {
@@ -162,6 +151,16 @@ class _NightClubProfile extends State<NightClubProfile> {
       }
     }
 
+    description() {
+      return Text(
+        clubData['description'],
+        style: TextStyle(
+          color: Colors.black,
+        ),
+        textAlign: TextAlign.justify,
+      );
+    }
+
     Widget nightClubDescription() {
       return Container(
         child: ListTile(
@@ -178,13 +177,8 @@ class _NightClubProfile extends State<NightClubProfile> {
               fontStyle: FontStyle.normal,
             ),
           ),
-          subtitle: Text(
-            clubData['description'],
-            style: TextStyle(
-              color: Colors.black,
-            ),
-          ),
-          /*trailing: Icon(
+          subtitle: descriptionSubtitle,
+          trailing: Icon(
               descriptionRoll
                   ? Icons.keyboard_arrow_down
                   : Icons.keyboard_arrow_right,
@@ -201,7 +195,7 @@ class _NightClubProfile extends State<NightClubProfile> {
                 descriptionRoll = true;
               }
             });
-          },*/
+          },
         ),
       );
     }
@@ -355,7 +349,6 @@ class _NightClubProfile extends State<NightClubProfile> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            favoriteButton(),
             SizedBox(
               height: 10,
             ),
@@ -389,11 +382,19 @@ class _NightClubProfile extends State<NightClubProfile> {
           Flexible(
             child: Column(
               children: <Widget>[
-                Text(
-                  clubData['name'],
-                  style: TextStyle(
-                      fontSize: 40, color: Theme.of(context).primaryColor),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      clubData['name'],
+                      style: TextStyle(
+                          fontSize: 40, color: Theme.of(context).primaryColor),
+                    ),
+                    favoriteButton(),
+                  ],
+
                 ),
+
                 SizedBox(
                   height: 25,
                 ),
