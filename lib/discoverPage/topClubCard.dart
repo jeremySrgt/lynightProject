@@ -139,7 +139,7 @@ class _TopClubCardState extends State<TopClubCard> {
                                               subtitle: Text(snapshot
                                                   .data
                                                   .documents[i]
-                                                  .data['description']),
+                                                  .data['description'],overflow: TextOverflow.ellipsis,),
                                             ),
                                             Container(
                                               alignment: Alignment.bottomRight,

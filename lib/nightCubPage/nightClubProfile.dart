@@ -6,6 +6,7 @@ import 'package:lynight/nightCubPage/carousel.dart';
 import 'package:lynight/services/clubPictures.dart';
 import 'package:lynight/nightCubPage/sumUpPage.dart';
 import 'package:lynight/services/crud.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NightClubProfile extends StatefulWidget {
   NightClubProfile({this.documentID});
@@ -30,9 +31,10 @@ class _NightClubProfile extends State<NightClubProfile> {
   bool rock = false;
   bool trans = false;
   bool alreadySaved = false;
-
   List favorites;
 
+  /* bool descriptionRoll = false;
+  Widget descriptionSubtitle; */
   void initState() {
     super.initState();
 
@@ -41,6 +43,7 @@ class _NightClubProfile extends State<NightClubProfile> {
       Map<String, dynamic> dataMap = value
           .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
       List<dynamic> favoritesAll = dataMap['favoris'];
+
       setState(() {
         favorites = dataMap['favoris'];
         alreadySaved = favorites.contains(widget.documentID);
@@ -121,107 +124,125 @@ class _NightClubProfile extends State<NightClubProfile> {
   Widget nightClubProfileInfo(clubData, context) {
     Map<dynamic, dynamic> musicMap = clubData['musics'];
 
-    final linkUrlWebsite = Container(
-      margin: EdgeInsets.only(top: 10.0, left: 5.0),
-      height: 60,
-      width: 250,
-      child: Text(
-        clubData['siteUrl'] + '\n' + '\n' + clubData['soundcloud'],
-      ),
-    );
+    _launchCaller() async {
+      var url = "tel:" + clubData['phone'];
+
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Non disponible $url';
+      }
+    }
+
+    _launchMap() async {
+      var url =
+          "google.navigation:q=${clubData['position'].latitude},${clubData['position'].longitude}";
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Non disponible $url';
+      }
+    }
+
+    _launchSite() async {
+      var url = clubData['siteUrl'];
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Non disponible $url';
+      }
+    }
+
+    _launchSoundCloud() async {
+      var url = clubData['soundcloud'];
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Non disponible $url';
+      }
+    }
 
     Widget nightClubDescription() {
       return Container(
-        alignment: FractionalOffset.center,
-        height: 100,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            border: Border.all(color: Theme.of(context).primaryColor),
+        child: ListTile(
+          leading: Icon(
+            Icons.description,
+            size: 35,
+            color: Theme.of(context).primaryColor,
           ),
-          margin: EdgeInsets.only(top: 10),
-          height: 100,
-          width: 350,
-          child: Container(
-            child: Row(
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.center,
-                  width: 60,
-                  child: Icon(
-                    Icons.description,
-                    size: 35,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                VerticalDivider(),
-                Container(
-                  alignment: FractionalOffset.centerLeft,
-                  height: 100,
-                  width: 250,
-                  child: Text(
-                    clubData['description'],
-
-                  ),
-                ),
-              ],
+          title: Text(
+            "Description",
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: 18,
+              fontStyle: FontStyle.normal,
             ),
           ),
+          subtitle: Text(
+            clubData['description'],
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+          /*trailing: Icon(
+              descriptionRoll
+                  ? Icons.keyboard_arrow_down
+                  : Icons.keyboard_arrow_right,
+              color: descriptionRoll
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).primaryColor),
+          onTap: () {
+            setState(() {
+              if (descriptionRoll) {
+                descriptionSubtitle = null;
+                descriptionRoll = false;
+              } else {
+                descriptionSubtitle = description();
+                descriptionRoll = true;
+              }
+            });
+          },*/
         ),
       );
     }
 
     Widget nightClubMusic() {
       return Container(
-        alignment: FractionalOffset.center,
-        height: 100,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            border: Border.all(color: Theme.of(context).primaryColor),
+        child: ListTile(
+          leading: Icon(
+            Icons.music_note,
+            size: 35,
+            color: Theme.of(context).primaryColor,
           ),
-          margin: EdgeInsets.only(top: 10),
-          height: 100,
-          width: 350,
-          child: Container(
-            child: Row(
-              children: <Widget>[
-                Container(
-                  alignment: FractionalOffset.center,
-                  width: 60,
-                  child: Icon(
-                    Icons.music_note,
-                    size: 35,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                VerticalDivider(),
-                Container(
-                  alignment: FractionalOffset.center,
-                  height: 60,
-                  color: Colors.white10,
-                  width: 270,
-                  child: Row(
-                    children: <Widget>[
-                      musicMap['electro'] == true
-                          ? Text('Electro ')
-                          : Container(),
-                      musicMap['populaire'] == true
-                          ? Text('Populaire ')
-                          : Container(),
-                      musicMap['rap'] == true ? Text('Rap ') : Container(),
-                      musicMap['rnb'] == true ? Text('RnB ') : Container(),
-                      musicMap['rock'] == true ? Text('Rock ') : Container(),
-                      musicMap['trans'] == true
-                          ? Text('Psytrance ')
-                          : Container(),
-                    ],
-                  ),
-                ),
-              ],
+          title: Text(
+            "Music",
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: 18,
+              fontStyle: FontStyle.normal,
             ),
+          ),
+          subtitle: Row(
+            children: <Widget>[
+              musicMap['electro'] == true
+                  ? Text('Electro ', style: TextStyle(color: Colors.black))
+                  : Container(),
+              musicMap['populaire'] == true
+                  ? Text('Populaire ', style: TextStyle(color: Colors.black))
+                  : Container(),
+              musicMap['rap'] == true
+                  ? Text('Rap ', style: TextStyle(color: Colors.black))
+                  : Container(),
+              musicMap['rnb'] == true
+                  ? Text('RnB ', style: TextStyle(color: Colors.black))
+                  : Container(),
+              musicMap['rock'] == true
+                  ? Text('Rock ', style: TextStyle(color: Colors.black))
+                  : Container(),
+              musicMap['trans'] == true
+                  ? Text('Psytrance ', style: TextStyle(color: Colors.black))
+                  : Container(),
+            ],
           ),
         ),
       );
@@ -229,39 +250,60 @@ class _NightClubProfile extends State<NightClubProfile> {
 
     Widget nightClubInformation() {
       return Container(
-        alignment: FractionalOffset.center,
-        height: 110,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            border: Border.all(color: Theme.of(context).primaryColor),
+        child: ListTile(
+          leading: Icon(
+            Icons.contacts,
+            size: 35,
+            color: Theme.of(context).primaryColor,
           ),
-          margin: EdgeInsets.only(top: 10),
-          height: 100,
-          width: 350,
-          child: Container(
-            child: Row(
-              children: <Widget>[
-                Container(
-                  alignment: FractionalOffset.center,
-                  width: 60,
-                  child: Icon(
-                    Icons.contacts,
-                    size: 35,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                VerticalDivider(),
-                Container(
-                    alignment: FractionalOffset.centerLeft,
-                    height: 60,
-                    color: Colors.white10,
-                    width: 270,
-                    child: Text(
-                        clubData['adress'] + '\n' + '\n' + clubData['phone'])),
-              ],
+          title: Text(
+            "Informations",
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: 18,
+              fontStyle: FontStyle.normal,
             ),
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Text(
+                    '\n' + 'Adresse : ',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      child: Text(
+                        '\n' + clubData['adress'],
+                        style: TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                      onTap: () {
+                        _launchMap();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Text(
+                    '\n' + 'Téléphone : ',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  InkWell(
+                    child: Text(
+                      '\n' + clubData['phone'],
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    onTap: () {
+                      _launchCaller();
+                    },
+                  ),
+                ],
+              )
+            ],
           ),
         ),
       );
@@ -269,44 +311,40 @@ class _NightClubProfile extends State<NightClubProfile> {
 
     Widget nightClubLink() {
       return Container(
-        alignment: FractionalOffset.center,
-        height: 95,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            border: Border.all(color: Theme.of(context).primaryColor),
+        child: ListTile(
+          leading: Icon(
+            Icons.link,
+            size: 35,
+            color: Theme.of(context).primaryColor,
           ),
-          margin: EdgeInsets.only(top: 10),
-          height: 100,
-          width: 350,
-          child: Container(
-            child: Row(
-              children: <Widget>[
-                Container(
-                  alignment: FractionalOffset.center,
-                  width: 60,
-                  child: Icon(
-                    Icons.link,
-                    size: 35,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                VerticalDivider(),
-                Container(
-                  alignment: FractionalOffset.center,
-                  margin: EdgeInsets.only(top: 5.0),
-                  height: 60,
-                  color: Colors.white10,
-                  width: 270,
-                  child: Row(
-                    children: <Widget>[
-                      linkUrlWebsite,
-                    ],
-                  ),
-                ),
-              ],
+          title: Text(
+            "Liens",
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: 18,
+              fontStyle: FontStyle.normal,
             ),
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              InkWell(
+                splashColor: Colors.white,
+                child: Text('\n' + clubData['siteUrl'] + '\n',
+                    style: TextStyle(color: Colors.black)),
+                onTap: () {
+                  _launchSite();
+                },
+              ),
+              InkWell(
+                splashColor: Colors.white,
+                child: Text(clubData['soundcloud'] + '\n',
+                    style: TextStyle(color: Colors.black)),
+                onTap: () {
+                  _launchSoundCloud();
+                },
+              ),
+            ],
           ),
         ),
       );
@@ -351,14 +389,30 @@ class _NightClubProfile extends State<NightClubProfile> {
           Flexible(
             child: Column(
               children: <Widget>[
+                Text(
+                  clubData['name'],
+                  style: TextStyle(
+                      fontSize: 40, color: Theme.of(context).primaryColor),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
                 nightClubDescription(),
-                SizedBox(height: 10),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  height: 15,
+                ),
                 nightClubMusic(),
-                SizedBox(height: 10),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  height: 15,
+                ),
                 nightClubInformation(),
-                SizedBox(height: 10),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  height: 15,
+                ),
                 nightClubLink(),
-                SizedBox(height: 10),
                 nightClubLetsParty(),
                 SizedBox(height: 30),
               ],
@@ -384,18 +438,18 @@ class _NightClubProfile extends State<NightClubProfile> {
             delegate: SliverChildListDelegate(
               [
                 Container(
-                  decoration: BoxDecoration(
+                  /**decoration: BoxDecoration(
                       gradient: LinearGradient(
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                    stops: [0.1, 0.5, 0.7, 0.9],
-                    colors: [
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topRight,
+                      stops: [0.1, 0.5, 0.7, 0.9],
+                      colors: [
                       Colors.deepPurple[50],
                       Colors.deepPurple[200],
                       Colors.deepPurple[400],
                       Color(0xFF7854d3),
-                    ],
-                  )),
+                      ],
+                      )),**/
                   child: Column(
                     children: <Widget>[
                       carouselPictureNightClubProfile(clubData, context),
