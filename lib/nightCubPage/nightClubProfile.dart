@@ -7,6 +7,7 @@ import 'package:lynight/services/clubPictures.dart';
 import 'package:lynight/nightCubPage/sumUpPage.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NightClubProfile extends StatefulWidget {
   NightClubProfile({this.documentID});
@@ -54,7 +55,7 @@ class _NightClubProfile extends State<NightClubProfile> {
 
   addFavorites() {
     List favoritesListTemp = new List.from(favorites);
-    if(!favoritesListTemp.contains(widget.documentID)){
+    if (!favoritesListTemp.contains(widget.documentID)) {
       favoritesListTemp.add(widget.documentID);
     }
     Map<String, dynamic> test = {
@@ -73,21 +74,23 @@ class _NightClubProfile extends State<NightClubProfile> {
   }
 
   Widget favoriteButton() {
-    return IconButton(icon: Icon(
-      alreadySaved ? Icons.favorite : Icons.favorite_border,
-      color: alreadySaved ? Colors.red : Colors.red,
-      size: 35,
-    ), onPressed: () {
-      setState(() {
-        if (alreadySaved) {
-          removeFavorites();
-          alreadySaved = false;
-        } else {
-          addFavorites();
-          alreadySaved = true;
-        }
-      });
-    });
+    return IconButton(
+        icon: Icon(
+          alreadySaved ? Icons.favorite : Icons.favorite_border,
+          color: alreadySaved ? Colors.red : Colors.red,
+          size: 35,
+        ),
+        onPressed: () {
+          setState(() {
+            if (alreadySaved) {
+              removeFavorites();
+              alreadySaved = false;
+            } else {
+              addFavorites();
+              alreadySaved = true;
+            }
+          });
+        });
   }
 
   Widget carouselPictureNightClubProfile(clubData, context) {
@@ -144,22 +147,15 @@ class _NightClubProfile extends State<NightClubProfile> {
       }
     }
 
-    _launchSoundCloud() async {
-      var url = clubData['soundcloud'];
-      if (await canLaunch(url)) {
-        await launch(url);
-      } else {
-        throw 'Non disponible $url';
-      }
-    }
-
     description() {
       return Text(
         clubData['description'],
         style: TextStyle(
           color: Colors.black,
+          height: 1.2,
         ),
         textAlign: TextAlign.justify,
+
       );
     }
 
@@ -211,32 +207,33 @@ class _NightClubProfile extends State<NightClubProfile> {
             color: Theme.of(context).primaryColor,
           ),
           title: Text(
-            "Music",
+            "Musiques",
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontSize: 18,
               fontStyle: FontStyle.normal,
             ),
           ),
-          subtitle: Row(
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               musicMap['electro'] == true
-                  ? Text('Electro ', style: TextStyle(color: Colors.black))
+                  ? Text('Electro ', style: TextStyle(color: Colors.black,height: 1.2))
                   : Container(),
               musicMap['populaire'] == true
-                  ? Text('Populaire ', style: TextStyle(color: Colors.black))
+                  ? Text('Populaire ', style: TextStyle(color: Colors.black,height: 1.2))
                   : Container(),
               musicMap['rap'] == true
-                  ? Text('Rap ', style: TextStyle(color: Colors.black))
+                  ? Text('Rap ', style: TextStyle(color: Colors.black,height: 1.2))
                   : Container(),
               musicMap['rnb'] == true
-                  ? Text('RnB ', style: TextStyle(color: Colors.black))
+                  ? Text('RnB ', style: TextStyle(color: Colors.black,height: 1.2))
                   : Container(),
               musicMap['rock'] == true
-                  ? Text('Rock ', style: TextStyle(color: Colors.black))
+                  ? Text('Rock ', style: TextStyle(color: Colors.black,height: 1.2))
                   : Container(),
               musicMap['trans'] == true
-                  ? Text('Psytrance ', style: TextStyle(color: Colors.black))
+                  ? Text('Psytrance ', style: TextStyle(color: Colors.black,height: 1.2))
                   : Container(),
             ],
           ),
@@ -248,7 +245,7 @@ class _NightClubProfile extends State<NightClubProfile> {
       return Container(
         child: ListTile(
           leading: Icon(
-            Icons.contacts,
+            FontAwesomeIcons.infoCircle,
             size: 35,
             color: Theme.of(context).primaryColor,
           ),
@@ -264,16 +261,17 @@ class _NightClubProfile extends State<NightClubProfile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    '\n' + 'Adresse : ',
-                    style: TextStyle(color: Colors.black),
+                     'Adresse : ',
+                    style: TextStyle(color: Colors.black,height: 1.2),
                   ),
                   Expanded(
                     child: InkWell(
                       child: Text(
-                        '\n' + clubData['adress'],
-                        style: TextStyle(color: Colors.black, fontSize: 16),
+                        clubData['adress'],
+                        style: TextStyle(color: Colors.black, fontSize: 16,height: 1.2),
                       ),
                       onTap: () {
                         _launchMap();
@@ -285,13 +283,13 @@ class _NightClubProfile extends State<NightClubProfile> {
               Row(
                 children: <Widget>[
                   Text(
-                    '\n' + 'Téléphone : ',
-                    style: TextStyle(color: Colors.black),
+                    'Téléphone : ',
+                    style: TextStyle(color: Colors.black,height: 1.2),
                   ),
                   InkWell(
                     child: Text(
-                      '\n' + clubData['phone'],
-                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      clubData['phone'],
+                      style: TextStyle(color: Colors.black, fontSize: 16,height: 1.2),
                     ),
                     onTap: () {
                       _launchCaller();
@@ -309,7 +307,7 @@ class _NightClubProfile extends State<NightClubProfile> {
       return Container(
         child: ListTile(
           leading: Icon(
-            Icons.link,
+            FontAwesomeIcons.link,
             size: 35,
             color: Theme.of(context).primaryColor,
           ),
@@ -326,21 +324,56 @@ class _NightClubProfile extends State<NightClubProfile> {
             children: <Widget>[
               InkWell(
                 splashColor: Colors.white,
-                child: Text('\n' + clubData['siteUrl'] + '\n',
-                    style: TextStyle(color: Colors.black)),
+                child: Text(clubData['siteUrl'],
+                    style: TextStyle(color: Colors.black,height: 1.5)),
                 onTap: () {
                   _launchSite();
                 },
               ),
-              //plus de soucloud
-//              InkWell(
-//                splashColor: Colors.white,
-//                child: Text(clubData['soundcloud'] + '\n',
-//                    style: TextStyle(color: Colors.black)),
-//                onTap: () {
-//                  _launchSoundCloud();
-//                },
-//              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    Widget nightClubPrice() {
+      return Container(
+        child: ListTile(
+          leading: Icon(
+            Icons.monetization_on,
+            size: 35,
+            color: Theme.of(context).primaryColor,
+          ),
+          title: Text(
+            "Tarifs ",
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: 18,
+              fontStyle: FontStyle.normal,
+            ),
+          ),
+          subtitle: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Icon(FontAwesomeIcons.male, color: Colors.black, size: 20),
+                  Text(
+                    'Homme : ' + clubData['price'][0].toString() + " €",
+                    style: TextStyle(color: Colors.black,height: 1.5),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Icon(FontAwesomeIcons.female, color: Colors.black, size: 20),
+                  Text(
+                    'Femme : ' + clubData['price'][1].toString() + " €",
+                    style: TextStyle(color: Colors.black,height: 1.5),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -372,9 +405,16 @@ class _NightClubProfile extends State<NightClubProfile> {
                             )));
               },
             ),
-            //onPressed: validateAndSubmit),
           ],
         ),
+      );
+    }
+
+    Widget lineSeparator() {
+      return Divider(
+        color: Theme.of(context).primaryColor,
+        height: 15,
+        indent: 70,
       );
     }
 
@@ -395,28 +435,20 @@ class _NightClubProfile extends State<NightClubProfile> {
                     ),
                     favoriteButton(),
                   ],
-
                 ),
-
                 SizedBox(
                   height: 25,
                 ),
                 nightClubDescription(),
-                Divider(
-                  color: Theme.of(context).primaryColor,
-                  height: 15,
-                ),
+                lineSeparator(),
                 nightClubMusic(),
-                Divider(
-                  color: Theme.of(context).primaryColor,
-                  height: 15,
-                ),
+                lineSeparator(),
                 nightClubInformation(),
-                Divider(
-                  color: Theme.of(context).primaryColor,
-                  height: 15,
-                ),
+                lineSeparator(),
                 nightClubLink(),
+                lineSeparator(),
+                nightClubPrice(),
+                SizedBox(height: 20),
                 nightClubLetsParty(),
                 SizedBox(height: 30),
               ],
