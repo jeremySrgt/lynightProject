@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/authentification/primary_button.dart';
@@ -130,7 +131,7 @@ class _AddClubState extends State<AddClub> {
         return AlertDialog(
           title: new Text("Photo manquante"),
           content:
-          new Text("Au moins une photo est requise pour ajouter un club"),
+              new Text("Au moins une photo est requise pour ajouter un club"),
           actions: <Widget>[
             new FlatButton(
               child: new Text("Ok"),
@@ -153,7 +154,7 @@ class _AddClubState extends State<AddClub> {
         decoration: InputDecoration(
           labelText: 'Nom du club',
           icon: new Icon(
-            Icons.mail,
+            FontAwesomeIcons.solidMoon,
             color: Colors.grey,
           ),
         ),
@@ -176,7 +177,7 @@ class _AddClubState extends State<AddClub> {
         decoration: InputDecoration(
           labelText: 'Decription',
           icon: new Icon(
-            Icons.mail,
+            FontAwesomeIcons.solidClipboard,
             color: Colors.grey,
           ),
         ),
@@ -198,7 +199,7 @@ class _AddClubState extends State<AddClub> {
         decoration: InputDecoration(
           labelText: 'Adresse',
           icon: new Icon(
-            Icons.mail,
+            FontAwesomeIcons.mapMarkerAlt,
             color: Colors.grey,
           ),
         ),
@@ -221,7 +222,7 @@ class _AddClubState extends State<AddClub> {
         decoration: InputDecoration(
           labelText: 'Téléphone',
           icon: new Icon(
-            Icons.mail,
+            FontAwesomeIcons.phone,
             color: Colors.grey,
           ),
         ),
@@ -251,7 +252,7 @@ class _AddClubState extends State<AddClub> {
             decoration: InputDecoration(
               labelText: 'Latitude',
               icon: new Icon(
-                Icons.mail,
+                FontAwesomeIcons.mapPin,
                 color: Colors.grey,
               ),
             ),
@@ -268,7 +269,7 @@ class _AddClubState extends State<AddClub> {
             decoration: InputDecoration(
               labelText: 'Longitude',
               icon: new Icon(
-                Icons.mail,
+                FontAwesomeIcons.mapPin,
                 color: Colors.grey,
               ),
             ),
@@ -295,7 +296,7 @@ class _AddClubState extends State<AddClub> {
             decoration: InputDecoration(
               labelText: 'Prix homme',
               icon: new Icon(
-                Icons.mail,
+                FontAwesomeIcons.euroSign,
                 color: Colors.grey,
               ),
             ),
@@ -312,7 +313,7 @@ class _AddClubState extends State<AddClub> {
             decoration: InputDecoration(
               labelText: 'Prix femme',
               icon: new Icon(
-                Icons.mail,
+                FontAwesomeIcons.euroSign,
                 color: Colors.grey,
               ),
             ),
@@ -336,7 +337,7 @@ class _AddClubState extends State<AddClub> {
         decoration: InputDecoration(
           labelText: 'Site web [optionnel]',
           icon: new Icon(
-            Icons.mail,
+            FontAwesomeIcons.link,
             color: Colors.grey,
           ),
         ),
@@ -373,22 +374,22 @@ class _AddClubState extends State<AddClub> {
                   height: 200,
                   child: clubPictureFile[index] == null
                       ? FlatButton(
-                    onPressed: () {
-                      getImageFromGallery(index);
-                    },
-                    child: Icon(Icons.add_circle_outline),
-                  )
+                          onPressed: () {
+                            getImageFromGallery(index);
+                          },
+                          child: Icon(Icons.add_circle_outline),
+                        )
                       : InkWell(
-                      onTap: () {
-                        getImageFromGallery(index);
-                      },
-                      child: Image.file(
-                        clubPictureFile[index],
-                        height: 200,
-                        width: 200,
-                        fit: BoxFit.cover,
-                      ),
-                  ),
+                          onTap: () {
+                            getImageFromGallery(index);
+                          },
+                          child: Image.file(
+                            clubPictureFile[index],
+                            height: 200,
+                            width: 200,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                 ),
                 Text(
                   'Photo ${index + 1}',
@@ -433,9 +434,9 @@ class _AddClubState extends State<AddClub> {
     for (int i = 0; i < clubPictureFile.length; i++) {
       if (clubPictureFile[i] != null) {
         final StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child('clubPics/$clubID/$i.jpg');
+            FirebaseStorage.instance.ref().child('clubPics/$clubID/$i.jpg');
         final StorageUploadTask task =
-        firebaseStorageRef.putFile(clubPictureFile[i]);
+            firebaseStorageRef.putFile(clubPictureFile[i]);
 //      if (task.isInProgress) {
 //        setState(() {
 //          _isLoading = true;
@@ -501,9 +502,7 @@ class _AddClubState extends State<AddClub> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme
-            .of(context)
-            .primaryColor,
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text('Ajouter un club'),
       ),
       body: SingleChildScrollView(
