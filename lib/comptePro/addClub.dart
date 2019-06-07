@@ -92,7 +92,9 @@ class _AddClubState extends State<AddClub> {
         searchKey: _name.substring(0, 1).toUpperCase(),
       );
 
-      DocumentReference docRef = await Firestore.instance.collection('club').add(clubData.getClubDataMap());
+      DocumentReference docRef = await Firestore.instance
+          .collection('club')
+          .add(clubData.getClubDataMap());
       uploadPictures(docRef.documentID);
 
 //      setState(() {
@@ -108,21 +110,18 @@ class _AddClubState extends State<AddClub> {
 
   Widget submitWidget() {
     return PrimaryButton(
-      key: new Key('submitclub'),
-      text: 'Créer',
-      height: 44.0,
-      onPressed: () {
-        if (clubPictureFile[0] == null) {
-          validateAndSave();
-          _showDialogMissingPhoto();
-        } else {
-          validateAndSubmit();
-        }
-      }
-    );
+        key: new Key('submitclub'),
+        text: 'Créer',
+        height: 44.0,
+        onPressed: () {
+          if (clubPictureFile[0] == null) {
+            validateAndSave();
+            _showDialogMissingPhoto();
+          } else {
+            validateAndSubmit();
+          }
+        });
   }
-
-
 
   void _showDialogMissingPhoto() {
     showDialog(
@@ -130,7 +129,8 @@ class _AddClubState extends State<AddClub> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: new Text("Photo manquante"),
-          content: new Text("Au moins une photo est requise pour ajouter un club"),
+          content:
+          new Text("Au moins une photo est requise pour ajouter un club"),
           actions: <Widget>[
             new FlatButton(
               child: new Text("Ok"),
@@ -352,37 +352,52 @@ class _AddClubState extends State<AddClub> {
   }
 
   Widget _selectionPictures() {
-    return Container(
-      height: 200,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        itemCount: clubPictureFile.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Column(
-            key: Key('pic$index'),
-            children: <Widget>[
-              Container(
-//              color: Colors.red,
-                width: 100,
-                height: 100,
-                child: clubPictureFile[index] == null
-                    ? FlatButton(
-                        onPressed: () {
-                          getImageFromGallery(index);
-                        },
-                        child: Icon(Icons.add_circle_outline),
-                      )
-                    : Image.file(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      child: Container(
+        height: 220,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          itemCount: clubPictureFile.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Column(
+              key: Key('pic$index'),
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: Colors.grey[300]),
+                  margin: EdgeInsets.only(right: 10),
+                  width: 250,
+                  height: 200,
+                  child: clubPictureFile[index] == null
+                      ? FlatButton(
+                    onPressed: () {
+                      getImageFromGallery(index);
+                    },
+                    child: Icon(Icons.add_circle_outline),
+                  )
+                      : InkWell(
+                      onTap: () {
+                        getImageFromGallery(index);
+                      },
+                      child: Image.file(
                         clubPictureFile[index],
                         height: 200,
                         width: 200,
+                        fit: BoxFit.cover,
                       ),
-              ),
-              Text('Photo $index'),
-            ],
-          );
-        },
+                  ),
+                ),
+                Text(
+                  'Photo ${index + 1}',
+                  style: TextStyle(color: Colors.grey[600]),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -416,7 +431,7 @@ class _AddClubState extends State<AddClub> {
 //    var rnd = new Random();
     List<String> urlList = [];
     for (int i = 0; i < clubPictureFile.length; i++) {
-      if(clubPictureFile[i] != null){
+      if (clubPictureFile[i] != null) {
         final StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('clubPics/$clubID/$i.jpg');
         final StorageUploadTask task =
@@ -486,7 +501,9 @@ class _AddClubState extends State<AddClub> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme
+            .of(context)
+            .primaryColor,
         title: Text('Ajouter un club'),
       ),
       body: SingleChildScrollView(
