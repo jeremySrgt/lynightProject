@@ -54,7 +54,9 @@ class _NightClubProfile extends State<NightClubProfile> {
 
   addFavorites() {
     List favoritesListTemp = new List.from(favorites);
-    favoritesListTemp.add(widget.documentID);
+    if(!favoritesListTemp.contains(widget.documentID)){
+      favoritesListTemp.add(widget.documentID);
+    }
     Map<String, dynamic> test = {
       'favoris': favoritesListTemp,
     };

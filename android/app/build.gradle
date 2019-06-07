@@ -49,7 +49,7 @@ android {
         multiDexEnabled true //ajouter pour resoudre bug
     }
 
-    signingConfigs {
+   /** signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
@@ -65,7 +65,7 @@ android {
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
+    }**/
 }
 
 flutter {
