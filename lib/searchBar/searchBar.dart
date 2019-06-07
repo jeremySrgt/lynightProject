@@ -280,8 +280,8 @@ class _SearchBarState extends State<SearchBar> {
                         height: 100,
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
-                                begin: Alignment.bottomRight,
-                                end: Alignment.topLeft,
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                                 colors: [
                                   Color.fromRGBO(	212, 63, 141, 1),
                                   Color.fromRGBO(		2, 80, 197, 1)
