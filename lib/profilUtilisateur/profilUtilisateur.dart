@@ -133,11 +133,18 @@ class _UserProfilState extends State<UserProfil> {
     return Container(
       padding: EdgeInsets.only(top: 16),
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 3.4,
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+      height: MediaQuery.of(context).size.height / 3.3,
+      decoration:  new BoxDecoration(
+        gradient: new LinearGradient(
+            colors: [Colors.deepOrangeAccent, Colors.deepPurpleAccent],
+            begin: FractionalOffset.topRight,
+            end: FractionalOffset.bottomLeft,
+            stops: [0.0, 1.0],
+            tileMode: TileMode.clamp
+        ),
+
         borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(32), bottomLeft: Radius.circular(32)),
+            bottomRight: Radius.circular(50), bottomLeft: Radius.circular(50)),
       ),
       child: Column(
         children: <Widget>[
@@ -158,7 +165,7 @@ class _UserProfilState extends State<UserProfil> {
                       // photo de profil
                       backgroundImage: NetworkImage(userData['picture']),
                       minRadius: 30,
-                      maxRadius: 80,
+                      maxRadius: 93,
                     ),
                   ),
                 ),
@@ -169,6 +176,7 @@ class _UserProfilState extends State<UserProfil> {
       ),
     );
   }
+
 
   Widget userBottomSection(userData) {
 
