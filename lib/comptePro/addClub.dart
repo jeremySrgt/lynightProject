@@ -257,7 +257,7 @@ class _AddClubState extends State<AddClub> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(title),
+        Text(title,style: TextStyle(color: Colors.grey[600]),),
         Checkbox(
           value: boolValue,
           onChanged: (bool value) {
@@ -300,39 +300,48 @@ class _AddClubState extends State<AddClub> {
   }
 
   Widget _checkboxMusicStyle() {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            checkbox('electro', electro),
-            SizedBox(
-              width: 20,
-            ),
-            checkbox('populaire', populaire),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            checkbox('rap', rap),
-            SizedBox(
-              width: 20,
-            ),
-            checkbox('rnb', rnb),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            checkbox('rock', rock),
-            SizedBox(
-              width: 20,
-            ),
-            checkbox('psytrance', trans),
-          ],
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      child: Column(
+        children: <Widget>[
+          Center(
+            child: Text('Style de musique de la boite', style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              checkbox('electro', electro),
+              SizedBox(
+                width: 20,
+              ),
+              checkbox('populaire', populaire),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              checkbox('rap', rap),
+              SizedBox(
+                width: 20,
+              ),
+              checkbox('rnb', rnb),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              checkbox('rock', rock),
+              SizedBox(
+                width: 20,
+              ),
+              checkbox('psytrance', trans),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
