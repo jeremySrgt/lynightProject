@@ -147,22 +147,15 @@ class _NightClubProfile extends State<NightClubProfile> {
       }
     }
 
-    _launchSoundCloud() async {
-      var url = clubData['soundcloud'];
-      if (await canLaunch(url)) {
-        await launch(url);
-      } else {
-        throw 'Non disponible $url';
-      }
-    }
-
     description() {
       return Text(
         clubData['description'],
         style: TextStyle(
           color: Colors.black,
+          height: 1.2,
         ),
         textAlign: TextAlign.justify,
+
       );
     }
 
@@ -221,25 +214,26 @@ class _NightClubProfile extends State<NightClubProfile> {
               fontStyle: FontStyle.normal,
             ),
           ),
-          subtitle: Row(
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               musicMap['electro'] == true
-                  ? Text('Electro ', style: TextStyle(color: Colors.black))
+                  ? Text('Electro ', style: TextStyle(color: Colors.black,height: 1.2))
                   : Container(),
               musicMap['populaire'] == true
-                  ? Text('Populaire ', style: TextStyle(color: Colors.black))
+                  ? Text('Populaire ', style: TextStyle(color: Colors.black,height: 1.2))
                   : Container(),
               musicMap['rap'] == true
-                  ? Text('Rap ', style: TextStyle(color: Colors.black))
+                  ? Text('Rap ', style: TextStyle(color: Colors.black,height: 1.2))
                   : Container(),
               musicMap['rnb'] == true
-                  ? Text('RnB ', style: TextStyle(color: Colors.black))
+                  ? Text('RnB ', style: TextStyle(color: Colors.black,height: 1.2))
                   : Container(),
               musicMap['rock'] == true
-                  ? Text('Rock ', style: TextStyle(color: Colors.black))
+                  ? Text('Rock ', style: TextStyle(color: Colors.black,height: 1.2))
                   : Container(),
               musicMap['trans'] == true
-                  ? Text('Psytrance ', style: TextStyle(color: Colors.black))
+                  ? Text('Psytrance ', style: TextStyle(color: Colors.black,height: 1.2))
                   : Container(),
             ],
           ),
@@ -267,16 +261,17 @@ class _NightClubProfile extends State<NightClubProfile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    '\n' + 'Adresse : ',
-                    style: TextStyle(color: Colors.black),
+                     'Adresse : ',
+                    style: TextStyle(color: Colors.black,height: 1.2),
                   ),
                   Expanded(
                     child: InkWell(
                       child: Text(
-                        '\n' + clubData['adress'],
-                        style: TextStyle(color: Colors.black, fontSize: 16),
+                        clubData['adress'],
+                        style: TextStyle(color: Colors.black, fontSize: 16,height: 1.2),
                       ),
                       onTap: () {
                         _launchMap();
@@ -288,13 +283,13 @@ class _NightClubProfile extends State<NightClubProfile> {
               Row(
                 children: <Widget>[
                   Text(
-                    '\n' + 'Téléphone : ',
-                    style: TextStyle(color: Colors.black),
+                    'Téléphone : ',
+                    style: TextStyle(color: Colors.black,height: 1.2),
                   ),
                   InkWell(
                     child: Text(
-                      '\n' + clubData['phone'],
-                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      clubData['phone'],
+                      style: TextStyle(color: Colors.black, fontSize: 16,height: 1.2),
                     ),
                     onTap: () {
                       _launchCaller();
@@ -329,21 +324,12 @@ class _NightClubProfile extends State<NightClubProfile> {
             children: <Widget>[
               InkWell(
                 splashColor: Colors.white,
-                child: Text('\n' + clubData['siteUrl'] + '\n',
-                    style: TextStyle(color: Colors.black)),
+                child: Text(clubData['siteUrl'],
+                    style: TextStyle(color: Colors.black,height: 1.5)),
                 onTap: () {
                   _launchSite();
                 },
               ),
-              //plus de soucloud
-//              InkWell(
-//                splashColor: Colors.white,
-//                child: Text(clubData['soundcloud'] + '\n',
-//                    style: TextStyle(color: Colors.black)),
-//                onTap: () {
-//                  _launchSoundCloud();
-//                },
-//              ),
             ],
           ),
         ),
@@ -366,7 +352,7 @@ class _NightClubProfile extends State<NightClubProfile> {
               fontStyle: FontStyle.normal,
             ),
           ),
-          subtitle: Row(
+          subtitle: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -375,7 +361,7 @@ class _NightClubProfile extends State<NightClubProfile> {
                   Icon(FontAwesomeIcons.male, color: Colors.black, size: 20),
                   Text(
                     'Homme : ' + clubData['price'][0].toString() + " €",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.black,height: 1.5),
                   ),
                 ],
               ),
@@ -384,11 +370,10 @@ class _NightClubProfile extends State<NightClubProfile> {
                   Icon(FontAwesomeIcons.female, color: Colors.black, size: 20),
                   Text(
                     'Femme : ' + clubData['price'][1].toString() + " €",
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.black,height: 1.5),
                   ),
                 ],
               ),
-
             ],
           ),
         ),
