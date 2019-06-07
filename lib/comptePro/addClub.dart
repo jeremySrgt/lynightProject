@@ -54,6 +54,12 @@ class _AddClubState extends State<AddClub> {
   double _latitude;
   double _longitude;
   List<File> clubPictureFile = new List<File>(4);
+  bool electro = false;
+  bool rap = false;
+  bool rnb = false;
+  bool populaire = false;
+  bool rock = false;
+  bool trans = false;
 
   @override
   void initState() {
@@ -86,7 +92,16 @@ class _AddClubState extends State<AddClub> {
         availablePlaces: 100,
         entryNumber: 0,
         like: 0,
-        musics: {},
+        musics: {
+          'music': {
+            'electro': electro,
+            'populaire': populaire,
+            'rap': rap,
+            'rnb': rnb,
+            'rock': rock,
+            'trans': trans,
+          }
+        },
         pictures: [],
         position: GeoPoint(_latitude, _longitude),
         storagePath: '',
@@ -236,9 +251,92 @@ class _AddClubState extends State<AddClub> {
     );
   }
 
-  Widget _clubMusicCheckbox() {}
+  //----------------------------------------------------------------------------------------------
 
-  Widget _clubPictures() {}
+  Widget checkbox(String title, bool boolValue) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(title),
+        Checkbox(
+          value: boolValue,
+          onChanged: (bool value) {
+            switch (title) {
+              case "electro":
+                setState(() {
+                  electro = value;
+                });
+                break;
+              case "rap":
+                setState(() {
+                  rap = value;
+                });
+                break;
+              case "rnb":
+                setState(() {
+                  rnb = value;
+                });
+                break;
+              case "populaire":
+                setState(() {
+                  populaire = value;
+                });
+                break;
+              case "rock":
+                setState(() {
+                  rock = value;
+                });
+                break;
+              case "psytrance":
+                setState(() {
+                  trans = value;
+                });
+                break;
+            }
+          },
+        )
+      ],
+    );
+  }
+
+  Widget _checkboxMusicStyle() {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            checkbox('electro', electro),
+            SizedBox(
+              width: 20,
+            ),
+            checkbox('populaire', populaire),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            checkbox('rap', rap),
+            SizedBox(
+              width: 20,
+            ),
+            checkbox('rnb', rnb),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            checkbox('rock', rock),
+            SizedBox(
+              width: 20,
+            ),
+            checkbox('psytrance', trans),
+          ],
+        ),
+      ],
+    );
+  }
+
+  //----------------------------------------------------------------------------------------------
 
   //peut etre toruver un moyen de convertir les adress en coordonnées satelite
   Widget _clubPosition() {
@@ -489,6 +587,7 @@ class _AddClubState extends State<AddClub> {
           _clubPosition(),
           _clubPrice(),
           _selectionPictures(),
+          _checkboxMusicStyle(),
           _clubSiteUrl(),
           _isLoading == false ? submitWidget() : _showCircularProgress()
         ],
