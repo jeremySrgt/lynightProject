@@ -43,7 +43,7 @@ android {
         applicationId "com.flutter.jerem.lynight"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 2
+        versionCode 2 // nombre de build upload sur le play store
         versionName "0.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner" //changer a cause du bug
         multiDexEnabled true //ajouter pour resoudre bug

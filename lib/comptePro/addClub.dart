@@ -1,4 +1,9 @@
+import 'dart:io';
+import 'dart:math';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/authentification/primary_button.dart';
 import 'package:lynight/widgets/slider.dart';
@@ -47,6 +52,8 @@ class _AddClubState extends State<AddClub> {
   String _siteUrl;
   double _latitude;
   double _longitude;
+  List<File> clubPictureFile = new List<File>(4);
+  File pic1;
 
   @override
   void initState() {
@@ -80,18 +87,19 @@ class _AddClubState extends State<AddClub> {
         entryNumber: 0,
         like: 0,
         musics: {},
-        pictures: [
-          'https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/clubPics%2F4alZYX7jcPfAGOT8YmsB%2Fbridge2.png?alt=media&token=d0597141-de82-495d-be98-2f31df827b59'
-        ],
+        pictures: [],
         position: GeoPoint(_latitude, _longitude),
         storagePath: '',
         searchKey: _name.substring(0, 1).toUpperCase(),
       );
 
-      crudObj.addData('club', clubData.getClubDataMap());
+      DocumentReference docRef = await Firestore.instance.collection('club').add(clubData.getClubDataMap());
+      uploadPictures(docRef.documentID);
+
       setState(() {
         _isLoading = false;
       });
+
     } else {
 //      setState(() {
 //        _authHint = '';
@@ -99,7 +107,7 @@ class _AddClubState extends State<AddClub> {
     }
   }
 
-  Widget submitWidget(){
+  Widget submitWidget() {
     return PrimaryButton(
       key: new Key('submitclub'),
       text: 'Créer',
@@ -315,6 +323,98 @@ class _AddClubState extends State<AddClub> {
     );
   }
 
+  Widget _selectionPictures() {
+    return Container(
+      height: 200,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        itemCount: clubPictureFile.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            key: Key('pic$index'),
+            children: <Widget>[
+              Container(
+//              color: Colors.red,
+                width: 100,
+                height: 100,
+                child: clubPictureFile[index] == null
+                    ? FlatButton(
+                        onPressed: () {
+                          getImageFromGallery(index);
+                        },
+                        child: Icon(Icons.add_circle_outline),
+                      )
+                    : Image.file(
+                        clubPictureFile[index],
+                        height: 200,
+                        width: 200,
+                      ),
+              ),
+              Text('Photo $index'),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Future getImageFromGallery(picNumber) async {
+    var tempImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if (picNumber == 0) {
+      setState(() {
+        clubPictureFile[0] = tempImage;
+      });
+    }
+    if (picNumber == 1) {
+      setState(() {
+        clubPictureFile[1] = tempImage;
+      });
+    }
+    if (picNumber == 2) {
+      setState(() {
+        clubPictureFile[2] = tempImage;
+      });
+    }
+    if (picNumber == 3) {
+      setState(() {
+        clubPictureFile[3] = tempImage;
+      });
+    }
+  }
+
+  uploadPictures(clubID) async {
+//    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+//    var rnd = new Random();
+    List<String> urlList = [];
+    for (int i = 0; i < clubPictureFile.length; i++) {
+      final StorageReference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child('clubPics/$clubID/$i.jpg');
+      final StorageUploadTask task =
+          firebaseStorageRef.putFile(clubPictureFile[i]);
+//      if (task.isInProgress) {
+//        setState(() {
+//          _isLoading = true;
+//        });
+//      }
+      var downloadUrl = await (await task.onComplete).ref.getDownloadURL();
+      var url = downloadUrl.toString();
+      urlList.add(url);
+//      updateProfilPicture(url);
+//      setState(() {
+//        _isLoading = false;
+//      });
+    }
+    updateCLubPictures(urlList, clubID);
+  }
+
+  updateCLubPictures(picUrlList, clubID) {
+    Firestore.instance
+        .collection('club')
+        .document(clubID)
+        .updateData({"pictures": picUrlList});
+  }
+
   bool validateAndSave() {
     final form = formKey.currentState;
     if (form.validate()) {
@@ -343,6 +443,7 @@ class _AddClubState extends State<AddClub> {
           _clubAdress(),
           _clubPosition(),
           _clubPrice(),
+          _selectionPictures(),
           _clubSiteUrl(),
           _isLoading == false ? submitWidget() : _showCircularProgress()
         ],
