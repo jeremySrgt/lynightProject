@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lynight/searchBar/searchService.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
+import 'package:lynight/searchBar/MarqueeText.dart';
 
 class SearchBar extends StatefulWidget {
   @override
@@ -201,21 +202,24 @@ class _SearchBarState extends State<SearchBar> {
                                         Icons.music_note,
                                         color: Colors.blue,
                                       ),
-                                      Row(
-                                        children: <Widget>[
-                                          musicMap['electro'] == true
-                                              ? Text('Electro ', style: TextStyle(color: Colors.white),)
-                                              : Container(),
-                                          musicMap['populaire'] == true
-                                              ? Text('Populaire ', style: TextStyle(color: Colors.white),)
-                                              : Container(),
-                                          musicMap['rap'] == true ? Text('Rap ', style: TextStyle(color: Colors.white),) : Container(),
-                                          musicMap['rnb'] == true ? Text('RnB ', style: TextStyle(color: Colors.white),) : Container(),
-                                          musicMap['rock'] == true ? Text('Rock ', style: TextStyle(color: Colors.white),) : Container(),
-                                          musicMap['trans'] == true
-                                              ? Text('Psytrans ', style: TextStyle(color: Colors.white),)
-                                              : Container(),
-                                        ],
+                                      MarqueeWidget(
+                                        direction: Axis.horizontal,
+                                        child: Row(
+                                          children: <Widget>[
+                                            musicMap['electro'] == true
+                                                ? Text('Electro ', style: TextStyle(color: Colors.white),)
+                                                : Container(),
+                                            musicMap['populaire'] == true
+                                                ? Text('Populaire ', style: TextStyle(color: Colors.white),)
+                                                : Container(),
+                                            musicMap['rap'] == true ? Text('Rap ', style: TextStyle(color: Colors.white),) : Container(),
+                                            musicMap['rnb'] == true ? Text('RnB ', style: TextStyle(color: Colors.white),) : Container(),
+                                            musicMap['rock'] == true ? Text('Rock ', style: TextStyle(color: Colors.white),) : Container(),
+                                            musicMap['trans'] == true
+                                                ? Text('Psytrans ', style: TextStyle(color: Colors.white),)
+                                                : Container(),
+                                          ],
+                                        ),
                                       )
                                     ]),
                                     trailing: Icon(Icons.arrow_forward_ios,
@@ -276,12 +280,11 @@ class _SearchBarState extends State<SearchBar> {
                         height: 100,
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
-                                begin: Alignment.bottomRight,
-                                end: Alignment.topLeft,
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                                 colors: [
-                                  Colors.blue,
-                                  Colors.deepPurpleAccent,
-                                  Colors.purple
+                                  Color.fromRGBO(	212, 63, 141, 1),
+                                  Color.fromRGBO(		2, 80, 197, 1)
                                 ]),
                             //color: Theme.of(context).primaryColor,
                             borderRadius:
