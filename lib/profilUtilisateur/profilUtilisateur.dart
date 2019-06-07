@@ -247,7 +247,11 @@ class _UserProfilState extends State<UserProfil> {
                   ),
                 ),
 
-                Divider(),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  height: 15,
+                  indent: 70,
+                ),
 
                 ListTile(
                   leading: Icon(Icons.supervisor_account,color: Theme.of(context).accentColor,  size: 35,),
@@ -302,7 +306,11 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
-                Divider(),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  height: 15,
+                  indent: 70,
+                ),
                 ListTile(
                   leading: Icon(Icons.mail,color: Theme.of(context).accentColor,  size: 35,),
                   title: Text(
@@ -315,7 +323,11 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
-                Divider(),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  height: 15,
+                  indent: 70,
+                ),
                 ListTile(
                   leading: Icon(Icons.phone,color: Theme.of(context).accentColor,  size: 35,),
                   title: Text(
@@ -371,7 +383,11 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
-                Divider(),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  height: 15,
+                  indent: 70,
+                ),
                 ListTile(
                   leading: Icon(Icons.music_note,color: Theme.of(context).accentColor,  size: 35,),
                   title: Text(
@@ -401,7 +417,11 @@ class _UserProfilState extends State<UserProfil> {
                     ],
                   ),
                 ),
-                Divider(),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  height: 15,
+                  indent: 70,
+                ),
 
                 ListTile(
                   leading: Icon(Icons.date_range,color: Theme.of(context).accentColor,  size: 35,),
@@ -415,7 +435,11 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
-                Divider(),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                  height: 15,
+                  indent: 70,
+                ),
 
                 ListTile(
                   leading: Icon(Icons.notifications,color: Theme.of(context).accentColor,  size: 35,),
