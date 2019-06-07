@@ -34,6 +34,10 @@ dependencies:
   percent_indicator: ^2.0.0
   flutter_slidable: ^0.5.3
   intl: ^0.15.7
+  qr_code_scanner: ^0.0.5
+
+
+
   flutter:
     sdk: flutter
 
