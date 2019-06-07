@@ -12,7 +12,8 @@ class UserData {
       this.favoris,
       this.notification,
       this.picture,
-      this.reservation});
+      this.reservation,
+      this.pro});
 
   final String name;
   final String surname;
@@ -25,6 +26,7 @@ class UserData {
   final bool notification;
   final String picture;
   final List<String> reservation;
+  final bool pro;
 
   Map<String,dynamic> getDataMap(){
     return {
@@ -38,7 +40,8 @@ class UserData {
       "favoris":favoris,
       "notification":notification,
       "picture":picture,
-      "reservation":reservation
+      "reservation":reservation,
+      "pro":pro,
     };
   }
 }

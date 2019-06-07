@@ -16,8 +16,8 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="lynight"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Bloon"
+        android:icon="@mipmap/ic_bloon">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBOi1vwqjYg3HfYiTEvHJMnRBL6sNzZUdI"/>
         <activity

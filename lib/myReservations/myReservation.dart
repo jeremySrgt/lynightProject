@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lynight/widgets/slider.dart';
-import 'package:lynight/myReservations/reservation.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/myReservations/detailReservation.dart';
 import 'package:lynight/authentification/auth.dart';

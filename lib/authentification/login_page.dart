@@ -18,7 +18,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => new _LoginPageState();
 }
 
-enum FormType { login, register }
+enum FormType { login, register, registerAsPro }
 
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   static final formKey = new GlobalKey<FormState>();
@@ -35,6 +35,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   bool userSex = true;
 
   int _radioValue = 0;
+  Color dobColor = Colors.grey[600];
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -59,7 +60,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           _isLoading = false;
         });
         widget.onSignIn();
-        if (_formType == FormType.register) {
+        if (_formType == FormType.register || _formType == FormType.registerAsPro) {
           UserData userData = new UserData(
             name: "",
             surname: "",
@@ -68,11 +69,11 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             mail: _email,
             music: {
               'electro': true,
-              'populaire': false,
-              'rap': false,
-              'rnb': false,
-              'rock': false,
-              'trans': false,
+              'populaire': true,
+              'rap': true,
+              'rnb': true,
+              'rock': true,
+              'trans': true,
             },
             notification: true,
             phone: "",
@@ -80,6 +81,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
             reservation: [],
             sex: userSex,
+            pro: _formType == FormType.registerAsPro ? true : false,
           );
           crudObj.createOrUpdateUserData(userData.getDataMap());
         }
@@ -101,6 +103,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     formKey.currentState.reset();
     setState(() {
       _formType = FormType.register;
+      _authHint = '';
+    });
+  }
+
+  void moveToRegisterAsPro() {
+    formKey.currentState.reset();
+    setState(() {
+      _formType = FormType.registerAsPro;
       _authHint = '';
     });
   }
@@ -202,6 +212,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 onConfirm: (date) {
                   setState(() {
                     dob = date;
+                    dobColor = Colors.grey[600];
                   });
                 },
                 currentTime: DateTime.now(),
@@ -212,7 +223,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               dob == null
                   ? 'Date de naissance'
                   : DateFormat('dd/MM/yyyy').format(dob),
-              style: TextStyle(color: Colors.grey[600], fontSize: 16.0),
+              style: TextStyle(color: dobColor, fontSize: 16.0),
             ),
           ),
         ],
@@ -271,17 +282,18 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           shrinkWrap: true,
           children: <Widget>[
             PrimaryButton(
-                key: new Key('login'),
-                text: 'Connexion',
-                height: 44.0,
-                onPressed: validateAndSubmit),
+              key: new Key('login'),
+              text: 'Connexion',
+              height: 44.0,
+              onPressed: validateAndSubmit,
+            ),
             FlatButton(
                 key: new Key('need-account'),
                 child: Text("Créer un compte"),
                 onPressed: moveToRegister),
           ],
         );
-      case FormType.register:
+      default:
         return ListView(
           shrinkWrap: true,
           children: <Widget>[
@@ -289,7 +301,16 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 key: new Key('register'),
                 text: 'Créer',
                 height: 44.0,
-                onPressed: validateAndSubmit),
+                onPressed: () {
+                  if (dob == null) {
+                    validateAndSave();
+                    setState(() {
+                      dobColor = Colors.red[700];
+                    });
+                  } else {
+                    validateAndSubmit();
+                  }
+                }),
             FlatButton(
                 key: new Key('need-login'),
                 child: Text("Déjà un compte ? Se connecter"),
@@ -320,6 +341,42 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             textAlign: TextAlign.center));
   }
 
+  Widget comptePro() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: FlatButton(
+        onPressed: moveToRegisterAsPro,
+        child: Text('Compte Pro'),
+      ),
+    );
+  }
+  Widget _showCodeComptePro(){
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+      child: TextFormField(
+        obscureText: true,
+        maxLines: 1,
+        keyboardType: TextInputType.number,
+        key: new Key('codepro'),
+        decoration: InputDecoration(
+          labelText: 'Code de compte Pro',
+          icon: new Icon(
+            Icons.verified_user,
+            color: Colors.grey,
+          ),
+        ),
+        validator: (String value) {
+          if (value.isEmpty) {
+            return 'Un code est requis pour créer un compte pro';
+          }
+          if(value != '1998'){
+            return 'Code invalide';
+          }
+        },
+      ),
+    );
+  }
+
   Widget _buildForm() {
     return Form(
         key: formKey,
@@ -336,6 +393,13 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               height: 10.0,
             ),
             _formType == FormType.register ? _showGenderSelect() : Container(),
+            _formType == FormType.registerAsPro
+                ? _builConfirmPasswordTextField()
+                : Container(),
+            _formType == FormType.registerAsPro ? _showDatePicker() : Container(),
+            _formType == FormType.registerAsPro ? _showGenderSelect() : Container(),
+            _formType == FormType.registerAsPro ? _showCodeComptePro() : Container(),
+
             _isLoading == false ? submitWidgets() : _showCircularProgress()
           ],
         ));
@@ -344,22 +408,26 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-            child: Container(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(children: <Widget>[
+            Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              Container(
                 padding: const EdgeInsets.all(16.0),
-                child: Column(children: <Widget>[
-                  Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.all(16.0),
-                      child: _buildForm(),
-                    ),
-                  ]),
-                  hintText()
-                ]))));
+                child: _buildForm(),
+              ),
+            ]),
+            hintText(),
+            comptePro()
+          ]),
+        ),
+      ),
+    );
   }
 
   Widget padded({Widget child}) {

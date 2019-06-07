@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'comptePro/addClub.dart';
+import 'comptePro/scannerQrCode.dart';
 import 'principalPage.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
@@ -46,6 +48,8 @@ class _MyAppState extends State<MyApp> {
         '/myReservations': (BuildContext context) => ListPage(),
         '/maps': (BuildContext context) => GoogleMapsClient(),
         '/sumUpPage': (BuildContext context) => SumUp(),
+        '/addClub' : (BuildContext context) => AddClub(),
+        '/scannerQrCode' : (BuildContext context) => ScannerQrCode(),
         //'/favorites':(BuildContext context) => FavoritesNightClub(),
 
 

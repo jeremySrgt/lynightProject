@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/services/userData.dart';
 
@@ -22,6 +23,7 @@ class _CustomSliderState extends State<CustomSlider>{
   CrudMethods crudObj = new CrudMethods();
   String name = 'UserName';
   String profilPicture = 'https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46';
+  bool pro = false;
 
   void initState() {
     super.initState();
@@ -31,6 +33,7 @@ class _CustomSliderState extends State<CustomSlider>{
       setState(() {
         name = dataMap['name'];
         profilPicture = dataMap['picture'];
+        pro = dataMap['pro'];
       });
     });
   }
@@ -71,6 +74,67 @@ class _CustomSliderState extends State<CustomSlider>{
       decoration: BoxDecoration(
           border: Border(
               bottom: BorderSide(color: Theme.of(context).primaryColor))),
+    );
+  }
+
+
+  Widget scanQrPro(){
+    return Container(
+      decoration: widget.activePage == 'ScanQr'
+          ? BoxDecoration(
+          color: Color(0xFFebdffc),
+          borderRadius: BorderRadius.circular(15.0))
+          : BoxDecoration(),
+      child: ListTile(
+        leading: Icon(
+          FontAwesomeIcons.qrcode,
+          color: widget.activePage == 'ScanQr'
+              ? Theme.of(context).primaryColor
+              : Colors.grey,
+        ),
+        title: Text(
+          'Scanner QR Code',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: widget.activePage == 'ScanQr'
+                ? Theme.of(context).primaryColor
+                : Colors.grey,
+          ),
+        ),
+        onTap: () {
+          Navigator.pushReplacementNamed(context, '/scannerQrCode');
+        },
+      ),
+    );
+  }
+
+  Widget addClubPro(){
+    return Container(
+      decoration: widget.activePage == 'AddClub'
+          ? BoxDecoration(
+          color: Color(0xFFebdffc),
+          borderRadius: BorderRadius.circular(15.0))
+          : BoxDecoration(),
+      child: ListTile(
+        leading: Icon(
+          Icons.add_circle,
+          color: widget.activePage == 'AddClub'
+              ? Theme.of(context).primaryColor
+              : Colors.grey,
+        ),
+        title: Text(
+          'Ajouter un club',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: widget.activePage == 'AddClub'
+                ? Theme.of(context).primaryColor
+                : Colors.grey,
+          ),
+        ),
+        onTap: () {
+          Navigator.pushReplacementNamed(context, '/addClub');
+        },
+      ),
     );
   }
 
@@ -170,7 +234,7 @@ class _CustomSliderState extends State<CustomSlider>{
                 : BoxDecoration(),
             child: ListTile(
               leading: Icon(
-                Icons.streetview,
+                FontAwesomeIcons.mapMarked,
                 color: widget.activePage == 'Maps'
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
@@ -189,6 +253,9 @@ class _CustomSliderState extends State<CustomSlider>{
               },
             ),
           ),
+          pro == true ? Divider() : Container(),
+          pro == true ? scanQrPro() : Container(),
+          pro == true ? addClubPro() : Container(),
         ],
       ),
     );
