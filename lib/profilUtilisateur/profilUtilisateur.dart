@@ -238,7 +238,6 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
-                Container(height: 20),
 
                 Divider(),
 
@@ -295,7 +294,6 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
-                Container(height: 20),
                 Divider(),
                 ListTile(
                   leading: Icon(Icons.mail,color: Theme.of(context).accentColor,  size: 35,),
@@ -309,7 +307,6 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
-                Container(height: 20),
                 Divider(),
                 ListTile(
                   leading: Icon(Icons.phone,color: Theme.of(context).accentColor,  size: 35,),
@@ -366,7 +363,6 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
-                Container(height: 20),
                 Divider(),
                 ListTile(
                   leading: Icon(Icons.music_note,color: Theme.of(context).accentColor,  size: 35,),
@@ -397,7 +393,6 @@ class _UserProfilState extends State<UserProfil> {
                     ],
                   ),
                 ),
-                Container(height: 20),
                 Divider(),
 
                 ListTile(
@@ -412,7 +407,6 @@ class _UserProfilState extends State<UserProfil> {
                     style: TextStyle(fontSize: 15.0),
                   ),
                 ),
-                Container(height: 20),
                 Divider(),
 
                 ListTile(
