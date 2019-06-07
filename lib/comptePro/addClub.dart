@@ -53,7 +53,6 @@ class _AddClubState extends State<AddClub> {
   double _latitude;
   double _longitude;
   List<File> clubPictureFile = new List<File>(4);
-  File pic1;
 
   @override
   void initState() {
@@ -96,9 +95,9 @@ class _AddClubState extends State<AddClub> {
       DocumentReference docRef = await Firestore.instance.collection('club').add(clubData.getClubDataMap());
       uploadPictures(docRef.documentID);
 
-      setState(() {
-        _isLoading = false;
-      });
+//      setState(() {
+//        _isLoading = false;
+//      });
 
     } else {
 //      setState(() {
@@ -112,7 +111,36 @@ class _AddClubState extends State<AddClub> {
       key: new Key('submitclub'),
       text: 'Créer',
       height: 44.0,
-      onPressed: validateAndSubmit,
+      onPressed: () {
+        if (clubPictureFile[0] == null) {
+          validateAndSave();
+          _showDialogMissingPhoto();
+        } else {
+          validateAndSubmit();
+        }
+      }
+    );
+  }
+
+
+
+  void _showDialogMissingPhoto() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Photo manquante"),
+          content: new Text("Au moins une photo est requise pour ajouter un club"),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Ok"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -388,23 +416,24 @@ class _AddClubState extends State<AddClub> {
 //    var rnd = new Random();
     List<String> urlList = [];
     for (int i = 0; i < clubPictureFile.length; i++) {
-      final StorageReference firebaseStorageRef =
-          FirebaseStorage.instance.ref().child('clubPics/$clubID/$i.jpg');
-      final StorageUploadTask task =
-          firebaseStorageRef.putFile(clubPictureFile[i]);
+      if(clubPictureFile[i] != null){
+        final StorageReference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child('clubPics/$clubID/$i.jpg');
+        final StorageUploadTask task =
+        firebaseStorageRef.putFile(clubPictureFile[i]);
 //      if (task.isInProgress) {
 //        setState(() {
 //          _isLoading = true;
 //        });
 //      }
-      var downloadUrl = await (await task.onComplete).ref.getDownloadURL();
-      var url = downloadUrl.toString();
-      urlList.add(url);
-//      updateProfilPicture(url);
-//      setState(() {
-//        _isLoading = false;
-//      });
+        var downloadUrl = await (await task.onComplete).ref.getDownloadURL();
+        var url = downloadUrl.toString();
+        urlList.add(url);
+      }
     }
+    setState(() {
+      _isLoading = false;
+    });
     updateCLubPictures(urlList, clubID);
   }
 
