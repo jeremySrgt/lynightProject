@@ -7,6 +7,7 @@ import 'package:lynight/services/clubPictures.dart';
 import 'package:lynight/nightCubPage/sumUpPage.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NightClubProfile extends StatefulWidget {
   NightClubProfile({this.documentID});
@@ -54,7 +55,7 @@ class _NightClubProfile extends State<NightClubProfile> {
 
   addFavorites() {
     List favoritesListTemp = new List.from(favorites);
-    if(!favoritesListTemp.contains(widget.documentID)){
+    if (!favoritesListTemp.contains(widget.documentID)) {
       favoritesListTemp.add(widget.documentID);
     }
     Map<String, dynamic> test = {
@@ -73,21 +74,23 @@ class _NightClubProfile extends State<NightClubProfile> {
   }
 
   Widget favoriteButton() {
-    return IconButton(icon: Icon(
-      alreadySaved ? Icons.favorite : Icons.favorite_border,
-      color: alreadySaved ? Colors.red : Colors.red,
-      size: 35,
-    ), onPressed: () {
-      setState(() {
-        if (alreadySaved) {
-          removeFavorites();
-          alreadySaved = false;
-        } else {
-          addFavorites();
-          alreadySaved = true;
-        }
-      });
-    });
+    return IconButton(
+        icon: Icon(
+          alreadySaved ? Icons.favorite : Icons.favorite_border,
+          color: alreadySaved ? Colors.red : Colors.red,
+          size: 35,
+        ),
+        onPressed: () {
+          setState(() {
+            if (alreadySaved) {
+              removeFavorites();
+              alreadySaved = false;
+            } else {
+              addFavorites();
+              alreadySaved = true;
+            }
+          });
+        });
   }
 
   Widget carouselPictureNightClubProfile(clubData, context) {
@@ -211,7 +214,7 @@ class _NightClubProfile extends State<NightClubProfile> {
             color: Theme.of(context).primaryColor,
           ),
           title: Text(
-            "Music",
+            "Musiques",
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontSize: 18,
@@ -248,7 +251,7 @@ class _NightClubProfile extends State<NightClubProfile> {
       return Container(
         child: ListTile(
           leading: Icon(
-            Icons.contacts,
+            FontAwesomeIcons.infoCircle,
             size: 35,
             color: Theme.of(context).primaryColor,
           ),
@@ -309,7 +312,7 @@ class _NightClubProfile extends State<NightClubProfile> {
       return Container(
         child: ListTile(
           leading: Icon(
-            Icons.link,
+            FontAwesomeIcons.link,
             size: 35,
             color: Theme.of(context).primaryColor,
           ),
@@ -347,6 +350,51 @@ class _NightClubProfile extends State<NightClubProfile> {
       );
     }
 
+    Widget nightClubPrice() {
+      return Container(
+        child: ListTile(
+          leading: Icon(
+            Icons.monetization_on,
+            size: 35,
+            color: Theme.of(context).primaryColor,
+          ),
+          title: Text(
+            "Tarifs ",
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: 18,
+              fontStyle: FontStyle.normal,
+            ),
+          ),
+          subtitle: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Icon(FontAwesomeIcons.male, color: Colors.black, size: 20),
+                  Text(
+                    'Homme : ' + clubData['price'][0].toString() + " €",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Icon(FontAwesomeIcons.female, color: Colors.black, size: 20),
+                  Text(
+                    'Femme : ' + clubData['price'][1].toString() + " €",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ],
+              ),
+
+            ],
+          ),
+        ),
+      );
+    }
+
     Widget nightClubLetsParty() {
       return Container(
         child: Column(
@@ -372,9 +420,16 @@ class _NightClubProfile extends State<NightClubProfile> {
                             )));
               },
             ),
-            //onPressed: validateAndSubmit),
           ],
         ),
+      );
+    }
+
+    Widget lineSeparator() {
+      return Divider(
+        color: Theme.of(context).primaryColor,
+        height: 15,
+        indent: 70,
       );
     }
 
@@ -395,28 +450,20 @@ class _NightClubProfile extends State<NightClubProfile> {
                     ),
                     favoriteButton(),
                   ],
-
                 ),
-
                 SizedBox(
                   height: 25,
                 ),
                 nightClubDescription(),
-                Divider(
-                  color: Theme.of(context).primaryColor,
-                  height: 15,
-                ),
+                lineSeparator(),
                 nightClubMusic(),
-                Divider(
-                  color: Theme.of(context).primaryColor,
-                  height: 15,
-                ),
+                lineSeparator(),
                 nightClubInformation(),
-                Divider(
-                  color: Theme.of(context).primaryColor,
-                  height: 15,
-                ),
+                lineSeparator(),
                 nightClubLink(),
+                lineSeparator(),
+                nightClubPrice(),
+                SizedBox(height: 20),
                 nightClubLetsParty(),
                 SizedBox(height: 30),
               ],
