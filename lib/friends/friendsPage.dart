@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lynight/authentification/auth.dart';
@@ -34,10 +35,14 @@ class FriendsPage extends StatefulWidget {
 class _FriendsPageState extends State<FriendsPage> {
   String currenUserId = 'userId';
   String currentUserMail = 'userMail';
+  Map<dynamic,dynamic> currentUserDataMap;
+  String _userName= '';
 
   String _friendID;
   List<dynamic> _friendRequestList0fRequestedFriend;
   bool _alreadyRequestedFriend = false;
+
+  List<Map<dynamic, dynamic>> listOfRequest = [];
 
   CrudMethods crudObj = new CrudMethods();
   static final formKey = new GlobalKey<FormState>();
@@ -55,6 +60,29 @@ class _FriendsPageState extends State<FriendsPage> {
       setState(() {
         currentUserMail = mail;
       });
+    });
+
+    crudObj.getDataFromUserFromDocument().then((value) {
+      Map<String, dynamic> dataMap = value.data;
+      setState(() {
+        currentUserDataMap = dataMap;
+      });
+
+      List<dynamic> userFriendRequestList = currentUserDataMap['friendRequest'];
+      setState(() {
+      _userName = currentUserDataMap['name'];
+      });
+
+      for (int i = 0; i < userFriendRequestList.length; i++) {
+        crudObj.getDataFromUserFromDocumentWithID(userFriendRequestList[i])
+            .then((value) {
+          Map<dynamic, dynamic> userDataMap = value.data;
+          setState(() {
+            listOfRequest.add(
+                {'name': userDataMap['name'], 'mail': userDataMap['mail'],'ID': userFriendRequestList[i]});
+          });
+        });
+      }
     });
   }
 
@@ -81,7 +109,7 @@ class _FriendsPageState extends State<FriendsPage> {
               },
               onSaved: (value) => _friendID = value,
             ),
-            PrimaryButton(
+            _userName == null ? Text('Tu dois enregistrer ton nom pour ajouter des amis !'): PrimaryButton(
               key: new Key('submitFriendRequest'),
               text: 'demande d\'ami',
               height: 44.0,
@@ -154,10 +182,27 @@ class _FriendsPageState extends State<FriendsPage> {
   }
 
   Widget friendRequest() {
-    return Text('request section');
+    return ListView.builder(
+      itemCount: listOfRequest.length,
+      itemBuilder: (context, i) {
+        print(listOfRequest);
+        return Container(
+          child: ListTile(
+            title: Text(listOfRequest[i]['mail']),
+            subtitle: Text(listOfRequest[i]['name']),
+            trailing: InkWell(
+              child: Icon(FontAwesomeIcons.check),
+              onTap: (){
+
+              },
+            ),
+          ),
+        );
+      },
+    );
   }
 
-  Widget friendList() {
+  Widget friendList() {//peut etre un streambuilder, ne causera pas les soucis de friend request je pense
     return Text('friend list section');
   }
 
@@ -176,8 +221,11 @@ class _FriendsPageState extends State<FriendsPage> {
             children: <Widget>[
               friendResearch(),
               // demande à yann pour rechercher par nom - 1ere approche par ID complet
-              friendRequest(),
-              // streambuilder pour sure
+              Container(
+                height: 300,
+                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                child: friendRequest(), // streambuilder pour sure
+              ),
               friendList()
               // streambuilder pour sure
             ],
