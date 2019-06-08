@@ -31,6 +31,10 @@ class CrudMethods {
     return await Firestore.instance.collection('user').document(user.uid).get();
   }
 
+  getDataFromUserFromDocumentWithID(userID) async{
+    return await Firestore.instance.collection('user').document(userID).get();
+  }
+
   getDataFromClubFromDocument() async{
     return await Firestore.instance.collection('club').getDocuments();
   }
@@ -61,6 +65,12 @@ class CrudMethods {
     DocumentReference ref = Firestore.instance.collection('user').document(user.uid);
     return ref.setData(userDataMap, merge: true);
     
+  }
+
+  updateUserDataWithUserID(userID, Map<String, dynamic> userDataMap) async{
+    DocumentReference ref = Firestore.instance.collection('user').document(userID);
+    return ref.setData(userDataMap, merge: true);
+
   }
 
   deleteData(collection, docId) {

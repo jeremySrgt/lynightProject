@@ -29,11 +29,15 @@ class FriendsPage extends StatefulWidget {
   }
 }
 
+//TODO SEPARER LES DIFFERENTES SECTION (research, request et liste) DANS DES DIFFERENTS FICHIER/CLASS POUR PLUS DE CLARTER PCQ CA VA ETRE LE BORDEL SINON
+
 class _FriendsPageState extends State<FriendsPage> {
-  String userId = 'userId';
-  String userMail = 'userMail';
+  String currenUserId = 'userId';
+  String currentUserMail = 'userMail';
 
   String _friendID;
+  List<dynamic> _friendRequestList0fRequestedFriend;
+  bool _alreadyRequestedFriend = false;
 
   CrudMethods crudObj = new CrudMethods();
   static final formKey = new GlobalKey<FormState>();
@@ -44,12 +48,12 @@ class _FriendsPageState extends State<FriendsPage> {
     super.initState();
     widget.auth.currentUser().then((id) {
       setState(() {
-        userId = id;
+        currenUserId = id;
       });
     });
     widget.auth.userEmail().then((mail) {
       setState(() {
-        userMail = mail;
+        currentUserMail = mail;
       });
     });
   }
@@ -78,19 +82,25 @@ class _FriendsPageState extends State<FriendsPage> {
               onSaved: (value) => _friendID = value,
             ),
             PrimaryButton(
-              key: new Key('submitclub'),
-              text: 'Créer',
+              key: new Key('submitFriendRequest'),
+              text: 'demande d\'ami',
               height: 44.0,
               onPressed: () {
                 validateAndSubmit();
+                print('friend ID : ' + _friendID);
               },
             ),
+            _alreadyRequestedFriend == true
+                ? Text(
+                    'Une demande d\'ami a déjà été envoyée',
+                    style: TextStyle(color: Colors.red),
+                  )
+                : Container(),
           ],
         ),
       ),
     );
   }
-
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -102,15 +112,49 @@ class _FriendsPageState extends State<FriendsPage> {
   }
 
   void validateAndSubmit() async {
+    //TODO ajouter la submition
     if (validateAndSave()) {
       setState(() {
         _isLoading = true;
       });
+
+      crudObj.getDataFromUserFromDocumentWithID(_friendID).then((value) {
+        Map<String, dynamic> dataMap = value.data;
+        List friendRequestList = dataMap['friendRequest'];
+        print(friendRequestList);
+        if (friendRequestList == null) {
+          crudObj.updateData('user', _friendID, {
+            'friendRequest': [currenUserId]
+          });
+        } else {
+          setState(() {
+            _friendRequestList0fRequestedFriend = friendRequestList;
+          });
+
+          for (int i = 0; i < _friendRequestList0fRequestedFriend.length; i++) {
+            if (_friendRequestList0fRequestedFriend[i] == currenUserId) {
+              setState(() {
+                _alreadyRequestedFriend = true;
+              });
+            }
+          }
+
+          if (_alreadyRequestedFriend == false) {
+            List<String> mutableListOfRequestedFriend =
+                List.from(_friendRequestList0fRequestedFriend);
+
+            mutableListOfRequestedFriend.add(currenUserId);
+
+            crudObj.updateData('user', _friendID,
+                {'friendRequest': mutableListOfRequestedFriend});
+          }
+        }
+      });
     }
   }
 
-  Widget friendDemand() {
-    return Text('demand section');
+  Widget friendRequest() {
+    return Text('request section');
   }
 
   Widget friendList() {
@@ -132,7 +176,7 @@ class _FriendsPageState extends State<FriendsPage> {
             children: <Widget>[
               friendResearch(),
               // demande à yann pour rechercher par nom - 1ere approche par ID complet
-              friendDemand(),
+              friendRequest(),
               // streambuilder pour sure
               friendList()
               // streambuilder pour sure
@@ -141,7 +185,7 @@ class _FriendsPageState extends State<FriendsPage> {
         ),
       ),
       drawer: CustomSlider(
-        userMail: userMail,
+        userMail: currentUserMail,
         signOut: widget._signOut,
         activePage: 'Amis',
       ),
