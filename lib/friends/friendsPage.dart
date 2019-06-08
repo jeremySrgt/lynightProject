@@ -79,7 +79,7 @@ class _FriendsPageState extends State<FriendsPage> {
           Map<dynamic, dynamic> userDataMap = value.data;
           setState(() {
             listOfRequest.add(
-                {'name': userDataMap['name'], 'mail': userDataMap['mail'],'ID': userFriendRequestList[i]});
+                {'name': userDataMap['name'], 'mail': userDataMap['mail'],'ID': userFriendRequestList[i],'friendList': userDataMap['friendList']});
           });
         });
       }
@@ -181,7 +181,8 @@ class _FriendsPageState extends State<FriendsPage> {
     }
   }
 
-  Widget friendRequest() {
+  Widget friendRequest() {//penser à ajouter un bouton poour supprimer la demande !
+    //ne pas oublier de suprimer de la liste des request le demander une fois ajouté
     return ListView.builder(
       itemCount: listOfRequest.length,
       itemBuilder: (context, i) {
@@ -193,13 +194,34 @@ class _FriendsPageState extends State<FriendsPage> {
             trailing: InkWell(
               child: Icon(FontAwesomeIcons.check),
               onTap: (){
-
+                addFriend(listOfRequest[i]['ID'],listOfRequest[i][friendList]);
               },
             ),
           ),
         );
       },
     );
+  }
+
+  void addFriend(iDDemander,friendListOfDemander){
+
+    if(friendListOfDemander !=null){
+      List<dynamic> mutableFriendListOfDemander = List.from(friendListOfDemander);
+      mutableFriendListOfDemander.add(currenUserId);
+      crudObj.updateData('user', iDDemander, {'friendList': mutableFriendListOfDemander});//ajout dans la liste d'amis de l'utilisatuer qui a demandé en ami
+    }else{
+      crudObj.updateData('user', iDDemander, {'friendList': [currenUserId]});//ajout dans la liste d'amis de l'utilisatuer qui a demandé en ami
+    }
+
+    if(currentUserDataMap['friendList'] != null){
+      List<dynamic> mutableFriendListOfCurrentUser = List.from(currentUserDataMap['friendList']);
+      mutableFriendListOfCurrentUser.add(iDDemander);
+      crudObj.updateData('user', currenUserId, {'friendList': mutableFriendListOfCurrentUser});//ajout dans la liste d'amis du current user
+    }
+    else{
+      crudObj.updateData('user', currenUserId, {'friendList': [iDDemander]});//ajout dans la liste d'amis du current user
+    }
+
   }
 
   Widget friendList() {//peut etre un streambuilder, ne causera pas les soucis de friend request je pense
