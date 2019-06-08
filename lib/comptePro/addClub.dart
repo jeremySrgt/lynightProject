@@ -93,14 +93,12 @@ class _AddClubState extends State<AddClub> {
         entryNumber: 0,
         like: 0,
         musics: {
-          'music': {
-            'electro': electro,
-            'populaire': populaire,
-            'rap': rap,
-            'rnb': rnb,
-            'rock': rock,
-            'trans': trans,
-          }
+          'electro': electro,
+          'populaire': populaire,
+          'rap': rap,
+          'rnb': rnb,
+          'rock': rock,
+          'trans': trans,
         },
         pictures: [],
         position: GeoPoint(_latitude, _longitude),
@@ -133,6 +131,14 @@ class _AddClubState extends State<AddClub> {
           if (clubPictureFile[0] == null) {
             validateAndSave();
             _showDialogMissingPhoto();
+          } else if (!electro &&
+              !rap &&
+              !rock &&
+              !rnb &&
+              !trans &&
+              !populaire) {
+            validateAndSave();
+            _showDialogMissingMusicStyle();
           } else {
             validateAndSubmit();
           }
@@ -145,8 +151,33 @@ class _AddClubState extends State<AddClub> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: new Text("Photo manquante"),
-          content:
-              new Text("Au moins une photo est requise pour ajouter un club"),
+          content: new Text(
+            "Au moins une photo est requise pour ajouter un club",
+            textAlign: TextAlign.justify,
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Ok"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showDialogMissingMusicStyle() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("N'oubliez pas le style de musique"),
+          content: new Text(
+            "Dans le but de mieux reférencer votre club nous vous invitons à saisir au moins 1 style de musique",
+            textAlign: TextAlign.justify,
+          ),
           actions: <Widget>[
             new FlatButton(
               child: new Text("Ok"),
@@ -257,7 +288,10 @@ class _AddClubState extends State<AddClub> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(title,style: TextStyle(color: Colors.grey[600]),),
+        Text(
+          title,
+          style: TextStyle(color: Colors.grey[600]),
+        ),
         Checkbox(
           value: boolValue,
           onChanged: (bool value) {
@@ -305,7 +339,11 @@ class _AddClubState extends State<AddClub> {
       child: Column(
         children: <Widget>[
           Center(
-            child: Text('Style de musique de la boite', style: TextStyle(fontSize: 18,color: Theme.of(context).primaryColor),),
+            child: Text(
+              'Style de musique de la boite',
+              style: TextStyle(
+                  fontSize: 18, color: Theme.of(context).primaryColor),
+            ),
           ),
           SizedBox(
             height: 15,
@@ -565,6 +603,7 @@ class _AddClubState extends State<AddClub> {
         .collection('club')
         .document(clubID)
         .updateData({"pictures": picUrlList});
+    Navigator.pushReplacementNamed(context, "/"); // comme cette methode est apl a la toute fin du processus de creation on push la cpage d'acceuil depuis cette methode pour etre sur que le process soit fini
   }
 
   bool validateAndSave() {
