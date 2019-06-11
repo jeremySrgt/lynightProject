@@ -31,18 +31,21 @@ class FriendsPage extends StatefulWidget {
 }
 
 //TODO SEPARER LES DIFFERENTES SECTION (research, request et liste) DANS DES DIFFERENTS FICHIER/CLASS POUR PLUS DE CLARTER PCQ CA VA ETRE LE BORDEL SINON
+//TODO peut etre ajouter une verif pour pas ajouter 2 fois un amis qu'on a deja car là la verif se fait sur la list friendRequest, avant de pouvoir demander un ami mais pas sur la liste d'amis en elle meme
+//TODO ajuter un message lorsque alreadyRequestedFriend == true pour prevenir le user qu'il a deja demandé en ami le mec
 
 class _FriendsPageState extends State<FriendsPage> {
   String currenUserId = 'userId';
   String currentUserMail = 'userMail';
-  Map<dynamic,dynamic> currentUserDataMap;
-  String _userName= '';
+  Map<dynamic, dynamic> currentUserDataMap;
+  String _userName = '';
 
   String _friendID;
   List<dynamic> _friendRequestList0fRequestedFriend;
   bool _alreadyRequestedFriend = false;
 
   List<Map<dynamic, dynamic>> listOfRequest = [];
+  List<dynamic> userFriendRequestListFromFirestore = [];
 
   CrudMethods crudObj = new CrudMethods();
   static final formKey = new GlobalKey<FormState>();
@@ -70,16 +73,35 @@ class _FriendsPageState extends State<FriendsPage> {
 
       List<dynamic> userFriendRequestList = currentUserDataMap['friendRequest'];
       setState(() {
-      _userName = currentUserDataMap['name'];
+        _userName = currentUserDataMap['name'];
+        userFriendRequestListFromFirestore = userFriendRequestList;
       });
 
+      print('aaaaaaaaaaa');
+      print(userFriendRequestList);
+
+      List<Map<dynamic, dynamic>> tempList = [];
+      tempList.length = userFriendRequestList.length;
       for (int i = 0; i < userFriendRequestList.length; i++) {
-        crudObj.getDataFromUserFromDocumentWithID(userFriendRequestList[i])
+        print('bbbbbbb-------$i');
+        print(userFriendRequestList[i]);
+        crudObj
+            .getDataFromUserFromDocumentWithID(userFriendRequestList[i])
             .then((value) {
           Map<dynamic, dynamic> userDataMap = value.data;
+          print('USERDATAMAP');
+          print(userDataMap);
+          print('IIIIIIIII = $i');
+          tempList.removeAt(i);
+          tempList.insert(i,{
+            'name': userDataMap['name'],
+            'mail': userDataMap['mail'],
+            'ID': userFriendRequestList[i],
+            'friendList': userDataMap['friendList']
+          });
           setState(() {
-            listOfRequest.add(
-                {'name': userDataMap['name'], 'mail': userDataMap['mail'],'ID': userFriendRequestList[i],'friendList': userDataMap['friendList']});
+            print(tempList);
+            listOfRequest = tempList;
           });
         });
       }
@@ -109,15 +131,17 @@ class _FriendsPageState extends State<FriendsPage> {
               },
               onSaved: (value) => _friendID = value,
             ),
-            _userName == null ? Text('Tu dois enregistrer ton nom pour ajouter des amis !'): PrimaryButton(
-              key: new Key('submitFriendRequest'),
-              text: 'demande d\'ami',
-              height: 44.0,
-              onPressed: () {
-                validateAndSubmit();
-                print('friend ID : ' + _friendID);
-              },
-            ),
+            _userName == null
+                ? Text('Tu dois enregistrer ton nom pour ajouter des amis !')
+                : PrimaryButton(
+                    key: new Key('submitFriendRequest'),
+                    text: 'demande d\'ami',
+                    height: 44.0,
+                    onPressed: () {
+                      validateAndSubmit();
+//                print('friend ID : ' + _friendID);
+                    },
+                  ),
             _alreadyRequestedFriend == true
                 ? Text(
                     'Une demande d\'ami a déjà été envoyée',
@@ -149,7 +173,6 @@ class _FriendsPageState extends State<FriendsPage> {
       crudObj.getDataFromUserFromDocumentWithID(_friendID).then((value) {
         Map<String, dynamic> dataMap = value.data;
         List friendRequestList = dataMap['friendRequest'];
-        print(friendRequestList);
         if (friendRequestList == null) {
           crudObj.updateData('user', _friendID, {
             'friendRequest': [currenUserId]
@@ -181,20 +204,32 @@ class _FriendsPageState extends State<FriendsPage> {
     }
   }
 
-  Widget friendRequest() {//penser à ajouter un bouton poour supprimer la demande !
+  Widget friendRequest() {
+    //penser à ajouter un bouton poour supprimer la demande !
     //ne pas oublier de suprimer de la liste des request le demander une fois ajouté
+    print('early');
+    print(userFriendRequestListFromFirestore);
+    print('listofrequest');
+    print('list' + listOfRequest.toString());
+    List<dynamic> mutableListOfRequest = List.from(listOfRequest);
     return ListView.builder(
-      itemCount: listOfRequest.length,
+      itemCount: mutableListOfRequest.length,
       itemBuilder: (context, i) {
-        print(listOfRequest);
         return Container(
           child: ListTile(
-            title: Text(listOfRequest[i]['mail']),
-            subtitle: Text(listOfRequest[i]['name']),
+            title: Text(mutableListOfRequest[i]['mail']),
+            subtitle: Text(mutableListOfRequest[i]['name']),
             trailing: InkWell(
               child: Icon(FontAwesomeIcons.check),
-              onTap: (){
-                addFriend(listOfRequest[i]['ID'],listOfRequest[i][friendList]);
+              onTap: () {
+                userFriendRequestListFromFirestore =
+                    List.from(userFriendRequestListFromFirestore)..removeAt(i);
+
+                addFriend(mutableListOfRequest[i]['ID'],
+                    mutableListOfRequest[i][friendList]);
+                setState(() {
+                  listOfRequest = List.from(listOfRequest)..removeAt(i);
+                });
               },
             ),
           ),
@@ -203,28 +238,43 @@ class _FriendsPageState extends State<FriendsPage> {
     );
   }
 
-  void addFriend(iDDemander,friendListOfDemander){
+  void addFriend(iDDemander, friendListOfDemander) {
+    print('late');
+    print(userFriendRequestListFromFirestore);
 
-    if(friendListOfDemander !=null){
-      List<dynamic> mutableFriendListOfDemander = List.from(friendListOfDemander);
+    if (friendListOfDemander != null) {
+      List<dynamic> mutableFriendListOfDemander =
+          List.from(friendListOfDemander);
       mutableFriendListOfDemander.add(currenUserId);
-      crudObj.updateData('user', iDDemander, {'friendList': mutableFriendListOfDemander});//ajout dans la liste d'amis de l'utilisatuer qui a demandé en ami
-    }else{
-      crudObj.updateData('user', iDDemander, {'friendList': [currenUserId]});//ajout dans la liste d'amis de l'utilisatuer qui a demandé en ami
+      crudObj.updateData('user', iDDemander, {
+        'friendList': mutableFriendListOfDemander
+      }); //ajout dans la liste d'amis de l'utilisatuer qui a demandé en ami
+    } else {
+      crudObj.updateData('user', iDDemander, {
+        'friendList': [currenUserId]
+      }); //ajout dans la liste d'amis de l'utilisatuer qui a demandé en ami
     }
 
-    if(currentUserDataMap['friendList'] != null){
-      List<dynamic> mutableFriendListOfCurrentUser = List.from(currentUserDataMap['friendList']);
+    if (currentUserDataMap['friendList'] != null) {
+      List<dynamic> mutableFriendListOfCurrentUser =
+          List.from(currentUserDataMap['friendList']);
       mutableFriendListOfCurrentUser.add(iDDemander);
-      crudObj.updateData('user', currenUserId, {'friendList': mutableFriendListOfCurrentUser});//ajout dans la liste d'amis du current user
+      crudObj.updateData('user', currenUserId, {
+        'friendList': mutableFriendListOfCurrentUser
+      }); //ajout dans la liste d'amis du current user
+      crudObj.updateData('user', currenUserId,
+          {'friendRequest': userFriendRequestListFromFirestore});
+    } else {
+      crudObj.updateData('user', currenUserId, {
+        'friendList': [iDDemander]
+      }); //ajout dans la liste d'amis du current user
+      crudObj.updateData('user', currenUserId,
+          {'friendRequest': userFriendRequestListFromFirestore});
     }
-    else{
-      crudObj.updateData('user', currenUserId, {'friendList': [iDDemander]});//ajout dans la liste d'amis du current user
-    }
-
   }
 
-  Widget friendList() {//peut etre un streambuilder, ne causera pas les soucis de friend request je pense
+  Widget friendList() {
+    //peut etre un streambuilder, ne causera pas les soucis de friend request je pense
     return Text('friend list section');
   }
 
