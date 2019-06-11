@@ -174,7 +174,7 @@ class _TopClubCardState extends State<TopClubCard> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          snapshot.data.documents[i].data['arrond'],
+                                          '${snapshot.data.documents[i].data['arrond']}e arrondissement',
                                           style: TextStyle(
                                             color: Colors.white,
                                             height: 1.2,
