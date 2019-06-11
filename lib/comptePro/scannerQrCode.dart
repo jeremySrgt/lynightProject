@@ -32,6 +32,8 @@ class ScannerQrCode extends StatefulWidget {
 class _ScannerQrCode extends State<ScannerQrCode> {
 
 
+
+
   String userMail = 'userMail';
   String userId = 'userId';
 
@@ -46,26 +48,15 @@ class _ScannerQrCode extends State<ScannerQrCode> {
         backgroundColor: Theme.of(context).primaryColor,
         title: Text('Scanner'),
       ),
-      body: Column(
+      body: Stack(
         children: <Widget>[
-          Expanded(
-            child: Container(
-                child: QRView(
-                key: qrKey,
-                onQRViewCreated: _onQRViewCreated,
-              ),
+          Container(// taille appareil photo
+            child: QRView(
+              key: qrKey,
+              onQRViewCreated: _onQRViewCreated,
             ),
-            flex: 4,
           ),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.only(top: 10),
-              child: Text("Resultat du scan: $qrText",
-                  style: TextStyle(fontSize: 25)
-              ),
-          ),
-            flex: 1,
-          )
+         verifQrCodeValue(qrText),
         ],
       ),
       drawer: CustomSlider(
@@ -76,6 +67,47 @@ class _ScannerQrCode extends State<ScannerQrCode> {
     );
   }
 
+  Widget verifQrCodeValue(qrCodeValue){
+    if(qrCodeValue != ""){
+      if(RegExp(r"[a-zA-Z]+\s-\s[a-zA-Z]+?\s-\s[0-9]{2}?/[0-9]{2}?/[0-9]{4}?").hasMatch(qrCodeValue) == true ){
+        return Container(
+          child: Center(
+               child: Container(
+                 decoration: BoxDecoration(
+                   border: Border.all(color: Colors.black),
+                   borderRadius: BorderRadius.circular(10.0),
+                   color: Colors.green,
+                 ),
+                 height: 150,
+                 width: 250,
+                 child: Text(qrText,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+                 alignment: Alignment(0, 0),
+               ),
+             ),
+        );
+      }else{
+        return Container(
+          child: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.red,
+              ),
+              height: 150,
+              width: 250,
+              child: Text(qrText,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+              alignment: Alignment(0, 0),
+            ),
+          ),
+        );
+      }
+    }else{
+      return Center(
+      );
+    }
+  }
+
   void _onQRViewCreated(QRViewController controller) {
     final channel = controller.channel;
     controller.init(qrKey);
@@ -84,9 +116,9 @@ class _ScannerQrCode extends State<ScannerQrCode> {
         case "onRecognizeQR":
           dynamic arguments = call.arguments;
           setState(() {
-            Container(color: Colors.red,
-              child: Text(qrText = arguments.toString()),
-            );
+              qrText = arguments.toString();
+
+              //child: Text('hduezh'),
           });
       }
     });

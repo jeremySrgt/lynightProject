@@ -45,6 +45,7 @@ class _SumUpState extends State<SumUp> {
   bool generationClicked = false;
   bool renderReady = false;
   bool _isLoading = false;
+  String userName = '';
 
   final Shader linearGradient = LinearGradient(
     colors: <Color>[Colors.pink, Colors.deepPurple],
@@ -52,6 +53,7 @@ class _SumUpState extends State<SumUp> {
 
   void initState() {
     super.initState();
+
     //permet de choper la liste de toute les reservations
     crudObj.getDataFromUserFromDocument().then((value) {
       // correspond à await Firestore.instance.collection('user').document(user.uid).get();
@@ -61,6 +63,7 @@ class _SumUpState extends State<SumUp> {
 //      print(reservationList);
       setState(() {
         reservation = reservationList;
+        userName = dataMap['name'];
       });
     });
   }
@@ -276,7 +279,7 @@ class _SumUpState extends State<SumUp> {
             key: globalKey,
             child: QrImage(
               data:
-                  "${widget.clubName} - ${DateFormat('dd/MM/yyyy').format(selectedDate)}",
+                  "$userName - ${widget.clubName} - ${DateFormat('dd/MM/yyyy').format(selectedDate)}",
               size: 200.0,
               version: 8,
               backgroundColor: Colors.white,

@@ -37,6 +37,8 @@ class _TopClubCardState extends State<TopClubCard> {
   bool rock = false;
   bool trans = false;
 
+
+
   //AlgoMusicReference algoTest = new AlgoMusicReference();
 
   @override
@@ -71,6 +73,10 @@ class _TopClubCardState extends State<TopClubCard> {
 //  }
 
   Widget clubList() {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double font = MediaQuery.of(context).textScaleFactor;
+
     //test();
     //print('qsdklqjsmdlksqjdmlkqjmdklqj');
     //print(dataClubFromBDD);
@@ -90,6 +96,7 @@ class _TopClubCardState extends State<TopClubCard> {
                   itemCount: snapshot.data.documents.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, i) {
+
                     Map<String, dynamic> clubDataMap;
 
                     String currentClubId =
@@ -102,8 +109,8 @@ class _TopClubCardState extends State<TopClubCard> {
                         Navigator.push(context,MaterialPageRoute(builder: (context) => NightClubProfile(documentID:currentClubId)));
                       },
                       child: Container(
-                        margin: new EdgeInsets.only(left: 20, bottom: 35, right: 20),
-                        alignment: Alignment.topCenter,
+                        margin: EdgeInsets.only(left: 20,bottom: 20 ,right: 20),
+                        //alignment: Alignment.topCenter,
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
                                 begin: Alignment.topLeft,
@@ -114,27 +121,27 @@ class _TopClubCardState extends State<TopClubCard> {
                                 ]),
                             //color: Theme.of(context).primaryColor,
                             borderRadius: BorderRadius.all(Radius.circular(25))),
-                        width: 330.0,
+                        width: width/1.7,
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 25.0),
+                          padding: const EdgeInsets.only(top: 20.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Padding(
                                 padding:
-                                const EdgeInsets.only(left: 28.0, right: 28),
+                                const EdgeInsets.only(left: 22.0, right: 22),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(11.0),
                                   child: Image.network(
                                     clubDataMap['pictures'][0],
                                     fit: BoxFit.cover,
-                                    height: 175.0,
-                                    width: 280.0,
+                                    height: height/6,
+                                    width: width/1.3,
                                   ),
                                 ),
                               ),
                               SizedBox(
-                                height: 15,
+                                height: height/40,
                               ),
                               Padding(
                                 padding:
@@ -143,18 +150,18 @@ class _TopClubCardState extends State<TopClubCard> {
                                   snapshot.data.documents[i].data['name'],
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 26,
+                                    fontSize: font*20,
                                     color: Colors.white,),
                                   textAlign: TextAlign.left,
                                   maxLines: 2,
                                 ),
                               ),
                               SizedBox(
-                                height: 15,
+                                height: height/40,
                               ),
                               Padding(
                                 padding:
-                                const EdgeInsets.only(left: 20.0, right: 30),
+                                const EdgeInsets.only(left: 20.0, right: 20),
                                 child: Row(
                                   //crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
@@ -163,15 +170,16 @@ class _TopClubCardState extends State<TopClubCard> {
                                         color: Colors.blue,
                                       ),
                                       SizedBox(
-                                        width: 10,
+                                        width: width/40,
                                       ),
                                       Expanded(
                                         child: Text(
-                                          snapshot.data.documents[i].data['adress'],
+                                          snapshot.data.documents[i].data['arrond'],
                                           style: TextStyle(
                                             color: Colors.white,
                                             height: 1.2,
                                             fontWeight: FontWeight.bold,
+                                              fontSize: font*13
                                           ),
                                           textAlign: TextAlign.justify,
                                         ),
@@ -180,7 +188,7 @@ class _TopClubCardState extends State<TopClubCard> {
                                 ),
                               ),
                               SizedBox(
-                                height: 15,
+                                height: height/75,
                               ),
                               Padding(
                                 padding:
@@ -191,7 +199,7 @@ class _TopClubCardState extends State<TopClubCard> {
                                     color: Colors.blue,
                                   ),
                                   SizedBox(
-                                    width: 10,
+                                    width: width/40,
                                   ),
                                   Row(
                                     children: <Widget>[
@@ -199,42 +207,42 @@ class _TopClubCardState extends State<TopClubCard> {
                                           ? Text(
                                         'Electro ',
                                         style:
-                                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
                                       )
                                           : Container(),
                                       musicMap['populaire'] == true
                                           ? Text(
                                         'Populaire ',
                                         style:
-                                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
                                       )
                                           : Container(),
                                       musicMap['rap'] == true
                                           ? Text(
                                         'Rap ',
                                         style:
-                                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
                                       )
                                           : Container(),
                                       musicMap['rnb'] == true
                                           ? Text(
                                         'RnB ',
                                         style:
-                                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
                                       )
                                           : Container(),
                                       musicMap['rock'] == true
                                           ? Text(
                                         'Rock ',
                                         style:
-                                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
                                       )
                                           : Container(),
                                       musicMap['trans'] == true
                                           ? Text(
                                         'Psytrans ',
                                         style:
-                                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                        TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
                                       )
                                           : Container(),
                                     ],
