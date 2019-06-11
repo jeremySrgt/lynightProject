@@ -485,14 +485,22 @@ class _NightClubProfile extends State<NightClubProfile> {
                   ),
                   Container(
                     child: favoriteButton(),
-                    padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     alignment: Alignment.topRight,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            colors: [Colors.transparent, Colors.black54],
+                            stops: [0.5,1.0],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          tileMode:TileMode.repeated,
+                        )),
                   ),
                 ],
               ),
               title: Text(
                 clubData['name'],
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 35),
                 overflow: TextOverflow.visible,
               ),
             ),
