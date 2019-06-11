@@ -201,56 +201,46 @@ class _TopClubCardState extends State<TopClubCard> {
                                   SizedBox(
                                     width: width/40,
                                   ),
-                                  Flexible(
-                                    child: musicMap['electro'] == true
-                                        ? Text(
-                                      'Electro ',
-                                      style:
-                                      TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
-                                      overflow: TextOverflow.ellipsis,
-                                    )
-                                        : Container(),
-                                  ),
-                                  Flexible(
-                                    child: musicMap['populaire'] == true
-                                        ? Text(
-                                      'Populaire ',
-                                      style:
-                                      TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
-                                      overflow: TextOverflow.ellipsis,
-                                    )
-                                        : Container(),
-                                  ),
-                                  Flexible(
-                                    child: musicMap['rap'] == true
-                                        ? Text(
-                                      'Rap ',
-                                      style:
-                                      TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
-                                      overflow: TextOverflow.ellipsis,
-                                    )
-                                        : Container(),
-                                  ),
-                                  Flexible(
-                                    child: musicMap['rnb'] == true
-                                        ? Text(
-                                      'RnB ',
-                                      style:
-                                      TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
-                                      overflow: TextOverflow.ellipsis,
-                                    )
-                                        : Container(),
-                                  ),
-                                  Flexible(
-                                    child: musicMap['rock'] == true
-                                        ? Text(
-                                      'Rock ',
-                                      style:
-                                      TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
-                                      overflow: TextOverflow.ellipsis,
-                                    )
-                                        : Container(),
-                                  ),
+                                  musicMap['electro'] == true
+                                      ? Text(
+                                    'Electro ',
+                                    style:
+                                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                      : Container(),
+                                  musicMap['populaire'] == true
+                                      ? Text(
+                                    'Populaire ',
+                                    style:
+                                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                      : Container(),
+                                  musicMap['rap'] == true
+                                      ? Text(
+                                    'Rap ',
+                                    style:
+                                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                      : Container(),
+                                  musicMap['rnb'] == true
+                                      ? Text(
+                                    'RnB ',
+                                    style:
+                                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                      : Container(),
+                                  musicMap['rock'] == true
+                                      ? Text(
+                                    'Rock ',
+                                    style:
+                                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                      : Container(),
                                     Flexible(
                                       child: musicMap['trans'] == true
                                           ? Text(
