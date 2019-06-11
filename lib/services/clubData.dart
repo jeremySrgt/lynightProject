@@ -18,6 +18,7 @@ class ClubData{
     this.searchKey,
     this.siteUrl,
     this.storagePath,
+    this.arrond,
 });
 
 
@@ -35,6 +36,7 @@ class ClubData{
   final String searchKey;
   final String siteUrl;
   final storagePath;
+  final int arrond;
 
 
   Map<String,dynamic> getClubDataMap(){
@@ -53,6 +55,7 @@ class ClubData{
       "searchKey":searchKey,
       "siteUrl":siteUrl,
       "storagePath":storagePath,
+      "arrond":arrond,
     };
   }
 

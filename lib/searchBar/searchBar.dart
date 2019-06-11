@@ -255,7 +255,7 @@ class _SearchBarState extends State<SearchBar> {
           child: Container(
               margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
               child: Text(
-                "Soit t'as mal écrit, soit a éxiste pas",
+                "Soit t'as mal écrit, soit ça existe pas",
                 style: TextStyle(
                   color: Colors.blueGrey,
                 ),

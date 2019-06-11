@@ -174,7 +174,7 @@ class _TopClubCardState extends State<TopClubCard> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          snapshot.data.documents[i].data['arrond'],
+                                          '${snapshot.data.documents[i].data['arrond']}e arrondissement',
                                           style: TextStyle(
                                             color: Colors.white,
                                             height: 1.2,
@@ -208,6 +208,7 @@ class _TopClubCardState extends State<TopClubCard> {
                                         'Electro ',
                                         style:
                                         TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
+                                        overflow: TextOverflow.ellipsis,
                                       )
                                           : Container(),
                                       musicMap['populaire'] == true
@@ -215,6 +216,7 @@ class _TopClubCardState extends State<TopClubCard> {
                                         'Populaire ',
                                         style:
                                         TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
+                                        overflow: TextOverflow.ellipsis,
                                       )
                                           : Container(),
                                       musicMap['rap'] == true
@@ -222,6 +224,7 @@ class _TopClubCardState extends State<TopClubCard> {
                                         'Rap ',
                                         style:
                                         TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
+                                        overflow: TextOverflow.ellipsis,
                                       )
                                           : Container(),
                                       musicMap['rnb'] == true
@@ -229,6 +232,7 @@ class _TopClubCardState extends State<TopClubCard> {
                                         'RnB ',
                                         style:
                                         TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
+                                        overflow: TextOverflow.ellipsis,
                                       )
                                           : Container(),
                                       musicMap['rock'] == true
@@ -236,6 +240,7 @@ class _TopClubCardState extends State<TopClubCard> {
                                         'Rock ',
                                         style:
                                         TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
+                                        overflow: TextOverflow.ellipsis,
                                       )
                                           : Container(),
                                       musicMap['trans'] == true
@@ -243,6 +248,7 @@ class _TopClubCardState extends State<TopClubCard> {
                                         'Psytrans ',
                                         style:
                                         TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: font*13),
+                                        overflow: TextOverflow.ellipsis,
                                       )
                                           : Container(),
                                     ],
