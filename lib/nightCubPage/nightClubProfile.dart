@@ -93,7 +93,7 @@ class _NightClubProfile extends State<NightClubProfile> {
         });
   }
 
-  Widget carouselPictureNightClubProfile(clubData, context) {
+  Widget carouselPictureNightClubProfile(clubData) {
     var length = clubData['pictures'].length;
     List<String> urlTab = [];
     //i<= 3 pour eviter de charger plus que 4 images de la base
@@ -101,16 +101,11 @@ class _NightClubProfile extends State<NightClubProfile> {
       urlTab.insert(i, clubData['pictures'][i]);
     }
     return Container(
-      height: 230,
-      width: double.infinity,
-      child: PageView(
-        children: <Widget>[
-          ImageSliderWidget(
-            imageUrls: urlTab,
-            imageBorderRadius: BorderRadius.circular(8.0),
-          ),
-        ],
-        scrollDirection: Axis.horizontal,
+      height: 200,
+      width: double.maxFinite,
+      child: ImageSliderWidget(
+        imageUrls: urlTab,
+        imageBorderRadius: BorderRadius.circular(8.0),
       ),
     );
   }
@@ -432,21 +427,22 @@ class _NightClubProfile extends State<NightClubProfile> {
           Flexible(
             child: Column(
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        clubData['name'],
-                        overflow: TextOverflow.visible,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 35, color: Theme.of(context).primaryColor),
-                      ),
-                    ),
-                    favoriteButton(),
-                  ],
-                ),
+//                Row(
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  children: <Widget>[
+//                    Expanded(
+//                      child: Text(
+//                        clubData['name'],
+//                        overflow: TextOverflow.visible,
+//                        textAlign: TextAlign.center,
+//                        style: TextStyle(
+//                            fontSize: 35,
+//                            color: Theme.of(context).primaryColor),
+//                      ),
+//                    ),
+//                    favoriteButton(),
+//                  ],
+//                ),
                 SizedBox(
                   height: 25,
                 ),
@@ -477,11 +473,29 @@ class _NightClubProfile extends State<NightClubProfile> {
           SliverAppBar(
             floating: false,
             pinned: true,
+            expandedHeight: 200,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
-              title: Text(clubData['name']),
+              background: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  Image.network(
+                    clubData['pictures'][0],
+                    fit: BoxFit.cover,
+                  ),
+                  Container(
+                    child: favoriteButton(),
+                    padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+                    alignment: Alignment.topRight,
+                  ),
+                ],
+              ),
+              title: Text(
+                clubData['name'],
+                style: TextStyle(fontSize: 30),
+                overflow: TextOverflow.visible,
+              ),
             ),
-
           ),
           SliverList(
             delegate: SliverChildListDelegate(
@@ -489,7 +503,6 @@ class _NightClubProfile extends State<NightClubProfile> {
                 Container(
                   child: Column(
                     children: <Widget>[
-                      carouselPictureNightClubProfile(clubData, context),
                       nightClubProfileInfo(clubData, context),
                     ],
                   ),
