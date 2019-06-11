@@ -47,15 +47,19 @@ class _FriendsPageState extends State<FriendsPage> {
   List<Map<dynamic, dynamic>> listOfRequest = [];
   List<dynamic> userFriendRequestListFromFirestore = [];
 
-  List<Map<dynamic,dynamic>> friendListMap = [];
+  List<Map<dynamic, dynamic>> friendListMap = [];
 
   CrudMethods crudObj = new CrudMethods();
   static final formKeyAddFriend = new GlobalKey<FormState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
+
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     widget.auth.currentUser().then((id) {
       setState(() {
         currenUserId = id;
@@ -108,10 +112,12 @@ class _FriendsPageState extends State<FriendsPage> {
         });
       }
 
-      List<Map<dynamic,dynamic>> mutableListOfFriendData = [];
+      List<Map<dynamic, dynamic>> mutableListOfFriendData = [];
       List<dynamic> tempFriendLList = currentUserDataMap['friendList'];
-      for(int i = 0; i< tempFriendLList.length; i++){
-        crudObj.getDataFromUserFromDocumentWithID(tempFriendLList[i]).then((value){
+      for (int i = 0; i < tempFriendLList.length; i++) {
+        crudObj
+            .getDataFromUserFromDocumentWithID(tempFriendLList[i])
+            .then((value) {
           Map<dynamic, dynamic> userDataMap = value.data;
           mutableListOfFriendData.add(userDataMap);
         });
@@ -120,7 +126,6 @@ class _FriendsPageState extends State<FriendsPage> {
         });
       }
     });
-
   }
 
   Widget friendResearch() {
@@ -224,6 +229,9 @@ class _FriendsPageState extends State<FriendsPage> {
     print('listofrequest');
     print('list' + listOfRequest.toString());
     List<dynamic> mutableListOfRequest = List.from(listOfRequest);
+    if(mutableListOfRequest.isEmpty){
+      return Text('Aucune demande d\'ami');
+    }
     return ListView.builder(
       itemCount: mutableListOfRequest.length,
       itemBuilder: (context, i) {
@@ -285,23 +293,6 @@ class _FriendsPageState extends State<FriendsPage> {
     }
   }
 
-  Widget friendListStreamBuilder() {
-    return StreamBuilder(
-      stream: Firestore.instance
-          .collection('user')
-          .document(currenUserId)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        }
-        var userData = snapshot.data;
-        List<dynamic> userFriendIDList = userData['friendList'];
-        return friendList();
-      },
-    );
-  }
-
   Widget friendList() {
     if (friendListMap.isEmpty) {
       return Text('Aucun amis');
@@ -312,11 +303,31 @@ class _FriendsPageState extends State<FriendsPage> {
           return Container(
             child: ListTile(
               title: Text(friendListMap[i]['name']),
+              subtitle: Text(friendListMap[i]['mail']),
             ),
           );
         },
       );
     }
+  }
+
+  Future<dynamic> _refresh() {
+    return crudObj.getDataFromUserFromDocument().then((value) {
+      Map<String, dynamic> dataMap = value.data;
+      List<Map<dynamic, dynamic>> mutableListOfFriendData = [];
+      List<dynamic> tempFriendLList = dataMap['friendList'];
+      for (int i = 0; i < tempFriendLList.length; i++) {
+        crudObj
+            .getDataFromUserFromDocumentWithID(tempFriendLList[i])
+            .then((value) {
+          Map<dynamic, dynamic> userDataMap = value.data;
+          mutableListOfFriendData.add(userDataMap);
+        });
+        setState(() {
+          friendListMap = mutableListOfFriendData;
+        });
+      }
+    });
   }
 
   @override
@@ -328,21 +339,28 @@ class _FriendsPageState extends State<FriendsPage> {
         backgroundColor: Theme.of(context).primaryColor,
         title: Text('Amis'),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              friendResearch(),
-              // demande à yann pour rechercher par nom - 1ere approche par ID complet
-              Container(
-                height: 300,
-                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
-                child: friendRequest(), // streambuilder pour sure
-              ),
-              Container(
-                  width: 400, height: 400, child: friendListStreamBuilder()),
-              // streambuilder pour sure
-            ],
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: _refresh,
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                friendResearch(),
+                // demande à yann pour rechercher par nom - 1ere approche par ID complet
+                Container(
+                  height: 300,
+                  padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                  child: friendRequest(), // streambuilder pour sure
+                ),
+                Container(
+                  width: 400,
+                  height: 400,
+                  child: friendList(),
+                ),
+                // streambuilder pour sure
+              ],
+            ),
           ),
         ),
       ),
