@@ -208,21 +208,31 @@ class _SumUpState extends State<SumUp> {
                                 alignment: FractionalOffset.centerLeft,
                                 child: Column(
                                   children: <Widget>[
-                                    RaisedButton(
-                                      elevation: 5.0,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
+                                    Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                              colors: [Colors.pinkAccent, Colors.deepPurpleAccent],
+                                              begin: FractionalOffset(0.0, 0.0),
+                                              end: FractionalOffset(0.5, 0.0),
+                                              stops: [0.0, 1.0],
+                                              tileMode: TileMode.clamp),
+                                        ),
+                                        child:RaisedButton(
+                                          elevation: 5.0,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
                                               BorderRadius.circular(5.0)),
-                                      child: Text('Choisir une date',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16.0)),
-                                      color: Theme.of(context).primaryColor,
-                                      textColor: Colors.black87,
-                                      onPressed: () {
-                                        _selectDate(context);
-                                      },
-                                    ),
+                                          child: Text('Choisir une date',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16.0)),
+                                          color: Colors.transparent,
+                                          textColor: Colors.black87,
+                                          onPressed: () {
+                                            _selectDate(context);
+                                          },
+                                        ),),
+
                                   ],
                                 ),
                               ),
