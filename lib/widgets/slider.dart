@@ -253,6 +253,33 @@ class _CustomSliderState extends State<CustomSlider>{
               },
             ),
           ),
+          Container(
+            decoration: widget.activePage == 'Amis'
+                ? BoxDecoration(
+                color: Color(0xFFebdffc),
+                borderRadius: BorderRadius.circular(15.0))
+                : BoxDecoration(),
+            child: ListTile(
+              leading: Icon(
+                FontAwesomeIcons.userFriends,
+                color: widget.activePage == 'Amis'
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              title: Text(
+                'Amis',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: widget.activePage == 'Amis'
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                ),
+              ),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/friends');
+              },
+            ),
+          ),
           pro == true ? Divider() : Container(),
           pro == true ? scanQrPro() : Container(),
           pro == true ? addClubPro() : Container(),

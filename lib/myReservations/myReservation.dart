@@ -86,19 +86,6 @@ class _ListPageState extends State<ListPage> {
 
   @override
   Widget build(BuildContext context) {
-
-//    return StreamBuilder(
-//      stream:
-//          Firestore.instance.collection('user').document(userId).snapshots(),
-//      builder: (context, snapshot) {
-//        if (!snapshot.hasData) {
-//          return CircularProgressIndicator();
-//        }
-//        var userData = snapshot.data;
-//        List<dynamic> userReservationList = userData['reservation'];
-//        return pageConstruct(userReservationList, context);
-//      },
-//    );
     return pageConstruct(reservation, context);
   }
 

@@ -13,7 +13,9 @@ class UserData {
       this.notification,
       this.picture,
       this.reservation,
-      this.pro});
+      this.pro,
+      this.friendRequest,
+      this.friendList});
 
   final String name;
   final String surname;
@@ -27,6 +29,9 @@ class UserData {
   final String picture;
   final List<String> reservation;
   final bool pro;
+  final List<String> friendRequest;
+  final List<String> friendList;
+
 
   Map<String,dynamic> getDataMap(){
     return {

@@ -82,6 +82,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             reservation: [],
             sex: userSex,
             pro: _formType == FormType.registerAsPro ? true : false,
+            friendRequest: [],
+            friendList: [],
           );
           crudObj.createOrUpdateUserData(userData.getDataMap());
         }
