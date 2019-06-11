@@ -134,8 +134,8 @@ class _UserProfilState extends State<UserProfil> {
       padding: EdgeInsets.only(top: 16),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height / 3.3,
-      decoration:  new BoxDecoration(
-        gradient: new LinearGradient(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
             colors: [Colors.deepOrangeAccent, Colors.deepPurpleAccent],
             begin: FractionalOffset.topRight,
             end: FractionalOffset.bottomLeft,
