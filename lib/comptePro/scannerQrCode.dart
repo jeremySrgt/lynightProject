@@ -46,26 +46,27 @@ class _ScannerQrCode extends State<ScannerQrCode> {
         backgroundColor: Theme.of(context).primaryColor,
         title: Text('Scanner'),
       ),
-      body: Column(
+      body: Stack(
         children: <Widget>[
-          Expanded(
-            child: Container(
-                child: QRView(
-                key: qrKey,
-                onQRViewCreated: _onQRViewCreated,
-              ),
+          Container(// taille appareil photo
+            child: QRView(
+              key: qrKey,
+              onQRViewCreated: _onQRViewCreated,
             ),
-            flex: 4,
           ),
-          Expanded(
+          qrText == "" ? Container(): Center(
             child: Container(
-              margin: EdgeInsets.only(top: 10),
-              child: Text("Resultat du scan: $qrText",
-                  style: TextStyle(fontSize: 25)
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.green,
               ),
+              height: 150,
+              width: 250,
+              child: Text(qrText,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+              alignment: Alignment(0, 0),
+            )
           ),
-            flex: 1,
-          )
         ],
       ),
       drawer: CustomSlider(
@@ -84,9 +85,9 @@ class _ScannerQrCode extends State<ScannerQrCode> {
         case "onRecognizeQR":
           dynamic arguments = call.arguments;
           setState(() {
-            Container(color: Colors.red,
-              child: Text(qrText = arguments.toString()),
-            );
+              qrText = arguments.toString();
+
+              //child: Text('hduezh'),
           });
       }
     });
