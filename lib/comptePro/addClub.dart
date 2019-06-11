@@ -47,6 +47,7 @@ class _AddClubState extends State<AddClub> {
   String _name;
   String _description;
   String _adress;
+  int _arrond;
   String _phone;
   int _manPrice;
   int _womanPrice;
@@ -104,6 +105,7 @@ class _AddClubState extends State<AddClub> {
         position: GeoPoint(_latitude, _longitude),
         storagePath: '',
         searchKey: _name.substring(0, 1).toUpperCase(),
+        arrond: _arrond,
       );
 
       DocumentReference docRef = await Firestore.instance
@@ -255,6 +257,30 @@ class _AddClubState extends State<AddClub> {
           }
         },
         onSaved: (value) => _adress = value,
+      ),
+    );
+  }
+
+  Widget _clubArrond() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        key: new Key('clubArrond'),
+        decoration: InputDecoration(
+          labelText: 'Arrondissement',
+          icon: new Icon(
+            FontAwesomeIcons.compass,
+            color: Colors.grey,
+          ),
+        ),
+        //on laisse l'arrondissement optionnel, si pas d'arrondissement, on affiche l'adresse sur la page d'acceuil
+//        validator: (String value) {
+//          if (value.isEmpty) {
+//            return 'Saisissez une adresse';
+//          }
+//        },
+        onSaved: (value) => _arrond = int.parse(value),
       ),
     );
   }
@@ -603,7 +629,8 @@ class _AddClubState extends State<AddClub> {
         .collection('club')
         .document(clubID)
         .updateData({"pictures": picUrlList});
-    Navigator.pushReplacementNamed(context, "/"); // comme cette methode est apl a la toute fin du processus de creation on push la cpage d'acceuil depuis cette methode pour etre sur que le process soit fini
+    Navigator.pushReplacementNamed(context,
+        "/"); // comme cette methode est apl a la toute fin du processus de creation on push la cpage d'acceuil depuis cette methode pour etre sur que le process soit fini
   }
 
   bool validateAndSave() {
@@ -632,6 +659,7 @@ class _AddClubState extends State<AddClub> {
           _clubDescription(),
           _clubPhone(),
           _clubAdress(),
+          _clubArrond(),
           _clubPosition(),
           _clubPrice(),
           _selectionPictures(),
