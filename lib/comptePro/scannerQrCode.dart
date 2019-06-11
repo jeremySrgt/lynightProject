@@ -69,14 +69,11 @@ class _ScannerQrCode extends State<ScannerQrCode> {
     );
   }
 
-  bool changeValue(){
-    checkIfScanOrNot = true;
-    return checkIfScanOrNot;
-  }
 
   Widget buttonToChangeUserScan(){
     return FlatButton(
       color: Colors.red,
+      shape: StadiumBorder(),
       child: Text('next user'),
       onPressed: (){
         setState(() {
@@ -89,13 +86,6 @@ class _ScannerQrCode extends State<ScannerQrCode> {
   Widget wrongQrCode(qrCodeValue){
     return Center(
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.circular(10.0),
-          color: Colors.red,
-        ),
-        height: 150,
-        width: 250,
         child: Text(qrCodeValue,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
         alignment: Alignment(0, 0),
       ),
@@ -105,13 +95,7 @@ class _ScannerQrCode extends State<ScannerQrCode> {
   Widget goodQrCode(qrCodeValue){
     return Center(
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.circular(10.0),
-          color: Colors.green,
-        ),
-        height: 150,
-        width: 250,
+
         child: Text(qrCodeValue,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
         alignment: Alignment(0, 0),
       ),
@@ -119,21 +103,53 @@ class _ScannerQrCode extends State<ScannerQrCode> {
   }
 
   Widget verifQrCodeValue(qrCodeValue){
+    Color c = const Color.fromRGBO(0, 0, 0, 0.7);
     if(qrCodeValue != "" && checkIfScanOrNot == false){
       if(RegExp(r"[a-zA-Z]+\s-\s[a-zA-Z]+?\s-\s[0-9]{2}?/[0-9]{2}?/[0-9]{4}?").hasMatch(qrCodeValue) == true ){
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            goodQrCode(qrCodeValue),
-            buttonToChangeUserScan()
-          ],
+        return Container(
+            color: c,
+          child: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(25.0),
+                color: Colors.green,
+              ),
+              height: 200,
+              width: 250,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  goodQrCode(qrCodeValue),
+                  SizedBox(height: 35),
+                  buttonToChangeUserScan(),
+                ],
+              ),
+            ),
+          ),
         );
       }else{
-        return Column(
-          children: <Widget>[
-            wrongQrCode(qrCodeValue),
-            buttonToChangeUserScan()
-        ],
+        return Container(
+          color: c,
+          child: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(25.0),
+                color: Colors.green,
+              ),
+              height: 200,
+              width: 250,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  wrongQrCode(qrCodeValue),
+                  SizedBox(height: 35),
+                  buttonToChangeUserScan(),
+                ],
+              ),
+            ),
+          ),
         );
       }
     }else{
