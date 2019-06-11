@@ -114,6 +114,9 @@ class _PrincipalPageState extends State<PrincipalPage>
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     // TODO: implement build
     return DefaultTabController(
       length: 3,
@@ -125,10 +128,13 @@ class _PrincipalPageState extends State<PrincipalPage>
             child: Column(
               children: <Widget>[
                 SizedBox(
-                  height: 20.0,
+                  height: height/35,
                 ),
                 TopClubCard(musicMap: mapOfUserMusic),
                 BottomClubCard(musicMap: mapOfUserMusic),
+                SizedBox(
+                  height: height/35,
+                )
               ],
             ),
           ),
