@@ -32,6 +32,8 @@ class ScannerQrCode extends StatefulWidget {
 class _ScannerQrCode extends State<ScannerQrCode> {
 
 
+
+
   String userMail = 'userMail';
   String userId = 'userId';
 
@@ -54,19 +56,7 @@ class _ScannerQrCode extends State<ScannerQrCode> {
               onQRViewCreated: _onQRViewCreated,
             ),
           ),
-          qrText == "" ? Container(): Center(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(10.0),
-                color: Colors.green,
-              ),
-              height: 150,
-              width: 250,
-              child: Text(qrText,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
-              alignment: Alignment(0, 0),
-            )
-          ),
+         verifQrCodeValue(qrText),
         ],
       ),
       drawer: CustomSlider(
@@ -75,6 +65,47 @@ class _ScannerQrCode extends State<ScannerQrCode> {
         activePage: 'ScanQr',
       ),
     );
+  }
+
+  Widget verifQrCodeValue(qrCodeValue){
+    if(qrCodeValue != ""){
+      if(RegExp(r"[a-zA-Z]+\s-\s[a-zA-Z]+?\s-\s[0-9]{2}?/[0-9]{2}?/[0-9]{4}?").hasMatch(qrCodeValue) == true ){
+        return Container(
+          child: Center(
+               child: Container(
+                 decoration: BoxDecoration(
+                   border: Border.all(color: Colors.black),
+                   borderRadius: BorderRadius.circular(10.0),
+                   color: Colors.green,
+                 ),
+                 height: 150,
+                 width: 250,
+                 child: Text(qrText,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+                 alignment: Alignment(0, 0),
+               ),
+             ),
+        );
+      }else{
+        return Container(
+          child: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.red,
+              ),
+              height: 150,
+              width: 250,
+              child: Text(qrText,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+              alignment: Alignment(0, 0),
+            ),
+          ),
+        );
+      }
+    }else{
+      return Center(
+      );
+    }
   }
 
   void _onQRViewCreated(QRViewController controller) {
