@@ -4,29 +4,24 @@ import 'package:lynight/services/crud.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/algo/algoReferencementMusique.dart';
 
-
-
 class BottomClubCard extends StatefulWidget {
   @override
   final musicMap;
+
   BottomClubCard({this.musicMap});
 
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _BottomClubCardState();
   }
-
 }
 
-class _BottomClubCardState extends State<BottomClubCard>{
-
+class _BottomClubCardState extends State<BottomClubCard> {
   CrudMethods crudObj = new CrudMethods();
   Stream club;
   Map<dynamic, dynamic> mapOfUserMusic;
   List<DocumentSnapshot> dataClubFromBDD;
   List<String> clubSelected;
-
-
 
   @override
   void initState() {
@@ -35,7 +30,8 @@ class _BottomClubCardState extends State<BottomClubCard>{
         club = results;
       });
     });
-    crudObj.getDataFromClubFromDocument().then((value){ // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+    crudObj.getDataFromClubFromDocument().then((value) {
+      // correspond à await Firestore.instance.collection('user').document(user.uid).get();
       setState(() {
         dataClubFromBDD = value.documents;
       });
@@ -43,57 +39,60 @@ class _BottomClubCardState extends State<BottomClubCard>{
     super.initState();
   }
 
-
   // Méthode qui apelle l'algo en lui donnant la musicMap et une List<DocumentSnapshot>
-  test(){
+  test() {
     setState(() {
-      AlgoMusicReference algoTest = new AlgoMusicReference(mapOfUserMusics: widget.musicMap, snapClub: dataClubFromBDD);
+      AlgoMusicReference algoTest = new AlgoMusicReference(
+          mapOfUserMusics: widget.musicMap, snapClub: dataClubFromBDD);
       clubSelected = algoTest.compareMusic();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double font = MediaQuery.of(context).textScaleFactor;
+
     // TODO: implement build
     return Container(
-      child: SizedBox(
-        height: 230.0,
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 30.0),
-                  child: Text(
-                    'Recommandé',
-                    style: TextStyle(fontSize: 23.0, color: Theme.of(context).accentColor),
-                  ),
+      height: height / 3,
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 30.0),
+                child: Text(
+                  'Recommandé',
+                  style: TextStyle(
+                      fontSize: font * 25,
+                      color: Theme.of(context).accentColor),
                 ),
-              ],
-            ),
-            Expanded(
-              child: clubList(),
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: clubList(),
+          ),
+        ],
       ),
     );
   }
 
-
-  Widget clubList(){
+  Widget clubList() {
     test();
     //print('prrrrrrrrrrrrint selected');
     //print(clubSelected);
     List displayNightClub = [];
     List displayNightClubID = [];
-    if(club != null){
+    if (club != null) {
       return StreamBuilder(
         stream: club,
         builder: (context, snapshot) {
           //print('entrer dans le stream builder ');
           // On cherche sur chaque club et on compare chaque club existant dans la base avec les club retourné de l'algo
-          if((clubSelected) != null && snapshot.data !=null) {
+          if ((clubSelected) != null && snapshot.data != null) {
             for (int i = 0; i < clubSelected.length; i++) {
               for (int j = 0; j < snapshot.data.documents.length; j++) {
                 if (snapshot.data.documents[j].documentID == clubSelected[i]) {
@@ -115,47 +114,52 @@ class _BottomClubCardState extends State<BottomClubCard>{
               return ListView.builder(
                 itemCount: displayNightClub.length,
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (context,i){
+                itemBuilder: (context, i) {
+                  double width = MediaQuery.of(context).size.width;
+                  double height = MediaQuery.of(context).size.height;
+                  double font = MediaQuery.of(context).textScaleFactor;
 
-                  Map<String,dynamic> clubDataMap;
+                  Map<String, dynamic> clubDataMap;
 
-                  String currentClubId = displayNightClubID[i];//recharge la page avec les recommandé adapté avec l'algo
+                  String currentClubId = displayNightClubID[
+                      i]; //recharge la page avec les recommandé adapté avec l'algo
                   clubDataMap = displayNightClub[i];
 
-                  return Container(
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 25.0, top: 10.0, bottom: 10.0),
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        left: 15.0, top: 20.0, bottom: 10.0, right: 15),
+                    child: Container(
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(context,MaterialPageRoute(builder: (context) => NightClubProfile(documentID:currentClubId)));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NightClubProfile(
+                                      documentID: currentClubId)));
                         },
-                        child: Card(
-                          elevation: 8.0,
-                          child: Column(
-                            children: <Widget>[
-                              ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(8.0),
-                                    topLeft: Radius.circular(8.0)),
-                                child: Image.network(
-                                  clubDataMap['pictures'][0],
-                                  fit: BoxFit.cover,
-                                  height: 115,
-                                  width: 120.0,
-                                ),
+                        child: Stack(
+                          children: <Widget>[
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(11.0),
+                              child: Image.network(
+                                clubDataMap['pictures'][0],
+                                fit: BoxFit.cover,
+                                height: height / 4.5,
+                                width: 130.0,
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 15.0),
-                                child: Text(
-                                  clubDataMap['name'],
-                                  style: TextStyle(
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: height/5.5, left: 15, right: 15),
+                              child: Text(
+                                clubDataMap['name'],
+                                style: TextStyle(
                                     fontSize: 15.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -165,8 +169,7 @@ class _BottomClubCardState extends State<BottomClubCard>{
           }
         },
       );
-    }
-    else {
+    } else {
       return CircularProgressIndicator();
     }
   }
