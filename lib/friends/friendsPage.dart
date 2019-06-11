@@ -47,8 +47,10 @@ class _FriendsPageState extends State<FriendsPage> {
   List<Map<dynamic, dynamic>> listOfRequest = [];
   List<dynamic> userFriendRequestListFromFirestore = [];
 
+  List<Map<dynamic,dynamic>> friendListMap = [];
+
   CrudMethods crudObj = new CrudMethods();
-  static final formKey = new GlobalKey<FormState>();
+  static final formKeyAddFriend = new GlobalKey<FormState>();
   bool _isLoading = false;
 
   @override
@@ -93,7 +95,7 @@ class _FriendsPageState extends State<FriendsPage> {
           print(userDataMap);
           print('IIIIIIIII = $i');
           tempList.removeAt(i);
-          tempList.insert(i,{
+          tempList.insert(i, {
             'name': userDataMap['name'],
             'mail': userDataMap['mail'],
             'ID': userFriendRequestList[i],
@@ -105,18 +107,30 @@ class _FriendsPageState extends State<FriendsPage> {
           });
         });
       }
+
+      List<Map<dynamic,dynamic>> mutableListOfFriendData = [];
+      List<dynamic> tempFriendLList = currentUserDataMap['friendList'];
+      for(int i = 0; i< tempFriendLList.length; i++){
+        crudObj.getDataFromUserFromDocumentWithID(tempFriendLList[i]).then((value){
+          Map<dynamic, dynamic> userDataMap = value.data;
+          mutableListOfFriendData.add(userDataMap);
+        });
+        setState(() {
+          friendListMap = mutableListOfFriendData;
+        });
+      }
     });
+
   }
 
   Widget friendResearch() {
     // la section research est pour le moment directement un ajout avec l'ID
     return Container(
       child: Form(
-        key: formKey,
+        key: formKeyAddFriend,
         child: Column(
           children: <Widget>[
             TextFormField(
-              key: Key('addViaID'),
               decoration: InputDecoration(
                 labelText: 'Ajout par ID (ne pas se tromper)',
                 icon: new Icon(
@@ -134,7 +148,6 @@ class _FriendsPageState extends State<FriendsPage> {
             _userName == null
                 ? Text('Tu dois enregistrer ton nom pour ajouter des amis !')
                 : PrimaryButton(
-                    key: new Key('submitFriendRequest'),
                     text: 'demande d\'ami',
                     height: 44.0,
                     onPressed: () {
@@ -155,7 +168,7 @@ class _FriendsPageState extends State<FriendsPage> {
   }
 
   bool validateAndSave() {
-    final form = formKey.currentState;
+    final form = formKeyAddFriend.currentState;
     if (form.validate()) {
       form.save();
       return true;
@@ -206,7 +219,6 @@ class _FriendsPageState extends State<FriendsPage> {
 
   Widget friendRequest() {
     //penser à ajouter un bouton poour supprimer la demande !
-    //ne pas oublier de suprimer de la liste des request le demander une fois ajouté
     print('early');
     print(userFriendRequestListFromFirestore);
     print('listofrequest');
@@ -273,9 +285,38 @@ class _FriendsPageState extends State<FriendsPage> {
     }
   }
 
+  Widget friendListStreamBuilder() {
+    return StreamBuilder(
+      stream: Firestore.instance
+          .collection('user')
+          .document(currenUserId)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
+        }
+        var userData = snapshot.data;
+        List<dynamic> userFriendIDList = userData['friendList'];
+        return friendList();
+      },
+    );
+  }
+
   Widget friendList() {
-    //peut etre un streambuilder, ne causera pas les soucis de friend request je pense
-    return Text('friend list section');
+    if (friendListMap.isEmpty) {
+      return Text('Aucun amis');
+    } else {
+      return ListView.builder(
+        itemCount: friendListMap.length,
+        itemBuilder: (context, i) {
+          return Container(
+            child: ListTile(
+              title: Text(friendListMap[i]['name']),
+            ),
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -298,7 +339,8 @@ class _FriendsPageState extends State<FriendsPage> {
                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                 child: friendRequest(), // streambuilder pour sure
               ),
-              friendList()
+              Container(
+                  width: 400, height: 400, child: friendListStreamBuilder()),
               // streambuilder pour sure
             ],
           ),
