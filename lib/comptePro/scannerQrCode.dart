@@ -36,6 +36,7 @@ class _ScannerQrCode extends State<ScannerQrCode> {
 
   String userMail = 'userMail';
   String userId = 'userId';
+  bool checkIfScanOrNot = false;
 
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   var qrText = "";
@@ -57,6 +58,7 @@ class _ScannerQrCode extends State<ScannerQrCode> {
             ),
           ),
          verifQrCodeValue(qrText),
+
         ],
       ),
       drawer: CustomSlider(
@@ -67,43 +69,76 @@ class _ScannerQrCode extends State<ScannerQrCode> {
     );
   }
 
+  bool changeValue(){
+    checkIfScanOrNot = true;
+    return checkIfScanOrNot;
+  }
+
+  Widget buttonToChangeUserScan(){
+    return FlatButton(
+      color: Colors.red,
+      child: Text('next user'),
+      onPressed: (){
+        setState(() {
+          checkIfScanOrNot = true;
+        });
+      },
+    );
+  }
+
+  Widget wrongQrCode(qrCodeValue){
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.red,
+        ),
+        height: 150,
+        width: 250,
+        child: Text(qrCodeValue,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+        alignment: Alignment(0, 0),
+      ),
+    );
+  }
+
+  Widget goodQrCode(qrCodeValue){
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.green,
+        ),
+        height: 150,
+        width: 250,
+        child: Text(qrCodeValue,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+        alignment: Alignment(0, 0),
+      ),
+    );
+  }
+
   Widget verifQrCodeValue(qrCodeValue){
-    if(qrCodeValue != ""){
+    if(qrCodeValue != "" && checkIfScanOrNot == false){
       if(RegExp(r"[a-zA-Z]+\s-\s[a-zA-Z]+?\s-\s[0-9]{2}?/[0-9]{2}?/[0-9]{4}?").hasMatch(qrCodeValue) == true ){
-        return Container(
-          child: Center(
-               child: Container(
-                 decoration: BoxDecoration(
-                   border: Border.all(color: Colors.black),
-                   borderRadius: BorderRadius.circular(10.0),
-                   color: Colors.green,
-                 ),
-                 height: 150,
-                 width: 250,
-                 child: Text(qrText,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
-                 alignment: Alignment(0, 0),
-               ),
-             ),
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            goodQrCode(qrCodeValue),
+            buttonToChangeUserScan()
+          ],
         );
       }else{
-        return Container(
-          child: Center(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(10.0),
-                color: Colors.red,
-              ),
-              height: 150,
-              width: 250,
-              child: Text(qrText,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
-              alignment: Alignment(0, 0),
-            ),
-          ),
+        return Column(
+          children: <Widget>[
+            wrongQrCode(qrCodeValue),
+            buttonToChangeUserScan()
+        ],
         );
       }
     }else{
       return Center(
+
       );
     }
   }
@@ -117,6 +152,7 @@ class _ScannerQrCode extends State<ScannerQrCode> {
           dynamic arguments = call.arguments;
           setState(() {
               qrText = arguments.toString();
+              checkIfScanOrNot = false;
 
               //child: Text('hduezh'),
           });
