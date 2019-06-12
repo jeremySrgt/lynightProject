@@ -96,7 +96,15 @@ class _ScannerQrCode extends State<ScannerQrCode> {
     List<String> nameOfUser = qrCodeValue.split('-');
     return Center(
       child: Container(
-        child: Text('Succes ! \n \n' + 'Bienvenue ' + nameOfUser[0] + '\n\n Au club' + nameOfUser[1] + '\n \n Le : ' + nameOfUser[2] ,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+        child: Row(
+          children: <Widget>[
+            Text('Succes ! '),
+            SizedBox(),
+            Text('Bienvenue ' + nameOfUser[0]),
+            Text('Au club' + nameOfUser[1]),
+            Text(' Le : ' + nameOfUser[2] ,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+          ],
+        ),
         alignment: Alignment(0, 0),
       ),
     );
