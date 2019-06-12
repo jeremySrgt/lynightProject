@@ -36,6 +36,7 @@ dependencies:
   intl: ^0.15.7
   qr_code_scanner: ^0.0.5
   path_provider: ^1.1.0
+  pull_to_refresh: ^1.4.4
 
 
 

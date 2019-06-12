@@ -25,6 +25,10 @@ class _CustomSliderState extends State<CustomSlider>{
   String profilPicture = 'https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46';
   bool pro = false;
 
+  final Shader linearGradient = LinearGradient(
+    colors: <Color>[Colors.pink, Colors.deepPurple],
+  ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
+
   void initState() {
     super.initState();
 
@@ -51,7 +55,7 @@ class _CustomSliderState extends State<CustomSlider>{
               minRadius: 25,
               maxRadius: 25,
             ),
-            title: name == '' ? Text('Pas de prénom'): Text(name),
+            title: name == '' ? Text('Pas de prénom'): Text(name,style: TextStyle(fontSize: 20.0,foreground: Paint()..shader = linearGradient),),
             subtitle: Text(widget.userMail,style: TextStyle(fontSize: 11.0),),
           ),
           RaisedButton(
