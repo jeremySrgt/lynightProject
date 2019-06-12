@@ -106,7 +106,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         title: Text(
           'Carte',
-          style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 34),
+          style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 30),
         ),
         backgroundColor: Colors.white,
       ),

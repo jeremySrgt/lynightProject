@@ -613,7 +613,7 @@ class _UserProfilState extends State<UserProfil> {
             flexibleSpace: FlexibleSpaceBar(
               title: userData['name'] == ""
                   ? Text(userMail)
-                  : Text(userData['name'] + ' ' + userData['surname'],style: TextStyle(fontSize: 34,color: Theme.of(context).primaryColor),),
+                  : Text(userData['name'] + ' ' + userData['surname'],style: TextStyle(fontSize: 30,color: Theme.of(context).primaryColor),),
             ),
           ),
           SliverList(

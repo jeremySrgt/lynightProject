@@ -146,7 +146,7 @@ class _PrincipalPageState extends State<PrincipalPage>
             appBarTitle,
             style: TextStyle(
                 color: Theme.of(context).primaryColor,
-                fontSize: 34.0,
+                fontSize: 30.0,
                 fontWeight: FontWeight.w500),
           ),
           iconTheme: IconThemeData(color: Theme.of(context).primaryColor),

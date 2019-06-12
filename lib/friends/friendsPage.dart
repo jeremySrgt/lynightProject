@@ -374,7 +374,7 @@ class _FriendsPageState extends State<FriendsPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-        title: Text('Amis',style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 34),),
+        title: Text('Amis',style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 30),),
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
