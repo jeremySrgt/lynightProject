@@ -397,8 +397,9 @@ class _FriendsPageState extends State<FriendsPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text('Amis'),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        title: Text('Amis',style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 34),),
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
