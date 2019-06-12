@@ -138,8 +138,8 @@ class _UserProfilState extends State<UserProfil> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: Colors.blueAccent,
-                width: 8,
+                color: Color.fromRGBO(212, 63, 141, 1),
+                width: 6,
               ),
             ),
             child: GestureDetector(
@@ -573,14 +573,12 @@ class _UserProfilState extends State<UserProfil> {
                           
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                                 colors: [
-                                  Colors.lightBlueAccent,
-                                  Colors.purpleAccent
-                                ],
-                                begin: FractionalOffset.topRight,
-                                end: FractionalOffset.bottomLeft,
-                                stops: [0.0, 1.0],
-                                tileMode: TileMode.clamp),
+                                  Color.fromRGBO(212, 63, 141, 1),
+                                  Color.fromRGBO(2, 80, 197, 1)
+                                ]),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20.0)),
                             boxShadow: [
