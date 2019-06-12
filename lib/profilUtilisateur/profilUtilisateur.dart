@@ -43,6 +43,8 @@ class _UserProfilState extends State<UserProfil> {
 
   bool _notificationValue = true;
 
+  final _formKey = GlobalKey<FormState>();
+
   void _onChangedNotification(bool value) {
     setState(() {
       _notificationValue = value;
@@ -162,10 +164,394 @@ class _UserProfilState extends State<UserProfil> {
     );
   }
 
+  Widget divider(){
+    return Divider(
+      color: Colors.white,
+      height: 15,
+      indent: 70,
+    );
+  }
+
   Widget userBottomSection(userData) {
     Map<dynamic, dynamic> musicMap = userData['music'];
 
-    final _formKey = GlobalKey<FormState>();
+    Widget name(){
+      return ListTile(
+        leading: Icon(
+          Icons.person,
+          color: Colors.white,
+          size: 35,
+        ),
+        title: Text(
+          "Prénom",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0),
+        ),
+        trailing: IconButton(
+          icon: Icon(Icons.edit,
+              color: Colors.white),
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize:
+                        MainAxisSize.min,
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                            EdgeInsets.all(
+                                8.0),
+                            child: TextFormField(
+                              decoration:
+                              InputDecoration(
+                                  hintText:
+                                  'Prénom'),
+                              onSaved: (value) =>
+                              _name = value,
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets
+                                .all(8.0),
+                            child: RaisedButton(
+                              child:
+                              Text("Valider"),
+                              onPressed: () {
+                                if (_formKey
+                                    .currentState
+                                    .validate()) {
+                                  _formKey
+                                      .currentState
+                                      .save();
+                                  crudObj
+                                      .createOrUpdateUserData({
+                                    'name': _name
+                                  });
+                                  Navigator.pop(
+                                      context);
+                                }
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                });
+          },
+        ),
+        subtitle: Text(
+          userData['name'],
+          style: TextStyle(
+            fontSize: 15.0,
+            color: Colors.white,
+          ),
+        ),
+      );
+    }
+
+    Widget surname(){
+      return ListTile(
+        leading: Icon(
+          Icons.supervisor_account,
+          color: Colors.white,
+          size: 35,
+        ),
+        title: Text(
+          "Nom",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0),
+        ),
+        trailing: IconButton(
+          icon: Icon(Icons.edit,
+              color: Colors.white),
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize:
+                        MainAxisSize.min,
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                            EdgeInsets.all(
+                                8.0),
+                            child: TextFormField(
+                              decoration:
+                              InputDecoration(
+                                  hintText:
+                                  'Nom'),
+                              onSaved: (value) =>
+                              _surname =
+                                  value,
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets
+                                .all(8.0),
+                            child: RaisedButton(
+                              child:
+                              Text("Valider"),
+                              onPressed: () {
+                                if (_formKey
+                                    .currentState
+                                    .validate()) {
+                                  _formKey
+                                      .currentState
+                                      .save();
+                                  crudObj
+                                      .createOrUpdateUserData({
+                                    'surname':
+                                    _surname
+                                  });
+                                  Navigator.pop(
+                                      context);
+                                }
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                });
+          },
+        ),
+        subtitle: Text(
+          userData['surname'],
+          style: TextStyle(
+              fontSize: 15.0,
+              color: Colors.white),
+        ),
+      );
+    }
+
+    Widget mail(){
+      return ListTile(
+        leading: Icon(
+          Icons.mail,
+          color: Colors.white,
+          size: 35,
+        ),
+        title: Text(
+          'Mail',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0),
+        ),
+        subtitle: Text(
+          userMail,
+          style: TextStyle(
+              fontSize: 15.0,
+              color: Colors.white),
+        ),
+      );
+    }
+
+    Widget phone(){
+      return ListTile(
+        leading: Icon(
+          Icons.phone,
+          color: Colors.white,
+          size: 35,
+        ),
+        title: Text(
+          "Numéro",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0),
+        ),
+        trailing: IconButton(
+          icon: Icon(Icons.edit,
+              color: Colors.white),
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize:
+                        MainAxisSize.min,
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                            EdgeInsets.all(
+                                8.0),
+                            child: TextFormField(
+                              validator:
+                              validatePhone,
+                              decoration:
+                              InputDecoration(
+                                  hintText:
+                                  'Numéro de téléphone'),
+                              keyboardType:
+                              TextInputType
+                                  .number,
+                              onSaved: (value) =>
+                              _phoneNumber =
+                                  value,
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets
+                                .all(8.0),
+                            child: RaisedButton(
+                              child:
+                              Text("Valider"),
+                              onPressed: () {
+                                if (_formKey
+                                    .currentState
+                                    .validate()) {
+                                  _formKey
+                                      .currentState
+                                      .save();
+                                  crudObj
+                                      .createOrUpdateUserData({
+                                    'phone':
+                                    _phoneNumber
+                                  });
+                                  Navigator.pop(
+                                      context);
+                                }
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                });
+          },
+        ),
+        subtitle: Text(
+          userData['phone'],
+          style: TextStyle(
+              fontSize: 15.0,
+              color: Colors.white),
+        ),
+      );
+    }
+
+    Widget musics(){
+      return ListTile(
+        leading: Icon(
+          Icons.music_note,
+          color: Colors.white,
+          size: 35,
+        ),
+        title: Text(
+          "Style de musique",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0),
+        ),
+        trailing: IconButton(
+          icon: Icon(Icons.edit,
+              color: Colors.white),
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return MyCheckbox();
+                });
+          },
+        ),
+        subtitle: Column(
+          crossAxisAlignment:
+          CrossAxisAlignment.start,
+          children: <Widget>[
+            musicMap['electro'] == true
+                ? Text('Electro',
+                style: TextStyle(
+                    color: Colors.white))
+                : Container(),
+            musicMap['populaire'] == true
+                ? Text('Populaire',
+                style: TextStyle(
+                    color: Colors.white))
+                : Container(),
+            musicMap['rap'] == true
+                ? Text('Rap',
+                style: TextStyle(
+                    color: Colors.white))
+                : Container(),
+            musicMap['rnb'] == true
+                ? Text('RnB',
+                style: TextStyle(
+                    color: Colors.white))
+                : Container(),
+            musicMap['rock'] == true
+                ? Text('Rock',
+                style: TextStyle(
+                    color: Colors.white))
+                : Container(),
+            musicMap['trans'] == true
+                ? Text('Psytrance',
+                style: TextStyle(
+                    color: Colors.white))
+                : Container(),
+          ],
+        ),
+      );
+    }
+
+    Widget birth(){
+      return ListTile(
+        leading: Icon(
+          Icons.date_range,
+          color: Colors.white,
+          size: 35,
+        ),
+        title: Text(
+          "Date de naissance",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0),
+        ),
+        subtitle: Text(
+          DateFormat('dd/MM/yyyy')
+              .format(userData['DOB'].toDate()),
+          style: TextStyle(
+              fontSize: 15.0,
+              color: Colors.white),
+        ),
+      );
+    }
+
+    Widget notification(){
+      return ListTile(
+        leading: Icon(
+          Icons.notifications,
+          color: Colors.white,
+          size: 35,
+        ),
+        title: Text(
+          "Notification",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0),
+        ),
+        trailing: Switch(
+            value: _notificationValue,
+            onChanged: _onChangedNotification),
+      );
+    }
+
     return Padding(
       padding: EdgeInsets.only(top: 5.0),
       child: Container(
@@ -211,392 +597,19 @@ class _UserProfilState extends State<UserProfil> {
                               Flexible(
                                 child: Column(
                                   children: <Widget>[
-                                    ListTile(
-                                      leading: Icon(
-                                        Icons.person,
-                                        color: Colors.white,
-                                        size: 35,
-                                      ),
-                                      title: Text(
-                                        "Prénom",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18.0),
-                                      ),
-                                      trailing: IconButton(
-                                        icon: Icon(Icons.edit,
-                                            color: Colors.white),
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  content: Form(
-                                                    key: _formKey,
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: <Widget>[
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: TextFormField(
-                                                            decoration:
-                                                                InputDecoration(
-                                                                    hintText:
-                                                                        'Prénom'),
-                                                            onSaved: (value) =>
-                                                                _name = value,
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: RaisedButton(
-                                                            child:
-                                                                Text("Valider"),
-                                                            onPressed: () {
-                                                              if (_formKey
-                                                                  .currentState
-                                                                  .validate()) {
-                                                                _formKey
-                                                                    .currentState
-                                                                    .save();
-                                                                crudObj
-                                                                    .createOrUpdateUserData({
-                                                                  'name': _name
-                                                                });
-                                                                Navigator.pop(
-                                                                    context);
-                                                              }
-                                                            },
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                );
-                                              });
-                                        },
-                                      ),
-                                      subtitle: Text(
-                                        userData['name'],
-                                        style: TextStyle(
-                                          fontSize: 15.0,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                    Divider(
-                                      color: Colors.white,
-                                      height: 15,
-                                      indent: 70,
-                                    ),
-                                    ListTile(
-                                      leading: Icon(
-                                        Icons.supervisor_account,
-                                        color: Colors.white,
-                                        size: 35,
-                                      ),
-                                      title: Text(
-                                        "Nom",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18.0),
-                                      ),
-                                      trailing: IconButton(
-                                        icon: Icon(Icons.edit,
-                                            color: Colors.white),
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  content: Form(
-                                                    key: _formKey,
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: <Widget>[
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: TextFormField(
-                                                            decoration:
-                                                                InputDecoration(
-                                                                    hintText:
-                                                                        'Nom'),
-                                                            onSaved: (value) =>
-                                                                _surname =
-                                                                    value,
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: RaisedButton(
-                                                            child:
-                                                                Text("Valider"),
-                                                            onPressed: () {
-                                                              if (_formKey
-                                                                  .currentState
-                                                                  .validate()) {
-                                                                _formKey
-                                                                    .currentState
-                                                                    .save();
-                                                                crudObj
-                                                                    .createOrUpdateUserData({
-                                                                  'surname':
-                                                                      _surname
-                                                                });
-                                                                Navigator.pop(
-                                                                    context);
-                                                              }
-                                                            },
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                );
-                                              });
-                                        },
-                                      ),
-                                      subtitle: Text(
-                                        userData['surname'],
-                                        style: TextStyle(
-                                            fontSize: 15.0,
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                    Divider(
-                                      color: Colors.white,
-                                      height: 15,
-                                      indent: 70,
-                                    ),
-                                    ListTile(
-                                      leading: Icon(
-                                        Icons.mail,
-                                        color: Colors.white,
-                                        size: 35,
-                                      ),
-                                      title: Text(
-                                        'Mail',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18.0),
-                                      ),
-                                      subtitle: Text(
-                                        userMail,
-                                        style: TextStyle(
-                                            fontSize: 15.0,
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                    Divider(
-                                      color: Colors.white,
-                                      height: 15,
-                                      indent: 70,
-                                    ),
-                                    ListTile(
-                                      leading: Icon(
-                                        Icons.phone,
-                                        color: Colors.white,
-                                        size: 35,
-                                      ),
-                                      title: Text(
-                                        "Numéro",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18.0),
-                                      ),
-                                      trailing: IconButton(
-                                        icon: Icon(Icons.edit,
-                                            color: Colors.white),
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  content: Form(
-                                                    key: _formKey,
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: <Widget>[
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: TextFormField(
-                                                            validator:
-                                                                validatePhone,
-                                                            decoration:
-                                                                InputDecoration(
-                                                                    hintText:
-                                                                        'Numéro de téléphone'),
-                                                            keyboardType:
-                                                                TextInputType
-                                                                    .number,
-                                                            onSaved: (value) =>
-                                                                _phoneNumber =
-                                                                    value,
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: RaisedButton(
-                                                            child:
-                                                                Text("Valider"),
-                                                            onPressed: () {
-                                                              if (_formKey
-                                                                  .currentState
-                                                                  .validate()) {
-                                                                _formKey
-                                                                    .currentState
-                                                                    .save();
-                                                                crudObj
-                                                                    .createOrUpdateUserData({
-                                                                  'phone':
-                                                                      _phoneNumber
-                                                                });
-                                                                Navigator.pop(
-                                                                    context);
-                                                              }
-                                                            },
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                );
-                                              });
-                                        },
-                                      ),
-                                      subtitle: Text(
-                                        userData['phone'],
-                                        style: TextStyle(
-                                            fontSize: 15.0,
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                    Divider(
-                                      color: Colors.white,
-                                      height: 15,
-                                      indent: 70,
-                                    ),
-                                    ListTile(
-                                      leading: Icon(
-                                        Icons.music_note,
-                                        color: Colors.white,
-                                        size: 35,
-                                      ),
-                                      title: Text(
-                                        "Style de musique",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18.0),
-                                      ),
-                                      trailing: IconButton(
-                                        icon: Icon(Icons.edit,
-                                            color: Colors.white),
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return MyCheckbox();
-                                              });
-                                        },
-                                      ),
-                                      subtitle: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          musicMap['electro'] == true
-                                              ? Text('Electro',
-                                                  style: TextStyle(
-                                                      color: Colors.white))
-                                              : Container(),
-                                          musicMap['populaire'] == true
-                                              ? Text('Populaire',
-                                                  style: TextStyle(
-                                                      color: Colors.white))
-                                              : Container(),
-                                          musicMap['rap'] == true
-                                              ? Text('Rap',
-                                                  style: TextStyle(
-                                                      color: Colors.white))
-                                              : Container(),
-                                          musicMap['rnb'] == true
-                                              ? Text('RnB',
-                                                  style: TextStyle(
-                                                      color: Colors.white))
-                                              : Container(),
-                                          musicMap['rock'] == true
-                                              ? Text('Rock',
-                                                  style: TextStyle(
-                                                      color: Colors.white))
-                                              : Container(),
-                                          musicMap['trans'] == true
-                                              ? Text('Psytrance',
-                                                  style: TextStyle(
-                                                      color: Colors.white))
-                                              : Container(),
-                                        ],
-                                      ),
-                                    ),
-                                    Divider(
-                                      color: Colors.white,
-                                      height: 15,
-                                      indent: 70,
-                                    ),
-                                    ListTile(
-                                      leading: Icon(
-                                        Icons.date_range,
-                                        color: Colors.white,
-                                        size: 35,
-                                      ),
-                                      title: Text(
-                                        "Date de naissance",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18.0),
-                                      ),
-                                      subtitle: Text(
-                                        DateFormat('dd/MM/yyyy')
-                                            .format(userData['DOB'].toDate()),
-                                        style: TextStyle(
-                                            fontSize: 15.0,
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                    Divider(
-                                      color: Colors.white,
-                                      height: 15,
-                                      indent: 70,
-                                    ),
-                                    ListTile(
-                                      leading: Icon(
-                                        Icons.notifications,
-                                        color: Colors.white,
-                                        size: 35,
-                                      ),
-                                      title: Text(
-                                        "Notification",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18.0),
-                                      ),
-                                      trailing: Switch(
-                                          value: _notificationValue,
-                                          onChanged: _onChangedNotification),
-                                    ),
+                                    name(),
+                                    divider(),
+                                    surname(),
+                                    divider(),
+                                    mail(),
+                                    divider(),
+                                    phone(),
+                                    divider(),
+                                    musics(),
+                                    divider(),
+                                    birth(),
+                                    divider(),
+                                    notification(),
                                   ],
                                 ),
                               ),
