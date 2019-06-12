@@ -244,7 +244,7 @@ class _ListPageState extends State<ListPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-        title: Text('Mes reservations',style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 34),),
+        title: Text('Mes reservations',style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 30),),
       ),
       body: _makeBody(userReservationList),
       drawer: CustomSlider(
