@@ -364,31 +364,6 @@ class _FriendsPageState extends State<FriendsPage> {
 
     });
 
-
-
-
-//    return crudObj.getDataFromUserFromDocument().then((value) {
-//      Map<String, dynamic> dataMap = value.data;
-//      List<Map<dynamic, dynamic>> mutableListOfFriendData = [];
-//      List<dynamic> tempFriendLList = dataMap['friendList'];
-//      if(tempFriendLList.isEmpty){
-//        setState(() {
-//          friendListMap = [];
-//        });
-//      }
-//      for (int i = 0; i < tempFriendLList.length; i++) {
-//        crudObj
-//            .getDataFromUserFromDocumentWithID(tempFriendLList[i])
-//            .then((value) {
-//          Map<dynamic, dynamic> userDataMap = value.data;
-//          mutableListOfFriendData.add(userDataMap);
-//          setState(() {
-//            friendListMap = mutableListOfFriendData;
-//          });
-//        });
-//
-//      }
-//    });
   }
 
   @override
@@ -399,7 +374,7 @@ class _FriendsPageState extends State<FriendsPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-        title: Text('Amis',style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 34),),
+        title: Text('Amis',style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 30),),
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,

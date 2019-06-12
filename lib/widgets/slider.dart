@@ -52,7 +52,7 @@ class _CustomSliderState extends State<CustomSlider>{
               maxRadius: 25,
             ),
             title: name == '' ? Text('Pas de prénom'): Text(name),
-            subtitle: Text(widget.userMail),
+            subtitle: Text(widget.userMail,style: TextStyle(fontSize: 11.0),),
           ),
           RaisedButton(
             elevation: 5.0,
