@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lynight/services/clubPictures.dart';
-import 'package:simple_slider/simple_slider.dart';
 import 'package:lynight/nightCubPage/carousel.dart';
 import 'package:lynight/services/clubPictures.dart';
 import 'package:lynight/nightCubPage/sumUpPage.dart';
@@ -93,22 +92,25 @@ class _NightClubProfile extends State<NightClubProfile> {
         });
   }
 
-  Widget carouselPictureNightClubProfile(clubData) {
-    var length = clubData['pictures'].length;
-    List<String> urlTab = [];
-    //i<= 3 pour eviter de charger plus que 4 images de la base
-    for (int i = 0; i < length && i <= 3; i++) {
-      urlTab.insert(i, clubData['pictures'][i]);
-    }
-    return Container(
-      height: 200,
-      width: double.maxFinite,
-      child: ImageSliderWidget(
-        imageUrls: urlTab,
-        imageBorderRadius: BorderRadius.circular(8.0),
-      ),
-    );
-  }
+  //c'etait pour un carrousel d'image mais on a besoin de path provider pour les QR code mais il n'est pas compatible avec simple_slider
+  //donc si on réutilise un carroussel il faut en trouver un autre qui ne propose pas de dépendance avec path_provider dans pubspec.yaml
+
+//  Widget carouselPictureNightClubProfile(clubData) {
+//    var length = clubData['pictures'].length;
+//    List<String> urlTab = [];
+//    //i<= 3 pour eviter de charger plus que 4 images de la base
+//    for (int i = 0; i < length && i <= 3; i++) {
+//      urlTab.insert(i, clubData['pictures'][i]);
+//    }
+//    return Container(
+//      height: 200,
+//      width: double.maxFinite,
+//      child: ImageSliderWidget(
+//        imageUrls: urlTab,
+//        imageBorderRadius: BorderRadius.circular(8.0),
+//      ),
+//    );
+//  }
 
   Widget nightClubProfileInfo(clubData, context) {
     Map<dynamic, dynamic> musicMap = clubData['musics'];

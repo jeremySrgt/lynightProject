@@ -35,6 +35,7 @@ dependencies:
   flutter_slidable: ^0.5.3
   intl: ^0.15.7
   qr_code_scanner: ^0.0.5
+  path_provider: ^1.1.0
 
 
 
@@ -44,7 +45,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   carousel_pro: ^0.0.1
-  simple_slider: ^0.0.1
+
   cupertino_icons: ^0.1.2
   collection: any
 
