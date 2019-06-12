@@ -40,7 +40,6 @@ class _FriendsPageState extends State<FriendsPage> {
   Map<dynamic, dynamic> currentUserDataMap;
   String _userName = '';
 
-
   List<Map<dynamic, dynamic>> listOfRequest = [];
   List<dynamic> userFriendRequestListFromFirestore = [];
 
@@ -113,7 +112,6 @@ class _FriendsPageState extends State<FriendsPage> {
 //    });
   }
 
-
   Widget friendRequest() {
     //penser à ajouter un bouton poour supprimer la demande !
     print('early');
@@ -127,27 +125,88 @@ class _FriendsPageState extends State<FriendsPage> {
     return ListView.builder(
       itemCount: mutableListOfRequest.length,
       itemBuilder: (context, i) {
-        return Container(
-          child: ListTile(
-            title: Text(mutableListOfRequest[i]['mail']),
-            subtitle: Text(mutableListOfRequest[i]['name']),
-            trailing: InkWell(
-              child: Icon(FontAwesomeIcons.check),
-              onTap: () {
-                userFriendRequestListFromFirestore =
-                    List.from(userFriendRequestListFromFirestore)..removeAt(i);
+        return Card(
+          margin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 20.0),
+          child: Container(
+            padding: EdgeInsets.fromLTRB(5.0, 10.0, 10.0, 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    CircleAvatar(
+                      // photo de profil
+                      backgroundImage:
+                          NetworkImage(mutableListOfRequest[i]['picture']),
+                      minRadius: 25,
+                      maxRadius: 25,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      width: 200,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            mutableListOfRequest[i]['name'],
+                            style: TextStyle(
+                                fontSize: 16.0, fontWeight: FontWeight.w400),
+                          ),
+                          Text(
+                            mutableListOfRequest[i]['mail'],
+                            style: TextStyle(
+                                color: Colors.grey[600], fontSize: 12.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                InkWell(
+                  //add
+                  child: Icon(FontAwesomeIcons.check),
+                  onTap: () {
+                    userFriendRequestListFromFirestore =
+                        List.from(userFriendRequestListFromFirestore)
+                          ..removeAt(i);
 
-                addFriend(mutableListOfRequest[i]['ID'],
-                    mutableListOfRequest[i]['friendList']);
-                setState(() {
-                  listOfRequest = List.from(listOfRequest)..removeAt(i);
-                });
-              },
+                    addFriend(mutableListOfRequest[i]['ID'],
+                        mutableListOfRequest[i]['friendList']);
+                    setState(() {
+                      listOfRequest = List.from(listOfRequest)..removeAt(i);
+                    });
+                  },
+                ),
+                InkWell(
+                  //remove
+                  child: Icon(FontAwesomeIcons.times),
+                  onTap: () {
+                    userFriendRequestListFromFirestore =
+                        List.from(userFriendRequestListFromFirestore)
+                          ..removeAt(i);
+
+                    removeFriendRequest();
+
+                    setState(() {
+                      listOfRequest = List.from(listOfRequest)..removeAt(i);
+                    });
+                  },
+                ),
+              ],
             ),
           ),
         );
       },
     );
+  }
+
+  void removeFriendRequest() {
+    crudObj.updateData('user', currentUserId,
+        {'friendRequest': userFriendRequestListFromFirestore});
   }
 
   void addFriend(iDDemander, friendListOfDemander) {
@@ -193,8 +252,15 @@ class _FriendsPageState extends State<FriendsPage> {
       return ListView.builder(
         itemCount: friendListMap.length,
         itemBuilder: (context, i) {
-          return Container(
+          return Card(
+            elevation: 3.0,
             child: ListTile(
+              leading: CircleAvatar(
+                // photo de profil
+                backgroundImage: NetworkImage(friendListMap[i]['picture']),
+                minRadius: 25,
+                maxRadius: 25,
+              ),
               title: Text(friendListMap[i]['name']),
               subtitle: Text(friendListMap[i]['mail']),
             ),
@@ -237,7 +303,8 @@ class _FriendsPageState extends State<FriendsPage> {
             'name': userDataMap['name'],
             'mail': userDataMap['mail'],
             'ID': userFriendRequestList[i],
-            'friendList': userDataMap['friendList']
+            'friendList': userDataMap['friendList'],
+            'picture': userDataMap['picture'],
           });
           setState(() {
             print(tempList);
@@ -308,7 +375,8 @@ class _FriendsPageState extends State<FriendsPage> {
             'name': userDataMap['name'],
             'mail': userDataMap['mail'],
             'ID': userFriendRequestList[i],
-            'friendList': userDataMap['friendList']
+            'friendList': userDataMap['friendList'],
+            'picture': userDataMap['picture'],
           });
           setState(() {
             print(tempList);
@@ -369,7 +437,8 @@ class _FriendsPageState extends State<FriendsPage> {
           child: Container(
             child: Column(
               children: <Widget>[
-                FriendResearch(userName: _userName,currentUserId: currentUserId),
+                FriendResearch(
+                    userName: _userName, currentUserId: currentUserId),
                 // demande à yann pour rechercher par nom - 1ere approche par ID complet
                 Container(
                   height: 300,
