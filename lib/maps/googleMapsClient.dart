@@ -103,10 +103,12 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         title: Text(
           'Carte',
+          style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 34),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.white,
       ),
       body: Container(
         child: Stack(children: <Widget>[
@@ -130,8 +132,12 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
                 FloatingActionButton(
                   //premier bouton qui recentre la position selon _center centre de paris
                   onPressed: _userPosition,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  child: const Icon(Icons.center_focus_weak, size: 50),
+                  backgroundColor: Colors.white,
+                  child: const Icon(
+                    Icons.center_focus_weak, 
+                    size: 35,
+                    color: Color(0xFF7854d3),
+                  ),
                 ),
                 SizedBox(height: 30),
 //                FloatingActionButton(

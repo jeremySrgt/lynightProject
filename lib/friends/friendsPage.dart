@@ -71,61 +71,47 @@ class _FriendsPageState extends State<FriendsPage> {
       });
     });
 
-    crudObj.getDataFromUserFromDocument().then((value) {
-      Map<String, dynamic> dataMap = value.data;
-      setState(() {
-        currentUserDataMap = dataMap;
-      });
-
-      List<dynamic> userFriendRequestList = currentUserDataMap['friendRequest'];
-      setState(() {
-        _userName = currentUserDataMap['name'];
-        userFriendRequestListFromFirestore = userFriendRequestList;
-      });
-
-      print('aaaaaaaaaaa');
-      print(userFriendRequestList);
-
-      List<Map<dynamic, dynamic>> tempList = [];
-      tempList.length = userFriendRequestList.length;
-      for (int i = 0; i < userFriendRequestList.length; i++) {
-        print('bbbbbbb-------$i');
-        print(userFriendRequestList[i]);
-        crudObj
-            .getDataFromUserFromDocumentWithID(userFriendRequestList[i])
-            .then((value) {
-          Map<dynamic, dynamic> userDataMap = value.data;
-          print('USERDATAMAP');
-          print(userDataMap);
-          print('IIIIIIIII = $i');
-          tempList.removeAt(i);
-          tempList.insert(i, {
-            'name': userDataMap['name'],
-            'mail': userDataMap['mail'],
-            'ID': userFriendRequestList[i],
-            'friendList': userDataMap['friendList']
-          });
-          setState(() {
-            print(tempList);
-            listOfRequest = tempList;
-          });
-        });
-      }
-
-      List<Map<dynamic, dynamic>> mutableListOfFriendData = [];
-      List<dynamic> tempFriendLList = currentUserDataMap['friendList'];
-      for (int i = 0; i < tempFriendLList.length; i++) {
-        crudObj
-            .getDataFromUserFromDocumentWithID(tempFriendLList[i])
-            .then((value) {
-          Map<dynamic, dynamic> userDataMap = value.data;
-          mutableListOfFriendData.add(userDataMap);
-        });
-        setState(() {
-          friendListMap = mutableListOfFriendData;
-        });
-      }
-    });
+//    crudObj.getDataFromUserFromDocument().then((value) {
+//      Map<String, dynamic> dataMap = value.data;
+//      setState(() {
+//        currentUserDataMap = dataMap;
+//      });
+//
+//      List<dynamic> userFriendRequestList = currentUserDataMap['friendRequest'];
+//      setState(() {
+//        _userName = currentUserDataMap['name'];
+//        userFriendRequestListFromFirestore = userFriendRequestList;
+//      });
+//
+//      print('aaaaaaaaaaa');
+//      print(userFriendRequestList);
+//
+//      List<Map<dynamic, dynamic>> tempList = [];
+//      tempList.length = userFriendRequestList.length;
+//      for (int i = 0; i < userFriendRequestList.length; i++) {
+//        print('bbbbbbb-------$i');
+//        print(userFriendRequestList[i]);
+//        crudObj
+//            .getDataFromUserFromDocumentWithID(userFriendRequestList[i])
+//            .then((value) {
+//          Map<dynamic, dynamic> userDataMap = value.data;
+//          print('USERDATAMAP');
+//          print(userDataMap);
+//          print('IIIIIIIII = $i');
+//          tempList.removeAt(i);
+//          tempList.insert(i, {
+//            'name': userDataMap['name'],
+//            'mail': userDataMap['mail'],
+//            'ID': userFriendRequestList[i],
+//            'friendList': userDataMap['friendList']
+//          });
+//          setState(() {
+//            print(tempList);
+//            listOfRequest = tempList;
+//          });
+//        });
+//      }
+//    });
   }
 
   Widget friendResearch() {
@@ -150,7 +136,7 @@ class _FriendsPageState extends State<FriendsPage> {
               },
               onSaved: (value) => _friendID = value,
             ),
-            _userName == null
+            _userName == ''
                 ? Text('Tu dois enregistrer ton nom pour ajouter des amis !')
                 : PrimaryButton(
                     text: 'demande d\'ami',
@@ -187,6 +173,7 @@ class _FriendsPageState extends State<FriendsPage> {
       setState(() {
         _isLoading = true;
       });
+      formKeyAddFriend.currentState.reset();
 
       crudObj.getDataFromUserFromDocumentWithID(_friendID).then((value) {
         Map<String, dynamic> dataMap = value.data;
@@ -291,6 +278,7 @@ class _FriendsPageState extends State<FriendsPage> {
       crudObj.updateData('user', currenUserId,
           {'friendRequest': userFriendRequestListFromFirestore});
     }
+    _refresh();
   }
 
   Widget friendList() {
@@ -314,20 +302,93 @@ class _FriendsPageState extends State<FriendsPage> {
   Future<dynamic> _refresh() {
     return crudObj.getDataFromUserFromDocument().then((value) {
       Map<String, dynamic> dataMap = value.data;
+      setState(() {
+        currentUserDataMap = dataMap;
+      });
+
+      List<dynamic> userFriendRequestList = currentUserDataMap['friendRequest'];
+      setState(() {
+        _userName = currentUserDataMap['name'];
+        userFriendRequestListFromFirestore = userFriendRequestList;
+      });
+
+      print('aaaaaaaaaaa');
+      print(userFriendRequestList);
+
+      List<Map<dynamic, dynamic>> tempList = [];
+      tempList.length = userFriendRequestList.length;
+      for (int i = 0; i < userFriendRequestList.length; i++) {
+        print('bbbbbbb-------$i');
+        print(userFriendRequestList[i]);
+        crudObj
+            .getDataFromUserFromDocumentWithID(userFriendRequestList[i])
+            .then((value) {
+          Map<dynamic, dynamic> userDataMap = value.data;
+          print('USERDATAMAP');
+          print(userDataMap);
+          print('IIIIIIIII = $i');
+          tempList.removeAt(i);
+          tempList.insert(i, {
+            'name': userDataMap['name'],
+            'mail': userDataMap['mail'],
+            'ID': userFriendRequestList[i],
+            'friendList': userDataMap['friendList']
+          });
+          setState(() {
+            print(tempList);
+            listOfRequest = tempList;
+          });
+        });
+      }
+
+//      Map<String, dynamic> dataMap = value.data;
       List<Map<dynamic, dynamic>> mutableListOfFriendData = [];
       List<dynamic> tempFriendLList = dataMap['friendList'];
+      if(tempFriendLList.isEmpty){
+        setState(() {
+          friendListMap = [];
+        });
+      }
       for (int i = 0; i < tempFriendLList.length; i++) {
         crudObj
             .getDataFromUserFromDocumentWithID(tempFriendLList[i])
             .then((value) {
           Map<dynamic, dynamic> userDataMap = value.data;
           mutableListOfFriendData.add(userDataMap);
+          setState(() {
+            friendListMap = mutableListOfFriendData;
+          });
         });
-        setState(() {
-          friendListMap = mutableListOfFriendData;
-        });
+
       }
+
     });
+
+
+
+
+//    return crudObj.getDataFromUserFromDocument().then((value) {
+//      Map<String, dynamic> dataMap = value.data;
+//      List<Map<dynamic, dynamic>> mutableListOfFriendData = [];
+//      List<dynamic> tempFriendLList = dataMap['friendList'];
+//      if(tempFriendLList.isEmpty){
+//        setState(() {
+//          friendListMap = [];
+//        });
+//      }
+//      for (int i = 0; i < tempFriendLList.length; i++) {
+//        crudObj
+//            .getDataFromUserFromDocumentWithID(tempFriendLList[i])
+//            .then((value) {
+//          Map<dynamic, dynamic> userDataMap = value.data;
+//          mutableListOfFriendData.add(userDataMap);
+//          setState(() {
+//            friendListMap = mutableListOfFriendData;
+//          });
+//        });
+//
+//      }
+//    });
   }
 
   @override
@@ -336,8 +397,9 @@ class _FriendsPageState extends State<FriendsPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text('Amis'),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        title: Text('Amis',style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 34),),
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,

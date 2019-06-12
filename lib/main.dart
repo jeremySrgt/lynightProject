@@ -40,6 +40,7 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
+      debugShowCheckedModeBanner: false, //retir la banniere de debug
       theme: ThemeData(
           primaryColor: primaryColor,
           accentColor: accentColor,
