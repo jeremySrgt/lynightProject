@@ -86,17 +86,17 @@ class _ScannerQrCode extends State<ScannerQrCode> {
   Widget wrongQrCode(qrCodeValue){
     return Center(
       child: Container(
-        child: Text(qrCodeValue,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+        child: Text('Success ! \n' + qrCodeValue,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
         alignment: Alignment(0, 0),
       ),
     );
   }
 
   Widget goodQrCode(qrCodeValue){
+    List<String> nameOfUser = qrCodeValue.split('-');
     return Center(
       child: Container(
-
-        child: Text(qrCodeValue,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+        child: Text('Succes ! \n \n' + 'Bienvenue ' + nameOfUser[0] + '\n\n Au club' + nameOfUser[1] + '\n \n Le : ' + nameOfUser[2] ,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
         alignment: Alignment(0, 0),
       ),
     );
@@ -113,13 +113,17 @@ class _ScannerQrCode extends State<ScannerQrCode> {
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(25.0),
-                color: Colors.green,
+                color: Colors.white,
               ),
-              height: 200,
-              width: 250,
+              height: 325,
+              width: 300,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Icon(
+                  Icons.check_circle,
+                    color: Colors.green,
+                  ) ,
                   goodQrCode(qrCodeValue),
                   SizedBox(height: 35),
                   buttonToChangeUserScan(),
@@ -136,9 +140,9 @@ class _ScannerQrCode extends State<ScannerQrCode> {
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(25.0),
-                color: Colors.green,
+                color: Colors.white,
               ),
-              height: 200,
+              height: 400,
               width: 250,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
