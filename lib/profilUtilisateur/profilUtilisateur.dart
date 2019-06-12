@@ -127,13 +127,47 @@ class _UserProfilState extends State<UserProfil> {
     );
   }
 
+  Widget userInfoTopSection(userData) {
+    return Container(
+      padding: EdgeInsets.only(top: 16),
+      child: Column(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.blueAccent,
+                width: 8,
+              ),
+            ),
+            child: GestureDetector(
+              onTap: () {
+//                      Navigator.push(context, MaterialPageRoute(
+//                          builder: (context) => SelectProfilPicture()));
+                _openModalBottomSheet(context);
+              },
+              child: CircleAvatar(
+                // photo de profil
+                backgroundImage: NetworkImage(userData['picture']),
+                minRadius: 30,
+                maxRadius: 93,
+              ),
+            ),
+          ),
+          Container(
+            height: 15,
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget userBottomSection(userData) {
     Map<dynamic, dynamic> musicMap = userData['music'];
 
     final _formKey = GlobalKey<FormState>();
     return Padding(
-      padding: EdgeInsets.only(top: 0),
+      padding: EdgeInsets.only(top: 5.0),
       child: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -144,12 +178,13 @@ class _UserProfilState extends State<UserProfil> {
                 children: <Widget>[
                   Container(
                     alignment: FractionalOffset.center,
+                    width: 390,
                     child: Column(
                       children: <Widget>[
                         Container(
                           padding: EdgeInsets.only(top: 16),
                           width: MediaQuery.of(context).size.width,
-                          height: 900,
+                          height: 700,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                                 colors: [
@@ -160,6 +195,8 @@ class _UserProfilState extends State<UserProfil> {
                                 end: FractionalOffset.bottomLeft,
                                 stops: [0.0, 1.0],
                                 tileMode: TileMode.clamp),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey,
@@ -174,24 +211,6 @@ class _UserProfilState extends State<UserProfil> {
                               Flexible(
                                 child: Column(
                                   children: <Widget>[
-                                    Container(
-                                      child: GestureDetector(
-                                        onTap: () {
-//                      Navigator.push(context, MaterialPageRoute(
-//                          builder: (context) => SelectProfilPicture()));
-                                          _openModalBottomSheet(context);
-                                        },
-                                        child: CircleAvatar(
-                                          // photo de profil
-                                          backgroundImage: NetworkImage(userData['picture']),
-                                          minRadius: 30,
-                                          maxRadius: 93,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 20,
-                                    ),
                                     ListTile(
                                       leading: Icon(
                                         Icons.person,
@@ -608,19 +627,30 @@ class _UserProfilState extends State<UserProfil> {
         slivers: <Widget>[
           SliverAppBar(
             floating: false,
-            pinned: true,backgroundColor: Colors.white,
+            pinned: true,
+            backgroundColor: Colors.white,
             iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
             flexibleSpace: FlexibleSpaceBar(
               title: userData['name'] == ""
                   ? Text(userMail)
-                  : Text(userData['name'] + ' ' + userData['surname'],style: TextStyle(fontSize: 30,color: Theme.of(context).primaryColor),),
+                  : Text(
+                      userData['name'] + ' ' + userData['surname'],
+                      style: TextStyle(
+                          fontSize: 30, color: Theme.of(context).primaryColor),
+                    ),
             ),
           ),
           SliverList(
             delegate: SliverChildListDelegate(
               [
                 Container(
+                  child: userInfoTopSection(userData),
+                ),
+                Container(
                   child: userBottomSection(userData),
+                ),
+                Container(
+                  height: 10,
                 ),
               ],
             ),
