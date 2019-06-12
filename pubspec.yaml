@@ -71,6 +71,8 @@ flutter:
     - assets/boite.jpg
     - assets/nightClub.jpg
     - assets/festival.jpg
+    - assets/bloon_pin.png
+    - assets/pin.png
     #- assets/loupe.png
     #- assets/test.jpg
   #  - images/a_dot_ham.jpeg

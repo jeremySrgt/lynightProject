@@ -6,6 +6,7 @@ import 'package:lynight/widgets/slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/authentification/auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class GoogleMapsClient extends StatefulWidget {
 
@@ -77,7 +78,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
                         )));
           },
         ),
-        icon: BitmapDescriptor.defaultMarker,
+        icon: BitmapDescriptor.fromAsset('assets/bloon_pin.png'),
       ));
     });
   }

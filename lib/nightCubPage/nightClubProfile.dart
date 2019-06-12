@@ -478,6 +478,7 @@ class _NightClubProfile extends State<NightClubProfile> {
             expandedHeight: 200,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
+              titlePadding: EdgeInsets.symmetric(vertical: 5),
               background: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
