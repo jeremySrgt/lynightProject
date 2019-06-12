@@ -5,6 +5,7 @@ import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/authentification/primary_button.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/widgets/slider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FriendsPage extends StatefulWidget {
   FriendsPage({this.onSignOut});
@@ -51,15 +52,18 @@ class _FriendsPageState extends State<FriendsPage> {
 
   CrudMethods crudObj = new CrudMethods();
   static final formKeyAddFriend = new GlobalKey<FormState>();
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
+
+//  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
+  RefreshController _refreshController;
 
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    _refreshController = RefreshController(initialRefresh: true);
+//    WidgetsBinding.instance
+//        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     widget.auth.currentUser().then((id) {
       setState(() {
         currenUserId = id;
@@ -114,6 +118,28 @@ class _FriendsPageState extends State<FriendsPage> {
 //    });
   }
 
+  Widget _button() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
+      child: SizedBox(
+        height: 40.0,
+        child: RaisedButton(
+          elevation: 5.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+          child:
+              Text('demande d\'ami', style: TextStyle(color: Colors.white, fontSize: 20.0)),
+          color: Theme.of(context).primaryColor,
+          textColor: Colors.black87,
+          onPressed: () {
+            validateAndSubmit();
+//                print('friend ID : ' + _friendID);
+          },
+        ),
+      ),
+    );
+  }
+
   Widget friendResearch() {
     // la section research est pour le moment directement un ajout avec l'ID
     return Container(
@@ -138,14 +164,7 @@ class _FriendsPageState extends State<FriendsPage> {
             ),
             _userName == ''
                 ? Text('Tu dois enregistrer ton nom pour ajouter des amis !')
-                : PrimaryButton(
-                    text: 'demande d\'ami',
-                    height: 44.0,
-                    onPressed: () {
-                      validateAndSubmit();
-//                print('friend ID : ' + _friendID);
-                    },
-                  ),
+                : _button(),
             _alreadyRequestedFriend == true
                 ? Text(
                     'Une demande d\'ami a déjà été envoyée',
@@ -216,7 +235,7 @@ class _FriendsPageState extends State<FriendsPage> {
     print('listofrequest');
     print('list' + listOfRequest.toString());
     List<dynamic> mutableListOfRequest = List.from(listOfRequest);
-    if(mutableListOfRequest.isEmpty){
+    if (mutableListOfRequest.isEmpty) {
       return Text('Aucune demande d\'ami');
     }
     return ListView.builder(
@@ -233,7 +252,7 @@ class _FriendsPageState extends State<FriendsPage> {
                     List.from(userFriendRequestListFromFirestore)..removeAt(i);
 
                 addFriend(mutableListOfRequest[i]['ID'],
-                    mutableListOfRequest[i][friendList]);
+                    mutableListOfRequest[i]['friendList']);
                 setState(() {
                   listOfRequest = List.from(listOfRequest)..removeAt(i);
                 });
@@ -344,7 +363,7 @@ class _FriendsPageState extends State<FriendsPage> {
 //      Map<String, dynamic> dataMap = value.data;
       List<Map<dynamic, dynamic>> mutableListOfFriendData = [];
       List<dynamic> tempFriendLList = dataMap['friendList'];
-      if(tempFriendLList.isEmpty){
+      if (tempFriendLList.isEmpty) {
         setState(() {
           friendListMap = [];
         });
@@ -359,11 +378,81 @@ class _FriendsPageState extends State<FriendsPage> {
             friendListMap = mutableListOfFriendData;
           });
         });
-
       }
 
+      _refreshController.refreshCompleted();
     });
+  }
 
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
+  }
+
+  void _onLoading() {
+    return crudObj.getDataFromUserFromDocument().then((value) {
+      Map<String, dynamic> dataMap = value.data;
+      setState(() {
+        currentUserDataMap = dataMap;
+      });
+
+      List<dynamic> userFriendRequestList = currentUserDataMap['friendRequest'];
+      setState(() {
+        _userName = currentUserDataMap['name'];
+        userFriendRequestListFromFirestore = userFriendRequestList;
+      });
+
+      print('aaaaaaaaaaa');
+      print(userFriendRequestList);
+
+      List<Map<dynamic, dynamic>> tempList = [];
+      tempList.length = userFriendRequestList.length;
+      for (int i = 0; i < userFriendRequestList.length; i++) {
+        print('bbbbbbb-------$i');
+        print(userFriendRequestList[i]);
+        crudObj
+            .getDataFromUserFromDocumentWithID(userFriendRequestList[i])
+            .then((value) {
+          Map<dynamic, dynamic> userDataMap = value.data;
+          print('USERDATAMAP');
+          print(userDataMap);
+          print('IIIIIIIII = $i');
+          tempList.removeAt(i);
+          tempList.insert(i, {
+            'name': userDataMap['name'],
+            'mail': userDataMap['mail'],
+            'ID': userFriendRequestList[i],
+            'friendList': userDataMap['friendList']
+          });
+          setState(() {
+            print(tempList);
+            listOfRequest = tempList;
+          });
+        });
+      }
+
+//      Map<String, dynamic> dataMap = value.data;
+      List<Map<dynamic, dynamic>> mutableListOfFriendData = [];
+      List<dynamic> tempFriendLList = dataMap['friendList'];
+      if (tempFriendLList.isEmpty) {
+        setState(() {
+          friendListMap = [];
+        });
+      }
+      for (int i = 0; i < tempFriendLList.length; i++) {
+        crudObj
+            .getDataFromUserFromDocumentWithID(tempFriendLList[i])
+            .then((value) {
+          Map<dynamic, dynamic> userDataMap = value.data;
+          mutableListOfFriendData.add(userDataMap);
+          setState(() {
+            friendListMap = mutableListOfFriendData;
+          });
+        });
+      }
+
+      _refreshController.loadComplete();
+    });
   }
 
   @override
@@ -374,10 +463,21 @@ class _FriendsPageState extends State<FriendsPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-        title: Text('Amis',style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 30),),
+        title: Text(
+          'Amis',
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 30),
+        ),
       ),
-      body: RefreshIndicator(
-        key: _refreshIndicatorKey,
+      body: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropMaterialHeader(
+          backgroundColor: Theme.of(context).primaryColor,
+          color: Colors.white,
+          distance: 200.0,
+        ),
+        controller: _refreshController,
+        onLoading: _onLoading,
         onRefresh: _refresh,
         child: SingleChildScrollView(
           child: Container(
@@ -395,7 +495,6 @@ class _FriendsPageState extends State<FriendsPage> {
                   height: 400,
                   child: friendList(),
                 ),
-                // streambuilder pour sure
               ],
             ),
           ),

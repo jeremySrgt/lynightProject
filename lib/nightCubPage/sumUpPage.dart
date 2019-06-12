@@ -21,6 +21,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
 import 'package:lynight/authentification/primary_button.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as I;
 
 class SumUp extends StatefulWidget {
@@ -68,7 +69,7 @@ class _SumUpState extends State<SumUp> {
     });
   }
 
-  Future<Uint8List> _getWidgetImage() async {
+  Future<void> _getWidgetImage() async {
     try {
       RenderRepaintBoundary boundary =
           globalKey.currentContext.findRenderObject();
@@ -78,7 +79,7 @@ class _SumUpState extends State<SumUp> {
       I.Image imgFile = I.decodeImage(pngBytes);
 //      var test = I.encodePng(imgFile);
 
-      final Directory systemTempDir = Directory.systemTemp;
+      final Directory systemTempDir = await getTemporaryDirectory(); //permet d'avoir n'import quel chemin de de TempDirectory peu importe le tel
       final File file =
           await new File('${systemTempDir.path}/tempimage.png').create();
       file.writeAsBytes(pngBytes);
@@ -155,7 +156,7 @@ class _SumUpState extends State<SumUp> {
 
   Widget userBottomSection(context) {
     return Padding(
-      padding: EdgeInsets.only(top: 150.0),
+      padding: EdgeInsets.only(top: 50.0),
       child: Container(
         child:
             Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[

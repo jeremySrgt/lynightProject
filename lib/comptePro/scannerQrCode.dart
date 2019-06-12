@@ -70,11 +70,40 @@ class _ScannerQrCode extends State<ScannerQrCode> {
   }
 
 
-  Widget buttonToChangeUserScan(){
+  Widget buttonToChangeUserScanWrong(){
     return FlatButton(
-      color: Colors.red,
+      color: Color(0xFFffb2b2),
       shape: StadiumBorder(),
-      child: Text('next user'),
+      child: Text(
+          'Réessayer',
+          style: TextStyle(
+              fontSize: 20,
+          color: Color(0xFFef0000)
+          )
+      ),
+      onPressed: (){
+        setState(() {
+          checkIfScanOrNot = true;
+        });
+      },
+    );
+  }
+
+  Widget buttonToChangeUserScanGood(){
+    final GreenForced = const Color.fromRGBO(66, 163, 65, 1);
+    final GreenLight = const Color.fromRGBO(184, 226, 163, 1);
+    return RaisedButton(
+      color: GreenLight,
+      elevation: 5,
+      shape: StadiumBorder(),
+      child: Text(
+          'Ok',
+          style: TextStyle(
+              fontSize: 20,
+              color: GreenForced,
+              fontWeight: FontWeight.bold
+          )
+      ),
       onPressed: (){
         setState(() {
           checkIfScanOrNot = true;
@@ -86,7 +115,16 @@ class _ScannerQrCode extends State<ScannerQrCode> {
   Widget wrongQrCode(qrCodeValue){
     return Center(
       child: Container(
-        child: Text('Success ! \n' + qrCodeValue,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Qr code invalide ! ', style: TextStyle(fontSize: 20, color: Colors.red)),
+            SizedBox(height: 15),
+            Text('Erreur le qr code ne correspond pas : ', style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+            SizedBox(height: 15),
+            Text(qrCodeValue),
+          ],
+        ),
         alignment: Alignment(0, 0),
       ),
     );
@@ -96,13 +134,15 @@ class _ScannerQrCode extends State<ScannerQrCode> {
     List<String> nameOfUser = qrCodeValue.split('-');
     return Center(
       child: Container(
-        child: Row(
+        child: Column(
           children: <Widget>[
-            Text('Succes ! '),
-            SizedBox(),
-            Text('Bienvenue ' + nameOfUser[0]),
-            Text('Au club' + nameOfUser[1]),
-            Text(' Le : ' + nameOfUser[2] ,style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
+            Text('Succes ! ', style: TextStyle(fontSize: 20, color: Colors.green)),
+            SizedBox(height: 15),
+            Text('Bienvenue ' + nameOfUser[0], style: TextStyle(fontSize: 20)),
+            SizedBox(height: 15),
+            Text('Au club ' + nameOfUser[1], style: TextStyle(fontSize: 20)),
+            SizedBox(height: 15),
+            Text('Le : ' + nameOfUser[2], style: TextStyle(fontSize: 20)),
           ],
         ),
         alignment: Alignment(0, 0),
@@ -131,10 +171,12 @@ class _ScannerQrCode extends State<ScannerQrCode> {
                   Icon(
                   Icons.check_circle,
                     color: Colors.green,
+                    size: 30,
                   ) ,
+                  SizedBox(height: 10),
                   goodQrCode(qrCodeValue),
                   SizedBox(height: 35),
-                  buttonToChangeUserScan(),
+                  buttonToChangeUserScanGood(),
                 ],
               ),
             ),
@@ -150,14 +192,20 @@ class _ScannerQrCode extends State<ScannerQrCode> {
                 borderRadius: BorderRadius.circular(25.0),
                 color: Colors.white,
               ),
-              height: 400,
-              width: 250,
+              height: 325,
+              width: 300,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Icon(
+                Icons.cancel,
+                color: Colors.red,
+                    size: 30,
+              ),
+                  SizedBox(height: 10),
                   wrongQrCode(qrCodeValue),
                   SizedBox(height: 35),
-                  buttonToChangeUserScan(),
+                  buttonToChangeUserScanWrong(),
                 ],
               ),
             ),
