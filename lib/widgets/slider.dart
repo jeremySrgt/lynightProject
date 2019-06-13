@@ -66,10 +66,10 @@ class _CustomSliderState extends State<CustomSlider>{
               'Déconnexion',
               style: TextStyle(
                 fontSize: 14.0,
-                color: Color(0xFFef0000),
+                color: Theme.of(context).primaryColor,
               ),
             ),
-            color: Color(0xFFffb2b2),
+            color: Colors.white,
             textColor: Theme.of(context).primaryColor,
             onPressed: widget.signOut,
           ),
@@ -281,6 +281,36 @@ class _CustomSliderState extends State<CustomSlider>{
               ),
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/friends');
+              },
+            ),
+          ),
+          Divider(
+            color: Theme.of(context).primaryColor,
+          ),
+          Container(
+            decoration: widget.activePage == 'À propos'
+                ? BoxDecoration(
+                color: Color(0xFFebdffc),
+                borderRadius: BorderRadius.circular(15.0))
+                : BoxDecoration(),
+            child:ListTile(
+              leading: Icon(
+                FontAwesomeIcons.infoCircle,
+                color: widget.activePage == 'À propos'
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              title: Text(
+                'À propos',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: widget.activePage == 'À propos'
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                ),
+              ),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/À propos');
               },
             ),
           ),
