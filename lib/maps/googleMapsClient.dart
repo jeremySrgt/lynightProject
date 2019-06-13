@@ -78,7 +78,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
                         )));
           },
         ),
-        icon: BitmapDescriptor.fromAsset('assets/bloon_pin.png'),
+        icon: BitmapDescriptor.fromAsset('assets/bloon_final_pin.png'),
       ));
     });
   }
