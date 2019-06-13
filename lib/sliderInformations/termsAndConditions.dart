@@ -44,7 +44,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
       appBar: AppBar(
         title: Text(
           'Termes & conditions',
-          style: TextStyle(fontSize: 34, color: Theme.of(context).primaryColor),
+          style: TextStyle(fontSize: 30, color: Theme.of(context).primaryColor),
         ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         backgroundColor: Colors.white,

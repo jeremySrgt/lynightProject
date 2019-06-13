@@ -44,7 +44,7 @@ class _ConfidentialityState extends State<Confidentiality> {
       appBar: AppBar(
         title: Text(
           'Confidentialité',
-          style: TextStyle(fontSize: 34, color: Theme.of(context).primaryColor),
+          style: TextStyle(fontSize: 30, color: Theme.of(context).primaryColor),
         ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         backgroundColor: Colors.white,

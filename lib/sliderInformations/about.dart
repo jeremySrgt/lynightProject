@@ -44,7 +44,7 @@ class _AboutState extends State<About> {
       appBar: AppBar(
         title: Text(
           'À propos',
-          style: TextStyle(fontSize: 34, color: Theme.of(context).primaryColor),
+          style: TextStyle(fontSize: 30, color: Theme.of(context).primaryColor),
         ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         backgroundColor: Colors.white,
