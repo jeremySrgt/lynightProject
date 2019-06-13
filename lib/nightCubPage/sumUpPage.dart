@@ -79,7 +79,8 @@ class _SumUpState extends State<SumUp> {
       I.Image imgFile = I.decodeImage(pngBytes);
 //      var test = I.encodePng(imgFile);
 
-      final Directory systemTempDir = await getTemporaryDirectory(); //permet d'avoir n'import quel chemin de de TempDirectory peu importe le tel
+      final Directory systemTempDir =
+          await getTemporaryDirectory(); //permet d'avoir n'import quel chemin de de TempDirectory peu importe le tel
       final File file =
           await new File('${systemTempDir.path}/tempimage.png').create();
       file.writeAsBytes(pngBytes);
@@ -166,7 +167,6 @@ class _SumUpState extends State<SumUp> {
               children: <Widget>[
                 Container(
                   alignment: FractionalOffset.center,
-//                margin: EdgeInsets.only(left: 10.0),
 //                  height: 400, //ne pas definir de height permet au container de prendre seulement la place qu'il a besoin et pas plus
                   width: 300,
                   child: Column(
@@ -202,7 +202,11 @@ class _SumUpState extends State<SumUp> {
                         child: Column(
                           children: <Widget>[
                             ListTile(
-                              leading: Icon(Icons.access_time),
+                              leading: Icon(
+                                Icons.access_time,
+                                color: Theme.of(context).primaryColor,
+                                size: 35,
+                              ),
                               title: Text(
                                 DateFormat('dd/MM/yyyy').format(selectedDate),
                                 style: TextStyle(
@@ -212,7 +216,11 @@ class _SumUpState extends State<SumUp> {
                               subtitle: Container(
                                 alignment: FractionalOffset.centerLeft,
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
+                                    Container (
+                                      height: 10,
+                                    ),
                                     Container(
                                       decoration: BoxDecoration(
                                         gradient: LinearGradient(
@@ -224,6 +232,8 @@ class _SumUpState extends State<SumUp> {
                                             end: FractionalOffset(0.5, 0.0),
                                             stops: [0.0, 1.0],
                                             tileMode: TileMode.clamp),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(30.0)),
                                       ),
                                       child: RaisedButton(
                                         elevation: 5.0,
@@ -235,7 +245,6 @@ class _SumUpState extends State<SumUp> {
                                                 color: Colors.white,
                                                 fontSize: 16.0)),
                                         color: Colors.transparent,
-                                        textColor: Colors.black87,
                                         onPressed: () {
                                           _selectDate(context);
                                         },
