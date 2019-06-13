@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lynight/authentification/auth.dart';
-import 'package:lynight/authentification/primary_button.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:lynight/friends/friendResearch.dart';
 
 class FriendsPage extends StatefulWidget {
   FriendsPage({this.onSignOut});
@@ -36,14 +35,10 @@ class FriendsPage extends StatefulWidget {
 //TODO ajuter un message lorsque alreadyRequestedFriend == true pour prevenir le user qu'il a deja demandé en ami le mec
 
 class _FriendsPageState extends State<FriendsPage> {
-  String currenUserId = 'userId';
+  String currentUserId = 'userId';
   String currentUserMail = 'userMail';
   Map<dynamic, dynamic> currentUserDataMap;
   String _userName = '';
-
-  String _friendID;
-  List<dynamic> _friendRequestList0fRequestedFriend;
-  bool _alreadyRequestedFriend = false;
 
   List<Map<dynamic, dynamic>> listOfRequest = [];
   List<dynamic> userFriendRequestListFromFirestore = [];
@@ -51,7 +46,6 @@ class _FriendsPageState extends State<FriendsPage> {
   List<Map<dynamic, dynamic>> friendListMap = [];
 
   CrudMethods crudObj = new CrudMethods();
-  static final formKeyAddFriend = new GlobalKey<FormState>();
 
 //  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   RefreshController _refreshController;
@@ -66,7 +60,7 @@ class _FriendsPageState extends State<FriendsPage> {
 //        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     widget.auth.currentUser().then((id) {
       setState(() {
-        currenUserId = id;
+        currentUserId = id;
       });
     });
     widget.auth.userEmail().then((mail) {
@@ -118,116 +112,6 @@ class _FriendsPageState extends State<FriendsPage> {
 //    });
   }
 
-  Widget _button() {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
-      child: SizedBox(
-        height: 40.0,
-        child: RaisedButton(
-          elevation: 5.0,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-          child:
-              Text('demande d\'ami', style: TextStyle(color: Colors.white, fontSize: 20.0)),
-          color: Theme.of(context).primaryColor,
-          textColor: Colors.black87,
-          onPressed: () {
-            validateAndSubmit();
-//                print('friend ID : ' + _friendID);
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget friendResearch() {
-    // la section research est pour le moment directement un ajout avec l'ID
-    return Container(
-      child: Form(
-        key: formKeyAddFriend,
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Ajout par ID (ne pas se tromper)',
-                icon: new Icon(
-                  FontAwesomeIcons.plusCircle,
-                  color: Colors.grey,
-                ),
-              ),
-              validator: (String value) {
-                if (value.isEmpty) {
-                  return 'Saisis un ID';
-                }
-              },
-              onSaved: (value) => _friendID = value,
-            ),
-            _userName == ''
-                ? Text('Tu dois enregistrer ton nom pour ajouter des amis !')
-                : _button(),
-            _alreadyRequestedFriend == true
-                ? Text(
-                    'Une demande d\'ami a déjà été envoyée',
-                    style: TextStyle(color: Colors.red),
-                  )
-                : Container(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  bool validateAndSave() {
-    final form = formKeyAddFriend.currentState;
-    if (form.validate()) {
-      form.save();
-      return true;
-    }
-    return false;
-  }
-
-  void validateAndSubmit() async {
-    //TODO ajouter la submition
-    if (validateAndSave()) {
-      setState(() {
-        _isLoading = true;
-      });
-      formKeyAddFriend.currentState.reset();
-
-      crudObj.getDataFromUserFromDocumentWithID(_friendID).then((value) {
-        Map<String, dynamic> dataMap = value.data;
-        List friendRequestList = dataMap['friendRequest'];
-        if (friendRequestList == null) {
-          crudObj.updateData('user', _friendID, {
-            'friendRequest': [currenUserId]
-          });
-        } else {
-          setState(() {
-            _friendRequestList0fRequestedFriend = friendRequestList;
-          });
-
-          for (int i = 0; i < _friendRequestList0fRequestedFriend.length; i++) {
-            if (_friendRequestList0fRequestedFriend[i] == currenUserId) {
-              setState(() {
-                _alreadyRequestedFriend = true;
-              });
-            }
-          }
-
-          if (_alreadyRequestedFriend == false) {
-            List<String> mutableListOfRequestedFriend =
-                List.from(_friendRequestList0fRequestedFriend);
-
-            mutableListOfRequestedFriend.add(currenUserId);
-
-            crudObj.updateData('user', _friendID,
-                {'friendRequest': mutableListOfRequestedFriend});
-          }
-        }
-      });
-    }
-  }
-
   Widget friendRequest() {
     //penser à ajouter un bouton poour supprimer la demande !
     print('early');
@@ -241,27 +125,88 @@ class _FriendsPageState extends State<FriendsPage> {
     return ListView.builder(
       itemCount: mutableListOfRequest.length,
       itemBuilder: (context, i) {
-        return Container(
-          child: ListTile(
-            title: Text(mutableListOfRequest[i]['mail']),
-            subtitle: Text(mutableListOfRequest[i]['name']),
-            trailing: InkWell(
-              child: Icon(FontAwesomeIcons.check),
-              onTap: () {
-                userFriendRequestListFromFirestore =
-                    List.from(userFriendRequestListFromFirestore)..removeAt(i);
+        return Card(
+          margin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 20.0),
+          child: Container(
+            padding: EdgeInsets.fromLTRB(5.0, 10.0, 10.0, 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    CircleAvatar(
+                      // photo de profil
+                      backgroundImage:
+                          NetworkImage(mutableListOfRequest[i]['picture']),
+                      minRadius: 25,
+                      maxRadius: 25,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      width: 200,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            mutableListOfRequest[i]['name'],
+                            style: TextStyle(
+                                fontSize: 16.0, fontWeight: FontWeight.w400),
+                          ),
+                          Text(
+                            mutableListOfRequest[i]['mail'],
+                            style: TextStyle(
+                                color: Colors.grey[600], fontSize: 12.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                InkWell(
+                  //add
+                  child: Icon(FontAwesomeIcons.check),
+                  onTap: () {
+                    userFriendRequestListFromFirestore =
+                        List.from(userFriendRequestListFromFirestore)
+                          ..removeAt(i);
 
-                addFriend(mutableListOfRequest[i]['ID'],
-                    mutableListOfRequest[i]['friendList']);
-                setState(() {
-                  listOfRequest = List.from(listOfRequest)..removeAt(i);
-                });
-              },
+                    addFriend(mutableListOfRequest[i]['ID'],
+                        mutableListOfRequest[i]['friendList']);
+                    setState(() {
+                      listOfRequest = List.from(listOfRequest)..removeAt(i);
+                    });
+                  },
+                ),
+                InkWell(
+                  //remove
+                  child: Icon(FontAwesomeIcons.times),
+                  onTap: () {
+                    userFriendRequestListFromFirestore =
+                        List.from(userFriendRequestListFromFirestore)
+                          ..removeAt(i);
+
+                    removeFriendRequest();
+
+                    setState(() {
+                      listOfRequest = List.from(listOfRequest)..removeAt(i);
+                    });
+                  },
+                ),
+              ],
             ),
           ),
         );
       },
     );
+  }
+
+  void removeFriendRequest() {
+    crudObj.updateData('user', currentUserId,
+        {'friendRequest': userFriendRequestListFromFirestore});
   }
 
   void addFriend(iDDemander, friendListOfDemander) {
@@ -271,13 +216,13 @@ class _FriendsPageState extends State<FriendsPage> {
     if (friendListOfDemander != null) {
       List<dynamic> mutableFriendListOfDemander =
           List.from(friendListOfDemander);
-      mutableFriendListOfDemander.add(currenUserId);
+      mutableFriendListOfDemander.add(currentUserId);
       crudObj.updateData('user', iDDemander, {
         'friendList': mutableFriendListOfDemander
       }); //ajout dans la liste d'amis de l'utilisatuer qui a demandé en ami
     } else {
       crudObj.updateData('user', iDDemander, {
-        'friendList': [currenUserId]
+        'friendList': [currentUserId]
       }); //ajout dans la liste d'amis de l'utilisatuer qui a demandé en ami
     }
 
@@ -285,16 +230,16 @@ class _FriendsPageState extends State<FriendsPage> {
       List<dynamic> mutableFriendListOfCurrentUser =
           List.from(currentUserDataMap['friendList']);
       mutableFriendListOfCurrentUser.add(iDDemander);
-      crudObj.updateData('user', currenUserId, {
+      crudObj.updateData('user', currentUserId, {
         'friendList': mutableFriendListOfCurrentUser
       }); //ajout dans la liste d'amis du current user
-      crudObj.updateData('user', currenUserId,
+      crudObj.updateData('user', currentUserId,
           {'friendRequest': userFriendRequestListFromFirestore});
     } else {
-      crudObj.updateData('user', currenUserId, {
+      crudObj.updateData('user', currentUserId, {
         'friendList': [iDDemander]
       }); //ajout dans la liste d'amis du current user
-      crudObj.updateData('user', currenUserId,
+      crudObj.updateData('user', currentUserId,
           {'friendRequest': userFriendRequestListFromFirestore});
     }
     _refresh();
@@ -307,8 +252,15 @@ class _FriendsPageState extends State<FriendsPage> {
       return ListView.builder(
         itemCount: friendListMap.length,
         itemBuilder: (context, i) {
-          return Container(
+          return Card(
+            elevation: 3.0,
             child: ListTile(
+              leading: CircleAvatar(
+                // photo de profil
+                backgroundImage: NetworkImage(friendListMap[i]['picture']),
+                minRadius: 25,
+                maxRadius: 25,
+              ),
               title: Text(friendListMap[i]['name']),
               subtitle: Text(friendListMap[i]['mail']),
             ),
@@ -351,7 +303,8 @@ class _FriendsPageState extends State<FriendsPage> {
             'name': userDataMap['name'],
             'mail': userDataMap['mail'],
             'ID': userFriendRequestList[i],
-            'friendList': userDataMap['friendList']
+            'friendList': userDataMap['friendList'],
+            'picture': userDataMap['picture'],
           });
           setState(() {
             print(tempList);
@@ -422,7 +375,8 @@ class _FriendsPageState extends State<FriendsPage> {
             'name': userDataMap['name'],
             'mail': userDataMap['mail'],
             'ID': userFriendRequestList[i],
-            'friendList': userDataMap['friendList']
+            'friendList': userDataMap['friendList'],
+            'picture': userDataMap['picture'],
           });
           setState(() {
             print(tempList);
@@ -483,7 +437,8 @@ class _FriendsPageState extends State<FriendsPage> {
           child: Container(
             child: Column(
               children: <Widget>[
-                friendResearch(),
+                FriendResearch(
+                    userName: _userName, currentUserId: currentUserId),
                 // demande à yann pour rechercher par nom - 1ere approche par ID complet
                 Container(
                   height: 300,

@@ -71,9 +71,12 @@ class _ListPageState extends State<ListPage> {
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              begin: Alignment.bottomRight,
-              end: Alignment.topLeft,
-              colors: [Colors.blue, Colors.deepPurpleAccent, Colors.purple]),
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromRGBO(212, 63, 141, 1),
+                Color.fromRGBO(2, 80, 197, 1)
+              ]),
           //color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.all(
             Radius.circular(25),
@@ -127,7 +130,7 @@ class _ListPageState extends State<ListPage> {
         ],
       ),
       trailing:
-          Icon(Icons.keyboard_arrow_right, color: Colors.purple, size: 25.0),
+          Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 25.0),
       onTap: () {
         Navigator.push(
           context,
