@@ -17,12 +17,11 @@ class CustomSlider extends StatefulWidget {
   }
 }
 
-
-class _CustomSliderState extends State<CustomSlider>{
-
+class _CustomSliderState extends State<CustomSlider> {
   CrudMethods crudObj = new CrudMethods();
   String name = 'UserName';
-  String profilPicture = 'https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46';
+  String profilPicture =
+      'https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46';
   bool pro = false;
 
   final Shader linearGradient = LinearGradient(
@@ -32,8 +31,10 @@ class _CustomSliderState extends State<CustomSlider>{
   void initState() {
     super.initState();
 
-    crudObj.getDataFromUserFromDocument().then((value){ // correspond à await Firestore.instance.collection('user').document(user.uid).get();
-      Map<String,dynamic> dataMap = value.data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
+    crudObj.getDataFromUserFromDocument().then((value) {
+      // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+      Map<String, dynamic> dataMap = value
+          .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
       setState(() {
         name = dataMap['name'];
         profilPicture = dataMap['picture'];
@@ -43,7 +44,6 @@ class _CustomSliderState extends State<CustomSlider>{
   }
 
   Widget header(context) {
-
     //peut etre faire du drawer hearder un streamBuilder pour eviter les chargement de la photo de profil a chaque ouverture du drawer
     return DrawerHeader(
       child: Column(
@@ -55,8 +55,18 @@ class _CustomSliderState extends State<CustomSlider>{
               minRadius: 25,
               maxRadius: 25,
             ),
-            title: name == '' ? Text('Pas de prénom'): Text(name,style: TextStyle(fontSize: 20.0,foreground: Paint()..shader = linearGradient),),
-            subtitle: Text(widget.userMail,style: TextStyle(fontSize: 11.0),),
+            title: name == ''
+                ? Text('Pas de prénom')
+                : Text(
+                    name,
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        foreground: Paint()..shader = linearGradient),
+                  ),
+            subtitle: Text(
+              widget.userMail,
+              style: TextStyle(fontSize: 11.0),
+            ),
           ),
           RaisedButton(
             elevation: 5.0,
@@ -66,10 +76,10 @@ class _CustomSliderState extends State<CustomSlider>{
               'Déconnexion',
               style: TextStyle(
                 fontSize: 14.0,
-                color: Color(0xFFef0000),
+                color: Theme.of(context).primaryColor,
               ),
             ),
-            color: Color(0xFFffb2b2),
+            color: Colors.white,
             textColor: Theme.of(context).primaryColor,
             onPressed: widget.signOut,
           ),
@@ -81,13 +91,12 @@ class _CustomSliderState extends State<CustomSlider>{
     );
   }
 
-
-  Widget scanQrPro(){
+  Widget scanQrPro() {
     return Container(
       decoration: widget.activePage == 'ScanQr'
           ? BoxDecoration(
-          color: Color(0xFFebdffc),
-          borderRadius: BorderRadius.circular(15.0))
+              color: Color(0xFFebdffc),
+              borderRadius: BorderRadius.circular(15.0))
           : BoxDecoration(),
       child: ListTile(
         leading: Icon(
@@ -112,12 +121,12 @@ class _CustomSliderState extends State<CustomSlider>{
     );
   }
 
-  Widget addClubPro(){
+  Widget addClubPro() {
     return Container(
       decoration: widget.activePage == 'AddClub'
           ? BoxDecoration(
-          color: Color(0xFFebdffc),
-          borderRadius: BorderRadius.circular(15.0))
+              color: Color(0xFFebdffc),
+              borderRadius: BorderRadius.circular(15.0))
           : BoxDecoration(),
       child: ListTile(
         leading: Icon(
@@ -260,8 +269,8 @@ class _CustomSliderState extends State<CustomSlider>{
           Container(
             decoration: widget.activePage == 'Amis'
                 ? BoxDecoration(
-                color: Color(0xFFebdffc),
-                borderRadius: BorderRadius.circular(15.0))
+                    color: Color(0xFFebdffc),
+                    borderRadius: BorderRadius.circular(15.0))
                 : BoxDecoration(),
             child: ListTile(
               leading: Icon(
@@ -287,6 +296,34 @@ class _CustomSliderState extends State<CustomSlider>{
           pro == true ? Divider() : Container(),
           pro == true ? scanQrPro() : Container(),
           pro == true ? addClubPro() : Container(),
+          Divider(),
+          Container(
+            decoration: widget.activePage == 'about'
+                ? BoxDecoration(
+                    color: Color(0xFFebdffc),
+                    borderRadius: BorderRadius.circular(15.0))
+                : BoxDecoration(),
+            child: ListTile(
+              leading: Icon(
+                FontAwesomeIcons.infoCircle,
+                color: widget.activePage == 'about'
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              title: Text(
+                'À propos',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: widget.activePage == 'about'
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                ),
+              ),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/about');
+              },
+            ),
+          ),
         ],
       ),
     );

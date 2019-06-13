@@ -13,7 +13,9 @@ import 'package:lynight/authentification/root_page.dart';
 import 'package:lynight/myReservations/myReservation.dart';
 import 'package:lynight/favorites/favoritesNightClub.dart';
 import 'package:lynight/nightCubPage/sumUpPage.dart';
-
+import 'package:lynight/sliderInformations/about.dart';
+import 'package:lynight/sliderInformations/termsAndConditions.dart';
+import 'package:lynight/sliderInformations/confidentiality.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -59,8 +61,9 @@ class _MyAppState extends State<MyApp> {
         '/scannerQrCode' : (BuildContext context) => ScannerQrCode(),
         '/friends' : (BuildContext context) => FriendsPage(),
         //'/favorites':(BuildContext context) => FavoritesNightClub(),
-
-
+        '/about': (BuildContext context) => About(),
+        '/terms&conditions': (BuildContext context) => TermsAndConditions(),
+        '/confidentiality' : (BuildContext context)=> Confidentiality(),
       },
     );
   }
