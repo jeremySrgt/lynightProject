@@ -36,6 +36,14 @@ class _AboutState extends State<About> {
     });
   }
 
+  Widget nous(){
+    return ListTile(
+      title: Text('Nous',style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 25),),
+      subtitle: Text(
+        'bonjour'
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +57,7 @@ class _AboutState extends State<About> {
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         backgroundColor: Colors.white,
       ),
-      body: Center(
-        child: Text('test'),
-      ),
+      body: nous(),
       drawer: CustomSlider(
         userMail: userMail,
         signOut: widget._signOut,
