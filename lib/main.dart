@@ -61,9 +61,9 @@ class _MyAppState extends State<MyApp> {
         '/scannerQrCode' : (BuildContext context) => ScannerQrCode(),
         '/friends' : (BuildContext context) => FriendsPage(),
         //'/favorites':(BuildContext context) => FavoritesNightClub(),
-        '/À propos': (BuildContext context) => About(),
-        '/Termes & conditions': (BuildContext context) => TermsAndConditions(),
-        '/confidentialité' : (BuildContext context)=> Confidentiality(),
+        '/about': (BuildContext context) => About(),
+        '/terms&conditions': (BuildContext context) => TermsAndConditions(),
+        '/confidentiality' : (BuildContext context)=> Confidentiality(),
       },
     );
   }

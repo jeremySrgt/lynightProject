@@ -55,7 +55,7 @@ class _ConfidentialityState extends State<Confidentiality> {
       drawer: CustomSlider(
         userMail: userMail,
         signOut: widget._signOut,
-        activePage: '/confidentialité',
+        activePage: '/confidentiality',
       ),
     );
   }

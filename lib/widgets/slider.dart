@@ -288,7 +288,7 @@ class _CustomSliderState extends State<CustomSlider>{
             color: Theme.of(context).primaryColor,
           ),
           Container(
-            decoration: widget.activePage == 'confidentialité'
+            decoration: widget.activePage == 'confidentiality'
                 ? BoxDecoration(
                 color: Color(0xFFebdffc),
                 borderRadius: BorderRadius.circular(15.0))
@@ -296,26 +296,26 @@ class _CustomSliderState extends State<CustomSlider>{
             child:ListTile(
               leading: Icon(
                 FontAwesomeIcons.lock,
-                color: widget.activePage == 'confidentialité'
+                color: widget.activePage == 'confidentiality'
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
               title: Text(
-                'confidentialité',
+                'Confidentialité',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: widget.activePage == 'confidentialité'
+                  color: widget.activePage == 'confidentiality'
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
               ),
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/confidentialité');
+                Navigator.pushReplacementNamed(context, '/confidentiality');
               },
             ),
           ),
           Container(
-            decoration: widget.activePage == 'Termes & conditions'
+            decoration: widget.activePage == 'terms&conditions'
                 ? BoxDecoration(
                 color: Color(0xFFebdffc),
                 borderRadius: BorderRadius.circular(15.0))
@@ -323,7 +323,7 @@ class _CustomSliderState extends State<CustomSlider>{
             child:ListTile(
               leading: Icon(
                 FontAwesomeIcons.fileAlt,
-                color: widget.activePage == 'Termes & conditions'
+                color: widget.activePage == 'terms&conditions'
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -331,18 +331,18 @@ class _CustomSliderState extends State<CustomSlider>{
                 'Termes & conditions',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: widget.activePage == 'Termes & conditions'
+                  color: widget.activePage == 'terms&conditions'
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
               ),
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/Termes & conditions');
+                Navigator.pushReplacementNamed(context, '/terms&conditions');
               },
             ),
           ),
           Container(
-            decoration: widget.activePage == 'À propos'
+            decoration: widget.activePage == 'about'
                 ? BoxDecoration(
                 color: Color(0xFFebdffc),
                 borderRadius: BorderRadius.circular(15.0))
@@ -350,7 +350,7 @@ class _CustomSliderState extends State<CustomSlider>{
             child:ListTile(
               leading: Icon(
                 FontAwesomeIcons.infoCircle,
-                color: widget.activePage == 'À propos'
+                color: widget.activePage == 'about'
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -358,13 +358,13 @@ class _CustomSliderState extends State<CustomSlider>{
                 'À propos',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: widget.activePage == 'À propos'
+                  color: widget.activePage == 'about'
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
               ),
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/À propos');
+                Navigator.pushReplacementNamed(context, '/about');
               },
             ),
           ),

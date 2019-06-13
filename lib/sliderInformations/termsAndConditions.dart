@@ -55,7 +55,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
       drawer: CustomSlider(
         userMail: userMail,
         signOut: widget._signOut,
-        activePage: '/Termes & conditions',
+        activePage: '/terms&conditions',
       ),
     );
   }
