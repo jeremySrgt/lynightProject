@@ -25,6 +25,9 @@ class CrudMethods {
     return await Firestore.instance.collection(collection).snapshots();
   }
 
+  getDataDocuments(collection) async {
+    return await Firestore.instance.collection(collection).getDocuments();
+  }
 
   getDataFromUserFromDocument() async{
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
@@ -73,13 +76,13 @@ class CrudMethods {
 
   }
 
-  deleteData(collection, docId) {
-    Firestore.instance
-        .collection(collection)
-        .document(docId)
-        .delete()
-        .catchError((e) {
-      print(e);
-    });
-  }
+//  deleteData(collection, docId) {
+//    Firestore.instance
+//        .collection(collection)
+//        .document(docId)
+//        .delete()
+//        .catchError((e) {
+//      print(e);
+//    });
+//  }
 }

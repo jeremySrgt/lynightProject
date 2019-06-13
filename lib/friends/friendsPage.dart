@@ -114,10 +114,10 @@ class _FriendsPageState extends State<FriendsPage> {
 
   Widget friendRequest() {
     //penser à ajouter un bouton poour supprimer la demande !
-    print('early');
-    print(userFriendRequestListFromFirestore);
-    print('listofrequest');
-    print('list' + listOfRequest.toString());
+//    print('early');
+//    print(userFriendRequestListFromFirestore);
+//    print('listofrequest');
+//    print('list' + listOfRequest.toString());
     List<dynamic> mutableListOfRequest = List.from(listOfRequest);
     if (mutableListOfRequest.isEmpty) {
       return Text('Aucune demande d\'ami');
