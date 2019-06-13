@@ -80,8 +80,8 @@ class _TopClubCardState extends State<TopClubCard> {
     //test();
     //print('qsdklqjsmdlksqjdmlkqjmdklqj');
     //print(dataClubFromBDD);
-    print('CLUBSLEECT');
-    print(clubSelected);
+//    print('CLUBSLEECT');
+//    print(clubSelected);
 
     if (club != null) {
       return StreamBuilder(

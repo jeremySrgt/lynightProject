@@ -210,8 +210,8 @@ class _FriendsPageState extends State<FriendsPage> {
   }
 
   void addFriend(iDDemander, friendListOfDemander) {
-    print('late');
-    print(userFriendRequestListFromFirestore);
+//    print('late');
+//    print(userFriendRequestListFromFirestore);
 
     if (friendListOfDemander != null) {
       List<dynamic> mutableFriendListOfDemander =
@@ -283,21 +283,21 @@ class _FriendsPageState extends State<FriendsPage> {
         userFriendRequestListFromFirestore = userFriendRequestList;
       });
 
-      print('aaaaaaaaaaa');
-      print(userFriendRequestList);
+//      print('aaaaaaaaaaa');
+//      print(userFriendRequestList);
 
       List<Map<dynamic, dynamic>> tempList = [];
       tempList.length = userFriendRequestList.length;
       for (int i = 0; i < userFriendRequestList.length; i++) {
-        print('bbbbbbb-------$i');
-        print(userFriendRequestList[i]);
+//        print('bbbbbbb-------$i');
+//        print(userFriendRequestList[i]);
         crudObj
             .getDataFromUserFromDocumentWithID(userFriendRequestList[i])
             .then((value) {
           Map<dynamic, dynamic> userDataMap = value.data;
-          print('USERDATAMAP');
-          print(userDataMap);
-          print('IIIIIIIII = $i');
+//          print('USERDATAMAP');
+//          print(userDataMap);
+//          print('IIIIIIIII = $i');
           tempList.removeAt(i);
           tempList.insert(i, {
             'name': userDataMap['name'],
@@ -307,7 +307,7 @@ class _FriendsPageState extends State<FriendsPage> {
             'picture': userDataMap['picture'],
           });
           setState(() {
-            print(tempList);
+//            print(tempList);
             listOfRequest = tempList;
           });
         });
@@ -355,21 +355,21 @@ class _FriendsPageState extends State<FriendsPage> {
         userFriendRequestListFromFirestore = userFriendRequestList;
       });
 
-      print('aaaaaaaaaaa');
-      print(userFriendRequestList);
+//      print('aaaaaaaaaaa');
+//      print(userFriendRequestList);
 
       List<Map<dynamic, dynamic>> tempList = [];
       tempList.length = userFriendRequestList.length;
       for (int i = 0; i < userFriendRequestList.length; i++) {
-        print('bbbbbbb-------$i');
-        print(userFriendRequestList[i]);
+//        print('bbbbbbb-------$i');
+//        print(userFriendRequestList[i]);
         crudObj
             .getDataFromUserFromDocumentWithID(userFriendRequestList[i])
             .then((value) {
           Map<dynamic, dynamic> userDataMap = value.data;
-          print('USERDATAMAP');
-          print(userDataMap);
-          print('IIIIIIIII = $i');
+//          print('USERDATAMAP');
+//          print(userDataMap);
+//          print('IIIIIIIII = $i');
           tempList.removeAt(i);
           tempList.insert(i, {
             'name': userDataMap['name'],
@@ -379,7 +379,7 @@ class _FriendsPageState extends State<FriendsPage> {
             'picture': userDataMap['picture'],
           });
           setState(() {
-            print(tempList);
+//            print(tempList);
             listOfRequest = tempList;
           });
         });

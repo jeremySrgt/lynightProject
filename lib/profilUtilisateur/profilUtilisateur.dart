@@ -628,6 +628,7 @@ class _UserProfilState extends State<UserProfil> {
 
   Widget pageConstruct(userData, context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       drawer: CustomSlider(
         userMail: userMail,
         signOut: widget._signOut,

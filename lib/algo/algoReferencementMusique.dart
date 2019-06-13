@@ -28,8 +28,8 @@ class AlgoMusicReference {
 
   // On demande une map des music de l'utilisateur et la snapshot
   AlgoMusicReference({
-    this.mapOfUserMusics,
-    this.snapClub,
+    @required this.mapOfUserMusics,
+    @required this.snapClub,
   });
 
   Map<dynamic, dynamic> test = {};
@@ -46,7 +46,13 @@ class AlgoMusicReference {
 
     var listClubFromDatabase = [];
 
-    for (int i = 0; i <= 3; i++) {
+    int numberOfClub = 0;
+    if(snapClub !=null){
+    numberOfClub = snapClub.length;
+    }
+
+
+    for (int i = 0; i < numberOfClub; i++) {
       if (snapClub != null) {
         var clubI = snapClub[i].data;
         //print(snapClub[i].documentID);
@@ -193,7 +199,7 @@ class AlgoMusicReference {
               //print('Le club ' +nameOfClubList[i] +'a aucun son en commun avec le user');
             }
           }
-          print('--------------------------------------------------');
+//          print('--------------------------------------------------');
         }
       }
     }

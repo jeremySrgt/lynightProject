@@ -43,29 +43,29 @@ android {
         applicationId "com.flutter.jerem.lynight"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 3 // nombre de build upload sur le play store
-        versionName "0.2.0"
+        versionCode 4 // nombre de build upload sur le play store
+        versionName "0.4.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner" //changer a cause du bug
         multiDexEnabled true //ajouter pour resoudre bug
     }
-//
-//    signingConfigs {
-//        release {
-//            keyAlias keystoreProperties['keyAlias']
-//            keyPassword keystoreProperties['keyPassword']
-//            storeFile file(keystoreProperties['storeFile'])
-//            storePassword keystoreProperties['storePassword']
-//        }
-//    }
-//    buildTypes {
-//        release {
-//            signingConfig signingConfigs.release
-//            minifyEnabled true
-//            useProguard true
-//
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
-//    }
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            useProguard true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 flutter {

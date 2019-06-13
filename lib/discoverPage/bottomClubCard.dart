@@ -40,11 +40,11 @@ class _BottomClubCardState extends State<BottomClubCard> {
   }
 
   // Méthode qui apelle l'algo en lui donnant la musicMap et une List<DocumentSnapshot>
-  test() {
+  algoRecommandation() {
     setState(() {
-      AlgoMusicReference algoTest = new AlgoMusicReference(
+      AlgoMusicReference algo = new AlgoMusicReference(
           mapOfUserMusics: widget.musicMap, snapClub: dataClubFromBDD);
-      clubSelected = algoTest.compareMusic();
+      clubSelected = algo.compareMusic();
     });
   }
 
@@ -81,7 +81,7 @@ class _BottomClubCardState extends State<BottomClubCard> {
   }
 
   Widget clubList() {
-    test();
+    algoRecommandation();
     //print('prrrrrrrrrrrrint selected');
     //print(clubSelected);
     List displayNightClub = [];
