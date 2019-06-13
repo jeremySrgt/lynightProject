@@ -14,6 +14,8 @@ import 'package:lynight/myReservations/myReservation.dart';
 import 'package:lynight/favorites/favoritesNightClub.dart';
 import 'package:lynight/nightCubPage/sumUpPage.dart';
 import 'package:lynight/sliderInformations/about.dart';
+import 'package:lynight/sliderInformations/termsAndConditions.dart';
+import 'package:lynight/sliderInformations/confidentiality.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -60,7 +62,8 @@ class _MyAppState extends State<MyApp> {
         '/friends' : (BuildContext context) => FriendsPage(),
         //'/favorites':(BuildContext context) => FavoritesNightClub(),
         '/À propos': (BuildContext context) => About(),
-
+        '/Termes & conditions': (BuildContext context) => TermsAndConditions(),
+        '/confidentialité' : (BuildContext context)=> Confidentiality(),
       },
     );
   }

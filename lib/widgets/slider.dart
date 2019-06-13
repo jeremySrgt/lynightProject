@@ -288,6 +288,60 @@ class _CustomSliderState extends State<CustomSlider>{
             color: Theme.of(context).primaryColor,
           ),
           Container(
+            decoration: widget.activePage == 'confidentialité'
+                ? BoxDecoration(
+                color: Color(0xFFebdffc),
+                borderRadius: BorderRadius.circular(15.0))
+                : BoxDecoration(),
+            child:ListTile(
+              leading: Icon(
+                FontAwesomeIcons.lock,
+                color: widget.activePage == 'confidentialité'
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              title: Text(
+                'confidentialité',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: widget.activePage == 'confidentialité'
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                ),
+              ),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/confidentialité');
+              },
+            ),
+          ),
+          Container(
+            decoration: widget.activePage == 'Termes & conditions'
+                ? BoxDecoration(
+                color: Color(0xFFebdffc),
+                borderRadius: BorderRadius.circular(15.0))
+                : BoxDecoration(),
+            child:ListTile(
+              leading: Icon(
+                FontAwesomeIcons.fileAlt,
+                color: widget.activePage == 'Termes & conditions'
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              title: Text(
+                'Termes & conditions',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: widget.activePage == 'Termes & conditions'
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                ),
+              ),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/Termes & conditions');
+              },
+            ),
+          ),
+          Container(
             decoration: widget.activePage == 'À propos'
                 ? BoxDecoration(
                 color: Color(0xFFebdffc),
