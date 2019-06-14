@@ -82,8 +82,6 @@ class _BottomClubCardState extends State<BottomClubCard> {
 
   Widget clubList() {
     algoRecommandation();
-    //print('prrrrrrrrrrrrint selected');
-    //print(clubSelected);
     List displayNightClub = [];
     List displayNightClubID = [];
     if (club != null) {
@@ -101,12 +99,7 @@ class _BottomClubCardState extends State<BottomClubCard> {
                 }
               }
             }
-            //print('La liste de club ::::::');
-            //print(displayNightClub.length);
-            //print(displayNightClub);
-
           }
-          //print('sortie de la big bpucle');
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return CircularProgressIndicator();
@@ -150,16 +143,16 @@ class _BottomClubCardState extends State<BottomClubCard> {
                             ),
                             Padding(
                               padding: EdgeInsets.only(
-                                  top: height/5.5, left: 15, right: 15),
+                                  top: height / 5.5, left: 15, right: 15),
                               child: Container(
                                 decoration: BoxDecoration(
                                     gradient: LinearGradient(
-                                      colors: [Colors.transparent, Colors.black54],
-                                      stops: [0.5,1.0],
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      tileMode:TileMode.repeated,
-                                    )),
+                                  colors: [Colors.transparent, Colors.black54],
+                                  stops: [0.5, 1.0],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  tileMode: TileMode.repeated,
+                                )),
                                 child: Text(
                                   clubDataMap['name'],
                                   style: TextStyle(
@@ -180,7 +173,41 @@ class _BottomClubCardState extends State<BottomClubCard> {
         },
       );
     } else {
-      return CircularProgressIndicator();
+      return ListView.builder(
+          itemCount: 3,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, i) {
+            double width = MediaQuery.of(context).size.width;
+            double height = MediaQuery.of(context).size.height;
+            double font = MediaQuery.of(context).textScaleFactor;
+
+            return Padding(
+              padding: EdgeInsets.only(
+                  left: 15.0, top: 20.0, bottom: 10.0, right: 15),
+              child: Container(
+                child: Stack(
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(11.0),
+                      child: Image(
+                        image: AssetImage('./assets/gris_chargement.jpg'),
+                        fit: BoxFit.cover,
+                        height: height / 4.5,
+                        width: 130.0,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: height / 10, left: 45,),
+                      child: Container(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
     }
   }
 }

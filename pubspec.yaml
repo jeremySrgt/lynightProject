@@ -75,6 +75,7 @@ flutter:
     - assets/pin.png
     - assets/bloon_final_pin.png
     - assets/bloonLogo.png
+    - assets/gris_chargement.jpg
     #- assets/loupe.png
     #- assets/test.jpg
   #  - images/a_dot_ham.jpeg

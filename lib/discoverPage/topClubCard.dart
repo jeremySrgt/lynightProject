@@ -44,7 +44,7 @@ class _TopClubCardState extends State<TopClubCard> {
     super.initState();
 
     crudObj.getDataDocuments('club').then((querySnapshot) {
-      print(querySnapshot.documents[3].documentID);
+      //print(querySnapshot.documents[3].documentID);
       List<Map<dynamic, dynamic>> tempList = [];
       for (int i = 0; i < querySnapshot.documents.length; i++) {
         Map<dynamic, dynamic> tempMap = querySnapshot.documents[i].data;
@@ -262,7 +262,7 @@ class _TopClubCardState extends State<TopClubCard> {
             margin: EdgeInsets.only(left: 20, bottom: 20, right: 20),
             //alignment: Alignment.topCenter,
             decoration: BoxDecoration(
-                color: Colors.grey[400],
+                color: Colors.grey[350],
                 //color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.all(Radius.circular(25))),
             width: width / 1.7,
