@@ -46,7 +46,9 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
                 color: Colors.white,
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold)),
-        subtitle: Row(children: <Widget>[
+        subtitle: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
           Icon(
             Icons.music_note,
             color: Colors.blue,
@@ -54,12 +56,12 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              music['electro'] == true ? Text('Electro ', style: TextStyle(color: Colors.white),) : Container(),
+              music['electro'] == true ? Text('Électro ', style: TextStyle(color: Colors.white),) : Container(),
               music['populaire'] == true ? Text('Populaire ', style: TextStyle(color: Colors.white),) : Container(),
               music['rap'] == true ? Text('Rap ', style: TextStyle(color: Colors.white),) : Container(),
               music['rnb'] == true ? Text('RnB ', style: TextStyle(color: Colors.white),) : Container(),
               music['rock'] == true ? Text('Rock ', style: TextStyle(color: Colors.white),) : Container(),
-              music['trans'] == true ? Text('Psytrans ', style: TextStyle(color: Colors.white),) : Container(),
+              music['trans'] == true ? Text('Trance ', style: TextStyle(color: Colors.white),) : Container(),
             ],
           )
         ]),

@@ -138,7 +138,7 @@ class _TopClubCardState extends State<TopClubCard> {
           ),
           Container(
             constraints: BoxConstraints(maxWidth: 150),
-            child: Text("${musicMap['electro'] == true ? 'Électro  ' : ''}${musicMap['populaire'] == true ? 'Populaire  ' : '' }${musicMap['rap'] == true ? 'Rap  ' : '' }${musicMap['rnb'] == true ? 'RnB  ' : '' }${musicMap['rock'] == true ? 'Rock  ' : '' }${musicMap['trans'] == true ? 'Trans  ' : '' }"
+            child: Text("${musicMap['electro'] == true ? 'Électro  ' : ''}${musicMap['populaire'] == true ? 'Populaire  ' : '' }${musicMap['rap'] == true ? 'Rap  ' : '' }${musicMap['rnb'] == true ? 'RnB  ' : '' }${musicMap['rock'] == true ? 'Rock  ' : '' }${musicMap['trans'] == true ? 'Trance  ' : '' }"
               ,style: TextStyle(color: Colors.white,),overflow: TextOverflow.visible,),
           ),
 

@@ -476,7 +476,7 @@ class _UserProfilState extends State<UserProfil> {
           CrossAxisAlignment.start,
           children: <Widget>[
             musicMap['electro'] == true
-                ? Text('Electro',
+                ? Text('Électro',
                 style: TextStyle(
                     color: Colors.white))
                 : Container(),
@@ -501,7 +501,7 @@ class _UserProfilState extends State<UserProfil> {
                     color: Colors.white))
                 : Container(),
             musicMap['trans'] == true
-                ? Text('Psytrance',
+                ? Text('Trance',
                 style: TextStyle(
                     color: Colors.white))
                 : Container(),

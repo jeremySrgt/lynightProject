@@ -207,7 +207,7 @@ class _SearchBarState extends State<SearchBar> {
                                         child: Row(
                                           children: <Widget>[
                                             musicMap['electro'] == true
-                                                ? Text('Electro ', style: TextStyle(color: Colors.white),)
+                                                ? Text('Électro ', style: TextStyle(color: Colors.white),)
                                                 : Container(),
                                             musicMap['populaire'] == true
                                                 ? Text('Populaire ', style: TextStyle(color: Colors.white),)
@@ -216,7 +216,7 @@ class _SearchBarState extends State<SearchBar> {
                                             musicMap['rnb'] == true ? Text('RnB ', style: TextStyle(color: Colors.white),) : Container(),
                                             musicMap['rock'] == true ? Text('Rock ', style: TextStyle(color: Colors.white),) : Container(),
                                             musicMap['trans'] == true
-                                                ? Text('Psytrans ', style: TextStyle(color: Colors.white),)
+                                                ? Text('Trance ', style: TextStyle(color: Colors.white),)
                                                 : Container(),
                                           ],
                                         ),
