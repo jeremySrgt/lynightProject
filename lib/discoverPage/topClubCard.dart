@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class _TopClubCardState extends State<TopClubCard> {
   Map<dynamic, dynamic> testMap;
   List<String> clubSelected;
   List<Map<dynamic, dynamic>> queryClubList;
+  List<Map<dynamic, dynamic>> fiveRandomClub;
 
   bool electro = false;
   bool rap = false;
@@ -58,12 +60,29 @@ class _TopClubCardState extends State<TopClubCard> {
     });
   }
 
+  void _randomClubToShow() {
+    if (queryClubList != null) {
+      int length = queryClubList.length;
+      print(length);
+      var rdm = new Random();
+      List<Map<dynamic, dynamic>> mutableListRandomClub = [];
+      for (int i = 0; i < 5; i++) {
+        mutableListRandomClub.add(queryClubList[rdm.nextInt(length)]);
+      }
+      setState(() {
+        fiveRandomClub = mutableListRandomClub;
+      });
+    }else{
+      print('liste des clubs pas encore fetch de la base');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (queryClubList == null) {
       return _loadingState();
     }
-
+    _randomClubToShow();
     return Expanded(
       child: clubList(),
     );
@@ -74,11 +93,11 @@ class _TopClubCardState extends State<TopClubCard> {
     double height = MediaQuery.of(context).size.height;
     double font = MediaQuery.of(context).textScaleFactor;
     return ListView.builder(
-        itemCount: queryClubList.length,
+        itemCount: fiveRandomClub.length,
         //faire une verif que la list ne soit pas null pour ca utiliser le refresh peut etre ca pourrait etre sympa
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, i) {
-          Map<dynamic, dynamic> musicMap = queryClubList[i]['musics'];
+          Map<dynamic, dynamic> musicMap = fiveRandomClub[i]['musics'];
 
           return GestureDetector(
             onTap: () {
@@ -86,7 +105,7 @@ class _TopClubCardState extends State<TopClubCard> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => NightClubProfile(
-                          documentID: queryClubList[i]['clubID'])));
+                          documentID: fiveRandomClub[i]['clubID'])));
             },
             child: Container(
               margin: EdgeInsets.only(left: 20, bottom: 20, right: 20),
@@ -112,7 +131,7 @@ class _TopClubCardState extends State<TopClubCard> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(11.0),
                         child: Image.network(
-                          queryClubList[i]['pictures'][0],
+                          fiveRandomClub[i]['pictures'][0],
                           fit: BoxFit.cover,
                           height: height / 6,
                           width: width / 1.3,
@@ -125,7 +144,7 @@ class _TopClubCardState extends State<TopClubCard> {
                     Padding(
                       padding: const EdgeInsets.only(left: 32.0, right: 25),
                       child: Text(
-                        queryClubList[i]['name'],
+                        fiveRandomClub[i]['name'],
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: font * 20,
@@ -152,7 +171,7 @@ class _TopClubCardState extends State<TopClubCard> {
                             ),
                             Expanded(
                               child: Text(
-                                '${queryClubList[i]['arrond']}e arrondissement',
+                                '${fiveRandomClub[i]['arrond']}e arrondissement',
                                 style: TextStyle(
                                     color: Colors.white,
                                     height: 1.2,
