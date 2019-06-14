@@ -38,6 +38,10 @@ class CrudMethods {
     return await Firestore.instance.collection('user').document(userID).get();
   }
 
+  getDataFromClubFromDocumentWithID(clubID) async{
+    return await Firestore.instance.collection('club').document(clubID).get();
+  }
+
   getDataFromClubFromDocument() async{
     return await Firestore.instance.collection('club').getDocuments();
   }

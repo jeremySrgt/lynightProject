@@ -23,6 +23,7 @@ class NightClubProfile extends StatefulWidget {
 class _NightClubProfile extends State<NightClubProfile> {
   String userId = 'userId';
   CrudMethods crudObj = new CrudMethods();
+  Map<dynamic,dynamic> currentClubData;
 
   bool electro = false;
   bool rap = false;
@@ -50,6 +51,12 @@ class _NightClubProfile extends State<NightClubProfile> {
         alreadySaved = favorites.contains(widget.documentID);
       });
     });
+
+    crudObj.getDataFromClubFromDocumentWithID(widget.documentID).then((value){
+      setState(() {
+        currentClubData = value.data;
+      });
+    });
   }
 
   addFavorites() {
@@ -57,19 +64,19 @@ class _NightClubProfile extends State<NightClubProfile> {
     if (!favoritesListTemp.contains(widget.documentID)) {
       favoritesListTemp.add(widget.documentID);
     }
-    Map<String, dynamic> test = {
+    Map<String, dynamic> favMap = {
       'favoris': favoritesListTemp,
     };
-    crudObj.createOrUpdateUserData(test);
+    crudObj.createOrUpdateUserData(favMap);
   }
 
   removeFavorites() {
     List favoritesListTemp = new List.from(favorites);
     favoritesListTemp.remove(widget.documentID);
-    Map<String, dynamic> test = {
+    Map<String, dynamic> favMap = {
       'favoris': favoritesListTemp,
     };
-    crudObj.createOrUpdateUserData(test);
+    crudObj.createOrUpdateUserData(favMap);
   }
 
   Widget favoriteButton() {
@@ -469,8 +476,10 @@ class _NightClubProfile extends State<NightClubProfile> {
   }
 
   Widget pageConstruct(clubData, context) {
-    return Scaffold(
-      body: CustomScrollView(
+    if(clubData == null){
+    return Center(child: CircularProgressIndicator(),);
+    }
+    return CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
             floating: false,
@@ -504,7 +513,7 @@ class _NightClubProfile extends State<NightClubProfile> {
               title: Text(
                 clubData['name'],
                 style: TextStyle(fontSize: 35),
-                overflow: TextOverflow.visible,
+                overflow: TextOverflow.visible,textAlign: TextAlign.center,
               ),
             ),
           ),
@@ -522,24 +531,13 @@ class _NightClubProfile extends State<NightClubProfile> {
             ),
           ),
         ],
-      ),
-    );
+      );
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: Firestore.instance
-          .collection('club')
-          .document(widget.documentID)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        }
-        var clubData = snapshot.data;
-        return pageConstruct(clubData, context);
-      },
+    return Scaffold(
+      body: pageConstruct(currentClubData, context),
     );
   }
 }
