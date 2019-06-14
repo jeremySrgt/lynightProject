@@ -164,7 +164,7 @@ class _UserProfilState extends State<UserProfil> {
     );
   }
 
-  Widget divider(){
+  Widget divider() {
     return Divider(
       color: Colors.white,
       height: 15,
@@ -175,7 +175,7 @@ class _UserProfilState extends State<UserProfil> {
   Widget userBottomSection(userData) {
     Map<dynamic, dynamic> musicMap = userData['music'];
 
-    Widget name(){
+    Widget name() {
       return ListTile(
         leading: Icon(
           Icons.person,
@@ -184,13 +184,10 @@ class _UserProfilState extends State<UserProfil> {
         ),
         title: Text(
           "Prénom",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0),
+          style: TextStyle(color: Colors.white, fontSize: 18.0),
         ),
         trailing: IconButton(
-          icon: Icon(Icons.edit,
-              color: Colors.white),
+          icon: Icon(Icons.edit, color: Colors.white),
           onPressed: () {
             showDialog(
                 context: context,
@@ -199,42 +196,25 @@ class _UserProfilState extends State<UserProfil> {
                     content: Form(
                       key: _formKey,
                       child: Column(
-                        mainAxisSize:
-                        MainAxisSize.min,
+                        mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Padding(
-                            padding:
-                            EdgeInsets.all(
-                                8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: TextFormField(
-                              decoration:
-                              InputDecoration(
-                                  hintText:
-                                  'Prénom'),
-                              onSaved: (value) =>
-                              _name = value,
+                              decoration: InputDecoration(hintText: 'Prénom'),
+                              onSaved: (value) => _name = value,
                             ),
                           ),
                           Padding(
-                            padding:
-                            const EdgeInsets
-                                .all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: RaisedButton(
-                              child:
-                              Text("Valider"),
+                              child: Text("Valider"),
                               onPressed: () {
-                                if (_formKey
-                                    .currentState
-                                    .validate()) {
-                                  _formKey
-                                      .currentState
-                                      .save();
+                                if (_formKey.currentState.validate()) {
+                                  _formKey.currentState.save();
                                   crudObj
-                                      .createOrUpdateUserData({
-                                    'name': _name
-                                  });
-                                  Navigator.pop(
-                                      context);
+                                      .createOrUpdateUserData({'name': _name});
+                                  Navigator.pop(context);
                                 }
                               },
                             ),
@@ -256,7 +236,7 @@ class _UserProfilState extends State<UserProfil> {
       );
     }
 
-    Widget surname(){
+    Widget surname() {
       return ListTile(
         leading: Icon(
           Icons.supervisor_account,
@@ -265,13 +245,10 @@ class _UserProfilState extends State<UserProfil> {
         ),
         title: Text(
           "Nom",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0),
+          style: TextStyle(color: Colors.white, fontSize: 18.0),
         ),
         trailing: IconButton(
-          icon: Icon(Icons.edit,
-              color: Colors.white),
+          icon: Icon(Icons.edit, color: Colors.white),
           onPressed: () {
             showDialog(
                 context: context,
@@ -280,44 +257,25 @@ class _UserProfilState extends State<UserProfil> {
                     content: Form(
                       key: _formKey,
                       child: Column(
-                        mainAxisSize:
-                        MainAxisSize.min,
+                        mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Padding(
-                            padding:
-                            EdgeInsets.all(
-                                8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: TextFormField(
-                              decoration:
-                              InputDecoration(
-                                  hintText:
-                                  'Nom'),
-                              onSaved: (value) =>
-                              _surname =
-                                  value,
+                              decoration: InputDecoration(hintText: 'Nom'),
+                              onSaved: (value) => _surname = value,
                             ),
                           ),
                           Padding(
-                            padding:
-                            const EdgeInsets
-                                .all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: RaisedButton(
-                              child:
-                              Text("Valider"),
+                              child: Text("Valider"),
                               onPressed: () {
-                                if (_formKey
-                                    .currentState
-                                    .validate()) {
-                                  _formKey
-                                      .currentState
-                                      .save();
-                                  crudObj
-                                      .createOrUpdateUserData({
-                                    'surname':
-                                    _surname
-                                  });
-                                  Navigator.pop(
-                                      context);
+                                if (_formKey.currentState.validate()) {
+                                  _formKey.currentState.save();
+                                  crudObj.createOrUpdateUserData(
+                                      {'surname': _surname});
+                                  Navigator.pop(context);
                                 }
                               },
                             ),
@@ -331,14 +289,12 @@ class _UserProfilState extends State<UserProfil> {
         ),
         subtitle: Text(
           userData['surname'],
-          style: TextStyle(
-              fontSize: 15.0,
-              color: Colors.white),
+          style: TextStyle(fontSize: 15.0, color: Colors.white),
         ),
       );
     }
 
-    Widget mail(){
+    Widget mail() {
       return ListTile(
         leading: Icon(
           Icons.mail,
@@ -347,20 +303,16 @@ class _UserProfilState extends State<UserProfil> {
         ),
         title: Text(
           'Mail',
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0),
+          style: TextStyle(color: Colors.white, fontSize: 18.0),
         ),
         subtitle: Text(
           userMail,
-          style: TextStyle(
-              fontSize: 15.0,
-              color: Colors.white),
+          style: TextStyle(fontSize: 15.0, color: Colors.white),
         ),
       );
     }
 
-    Widget phone(){
+    Widget phone() {
       return ListTile(
         leading: Icon(
           Icons.phone,
@@ -369,13 +321,10 @@ class _UserProfilState extends State<UserProfil> {
         ),
         title: Text(
           "Numéro",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0),
+          style: TextStyle(color: Colors.white, fontSize: 18.0),
         ),
         trailing: IconButton(
-          icon: Icon(Icons.edit,
-              color: Colors.white),
+          icon: Icon(Icons.edit, color: Colors.white),
           onPressed: () {
             showDialog(
                 context: context,
@@ -384,49 +333,28 @@ class _UserProfilState extends State<UserProfil> {
                     content: Form(
                       key: _formKey,
                       child: Column(
-                        mainAxisSize:
-                        MainAxisSize.min,
+                        mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Padding(
-                            padding:
-                            EdgeInsets.all(
-                                8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: TextFormField(
-                              validator:
-                              validatePhone,
-                              decoration:
-                              InputDecoration(
-                                  hintText:
-                                  'Numéro de téléphone'),
-                              keyboardType:
-                              TextInputType
-                                  .number,
-                              onSaved: (value) =>
-                              _phoneNumber =
-                                  value,
+                              validator: validatePhone,
+                              decoration: InputDecoration(
+                                  hintText: 'Numéro de téléphone'),
+                              keyboardType: TextInputType.number,
+                              onSaved: (value) => _phoneNumber = value,
                             ),
                           ),
                           Padding(
-                            padding:
-                            const EdgeInsets
-                                .all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: RaisedButton(
-                              child:
-                              Text("Valider"),
+                              child: Text("Valider"),
                               onPressed: () {
-                                if (_formKey
-                                    .currentState
-                                    .validate()) {
-                                  _formKey
-                                      .currentState
-                                      .save();
-                                  crudObj
-                                      .createOrUpdateUserData({
-                                    'phone':
-                                    _phoneNumber
-                                  });
-                                  Navigator.pop(
-                                      context);
+                                if (_formKey.currentState.validate()) {
+                                  _formKey.currentState.save();
+                                  crudObj.createOrUpdateUserData(
+                                      {'phone': _phoneNumber});
+                                  Navigator.pop(context);
                                 }
                               },
                             ),
@@ -440,14 +368,12 @@ class _UserProfilState extends State<UserProfil> {
         ),
         subtitle: Text(
           userData['phone'],
-          style: TextStyle(
-              fontSize: 15.0,
-              color: Colors.white),
+          style: TextStyle(fontSize: 15.0, color: Colors.white),
         ),
       );
     }
 
-    Widget musics(){
+    Widget musics() {
       return ListTile(
         leading: Icon(
           Icons.music_note,
@@ -456,13 +382,10 @@ class _UserProfilState extends State<UserProfil> {
         ),
         title: Text(
           "Style de musique",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0),
+          style: TextStyle(color: Colors.white, fontSize: 18.0,),
         ),
         trailing: IconButton(
-          icon: Icon(Icons.edit,
-              color: Colors.white),
+          icon: Icon(Icons.edit, color: Colors.white),
           onPressed: () {
             showDialog(
                 context: context,
@@ -472,45 +395,32 @@ class _UserProfilState extends State<UserProfil> {
           },
         ),
         subtitle: Column(
-          crossAxisAlignment:
-          CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             musicMap['electro'] == true
-                ? Text('Électro',
-                style: TextStyle(
-                    color: Colors.white))
+                ? Text('Électro', style: TextStyle(color: Colors.white,height: 1.2))
                 : Container(),
             musicMap['populaire'] == true
-                ? Text('Populaire',
-                style: TextStyle(
-                    color: Colors.white))
+                ? Text('Populaire', style: TextStyle(color: Colors.white,height: 1.2))
                 : Container(),
             musicMap['rap'] == true
-                ? Text('Rap',
-                style: TextStyle(
-                    color: Colors.white))
+                ? Text('Rap', style: TextStyle(color: Colors.white,height: 1.2))
                 : Container(),
             musicMap['rnb'] == true
-                ? Text('RnB',
-                style: TextStyle(
-                    color: Colors.white))
+                ? Text('RnB', style: TextStyle(color: Colors.white,height: 1.2))
                 : Container(),
             musicMap['rock'] == true
-                ? Text('Rock',
-                style: TextStyle(
-                    color: Colors.white))
+                ? Text('Rock', style: TextStyle(color: Colors.white,height: 1.2))
                 : Container(),
             musicMap['trans'] == true
-                ? Text('Trance',
-                style: TextStyle(
-                    color: Colors.white))
+                ? Text('Trance', style: TextStyle(color: Colors.white,height: 1.2))
                 : Container(),
           ],
         ),
       );
     }
 
-    Widget birth(){
+    Widget birth() {
       return ListTile(
         leading: Icon(
           Icons.date_range,
@@ -519,21 +429,16 @@ class _UserProfilState extends State<UserProfil> {
         ),
         title: Text(
           "Date de naissance",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0),
+          style: TextStyle(color: Colors.white, fontSize: 18.0),
         ),
         subtitle: Text(
-          DateFormat('dd/MM/yyyy')
-              .format(userData['DOB'].toDate()),
-          style: TextStyle(
-              fontSize: 15.0,
-              color: Colors.white),
+          DateFormat('dd/MM/yyyy').format(userData['DOB'].toDate()),
+          style: TextStyle(fontSize: 15.0, color: Colors.white),
         ),
       );
     }
 
-    Widget notification(){
+    Widget notification() {
       return ListTile(
         leading: Icon(
           Icons.notifications,
@@ -542,13 +447,10 @@ class _UserProfilState extends State<UserProfil> {
         ),
         title: Text(
           "Notification",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0),
+          style: TextStyle(color: Colors.white, fontSize: 18.0),
         ),
         trailing: Switch(
-            value: _notificationValue,
-            onChanged: _onChangedNotification),
+            value: _notificationValue, onChanged: _onChangedNotification),
       );
     }
 
