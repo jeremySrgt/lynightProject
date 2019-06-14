@@ -504,7 +504,7 @@ class _NightClubProfile extends State<NightClubProfile> {
               title: Text(
                 clubData['name'],
                 style: TextStyle(fontSize: 35),
-                overflow: TextOverflow.visible,
+                overflow: TextOverflow.visible,textAlign: TextAlign.center,
               ),
             ),
           ),

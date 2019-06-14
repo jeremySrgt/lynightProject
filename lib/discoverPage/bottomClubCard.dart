@@ -148,25 +148,16 @@ class _BottomClubCardState extends State<BottomClubCard> {
                                 width: 130.0,
                               ),
                             ),
-                            Padding(
+                            Container(constraints: BoxConstraints(maxWidth: 130,maxHeight: height / 4.5,),
                               padding: EdgeInsets.only(
-                                  top: height/5.5, left: 15, right: 15),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [Colors.transparent, Colors.black54],
-                                      stops: [0.5,1.0],
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      tileMode:TileMode.repeated,
-                                    )),
-                                child: Text(
-                                  clubDataMap['name'],
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
+                                  top: height / 5.5, left: 15, right: 15),
+                              child: Text(
+                                clubDataMap['name'],
+                                style: TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
