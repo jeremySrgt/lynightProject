@@ -57,22 +57,46 @@ class _TopClubCardState extends State<TopClubCard> {
       setState(() {
         queryClubList = tempList;
       });
+      _randomClubToShow();
     });
   }
 
   void _randomClubToShow() {
     if (queryClubList != null) {
       int length = queryClubList.length;
-      print(length);
+//      print(length);
       var rdm = new Random();
+      int loop = 5;
       List<Map<dynamic, dynamic>> mutableListRandomClub = [];
-      for (int i = 0; i < 5; i++) {
-        mutableListRandomClub.add(queryClubList[rdm.nextInt(length)]);
+      for (int i = 0; i < loop; i++) {
+        bool sameClub = false;
+        var currentRandom = rdm.nextInt(length);
+//        print('current random' + currentRandom.toString());
+        if (mutableListRandomClub.isEmpty) {
+//          print('ISEMPTY');
+          mutableListRandomClub.add(queryClubList[currentRandom]);
+        } else {
+          for(int j=0; j< mutableListRandomClub.length; j++){
+            if(queryClubList[currentRandom]['clubID'] == mutableListRandomClub[j]['clubID']){
+//              print('SAME CLUB DOMMAGE');
+              sameClub = true;
+              break;
+            }
+          }
+          if(!sameClub){
+//            print('sur le point dajouter : ' + queryClubList[currentRandom]['name']);
+            mutableListRandomClub.add(queryClubList[currentRandom]);
+          }
+          else{
+            loop++;
+          }
+
+        }
       }
       setState(() {
         fiveRandomClub = mutableListRandomClub;
       });
-    }else{
+    } else {
       print('liste des clubs pas encore fetch de la base');
     }
   }
@@ -82,7 +106,7 @@ class _TopClubCardState extends State<TopClubCard> {
     if (queryClubList == null) {
       return _loadingState();
     }
-    _randomClubToShow();
+//    _randomClubToShow(); //preferable de l'apl dans le initstate pour eviter les "blink" des anciens club qui reste une fraction de seconde en mémoire le temps d'etre éffacé
     return Expanded(
       child: clubList(),
     );
