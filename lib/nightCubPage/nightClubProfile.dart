@@ -502,10 +502,10 @@ class _NightClubProfile extends State<NightClubProfile> {
                 ],
               ),
               title: Container(
-                constraints: BoxConstraints(maxWidth: 400),
+                constraints: BoxConstraints(maxWidth: 300),
                 child: Text(
                   clubData['name'],
-                  style: TextStyle(fontSize: 35),
+                  style: TextStyle(fontSize: 30),
                   overflow: TextOverflow.visible,textAlign: TextAlign.center,
                 ),
               ),
