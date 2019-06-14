@@ -125,79 +125,25 @@ class _TopClubCardState extends State<TopClubCard> {
   Widget clubMusic(musicMap, width, font) {
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 25),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-        Icon(
-          Icons.music_note,
-          color: Colors.blue,
-        ),
-        Column(
+      child: Container(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            musicMap['electro'] == true
-                ? Text(
-              'Electro ',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: font * 13),
-              overflow: TextOverflow.visible,
-            )
-                : Container(),
-            musicMap['populaire'] == true
-                ? Text(
-              'Populaire ',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: font * 13),
-              overflow: TextOverflow.visible,
-            )
-                : Container(),
-            musicMap['rap'] == true
-                ? Text(
-              'Rap ',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: font * 13),
-              overflow: TextOverflow.visible,
-            )
-                : Container(),
-            musicMap['rnb'] == true
-                ? Text(
-              'RnB ',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: font * 13),
-              overflow: TextOverflow.visible,
-            )
-                : Container(),
-            musicMap['rock'] == true
-                ? Text(
-              'Rock ',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: font * 13),
-              overflow: TextOverflow.visible,
-            )
-                : Container(),
-            musicMap['trans'] == true
-                ? Text(
-              'Psytrans ',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: font * 13),
-              overflow: TextOverflow.visible,
-            )
-                : Container(),
-          ],
-        ),
-      ]),
+            children: <Widget>[
+          Icon(
+            Icons.music_note,
+            color: Colors.blue,
+          ),
+          SizedBox(
+            width: width / 40,
+          ),
+          Container(
+            constraints: BoxConstraints(maxWidth: 150),
+            child: Text("${musicMap['electro'] == true ? 'Électro  ' : ''}${musicMap['populaire'] == true ? 'Populaire  ' : '' }${musicMap['rap'] == true ? 'Rap  ' : '' }${musicMap['rnb'] == true ? 'RnB  ' : '' }${musicMap['rock'] == true ? 'Rock  ' : '' }${musicMap['trans'] == true ? 'Trans  ' : '' }"
+              ,style: TextStyle(color: Colors.white,),overflow: TextOverflow.visible,),
+          ),
+
+        ]),
+      ),
     );
   }
 
