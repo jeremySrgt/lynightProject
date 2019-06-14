@@ -214,7 +214,7 @@ class _SearchBarState extends State<SearchBar> {
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   height: 1.5),
-                                              overflow: TextOverflow.visible,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
                                         ],
@@ -321,48 +321,17 @@ class _SearchBarState extends State<SearchBar> {
                                     ),
                                     Row(
                                       children: <Widget>[
-                                        musicMap['electro'] == true
-                                            ? Text(
-                                                'Electro ',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              )
-                                            : Container(),
-                                        musicMap['populaire'] == true
-                                            ? Text(
-                                                'Populaire ',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              )
-                                            : Container(),
-                                        musicMap['rap'] == true
-                                            ? Text(
-                                                'Rap ',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              )
-                                            : Container(),
-                                        musicMap['rnb'] == true
-                                            ? Text(
-                                                'RnB ',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              )
-                                            : Container(),
-                                        musicMap['rock'] == true
-                                            ? Text(
-                                                'Rock ',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              )
-                                            : Container(),
-                                        musicMap['trans'] == true
-                                            ? Text(
-                                                'Psytrans ',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              )
-                                            : Container(),
+                                        Container(
+                                          constraints:
+                                          BoxConstraints(maxWidth: 200),
+                                          child: Text(
+                                            "${musicMap['electro'] == true ? 'Électro  ' : ''}${musicMap['populaire'] == true ? 'Populaire  ' : ''}${musicMap['rap'] == true ? 'Rap  ' : ''}${musicMap['rnb'] == true ? 'RnB  ' : ''}${musicMap['rock'] == true ? 'Rock  ' : ''}${musicMap['trans'] == true ? 'Trance  ' : ''}",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                height: 1.5),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
                                       ],
                                     )
                                   ]),

@@ -64,7 +64,7 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
                     child: Text(
                       "${music['electro'] == true ? 'Électro  ' : ''}${music['populaire'] == true ? 'Populaire  ' : ''}${music['rap'] == true ? 'Rap  ' : ''}${music['rnb'] == true ? 'RnB  ' : ''}${music['rock'] == true ? 'Rock  ' : ''}${music['trans'] == true ? 'Trance  ' : ''}",
                       style: TextStyle(color: Colors.white, height: 1.5),
-                      overflow: TextOverflow.visible,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
