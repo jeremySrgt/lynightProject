@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -47,10 +49,9 @@ class AlgoMusicReference {
     var listClubFromDatabase = [];
 
     int numberOfClub = 0;
-    if(snapClub !=null){
-    numberOfClub = snapClub.length;
+    if (snapClub != null) {
+      numberOfClub = snapClub.length;
     }
-
 
     for (int i = 0; i < numberOfClub; i++) {
       if (snapClub != null) {
@@ -147,7 +148,9 @@ class AlgoMusicReference {
           // Va verifier tout les style de musique d'abord si ils ont là même valeur et ensuite si il retourne true
           // Si c'est le cas on va l'ajouter à la liste qui sera retourné
 
-          if ((mapOfUserMusics['populaire'] == mapOfMusicFromList['populaire']) && (mapOfUserMusics['populaire'] == true)) {
+          if ((mapOfUserMusics['populaire'] ==
+                  mapOfMusicFromList['populaire']) &&
+              (mapOfUserMusics['populaire'] == true)) {
             //print('debut de la boucle de verif de style de music');
             //print('*********************');
             //print('Les deux il kiffe populaire');
@@ -156,35 +159,41 @@ class AlgoMusicReference {
             //print(bestClub);
             //return bestClub;
           } else {
-            if ((mapOfUserMusics['electro'] == mapOfMusicFromList['electro']) && (mapOfUserMusics['electro'] == true)) {
+            if ((mapOfUserMusics['electro'] == mapOfMusicFromList['electro']) &&
+                (mapOfUserMusics['electro'] == true)) {
               //print('*****************');
               //print('ils aiment le electro tout les 2 ');
               bestClub.add(snapClub[i].documentID);
               //print('Valur après ajout de electro');
               //print(bestClub);
             } else {
-              if ((mapOfUserMusics['rap'] == mapOfMusicFromList['rap']) && (mapOfUserMusics['rap'] == true)) {
+              if ((mapOfUserMusics['rap'] == mapOfMusicFromList['rap']) &&
+                  (mapOfUserMusics['rap'] == true)) {
                 //print('*****************');
                 //print('ils aiment le rap tout les 2 ');
                 bestClub.add(snapClub[i].documentID);
                 //print('Valur après ajout de rap');
                 //print(bestClub);
               } else {
-                if ((mapOfUserMusics['rnb'] == mapOfMusicFromList['rnb']) && (mapOfUserMusics['rnb'] == true)) {
+                if ((mapOfUserMusics['rnb'] == mapOfMusicFromList['rnb']) &&
+                    (mapOfUserMusics['rnb'] == true)) {
                   //print('*****************');
                   //print('ils aiment le rnb tout les 2 ');
                   bestClub.add(snapClub[i].documentID);
                   //print('Valur après ajout de rnb');
                   //print(bestClub);
                 } else {
-                  if ((mapOfUserMusics['rock'] == mapOfMusicFromList['rock']) && (mapOfUserMusics['rock'] == true)) {
+                  if ((mapOfUserMusics['rock'] == mapOfMusicFromList['rock']) &&
+                      (mapOfUserMusics['rock'] == true)) {
                     //print('*****************');
                     //print('ils aiment le rock tout les 2 ');
                     bestClub.add(snapClub[i].documentID);
                     //print('Valur après ajout de rock');
                     //print(bestClub);
                   } else {
-                    if ((mapOfUserMusics['trans'] == mapOfMusicFromList['trans']) && (mapOfUserMusics['trans'] == true)) {
+                    if ((mapOfUserMusics['trans'] ==
+                            mapOfMusicFromList['trans']) &&
+                        (mapOfUserMusics['trans'] == true)) {
                       //print('*****************');
                       //print('ils aiment la trans tout les 2 ');
                       bestClub.add(snapClub[i].documentID);
@@ -203,6 +212,54 @@ class AlgoMusicReference {
         }
       }
     }
-    return bestClub;
+
+//    print(bestClub);
+//    return bestClub;
+
+    List<String> test = [
+      '-LhKMefcBQ5wcJwluZxY',
+      '-LhLFk-SNwnXVF7oIjh_',
+      '-LhKOuZvkR9OVXRUFDnI'
+    ];
+
+    if (bestClub.isNotEmpty) {
+      int length = bestClub.length;
+      if (length >= 5) {
+        print(length);
+        var rdm = new Random();
+        int loop = 5;
+        List<String> mutableListRandomClub = [];
+        for (int i = 0; i < loop; i++) {
+          bool sameClub = false;
+          var currentRandom = rdm.nextInt(length);
+//        print('current random' + currentRandom.toString());
+          if (mutableListRandomClub.isEmpty) {
+//          print('ISEMPTY');
+            mutableListRandomClub.add(bestClub[currentRandom]);
+          } else {
+            for (int j = 0; j < mutableListRandomClub.length; j++) {
+              if (bestClub[currentRandom] == mutableListRandomClub[j]) {
+//              print('SAME CLUB DOMMAGE');
+                sameClub = true;
+                break;
+              }
+            }
+            if (!sameClub) {
+//            print('sur le point dajouter : ' + queryClubList[currentRandom]['name']);
+              mutableListRandomClub.add(bestClub[currentRandom]);
+            } else {
+              loop++;
+            }
+          }
+        }
+        print(mutableListRandomClub);
+        return mutableListRandomClub;
+      } else {
+        return bestClub;
+      }
+    } else {
+      print('liste des clubs pas encore fetch de la base');
+      return null;
+    }
   }
 }
