@@ -20,7 +20,7 @@ class CustomSlider extends StatefulWidget {
 class _CustomSliderState extends State<CustomSlider> {
   CrudMethods crudObj = new CrudMethods();
   String name = 'UserName';
-  String profilPicture =
+  String profilePicture =
       'https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46';
   bool pro = false;
 
@@ -37,7 +37,7 @@ class _CustomSliderState extends State<CustomSlider> {
           .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
       setState(() {
         name = dataMap['name'];
-        profilPicture = dataMap['picture'];
+        profilePicture = dataMap['picture'];
         pro = dataMap['pro'];
       });
     });
@@ -51,7 +51,7 @@ class _CustomSliderState extends State<CustomSlider> {
           ListTile(
             leading: CircleAvatar(
               // photo de profil
-              backgroundImage: NetworkImage(profilPicture),
+              backgroundImage: NetworkImage(profilePicture),
               minRadius: 25,
               maxRadius: 25,
             ),

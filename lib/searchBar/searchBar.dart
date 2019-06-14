@@ -147,7 +147,8 @@ class _SearchBarState extends State<SearchBar> {
                   scrollDirection: Axis.vertical,
                   itemCount: allClubsDisplay.length,
                   itemBuilder: (context, index) {
-                    Map<dynamic, dynamic> musicMap = allClubsDisplay[index]['musics'];
+                    Map<dynamic, dynamic> musicMap =
+                        allClubsDisplay[index]['musics'];
 
                     return Card(
                       color: Colors.transparent,
@@ -161,8 +162,8 @@ class _SearchBarState extends State<SearchBar> {
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                   colors: [
-                                    Color.fromRGBO(	212, 63, 141, 1),
-                                    Color.fromRGBO(		2, 80, 197, 1)
+                                    Color.fromRGBO(212, 63, 141, 1),
+                                    Color.fromRGBO(2, 80, 197, 1)
                                   ]),
                               //color: Theme.of(context).primaryColor,
                               borderRadius:
@@ -194,32 +195,29 @@ class _SearchBarState extends State<SearchBar> {
                                     ),
                                     title: Text(allClubsDisplay[index]['name'],
                                         style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold)),
+                                          color: Colors.white,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                        )),
                                     subtitle: Row(children: <Widget>[
                                       Icon(
                                         Icons.music_note,
                                         color: Colors.blue,
                                       ),
-                                      MarqueeWidget(
-                                        direction: Axis.horizontal,
-                                        child: Row(
-                                          children: <Widget>[
-                                            musicMap['electro'] == true
-                                                ? Text('Electro ', style: TextStyle(color: Colors.white),)
-                                                : Container(),
-                                            musicMap['populaire'] == true
-                                                ? Text('Populaire ', style: TextStyle(color: Colors.white),)
-                                                : Container(),
-                                            musicMap['rap'] == true ? Text('Rap ', style: TextStyle(color: Colors.white),) : Container(),
-                                            musicMap['rnb'] == true ? Text('RnB ', style: TextStyle(color: Colors.white),) : Container(),
-                                            musicMap['rock'] == true ? Text('Rock ', style: TextStyle(color: Colors.white),) : Container(),
-                                            musicMap['trans'] == true
-                                                ? Text('Psytrans ', style: TextStyle(color: Colors.white),)
-                                                : Container(),
-                                          ],
-                                        ),
+                                      Row(
+                                        children: <Widget>[
+                                          Container(
+                                            constraints:
+                                                BoxConstraints(maxWidth: 200),
+                                            child: Text(
+                                              "${musicMap['electro'] == true ? 'Électro  ' : ''}${musicMap['populaire'] == true ? 'Populaire  ' : ''}${musicMap['rap'] == true ? 'Rap  ' : ''}${musicMap['rnb'] == true ? 'RnB  ' : ''}${musicMap['rock'] == true ? 'Rock  ' : ''}${musicMap['trans'] == true ? 'Trance  ' : ''}",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  height: 1.5),
+                                              overflow: TextOverflow.visible,
+                                            ),
+                                          ),
+                                        ],
                                       )
                                     ]),
                                     trailing: Icon(Icons.arrow_forward_ios,
@@ -239,11 +237,9 @@ class _SearchBarState extends State<SearchBar> {
       });
     }
 
-
     setState(() {
       nameClubEmpty = false;
     });
-
 
     if (strController.text.length >= 1 && nameClub.isEmpty) {
       setState(() {
@@ -262,14 +258,14 @@ class _SearchBarState extends State<SearchBar> {
               )));
     }
 
-
     return Expanded(
         child: Container(
             child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: tempSearchStore.length,
                 itemBuilder: (context, index) {
-                  Map<dynamic, dynamic> musicMap = tempSearchStore[index]['musics'];
+                  Map<dynamic, dynamic> musicMap =
+                      tempSearchStore[index]['musics'];
 
                   return Card(
                     color: Colors.transparent,
@@ -283,8 +279,8 @@ class _SearchBarState extends State<SearchBar> {
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                                 colors: [
-                                  Color.fromRGBO(	212, 63, 141, 1),
-                                  Color.fromRGBO(		2, 80, 197, 1)
+                                  Color.fromRGBO(212, 63, 141, 1),
+                                  Color.fromRGBO(2, 80, 197, 1)
                                 ]),
                             //color: Theme.of(context).primaryColor,
                             borderRadius:
@@ -326,16 +322,46 @@ class _SearchBarState extends State<SearchBar> {
                                     Row(
                                       children: <Widget>[
                                         musicMap['electro'] == true
-                                            ? Text('Electro ', style: TextStyle(color: Colors.white),)
+                                            ? Text(
+                                                'Electro ',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )
                                             : Container(),
                                         musicMap['populaire'] == true
-                                            ? Text('Populaire ', style: TextStyle(color: Colors.white),)
+                                            ? Text(
+                                                'Populaire ',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )
                                             : Container(),
-                                        musicMap['rap'] == true ? Text('Rap ', style: TextStyle(color: Colors.white),) : Container(),
-                                        musicMap['rnb'] == true ? Text('RnB ', style: TextStyle(color: Colors.white),) : Container(),
-                                        musicMap['rock'] == true ? Text('Rock ', style: TextStyle(color: Colors.white),) : Container(),
+                                        musicMap['rap'] == true
+                                            ? Text(
+                                                'Rap ',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )
+                                            : Container(),
+                                        musicMap['rnb'] == true
+                                            ? Text(
+                                                'RnB ',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )
+                                            : Container(),
+                                        musicMap['rock'] == true
+                                            ? Text(
+                                                'Rock ',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )
+                                            : Container(),
                                         musicMap['trans'] == true
-                                            ? Text('Psytrans ', style: TextStyle(color: Colors.white),)
+                                            ? Text(
+                                                'Psytrans ',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )
                                             : Container(),
                                       ],
                                     )

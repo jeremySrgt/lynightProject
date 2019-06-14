@@ -43,26 +43,33 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
         ),
         title: Text(titre,
             style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold)),
-        subtitle: Row(children: <Widget>[
-          Icon(
-            Icons.music_note,
-            color: Colors.blue,
-          ),
-          Row(
+              color: Colors.white,
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+            )),
+        subtitle: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              music['electro'] == true ? Text('Electro ', style: TextStyle(color: Colors.white),) : Container(),
-              music['populaire'] == true ? Text('Populaire ', style: TextStyle(color: Colors.white),) : Container(),
-              music['rap'] == true ? Text('Rap ', style: TextStyle(color: Colors.white),) : Container(),
-              music['rnb'] == true ? Text('RnB ', style: TextStyle(color: Colors.white),) : Container(),
-              music['rock'] == true ? Text('Rock ', style: TextStyle(color: Colors.white),) : Container(),
-              music['trans'] == true ? Text('Psytrans ', style: TextStyle(color: Colors.white),) : Container(),
-            ],
-          )
-        ]),
+              Icon(
+                Icons.music_note,
+                color: Colors.blue,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 200),
+                    child: Text(
+                      "${music['electro'] == true ? 'Électro  ' : ''}${music['populaire'] == true ? 'Populaire  ' : ''}${music['rap'] == true ? 'Rap  ' : ''}${music['rnb'] == true ? 'RnB  ' : ''}${music['rock'] == true ? 'Rock  ' : ''}${music['trans'] == true ? 'Trance  ' : ''}",
+                      style: TextStyle(color: Colors.white, height: 1.5),
+                      overflow: TextOverflow.visible,
+                    ),
+                  ),
+                ],
+              )
+            ]),
         trailing: Icon(Icons.arrow_forward_ios, color: Colors.white),
         onTap: () {
           Navigator.push(
@@ -96,8 +103,8 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
         child: Center(
           child: Container(
               height: 80,
-              padding: EdgeInsets.only(
-                  left: 5.0, right: 5.0, top: 2.0, bottom: 1),
+              padding:
+                  EdgeInsets.only(left: 5.0, right: 5.0, top: 2.0, bottom: 1),
               child: _createFavoritesCard(picture, titre, music, clubID)),
         ),
       ),
