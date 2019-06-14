@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/algo/algoReferencementMusique.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class BottomClubCard extends StatefulWidget {
   @override
@@ -109,7 +110,7 @@ class _BottomClubCardState extends State<BottomClubCard> {
           //print('sortie de la big bpucle');
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return CircularProgressIndicator();
+              return Text('Chargement...');
             default:
               return ListView.builder(
                 itemCount: displayNightClub.length,
@@ -141,8 +142,9 @@ class _BottomClubCardState extends State<BottomClubCard> {
                           children: <Widget>[
                             ClipRRect(
                               borderRadius: BorderRadius.circular(11.0),
-                              child: Image.network(
-                                clubDataMap['pictures'][0],
+                              child: FadeInImage.memoryNetwork(
+                                placeholder: kTransparentImage,
+                                image: clubDataMap['pictures'][0],
                                 fit: BoxFit.cover,
                                 height: height / 4.5,
                                 width: 130.0,

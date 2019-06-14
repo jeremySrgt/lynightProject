@@ -1,15 +1,9 @@
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/services/crud.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:lynight/services/clubPictures.dart';
-import 'package:lynight/algo/algoReferencementMusique.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class TopClubCard extends StatefulWidget {
   final musicMap;
@@ -76,21 +70,20 @@ class _TopClubCardState extends State<TopClubCard> {
 //          print('ISEMPTY');
           mutableListRandomClub.add(queryClubList[currentRandom]);
         } else {
-          for(int j=0; j< mutableListRandomClub.length; j++){
-            if(queryClubList[currentRandom]['clubID'] == mutableListRandomClub[j]['clubID']){
+          for (int j = 0; j < mutableListRandomClub.length; j++) {
+            if (queryClubList[currentRandom]['clubID'] ==
+                mutableListRandomClub[j]['clubID']) {
 //              print('SAME CLUB DOMMAGE');
               sameClub = true;
               break;
             }
           }
-          if(!sameClub){
+          if (!sameClub) {
 //            print('sur le point dajouter : ' + queryClubList[currentRandom]['name']);
             mutableListRandomClub.add(queryClubList[currentRandom]);
-          }
-          else{
+          } else {
             loop++;
           }
-
         }
       }
       setState(() {
@@ -154,8 +147,9 @@ class _TopClubCardState extends State<TopClubCard> {
                       padding: const EdgeInsets.only(left: 22.0, right: 22),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(11.0),
-                        child: Image.network(
-                          fiveRandomClub[i]['pictures'][0],
+                        child: FadeInImage.memoryNetwork(
+                          placeholder: kTransparentImage,
+                          image: fiveRandomClub[i]['pictures'][0],
                           fit: BoxFit.cover,
                           height: height / 6,
                           width: width / 1.3,

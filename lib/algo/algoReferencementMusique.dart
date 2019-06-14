@@ -216,12 +216,6 @@ class AlgoMusicReference {
 //    print(bestClub);
 //    return bestClub;
 
-    List<String> test = [
-      '-LhKMefcBQ5wcJwluZxY',
-      '-LhLFk-SNwnXVF7oIjh_',
-      '-LhKOuZvkR9OVXRUFDnI'
-    ];
-
     if (bestClub.isNotEmpty) {
       int length = bestClub.length;
       if (length >= 5) {
@@ -252,7 +246,7 @@ class AlgoMusicReference {
             }
           }
         }
-        print(mutableListRandomClub);
+//        print(mutableListRandomClub);
         return mutableListRandomClub;
       } else {
         return bestClub;
