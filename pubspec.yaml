@@ -38,6 +38,7 @@ dependencies:
   path_provider: ^1.1.0
   pull_to_refresh: ^1.4.4
   transparent_image: ^1.0.0
+  folding_cell: ^0.1.2
 
 
 

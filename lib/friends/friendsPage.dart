@@ -5,6 +5,7 @@ import 'package:lynight/services/crud.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:lynight/friends/friendResearch.dart';
+import 'package:folding_cell/folding_cell.dart';
 
 class FriendsPage extends StatefulWidget {
   FriendsPage({this.onSignOut});
@@ -245,6 +246,31 @@ class _FriendsPageState extends State<FriendsPage> {
     _refresh();
   }
 
+//  Widget friendList() {
+//    if (friendListMap.isEmpty) {
+//      return Text('Aucun amis');
+//    } else {
+//      return ListView.builder(
+//        itemCount: friendListMap.length,
+//        itemBuilder: (context, i) {
+//          return Card(
+//            elevation: 3.0,
+//            child: ListTile(
+//              leading: CircleAvatar(
+//                // photo de profil
+//                backgroundImage: NetworkImage(friendListMap[i]['picture']),
+//                minRadius: 25,
+//                maxRadius: 25,
+//              ),
+//              title: Text(friendListMap[i]['name']),
+//              subtitle: Text(friendListMap[i]['mail']),
+//            ),
+//          );
+//        },
+//      );
+//    }
+//  }
+
   Widget friendList() {
     if (friendListMap.isEmpty) {
       return Text('Aucun amis');
@@ -252,8 +278,34 @@ class _FriendsPageState extends State<FriendsPage> {
       return ListView.builder(
         itemCount: friendListMap.length,
         itemBuilder: (context, i) {
-          return Card(
-            elevation: 3.0,
+          return SimpleFoldingCell(
+            frontWidget: _buildFrontWidget(i),
+            innerTopWidget: _buildInnerTopWidget(i),
+            innerBottomWidget: _buildInnerBottomWidget(i),
+            cellSize: Size(MediaQuery.of(context).size.width, 125),
+            padding: EdgeInsets.all(15),
+            animationDuration: Duration(milliseconds: 300),
+            borderRadius: 14,
+            onOpen: () => print('$i cell ouverte'),
+            onClose: () => print('$i cell fermée'),
+          );
+        },
+      );
+    }
+  }
+
+  Widget _buildFrontWidget(int i) {
+    return Builder(
+      builder: (BuildContext context) {
+        return GestureDetector(
+          onTap: () {
+            SimpleFoldingCellState foldingCellState = context
+                .ancestorStateOfType(TypeMatcher<SimpleFoldingCellState>());
+            foldingCellState?.toggleFold();
+          },
+          child: Container(
+            color: Color(0xFFdfd3ff),
+            alignment: Alignment.center,
             child: ListTile(
               leading: CircleAvatar(
                 // photo de profil
@@ -264,10 +316,131 @@ class _FriendsPageState extends State<FriendsPage> {
               title: Text(friendListMap[i]['name']),
               subtitle: Text(friendListMap[i]['mail']),
             ),
-          );
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildInnerTopWidget(int i) {
+    return Builder(builder: (context) {
+      return GestureDetector(
+        onTap: () {
+          SimpleFoldingCellState foldingCellState = context
+              .ancestorStateOfType(TypeMatcher<SimpleFoldingCellState>());
+          foldingCellState?.toggleFold();
         },
+        child: Container(
+          color: Color(0xFFecf2f9),
+          alignment: Alignment.center,
+          child: ListTile(
+            leading: CircleAvatar(
+              // photo de profil
+              backgroundImage: NetworkImage(friendListMap[i]['picture']),
+              minRadius: 25,
+              maxRadius: 25,
+            ),
+            title: Text(friendListMap[i]['name']),
+            subtitle: Text(friendListMap[i]['mail']),
+          ),
+        ),
       );
-    }
+    });
+  }
+
+  Widget _buildInnerBottomWidget(int i) {
+    return Builder(builder: (context) {
+      return GestureDetector(
+        onTap: () {
+          SimpleFoldingCellState foldingCellState = context
+              .ancestorStateOfType(TypeMatcher<SimpleFoldingCellState>());
+          foldingCellState?.toggleFold();
+        },
+        child: Container(
+          color: Color(0xFFecf2f9),
+//          alignment: Alignment.center,
+          child: _buttonOneFriendCard(),
+        ),
+      );
+    });
+  }
+
+  Widget _buttonOneFriendCard() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            InkWell(
+              child: Container(
+                width: 70,
+                height: 70,
+                child: Icon(
+                  FontAwesomeIcons.handshake,
+                  color: Theme.of(context).primaryColor,
+                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40.0),
+                    color: Colors.transparent,
+                    border: Border.all(color: Theme.of(context).primaryColor)),
+              ),
+              onTap: () {
+                print('BUTTON 1');
+              },
+            ),
+            Text('Jsp button'),
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            InkWell(
+              child: Container(
+                width: 70,
+                height: 70,
+                child: Icon(
+                  FontAwesomeIcons.shareAlt,
+                  color: Theme.of(context).primaryColor,
+                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40.0),
+                    color: Colors.transparent,
+                    border: Border.all(color: Theme.of(context).primaryColor)),
+              ),
+              onTap: () {
+                print('BUTTON 2');
+              },
+            ),
+            Text('Inviter'),
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            InkWell(
+              child: Container(
+                width: 70,
+                height: 70,
+                child: Icon(
+                  FontAwesomeIcons.times,
+                  color: Colors.red,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40.0),
+                  color: Colors.transparent,
+                  border: Border.all(color: Colors.red),
+                ),
+              ),
+              onTap: () {
+                print('BUTTON 3');
+              },
+            ),
+            Text('Supprimer'),
+          ],
+        ),
+      ],
+    );
   }
 
   Future<dynamic> _refresh() {
@@ -433,25 +606,22 @@ class _FriendsPageState extends State<FriendsPage> {
         controller: _refreshController,
         onLoading: _onLoading,
         onRefresh: _refresh,
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                FriendResearch(
-                    userName: _userName, currentUserId: currentUserId),
-                // demande à yann pour rechercher par nom - 1ere approche par ID complet
-                Container(
-                  height: 300,
-                  padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
-                  child: friendRequest(), // streambuilder pour sure
-                ),
-                Container(
-                  width: 400,
-                  height: 400,
-                  child: friendList(),
-                ),
-              ],
-            ),
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              FriendResearch(userName: _userName, currentUserId: currentUserId),
+              // demande à yann pour rechercher par nom - 1ere approche par ID complet
+              Container(
+                height: 300,
+                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                child: friendRequest(), // streambuilder pour sure
+              ),
+              Container(
+                width: 400,
+                height: 700,
+                child: friendList(),
+              ),
+            ],
           ),
         ),
       ),
