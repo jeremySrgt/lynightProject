@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lynight/services/crud.dart';
+import 'package:lynight/friends/SearchAlgo.dart';
 
 class FriendResearch extends StatefulWidget {
   final String currentUserId;
@@ -147,6 +148,42 @@ class _FriendResearchState extends State<FriendResearch> {
 
   @override
   Widget build(BuildContext context) {
-    return friendResearch();
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double font = MediaQuery.of(context).textScaleFactor;
+
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+        child: SizedBox(
+          height: height/18,
+          width: width/2,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchAlgo(currentUserId: widget.currentUserId, userName: widget.userName,)));
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color.fromRGBO(212, 63, 141, 1),
+                        Color.fromRGBO(2, 80, 197, 1)
+                      ]),
+                  //color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.all(Radius.circular(25))),
+              child: Center(
+                child: Text('Ajouter un ami',
+                    style: TextStyle(color: Colors.white, fontSize: 20.0)),
+              ),
+              //color: Theme.of(context).primaryColor,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
