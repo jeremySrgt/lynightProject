@@ -146,6 +146,30 @@ class _FriendResearchState extends State<FriendResearch> {
     }
   }
 
+
+  void _openModalBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xFF737373)),
+              color: Color(0xFF737373),
+            ),
+            child: Container(
+              child: SearchAlgo(currentUserId: widget.currentUserId, userName: widget.userName,),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(25.0),
+                  topRight: const Radius.circular(25.0),
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -160,9 +184,10 @@ class _FriendResearchState extends State<FriendResearch> {
           width: width/2,
           child: GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SearchAlgo(currentUserId: widget.currentUserId, userName: widget.userName,)));
+              _openModalBottomSheet(context);
+//              Navigator.push(
+//                  context,
+//                  MaterialPageRoute(builder: (context) => SearchAlgo(currentUserId: widget.currentUserId, userName: widget.userName,)));
             },
             child: Container(
               decoration: BoxDecoration(

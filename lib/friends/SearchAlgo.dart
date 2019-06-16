@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lynight/services/crud.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SearchAlgo extends StatefulWidget {
   final String userName;
@@ -24,7 +23,6 @@ class _SearchAlgoState extends State<SearchAlgo> {
   final strController = TextEditingController();
   List<Map<dynamic, dynamic>> suggestionList = [];
   List<Map<dynamic, dynamic>> RealSugg;
-
 
   @override
   void dispose() {
@@ -62,7 +60,7 @@ class _SearchAlgoState extends State<SearchAlgo> {
       });
     }
 
-    if(strController.text.length != 0) {
+    if (strController.text.length != 0) {
       allUser.forEach((user) {
         if (user['mail'].toUpperCase().startsWith(value.toUpperCase())) {
           setState(() {
@@ -72,7 +70,7 @@ class _SearchAlgoState extends State<SearchAlgo> {
       });
     }
 
- /*     for (int n = 0; n < allUser.length; n++) {
+    /*     for (int n = 0; n < allUser.length; n++) {
         if (allUser[n]['mail'].toUpperCase().startsWith(
             value.toUpperCase())) {
           setState(() {
@@ -89,44 +87,37 @@ class _SearchAlgoState extends State<SearchAlgo> {
     double font = MediaQuery.of(context).textScaleFactor;
 
     String val = "";
-    return Scaffold(
-        resizeToAvoidBottomPadding: false,
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Container(
-            color: Colors.white,
-            child: Column(children: [
-              Container(
-                margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 15),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    color: Colors.white,
-                    border: Border.all(color: Colors.deepPurpleAccent)),
-                child: ListTile(
-                  leading: Icon(
-                    Icons.search,
-                    color: Theme.of(context).accentColor,
-                  ),
-                  title: TextField(
-                    controller: strController,
-                    onChanged: (val) {
-                      initiateSearch(val);
-                      //inputSearch = val;
-                    },
-                    maxLines: 1,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                        hintText: "Recherche par e-mail",
-                        hintStyle:
-                            TextStyle(color: Colors.grey, fontSize: font * 15),
-                        border: InputBorder.none),
-                  ),
-                ),
-              ),
-              resultSearch(),
-            ]),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(25.0),
+          topRight: const Radius.circular(25.0),
+        ),
+      ),
+      child: Column(children: [
+        ListTile(
+          leading: Icon(
+            Icons.search,
+            color: Theme.of(context).accentColor,
           ),
-        ));
+          title: TextField(
+            controller: strController,
+            onChanged: (val) {
+              initiateSearch(val);
+              //inputSearch = val;
+            },
+            maxLines: 1,
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+                hintText: "Recherche par e-mail",
+                hintStyle: TextStyle(color: Colors.grey, fontSize: font * 15),
+                border: InputBorder.none),
+          ),
+        ),
+        resultSearch(),
+      ]),
+    );
   }
 
   void addFriend(friendID) {
@@ -147,8 +138,7 @@ class _SearchAlgoState extends State<SearchAlgo> {
         });
 
         for (int i = 0; i < _friendRequestList0fRequestedFriend.length; i++) {
-          if (_friendRequestList0fRequestedFriend[i] ==
-              widget.currentUserId) {
+          if (_friendRequestList0fRequestedFriend[i] == widget.currentUserId) {
             setState(() {
               _alreadyRequestedFriend = true;
             });
@@ -157,14 +147,13 @@ class _SearchAlgoState extends State<SearchAlgo> {
 
         if (_alreadyRequestedFriend == false) {
           List<String> mutableListOfRequestedFriend =
-          List.from(_friendRequestList0fRequestedFriend);
+              List.from(_friendRequestList0fRequestedFriend);
 
           mutableListOfRequestedFriend.add(widget.currentUserId);
 
           crudObj.updateData('user', friendID,
               {'friendRequest': mutableListOfRequestedFriend});
-
-        }else{
+        } else {
           print('deja amis===========');
         }
       }
@@ -174,47 +163,52 @@ class _SearchAlgoState extends State<SearchAlgo> {
     });
   }
 
-
-  bool alreadyFriend(requestedFriendList){
-    if(requestedFriendList == null) {
+  bool alreadyFriend(requestedFriendList) {
+    if (requestedFriendList == null) {
       return false;
     }
-      for (int i = 0; i < requestedFriendList.length; i++) {
-        if (widget.currentUserId == requestedFriendList[i]) {
-          return true;
-        }
+    for (int i = 0; i < requestedFriendList.length; i++) {
+      if (widget.currentUserId == requestedFriendList[i]) {
+        return true;
       }
+    }
 
-      return false;
-
+    return false;
   }
 
-  bool alreadyReq(requestedFriendReq){
-    if(requestedFriendReq == null) {
+  bool alreadyReq(requestedFriendReq) {
+    if (requestedFriendReq == null) {
       return false;
     }
-      for (int i = 0; i < requestedFriendReq.length; i++) {
-        if (widget.currentUserId == requestedFriendReq[i]) {
-          return true;
-        }
+    for (int i = 0; i < requestedFriendReq.length; i++) {
+      if (widget.currentUserId == requestedFriendReq[i]) {
+        return true;
       }
+    }
 
-      return false;
-
+    return false;
   }
 
-  Widget trailingIcon(index){
-    if(alreadyFriend(suggestionList[index]['friendList'])){
+  Widget trailingIcon(index) {
+    if (alreadyFriend(suggestionList[index]['friendList'])) {
       return Icon(Icons.check);
     }
-    if(alreadyReq(suggestionList[index]['friendRequest'])){
-      return Icon(FontAwesomeIcons.paperPlane, color: Colors.white,);
+    if (alreadyReq(suggestionList[index]['friendRequest'])) {
+      return Icon(
+        FontAwesomeIcons.paperPlane,
+        color: Colors.white,
+      );
     }
 
     return GestureDetector(
-      onTap: () {addFriend(suggestionList[index]['userID']);},
-      child: Icon(Icons.add,
-        color: Colors.white, size: 30,),
+      onTap: () {
+        addFriend(suggestionList[index]['userID']);
+      },
+      child: Icon(
+        Icons.add,
+        color: Colors.white,
+        size: 30,
+      ),
     );
   }
 
@@ -224,76 +218,80 @@ class _SearchAlgoState extends State<SearchAlgo> {
         suggestionList = [];
       });
     }
-    if (suggestionList == [] && strController.text.length >=1){
+    if (suggestionList == [] && strController.text.length >= 1) {
       return Text("Cet utilisateur n'existe pas");
-    }
-    else {
+    } else {
       print("DANS LE ELSE : " + suggestionList.toString());
-    return Expanded(
+      return Expanded(
         child: Container(
-            child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: suggestionList.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    color: Colors.transparent,
-                    elevation: 12.0,
-                    margin: new EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 6.0),
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: suggestionList.length,
+            itemBuilder: (context, index) {
+              return Card(
+                color: Colors.transparent,
+                elevation: 12.0,
+                margin:
+                    new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color.fromRGBO(212, 63, 141, 1),
+                            Color.fromRGBO(2, 80, 197, 1)
+                          ]),
+                      //color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.all(Radius.circular(25))),
+                  child: Center(
                     child: Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Color.fromRGBO(	212, 63, 141, 1),
-                                  Color.fromRGBO(		2, 80, 197, 1)
-                                ]),
-                            //color: Theme.of(context).primaryColor,
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(25))),
-                        child: Center(
-                          child: Container(
-                            height: 80,
-                            padding: EdgeInsets.only(
-                                left: 5.0, right: 5.0, top: 2.0, bottom: 1),
-                            child: Column(children: [
-                              ListTile(
-                                leading: ClipRRect(
-                                  borderRadius:
-                                  BorderRadius.circular(100.0),
-                                  child: Image.network(
-                                    suggestionList[index]['picture'],
-                                    fit: BoxFit.cover,
-                                    width: 60.0,
-                                    height: 150.0,
-                                  ),
-                                ),
-                                title: Text(suggestionList[index]['name'],
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold)),
-                                subtitle: Row(
-                                  children: <Widget>[
-                                    Icon(Icons.alternate_email, color: Colors.blue, size: 20,),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(suggestionList[index]['mail'],
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold)),
-                                  ]
-                                ),
-                                trailing: trailingIcon(index),
-                              ),
-                            ]),
+                      height: 80,
+                      padding: EdgeInsets.only(
+                          left: 5.0, right: 5.0, top: 2.0, bottom: 1),
+                      child: Column(children: [
+                        ListTile(
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(100.0),
+                            child: Image.network(
+                              suggestionList[index]['picture'],
+                              fit: BoxFit.cover,
+                              width: 60.0,
+                              height: 150.0,
+                            ),
                           ),
-                        )),
-                  );
-                })));}
+                          title: Text(suggestionList[index]['name'],
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold)),
+                          subtitle: Row(children: <Widget>[
+                            Icon(
+                              Icons.alternate_email,
+                              color: Colors.blue,
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(suggestionList[index]['mail'],
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold)),
+                          ]),
+                          trailing: trailingIcon(index),
+                        ),
+                      ]),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      );
+    }
   }
 }

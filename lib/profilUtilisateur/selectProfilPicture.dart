@@ -88,8 +88,6 @@ class _SelectProfilPictureState extends State<SelectProfilPicture> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
     return Container(
       child: Column(
         children: <Widget>[

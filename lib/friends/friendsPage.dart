@@ -597,6 +597,8 @@ class _FriendsPageState extends State<FriendsPage> {
   }
 }
 
+
+//juste une class pour override les header d'une sliverList
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverAppBarDelegate({
     @required this.minHeight,

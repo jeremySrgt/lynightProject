@@ -245,6 +245,7 @@ class _ListPageState extends State<ListPage> {
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0.0,
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         title: Text('Mes reservations',style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 30),),
