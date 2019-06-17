@@ -301,6 +301,34 @@ class _CustomSliderState extends State<CustomSlider> {
               },
             ),
           ),
+          Container(
+            decoration: widget.activePage == 'Invitation'
+                ? BoxDecoration(
+                color: Color(0xFFebdffc),
+                borderRadius: BorderRadius.circular(15.0))
+                : BoxDecoration(),
+            child: ListTile(
+              leading: Icon(
+                FontAwesomeIcons.compactDisc,
+                color: widget.activePage == 'Invitation'
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              title: Text(
+                'Évènements',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: widget.activePage == 'Invitation'
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                ),
+              ),
+              //TODO ajouter un trailing pour afficher le nombre d'invitation
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/eventInvitation');
+              },
+            ),
+          ),
           pro == true ? Divider() : Container(),
           pro == true ? scanQrPro() : Container(),
           pro == true ? addClubPro() : Container(),

@@ -4,18 +4,17 @@ import 'package:flutter/services.dart';
 import 'comptePro/addClub.dart';
 import 'comptePro/scannerQrCode.dart';
 import 'friends/friendsPage.dart';
-import 'principalPage.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
 import 'package:lynight/maps/googleMapsClient.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/authentification/root_page.dart';
 import 'package:lynight/myReservations/myReservation.dart';
-import 'package:lynight/favorites/favoritesNightClub.dart';
 import 'package:lynight/nightCubPage/sumUpPage.dart';
 import 'package:lynight/sliderInformations/about.dart';
 import 'package:lynight/sliderInformations/termsAndConditions.dart';
 import 'package:lynight/sliderInformations/confidentiality.dart';
+import 'package:lynight/friends/eventInvitation.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -64,6 +63,7 @@ class _MyAppState extends State<MyApp> {
         '/about': (BuildContext context) => About(),
         '/terms&conditions': (BuildContext context) => TermsAndConditions(),
         '/confidentiality' : (BuildContext context)=> Confidentiality(),
+        '/eventInvitation' : (BuildContext context)=> EventInvitation(),
       },
     );
   }

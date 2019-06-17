@@ -117,21 +117,20 @@ class _FriendResearchState extends State<FriendResearch> {
   }
 
   Widget _button() {
-    if(_isLoading){
+    if (_isLoading) {
       return Padding(
         padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
         child: CircularProgressIndicator(),
       );
-    }
-    else{
+    } else {
       return Padding(
         padding: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
         child: SizedBox(
           height: 40.0,
           child: RaisedButton(
             elevation: 5.0,
-            shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0)),
             child: Text('demande d\'ami',
                 style: TextStyle(color: Colors.white, fontSize: 20.0)),
             color: Theme.of(context).primaryColor,
@@ -146,7 +145,6 @@ class _FriendResearchState extends State<FriendResearch> {
     }
   }
 
-
   void _openModalBottomSheet(context) {
     showModalBottomSheet(
         context: context,
@@ -157,7 +155,10 @@ class _FriendResearchState extends State<FriendResearch> {
               color: Color(0xFF737373),
             ),
             child: Container(
-              child: SearchAlgo(currentUserId: widget.currentUserId, userName: widget.userName,),
+              child: SearchAlgo(
+                currentUserId: widget.currentUserId,
+                userName: widget.userName,
+              ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -179,39 +180,42 @@ class _FriendResearchState extends State<FriendResearch> {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
-        child: Card(
-          color: Colors.transparent,
-          elevation: 8,
-          child: SizedBox(
-            height: height/18,
-            width: width/2,
-            child: GestureDetector(
-              onTap: () {
-                _openModalBottomSheet(context);
+        child: widget.userName == ''
+            ? Text('Tu dois renseigner ton prénom pour ajouter un ami !')
+            : Card(
+                color: Colors.transparent,
+                elevation: 8,
+                child: SizedBox(
+                  height: height / 18,
+                  width: width / 2,
+                  child: GestureDetector(
+                    onTap: () {
+                      _openModalBottomSheet(context);
 //              Navigator.push(
 //                  context,
 //                  MaterialPageRoute(builder: (context) => SearchAlgo(currentUserId: widget.currentUserId, userName: widget.userName,)));
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Color.fromRGBO(212, 63, 141, 1),
-                          Color.fromRGBO(2, 80, 197, 1)
-                        ]),
-                    //color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.all(Radius.circular(25))),
-                child: Center(
-                  child: Text('Ajouter un ami',
-                      style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color.fromRGBO(212, 63, 141, 1),
+                                Color.fromRGBO(2, 80, 197, 1)
+                              ]),
+                          //color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(25))),
+                      child: Center(
+                        child: Text('Ajouter un ami',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 20.0)),
+                      ),
+                      //color: Theme.of(context).primaryColor,
+                    ),
+                  ),
                 ),
-                //color: Theme.of(context).primaryColor,
               ),
-            ),
-          ),
-        ),
       ),
     );
   }

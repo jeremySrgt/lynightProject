@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:lynight/discoverPage/topClubCard.dart';
 import 'package:lynight/discoverPage/bottomClubCard.dart';
@@ -100,7 +101,7 @@ class _PrincipalPageState extends State<PrincipalPage>
           indicatorColor: Colors.white,
           tabs: [
             Tab(
-              icon: Icon(Icons.adjust),
+              icon: Icon(FontAwesomeIcons.globe),
             ),
             Tab(
               icon: Icon(Icons.search),
