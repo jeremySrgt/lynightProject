@@ -45,6 +45,8 @@ class _FriendsPageState extends State<FriendsPage> {
   List<Map<dynamic, dynamic>> listOfRequest = [];
   List<dynamic> userFriendRequestListFromFirestore = [];
 
+  List<dynamic> userFriendList = [];
+
   List<Map<dynamic, dynamic>> friendListMap = [];
 
   CrudMethods crudObj = new CrudMethods();
@@ -239,8 +241,8 @@ class _FriendsPageState extends State<FriendsPage> {
           padding: EdgeInsets.all(15),
           animationDuration: Duration(milliseconds: 300),
           borderRadius: 14,
-          onOpen: () => print('$i cell ouverte'),
-          onClose: () => print('$i cell fermée'),
+//          onOpen: () => print('$i cell ouverte'),
+//          onClose: () => print('$i cell fermée'),
         );
       }, childCount: friendListMap.length),
     );
@@ -311,13 +313,13 @@ class _FriendsPageState extends State<FriendsPage> {
         child: Container(
           color: Color(0xFFecf2f9),
 //          alignment: Alignment.center,
-          child: _buttonOneFriendCard(),
+          child: _buttonOneFriendCard(i),
         ),
       );
     });
   }
 
-  Widget _buttonOneFriendCard() {
+  Widget _buttonOneFriendCard(int i) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
@@ -385,7 +387,38 @@ class _FriendsPageState extends State<FriendsPage> {
                 ),
               ),
               onTap: () {
-                print('BUTTON 3');
+                List<dynamic> mutableFriendList = userFriendList;
+                List<Map<dynamic,dynamic>> mutableFriendListMap = friendListMap;
+                print('iiiiiiiii' + i.toString());
+                print('userfriendlist apres le chargement');
+                print(mutableFriendList);
+                print('friendListMap');
+                print(friendListMap[1]);
+                String friendID = friendListMap[i]['ID'];
+                print(friendID);
+                mutableFriendList = List.from(mutableFriendList)..removeAt(i);
+                print('mutableFriendList ----');
+                print(mutableFriendList);
+                List<dynamic> mutableFriendListOfFriend = List.from(friendListMap[i]['friendList']);
+                for(int k = 0; k<mutableFriendListOfFriend.length; k++){
+                  if(currentUserId == mutableFriendListOfFriend[k]){
+                    mutableFriendListOfFriend.removeAt(k);
+                    break;
+                  }
+                }
+                print('mutableFriendListOfFriend +++++');
+                print(mutableFriendListOfFriend);
+                mutableFriendListMap = List.from(mutableFriendListMap)..removeAt(i);
+
+                setState(() {
+                  userFriendList = mutableFriendList;
+                  friendListMap = mutableFriendListMap;
+                });
+                print('userFriendList apres le removeAt');
+                print(mutableFriendList);
+                print(friendListMap);
+                removeFriend(friendID,mutableFriendListOfFriend);
+
               },
             ),
             Text('Supprimer'),
@@ -393,6 +426,15 @@ class _FriendsPageState extends State<FriendsPage> {
         ),
       ],
     );
+  }
+
+
+
+  void removeFriend(friendID,friendListOfFriend){
+
+    crudObj.updateData('user', currentUserId, {'friendList' : userFriendList});
+    crudObj.updateData('user', friendID, {'friendList' : friendListOfFriend});
+    _refresh();
   }
 
   Future<dynamic> _refresh() {
@@ -403,9 +445,11 @@ class _FriendsPageState extends State<FriendsPage> {
       });
 
       List<dynamic> userFriendRequestList = currentUserDataMap['friendRequest'];
+      List<dynamic> currentUserFriendList = currentUserDataMap['friendList'];
       setState(() {
         _userName = currentUserDataMap['name'];
         userFriendRequestListFromFirestore = userFriendRequestList;
+        userFriendList = currentUserFriendList;
       });
 
 //      print('aaaaaaaaaaa');
@@ -440,17 +484,18 @@ class _FriendsPageState extends State<FriendsPage> {
 
 //      Map<String, dynamic> dataMap = value.data;
       List<Map<dynamic, dynamic>> mutableListOfFriendData = [];
-      List<dynamic> tempFriendLList = dataMap['friendList'];
-      if (tempFriendLList.isEmpty) {
+      List<dynamic> tempFriendList = dataMap['friendList'];
+      if (tempFriendList.isEmpty) {
         setState(() {
           friendListMap = [];
         });
       }
-      for (int i = 0; i < tempFriendLList.length; i++) {
+      for (int i = 0; i < tempFriendList.length; i++) {
         crudObj
-            .getDataFromUserFromDocumentWithID(tempFriendLList[i])
+            .getDataFromUserFromDocumentWithID(tempFriendList[i])
             .then((value) {
           Map<dynamic, dynamic> userDataMap = value.data;
+          userDataMap['ID'] = tempFriendList[i];
           mutableListOfFriendData.add(userDataMap);
           setState(() {
             friendListMap = mutableListOfFriendData;
@@ -475,9 +520,11 @@ class _FriendsPageState extends State<FriendsPage> {
       });
 
       List<dynamic> userFriendRequestList = currentUserDataMap['friendRequest'];
+      List<dynamic> currentUserFriendList = currentUserDataMap['friendList'];
       setState(() {
         _userName = currentUserDataMap['name'];
         userFriendRequestListFromFirestore = userFriendRequestList;
+        userFriendList = currentUserFriendList;
       });
 
 //      print('aaaaaaaaaaa');
@@ -512,17 +559,18 @@ class _FriendsPageState extends State<FriendsPage> {
 
 //      Map<String, dynamic> dataMap = value.data;
       List<Map<dynamic, dynamic>> mutableListOfFriendData = [];
-      List<dynamic> tempFriendLList = dataMap['friendList'];
-      if (tempFriendLList.isEmpty) {
+      List<dynamic> tempFriendList = dataMap['friendList'];
+      if (tempFriendList.isEmpty) {
         setState(() {
           friendListMap = [];
         });
       }
-      for (int i = 0; i < tempFriendLList.length; i++) {
+      for (int i = 0; i < tempFriendList.length; i++) {
         crudObj
-            .getDataFromUserFromDocumentWithID(tempFriendLList[i])
+            .getDataFromUserFromDocumentWithID(tempFriendList[i])
             .then((value) {
           Map<dynamic, dynamic> userDataMap = value.data;
+          userDataMap['ID'] = tempFriendList[i];
           mutableListOfFriendData.add(userDataMap);
           setState(() {
             friendListMap = mutableListOfFriendData;
