@@ -23,7 +23,7 @@ class _CustomSliderState extends State<CustomSlider> {
   String profilePicture =
       'https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46';
   bool pro = false;
-  int numberOfFriendRequest;
+  int numberOfFriendRequest = 0;
 
   final Shader linearGradient = LinearGradient(
     colors: <Color>[Colors.pink, Colors.deepPurple],
@@ -290,7 +290,12 @@ class _CustomSliderState extends State<CustomSlider> {
                       : Colors.grey,
                 ),
               ),
-              trailing: Text(numberOfFriendRequest.toString()),
+              trailing: numberOfFriendRequest != 0
+                  ? Text(
+                      numberOfFriendRequest.toString() + ' demande',
+                      style: TextStyle(color: Color(0xFFce3737)),
+                    )
+                  : Text(''),
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/friends');
               },
