@@ -280,7 +280,7 @@ class _SearchAlgoState extends State<SearchAlgo> {
                             Text(suggestionList[index]['mail'],
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 13,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.bold)),
                           ]),
                           trailing: trailingIcon(index),
