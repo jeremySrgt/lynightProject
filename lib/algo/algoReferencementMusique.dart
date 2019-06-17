@@ -15,6 +15,8 @@ class AlgoMusicReference {
   bool populaire = false;
   bool rock = false;
   bool trans = false;
+  int numberOfSameMusics= 0;
+
 
   List<DocumentSnapshot> dataClubFromBDD;
   final snapClub;
@@ -92,8 +94,35 @@ class AlgoMusicReference {
     }
   }
 
+  Map<String, int> creationMapOfMusicAndLiked(){
+      Map<String, int> club = {};
+      if(snapClub != null) {
+        for (int i = 0; i < 5; i++) {
+          if (snapClub[i].documentID != null) {
+            club[snapClub[i].documentID] = 0;
+          }
+        }
+        return club;
+      }
+
+  }
+
+
+  List<List> listNumberOfMusicLiked(){
+    var m = 5;
+    var n = 2;
+    var x = new List.generate(m, (_) => new List(n));
+    print('diezbdhuezbhudbezhubdhuzebdhezhudbezhudbeuz');
+    print(x);
+    return x;
+  }
+
   // Compare les 2 map
   List<String> compareMusic() {
+    Map<String, int> mapOfClubAndMatch = creationMapOfMusicAndLiked();
+    print('dheiuzduiezidez');
+    print(mapOfClubAndMatch);
+
     final List<String> bestClub = []; //club retenu pour la liste à retourner
 
     //print('==================');
@@ -129,21 +158,40 @@ class AlgoMusicReference {
     //print(getMusic);
     //print('==================');
 
+
+
+
     // Va boucler sur la taille de la liste complete
     for (int i = 0; i < getMusic.length; i++) {
       if (mapOfUserMusics != null) {
         if (getMusic != null) {
           Map<dynamic, dynamic> mapOfMusicFromList = getMusic[i];
-          List<String> nameOfClubList = getClubName();
 
           // Va verifier tout les style de musique d'abord si ils ont là même valeur et ensuite si il retourne true
           // Si c'est le cas on va l'ajouter à la liste qui sera retourné
 
-          if ((mapOfUserMusics['populaire'] ==
-                  mapOfMusicFromList['populaire']) && (mapOfUserMusics['populaire'] == true)) {
+          if ((mapOfUserMusics['populaire'] == mapOfMusicFromList['populaire']) && (mapOfUserMusics['populaire'] == true)) {
+            listNumberOfMusicLiked();
             //print('debut de la boucle de verif de style de music');
             //print('*********************');
-            //print('Les deux il kiffe populaire');
+            // print('Les deux il kiffe populaire');
+
+
+            var numberOfMatch = mapOfClubAndMatch['${snapClub[i].documentID}'];
+            print('---------------------');
+            print('number of match au debut, devrait etre 0  ');
+            print(numberOfMatch);
+            if(numberOfMatch != null) {
+              numberOfMatch = numberOfMatch + 1;
+              mapOfClubAndMatch['${snapClub[i].documentID}'] = numberOfMatch;
+              print('number of match :;;;;;;;;;;;;;; ');
+              print(numberOfMatch);
+              print(mapOfClubAndMatch);
+            }
+
+
+            print('---------------');
+            print(mapOfClubAndMatch);
             bestClub.add(snapClub[i].documentID);
             //print('Valur après ajout de populaire');
             //print(bestClub);
