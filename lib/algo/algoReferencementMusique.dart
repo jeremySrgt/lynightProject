@@ -1,18 +1,9 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:lynight/services/crud.dart';
-import 'package:lynight/nightCubPage/nightClubProfile.dart';
 
-/*class AlgoMusicReference extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _AlgoMusicReference();
-  }
-}*/
 
 class AlgoMusicReference {
   CrudMethods crudObj = new CrudMethods();
@@ -149,8 +140,7 @@ class AlgoMusicReference {
           // Si c'est le cas on va l'ajouter à la liste qui sera retourné
 
           if ((mapOfUserMusics['populaire'] ==
-                  mapOfMusicFromList['populaire']) &&
-              (mapOfUserMusics['populaire'] == true)) {
+                  mapOfMusicFromList['populaire']) && (mapOfUserMusics['populaire'] == true)) {
             //print('debut de la boucle de verif de style de music');
             //print('*********************');
             //print('Les deux il kiffe populaire');
@@ -159,41 +149,35 @@ class AlgoMusicReference {
             //print(bestClub);
             //return bestClub;
           } else {
-            if ((mapOfUserMusics['electro'] == mapOfMusicFromList['electro']) &&
-                (mapOfUserMusics['electro'] == true)) {
+            if ((mapOfUserMusics['electro'] == mapOfMusicFromList['electro']) && (mapOfUserMusics['electro'] == true)) {
               //print('*****************');
               //print('ils aiment le electro tout les 2 ');
               bestClub.add(snapClub[i].documentID);
               //print('Valur après ajout de electro');
               //print(bestClub);
             } else {
-              if ((mapOfUserMusics['rap'] == mapOfMusicFromList['rap']) &&
-                  (mapOfUserMusics['rap'] == true)) {
+              if ((mapOfUserMusics['rap'] == mapOfMusicFromList['rap']) && (mapOfUserMusics['rap'] == true)) {
                 //print('*****************');
                 //print('ils aiment le rap tout les 2 ');
                 bestClub.add(snapClub[i].documentID);
                 //print('Valur après ajout de rap');
                 //print(bestClub);
               } else {
-                if ((mapOfUserMusics['rnb'] == mapOfMusicFromList['rnb']) &&
-                    (mapOfUserMusics['rnb'] == true)) {
+                if ((mapOfUserMusics['rnb'] == mapOfMusicFromList['rnb']) && (mapOfUserMusics['rnb'] == true)) {
                   //print('*****************');
                   //print('ils aiment le rnb tout les 2 ');
                   bestClub.add(snapClub[i].documentID);
                   //print('Valur après ajout de rnb');
                   //print(bestClub);
                 } else {
-                  if ((mapOfUserMusics['rock'] == mapOfMusicFromList['rock']) &&
-                      (mapOfUserMusics['rock'] == true)) {
+                  if ((mapOfUserMusics['rock'] == mapOfMusicFromList['rock']) && (mapOfUserMusics['rock'] == true)) {
                     //print('*****************');
                     //print('ils aiment le rock tout les 2 ');
                     bestClub.add(snapClub[i].documentID);
                     //print('Valur après ajout de rock');
                     //print(bestClub);
                   } else {
-                    if ((mapOfUserMusics['trans'] ==
-                            mapOfMusicFromList['trans']) &&
-                        (mapOfUserMusics['trans'] == true)) {
+                    if ((mapOfUserMusics['trans'] == mapOfMusicFromList['trans']) && (mapOfUserMusics['trans'] == true)) {
                       //print('*****************');
                       //print('ils aiment la trans tout les 2 ');
                       bestClub.add(snapClub[i].documentID);
@@ -203,8 +187,8 @@ class AlgoMusicReference {
                   }
                 }
               }
-              //print('Valeur de bestclub quoi quil arrive');
-              //print(bestClub);
+              print('Valeur de bestclub quoi quil arrive');
+              print(bestClub);
               //print('Le club ' +nameOfClubList[i] +'a aucun son en commun avec le user');
             }
           }
