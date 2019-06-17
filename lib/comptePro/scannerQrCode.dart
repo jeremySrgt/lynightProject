@@ -90,17 +90,17 @@ class _ScannerQrCode extends State<ScannerQrCode> {
   }
 
   Widget buttonToChangeUserScanGood(){
-    final GreenForced = const Color.fromRGBO(66, 163, 65, 1);
-    final GreenLight = const Color.fromRGBO(184, 226, 163, 1);
+    final greenForced = const Color.fromRGBO(66, 163, 65, 1);
+    final greenLight = const Color.fromRGBO(184, 226, 163, 1);
     return RaisedButton(
-      color: GreenLight,
+      color: greenLight,
       elevation: 5,
       shape: StadiumBorder(),
       child: Text(
           'Ok',
           style: TextStyle(
               fontSize: 20,
-              color: GreenForced,
+              color: greenForced,
               fontWeight: FontWeight.bold
           )
       ),
@@ -229,8 +229,6 @@ class _ScannerQrCode extends State<ScannerQrCode> {
           setState(() {
               qrText = arguments.toString();
               checkIfScanOrNot = false;
-
-              //child: Text('hduezh'),
           });
       }
     });
