@@ -97,7 +97,7 @@ class AlgoMusicReference {
   Map<String, int> creationMapOfMusicAndLiked(){
       Map<String, int> club = {};
       if(snapClub != null) {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 15; i++) {
           if (snapClub[i].documentID != null) {
             club[snapClub[i].documentID] = 0;
           }
@@ -196,7 +196,7 @@ class AlgoMusicReference {
             //print('Valur après ajout de populaire');
             //print(bestClub);
             //return bestClub;
-          } else {
+          }
             if ((mapOfUserMusics['electro'] == mapOfMusicFromList['electro']) && (mapOfUserMusics['electro'] == true)) {
               //print('*****************');
               //print('ils aiment le electro tout les 2 ');
@@ -220,7 +220,7 @@ class AlgoMusicReference {
               bestClub.add(snapClub[i].documentID);
               //print('Valur après ajout de electro');
               //print(bestClub);
-            } else {
+            }
               if ((mapOfUserMusics['rap'] == mapOfMusicFromList['rap']) && (mapOfUserMusics['rap'] == true)) {
                 //print('*****************');
                 //print('ils aiment le rap tout les 2 ');
@@ -246,7 +246,7 @@ class AlgoMusicReference {
                 bestClub.add(snapClub[i].documentID);
                 //print('Valur après ajout de rap');
                 //print(bestClub);
-              } else {
+              }
                 if ((mapOfUserMusics['rnb'] == mapOfMusicFromList['rnb']) && (mapOfUserMusics['rnb'] == true)) {
                   //print('*****************');
                   //print('ils aiment le rnb tout les 2 ');
@@ -273,7 +273,7 @@ class AlgoMusicReference {
                   bestClub.add(snapClub[i].documentID);
                   //print('Valur après ajout de rnb');
                   //print(bestClub);
-                } else {
+                }
                   if ((mapOfUserMusics['rock'] == mapOfMusicFromList['rock']) && (mapOfUserMusics['rock'] == true)) {
                     //print('*****************');
                     //print('ils aiment le rock tout les 2 ');
@@ -300,7 +300,7 @@ class AlgoMusicReference {
                     bestClub.add(snapClub[i].documentID);
                     //print('Valur après ajout de rock');
                     //print(bestClub);
-                  } else {
+                  }
                     if ((mapOfUserMusics['trans'] == mapOfMusicFromList['trans']) && (mapOfUserMusics['trans'] == true)) {
                       //print('*****************');
                       //print('ils aiment la trans tout les 2 ');
@@ -327,18 +327,20 @@ class AlgoMusicReference {
                       //print('Valur après ajout de trans');
                       //print(bestClub);
                     }
-                  }
-                }
-              }
+
+
+
               print('Valeur de bestclub quoi quil arrive');
               print(bestClub);
+              print('__________________________');
+              print('fin de la map avec les club');
+              print(mapOfClubAndMatch);
               //print('Le club ' +nameOfClubList[i] +'a aucun son en commun avec le user');
             }
           }
 //          print('--------------------------------------------------');
         }
-      }
-    }
+
 
 //    print(bestClub);
 //    return bestClub;
