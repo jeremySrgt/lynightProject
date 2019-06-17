@@ -47,6 +47,8 @@ class UserData {
       "picture":picture,
       "reservation":reservation,
       "pro":pro,
+      "friendRequest": friendRequest,
+      "friendList": friendList,
     };
   }
 }
