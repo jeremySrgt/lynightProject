@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lynight/services/clubPictures.dart';
-import 'package:lynight/nightCubPage/carousel.dart';
-import 'package:lynight/services/clubPictures.dart';
 import 'package:lynight/nightCubPage/sumUpPage.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:url_launcher/url_launcher.dart';
