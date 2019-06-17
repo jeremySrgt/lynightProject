@@ -95,9 +95,10 @@ class AlgoMusicReference {
   }
 
   Map<String, int> creationMapOfMusicAndLiked(){
-      Map<String, int> club = {};
+    List<dynamic> getMusic = getMusicsOfClubMap();
+    Map<String, int> club = {};
       if(snapClub != null) {
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < getMusic.length; i++) {
           if (snapClub[i].documentID != null) {
             club[snapClub[i].documentID] = 0;
           }
