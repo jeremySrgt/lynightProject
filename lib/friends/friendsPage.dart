@@ -365,7 +365,7 @@ class _FriendsPageState extends State<FriendsPage> {
                     border: Border.all(color: Theme.of(context).primaryColor)),
               ),
               onTap: () {
-                _openModalBottomSheet(context,friendListMap[i]['ID']);
+                _openModalBottomSheet(context,friendListMap[i]['ID'],friendListMap[i]['name']);
               },
             ),
             Text('Inviter'),
@@ -425,7 +425,7 @@ class _FriendsPageState extends State<FriendsPage> {
     _refresh();
   }
 
-  void _openModalBottomSheet(context, friendID) {
+  void _openModalBottomSheet(context, friendID,friendName) {
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -435,7 +435,7 @@ class _FriendsPageState extends State<FriendsPage> {
               color: Color(0xFF737373),
             ),
             child: Container(
-              child: inviteToClub(friendID),
+              child: inviteToClub(friendID,friendName),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -448,7 +448,7 @@ class _FriendsPageState extends State<FriendsPage> {
         });
   }
 
-  Widget inviteToClub(friendID) {
+  Widget inviteToClub(friendID,friendName) {
     List<dynamic> currentUserReservation =
         List.from(currentUserDataMap['reservation']);
     print(currentUserReservation);
@@ -457,7 +457,7 @@ class _FriendsPageState extends State<FriendsPage> {
       child: Column(
         children: <Widget>[
           Container(
-            child: Text('Clique sur un évènement pour inviter un ami'),
+            child: Text('Clique sur un évènement pour inviter $friendName'),
           ),
           Expanded(
             child: Container(
