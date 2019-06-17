@@ -148,7 +148,7 @@ class _TopClubCardState extends State<TopClubCard> {
             ),
             Expanded(
               child: Text(
-                '${fiveRandomClub[i]['arrond']}e arrondissement',
+                'Paris ${fiveRandomClub[i]['arrond']} ',
                 style: TextStyle(
                     color: Colors.white,
                     height: 1.2,
@@ -176,9 +176,9 @@ class _TopClubCardState extends State<TopClubCard> {
             width: width / 40,
           ),
           Container(
-            constraints: BoxConstraints(maxWidth: 150),
+            constraints: BoxConstraints(maxWidth: width/ 2.9),
             child: Text("${musicMap['electro'] == true ? 'Électro  ' : ''}${musicMap['populaire'] == true ? 'Populaire  ' : '' }${musicMap['rap'] == true ? 'Rap  ' : '' }${musicMap['rnb'] == true ? 'RnB  ' : '' }${musicMap['rock'] == true ? 'Rock  ' : '' }${musicMap['trans'] == true ? 'Trance  ' : '' }"
-              ,style: TextStyle(color: Colors.white,),overflow: TextOverflow.visible,),
+              ,style: TextStyle(color: Colors.white,),overflow: TextOverflow.ellipsis,),
           ),
 
         ]),
@@ -222,15 +222,15 @@ class _TopClubCardState extends State<TopClubCard> {
             children: <Widget>[
               clubPicture(height, width, i),
               SizedBox(
-                height: height / 40,
+                height: height / 75,
               ),
               clubName(font, i),
               SizedBox(
-                height: height / 40,
+                height: height / 60,
               ),
               clubLocation(width, font, i),
               SizedBox(
-                height: height / 75,
+                height: height / 120,
               ),
               clubMusic(musicMap, width, font),
             ],

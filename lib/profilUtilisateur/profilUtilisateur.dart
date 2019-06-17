@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/authentification/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';

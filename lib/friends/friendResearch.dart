@@ -179,32 +179,36 @@ class _FriendResearchState extends State<FriendResearch> {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
-        child: SizedBox(
-          height: height/18,
-          width: width/2,
-          child: GestureDetector(
-            onTap: () {
-              _openModalBottomSheet(context);
+        child: Card(
+          color: Colors.transparent,
+          elevation: 8,
+          child: SizedBox(
+            height: height/18,
+            width: width/2,
+            child: GestureDetector(
+              onTap: () {
+                _openModalBottomSheet(context);
 //              Navigator.push(
 //                  context,
 //                  MaterialPageRoute(builder: (context) => SearchAlgo(currentUserId: widget.currentUserId, userName: widget.userName,)));
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color.fromRGBO(212, 63, 141, 1),
-                        Color.fromRGBO(2, 80, 197, 1)
-                      ]),
-                  //color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.all(Radius.circular(25))),
-              child: Center(
-                child: Text('Ajouter un ami',
-                    style: TextStyle(color: Colors.white, fontSize: 20.0)),
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color.fromRGBO(212, 63, 141, 1),
+                          Color.fromRGBO(2, 80, 197, 1)
+                        ]),
+                    //color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.all(Radius.circular(25))),
+                child: Center(
+                  child: Text('Ajouter un ami',
+                      style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                ),
+                //color: Theme.of(context).primaryColor,
               ),
-              //color: Theme.of(context).primaryColor,
             ),
           ),
         ),

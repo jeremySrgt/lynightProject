@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lynight/services/crud.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SearchAlgo extends StatefulWidget {
   final String userName;
@@ -22,7 +23,6 @@ class _SearchAlgoState extends State<SearchAlgo> {
 
   final strController = TextEditingController();
   List<Map<dynamic, dynamic>> suggestionList = [];
-  List<Map<dynamic, dynamic>> RealSugg;
 
   @override
   void dispose() {
@@ -35,7 +35,6 @@ class _SearchAlgoState extends State<SearchAlgo> {
     super.initState();
 
     crudObj.getDataDocuments('user').then((querySnapshot) {
-      //print(querySnapshot.documents[3].documentID);
       List<Map<dynamic, dynamic>> tempList = [];
       for (int i = 0; i < querySnapshot.documents.length; i++) {
         Map<dynamic, dynamic> tempMap = querySnapshot.documents[i].data;
@@ -45,10 +44,7 @@ class _SearchAlgoState extends State<SearchAlgo> {
 
       setState(() {
         allUser = tempList;
-        print("USER : " + allUser.toString());
       });
-      print(widget.userName);
-      print(widget.currentUserId);
     });
   }
 
@@ -60,17 +56,26 @@ class _SearchAlgoState extends State<SearchAlgo> {
       });
     }
 
-    if (strController.text.length != 0) {
+    if(value != 0) {
       allUser.forEach((user) {
-        if (user['mail'].toUpperCase().startsWith(value.toUpperCase())) {
+        if (user['mail'].toUpperCase().startsWith(strController.text.toUpperCase())) {
+          if(suggestionList.contains(user)){
+            //pour ne pas multiplier le user dans la suggestionList
+          }else {
+            setState(() {
+              suggestionList.add(user);
+            });
+          }
+        }
+        else{
           setState(() {
-            suggestionList.add(user);
+            suggestionList.remove(user);
           });
         }
       });
     }
 
-    /*     for (int n = 0; n < allUser.length; n++) {
+ /*     for (int n = 0; n < allUser.length; n++) {
         if (allUser[n]['mail'].toUpperCase().startsWith(
             value.toUpperCase())) {
           setState(() {
@@ -163,52 +168,55 @@ class _SearchAlgoState extends State<SearchAlgo> {
     });
   }
 
-  bool alreadyFriend(requestedFriendList) {
-    if (requestedFriendList == null) {
-      return false;
-    }
-    for (int i = 0; i < requestedFriendList.length; i++) {
-      if (widget.currentUserId == requestedFriendList[i]) {
-        return true;
-      }
-    }
 
-    return false;
+  bool alreadyFriend(requestedFriendList){
+      for (int i = 0; i < requestedFriendList.length; i++) {
+        if (widget.currentUserId == requestedFriendList[i]) {
+          return true;
+        }
+      }
+      return false;
   }
 
-  bool alreadyReq(requestedFriendReq) {
-    if (requestedFriendReq == null) {
-      return false;
-    }
-    for (int i = 0; i < requestedFriendReq.length; i++) {
-      if (widget.currentUserId == requestedFriendReq[i]) {
-        return true;
+  bool alreadyReq(requestedFriendReq){
+      for (int i = 0; i < requestedFriendReq.length; i++) {
+        if (widget.currentUserId == requestedFriendReq[i]) {
+          return true;
+        }
       }
-    }
-
-    return false;
+      return false;
   }
 
-  Widget trailingIcon(index) {
-    if (alreadyFriend(suggestionList[index]['friendList'])) {
-      return Icon(Icons.check);
+  Widget ReqSent(index) {
+    if(suggestionList[index]['friendRequest'] == null) {
+      //pour éviter l'erreur null
+    }else {
+      if (alreadyReq(suggestionList[index]['friendRequest'])) {
+        return Icon(FontAwesomeIcons.paperPlane, color: Colors.white,);
+      }
+      else{
+        return Icon(Icons.add,
+          color: Colors.white, size: 30,);
+      }
     }
-    if (alreadyReq(suggestionList[index]['friendRequest'])) {
-      return Icon(
-        FontAwesomeIcons.paperPlane,
-        color: Colors.white,
-      );
+  }
+
+  Widget trailingIcon(index){
+    if(suggestionList[index]['friendList'] == null) {
+      //pour éviter l'erreur null
+    }else {
+      if (alreadyFriend(suggestionList[index]['friendList'])) {
+          return Icon(Icons.check);
+      }
     }
 
     return GestureDetector(
       onTap: () {
-        addFriend(suggestionList[index]['userID']);
-      },
-      child: Icon(
-        Icons.add,
-        color: Colors.white,
-        size: 30,
-      ),
+        setState(() {
+          addFriend(suggestionList[index]['userID']);
+        });
+        },
+      child: ReqSent(index)
     );
   }
 
@@ -278,7 +286,7 @@ class _SearchAlgoState extends State<SearchAlgo> {
                             Text(suggestionList[index]['mail'],
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 13,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.bold)),
                           ]),
                           trailing: trailingIcon(index),

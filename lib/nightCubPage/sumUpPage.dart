@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
@@ -7,20 +6,14 @@ import 'dart:ui';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:lynight/authentification/primary_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lynight/services/clubPictures.dart';
 import 'package:lynight/services/crud.dart';
-import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'dart:async';
-import 'package:lynight/qrCode/qrCodeGeneration.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
-import 'package:lynight/authentification/primary_button.dart';
+
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as I;
 
@@ -240,7 +233,8 @@ class _SumUpState extends State<SumUp> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(5.0)),
-                                        child: Text('Choisir une date',
+                                        child: Text(
+                                            'Choisir une date',
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16.0)),
@@ -276,20 +270,38 @@ class _SumUpState extends State<SumUp> {
     return SizedBox(
       height: 40.0,
       width: 200,
-      child: RaisedButton(
-        elevation: 5.0,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        child: Text('C\'est ok !',
-            style: TextStyle(color: Colors.white, fontSize: 20.0)),
-        color: Theme.of(context).primaryColor,
-        textColor: Colors.black87,
-        onPressed: () {
-          setState(() {
-            generationClicked = true;
-          });
-          _getWidgetImage();
-        },
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [
+                Colors.pinkAccent,
+                Colors.deepPurpleAccent
+              ],
+              begin: FractionalOffset(0.0, 0.0),
+              end: FractionalOffset(0.5, 0.0),
+              stops: [0.0, 1.0],
+              tileMode: TileMode.clamp),
+          borderRadius: BorderRadius.all(
+              Radius.circular(30.0)),
+        ),
+        child: RaisedButton(
+          elevation: 5.0,
+          shape: RoundedRectangleBorder(
+              borderRadius:
+              BorderRadius.circular(5.0)),
+          child: Text(
+              'C\'est ok ',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0)),
+          color: Colors.transparent,
+          onPressed: () {
+            setState(() {
+              generationClicked = true;
+            });
+            _getWidgetImage();
+          },
+        ),
       ),
     );
   }

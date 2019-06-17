@@ -243,8 +243,8 @@ class _FriendsPageState extends State<FriendsPage> {
           padding: EdgeInsets.all(15),
           animationDuration: Duration(milliseconds: 300),
           borderRadius: 14,
-//          onOpen: () => print('$i cell ouverte'),
-//          onClose: () => print('$i cell fermée'),
+          onOpen: () => print('$i cell ouverte'),
+          onClose: () => print('$i cell fermée'),
         );
       }, childCount: friendListMap.length),
     );
@@ -451,7 +451,6 @@ class _FriendsPageState extends State<FriendsPage> {
   Widget inviteToClub(friendID,friendName) {
     List<dynamic> currentUserReservation =
         List.from(currentUserDataMap['reservation']);
-    print(currentUserReservation);
 
     return Container(
       child: Column(
@@ -488,7 +487,6 @@ class _FriendsPageState extends State<FriendsPage> {
   void inviteFriend(currentUserName, friendID, boiteName,date){
     crudObj.getDataFromUserFromDocumentWithID(friendID).then((value){
       Map<dynamic,dynamic> userDataMap = value.data;
-      print(userDataMap);
       List<dynamic> invitationList = userDataMap['invitation'];
       if(invitationList != null){
         List<dynamic> mutableInvitationList = List.from(invitationList);
@@ -571,6 +569,7 @@ class _FriendsPageState extends State<FriendsPage> {
     });
   }
 
+  @override
   void dispose() {
     _refreshController.dispose();
     super.dispose();
@@ -709,6 +708,7 @@ class _FriendsPageState extends State<FriendsPage> {
     );
   }
 }
+
 
 //juste une class pour override les header d'une sliverList
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {

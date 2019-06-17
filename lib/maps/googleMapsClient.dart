@@ -9,12 +9,11 @@ import 'package:lynight/authentification/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class GoogleMapsClient extends StatefulWidget {
-
   GoogleMapsClient({this.onSignOut});
   final VoidCallback onSignOut;
   final BaseAuth auth = new Auth();
 
-  void _signOut() async{
+  void _signOut() async {
     try {
       await auth.signOut();
       onSignOut();
@@ -93,13 +92,28 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
   }
 
   void _onMapCreated(GoogleMapController controller) {
-    location.requestPermission();
     _controller.complete(controller);
+  }
+
+  Widget googleMapsCreation(){
+    return GoogleMap(
+      initialCameraPosition: CameraPosition(
+        target: _center,
+        zoom: 13,
+      ),
+      onMapCreated: _onMapCreated,
+      myLocationEnabled: true,
+      rotateGesturesEnabled: true,
+      zoomGesturesEnabled: true,
+      scrollGesturesEnabled: true,
+      markers: _markers,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     placeAllMarkers();
+    location.requestPermission();
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -107,24 +121,13 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         title: Text(
           'Carte',
-          style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 30),
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 30),
         ),
         backgroundColor: Colors.white,
       ),
       body: Container(
         child: Stack(children: <Widget>[
-          GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 13,
-            ),
-            onMapCreated: _onMapCreated,
-            myLocationEnabled: true,
-            rotateGesturesEnabled: true,
-            zoomGesturesEnabled: true,
-            scrollGesturesEnabled: true,
-            markers: _markers,
-          ),
+          googleMapsCreation(),
           Align(
             alignment: Alignment.topRight, // aligne les widget en haut à gauche
             child: Column(
@@ -135,7 +138,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
                   onPressed: _userPosition,
                   backgroundColor: Colors.white,
                   child: const Icon(
-                    Icons.center_focus_weak, 
+                    Icons.center_focus_weak,
                     size: 35,
                     color: Color(0xFF7854d3),
                   ),

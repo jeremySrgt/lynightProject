@@ -190,7 +190,7 @@ class _SearchBarState extends State<SearchBar> {
                                         allClubsDisplay[index]['pictures'][0],
                                         fit: BoxFit.cover,
                                         width: 60.0,
-                                        height: 150.0,
+                                        height: 60.0,
                                       ),
                                     ),
                                     title: Text(allClubsDisplay[index]['name'],
@@ -199,21 +199,23 @@ class _SearchBarState extends State<SearchBar> {
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.bold,
                                         )),
-                                    subtitle: Row(children: <Widget>[
+                                    subtitle: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
                                       Icon(
                                         Icons.music_note,
                                         color: Colors.blue,
                                       ),
                                       Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Container(
-                                            constraints:
-                                                BoxConstraints(maxWidth: 200),
+                                            constraints: BoxConstraints(maxWidth: 150),
                                             child: Text(
                                               "${musicMap['electro'] == true ? 'Électro  ' : ''}${musicMap['populaire'] == true ? 'Populaire  ' : ''}${musicMap['rap'] == true ? 'Rap  ' : ''}${musicMap['rnb'] == true ? 'RnB  ' : ''}${musicMap['rock'] == true ? 'Rock  ' : ''}${musicMap['trans'] == true ? 'Trance  ' : ''}",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  height: 1.5),
+                                              style: TextStyle(color: Colors.white, height: 1.5),
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
@@ -306,7 +308,7 @@ class _SearchBarState extends State<SearchBar> {
                                       tempSearchStore[index]['pictures'][0],
                                       fit: BoxFit.cover,
                                       width: 60.0,
-                                      height: 150.0,
+                                      height: 60.0,
                                     ),
                                   ),
                                   title: Text(tempSearchStore[index]['name'],
@@ -314,26 +316,28 @@ class _SearchBarState extends State<SearchBar> {
                                           color: Colors.white,
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.bold)),
-                                  subtitle: Row(children: <Widget>[
+                                  subtitle: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: <Widget>[
                                     Icon(
                                       Icons.music_note,
                                       color: Colors.blue,
                                     ),
                                     Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: <Widget>[
                                         Container(
-                                          constraints:
-                                          BoxConstraints(maxWidth: 200),
+                                          constraints: BoxConstraints(maxWidth: 150),
                                           child: Text(
                                             "${musicMap['electro'] == true ? 'Électro  ' : ''}${musicMap['populaire'] == true ? 'Populaire  ' : ''}${musicMap['rap'] == true ? 'Rap  ' : ''}${musicMap['rnb'] == true ? 'RnB  ' : ''}${musicMap['rock'] == true ? 'Rock  ' : ''}${musicMap['trans'] == true ? 'Trance  ' : ''}",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                height: 1.5),
+                                            style: TextStyle(color: Colors.white, height: 1.5),
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
                                       ],
-                                    )
+                                    ),
                                   ]),
                                   trailing: Icon(Icons.arrow_forward_ios,
                                       color: Colors.white),
