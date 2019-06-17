@@ -322,8 +322,7 @@ class _SearchBarState extends State<SearchBar> {
                                     Row(
                                       children: <Widget>[
                                         Container(
-                                          constraints:
-                                          BoxConstraints(maxWidth: 200),
+                                          constraints: BoxConstraints(maxWidth: 50),
                                           child: Text(
                                             "${musicMap['electro'] == true ? 'Électro  ' : ''}${musicMap['populaire'] == true ? 'Populaire  ' : ''}${musicMap['rap'] == true ? 'Rap  ' : ''}${musicMap['rnb'] == true ? 'RnB  ' : ''}${musicMap['rock'] == true ? 'Rock  ' : ''}${musicMap['trans'] == true ? 'Trance  ' : ''}",
                                             style: TextStyle(
