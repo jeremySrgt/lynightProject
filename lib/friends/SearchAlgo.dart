@@ -35,7 +35,6 @@ class _SearchAlgoState extends State<SearchAlgo> {
     super.initState();
 
     crudObj.getDataDocuments('user').then((querySnapshot) {
-      //print(querySnapshot.documents[3].documentID);
       List<Map<dynamic, dynamic>> tempList = [];
       for (int i = 0; i < querySnapshot.documents.length; i++) {
         Map<dynamic, dynamic> tempMap = querySnapshot.documents[i].data;
@@ -188,29 +187,36 @@ class _SearchAlgoState extends State<SearchAlgo> {
       return false;
   }
 
-  Widget trailingIcon(index){
-    if(suggestionList[index]['friendList'] == null) {
-      //pour éviter l'erreur null
-    }else {
-      if (alreadyFriend(suggestionList[index]['friendList'])) {
-        return Icon(Icons.check);
-      }
-    }
+  Widget ReqSent(index) {
     if(suggestionList[index]['friendRequest'] == null) {
       //pour éviter l'erreur null
     }else {
       if (alreadyReq(suggestionList[index]['friendRequest'])) {
         return Icon(FontAwesomeIcons.paperPlane, color: Colors.white,);
       }
+      else{
+        return Icon(Icons.add,
+          color: Colors.white, size: 30,);
+      }
     }
+  }
+
+  Widget trailingIcon(index){
+    if(suggestionList[index]['friendList'] == null) {
+      //pour éviter l'erreur null
+    }else {
+      if (alreadyFriend(suggestionList[index]['friendList'])) {
+          return Icon(Icons.check);
+      }
+    }
+
     return GestureDetector(
       onTap: () {
         setState(() {
           addFriend(suggestionList[index]['userID']);
         });
         },
-      child: Icon(Icons.add,
-        color: Colors.white, size: 30,),
+      child: ReqSent(index)
     );
   }
 

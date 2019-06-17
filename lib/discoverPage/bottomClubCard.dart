@@ -150,7 +150,28 @@ class _BottomClubCardState extends State<BottomClubCard> {
                                 width: 130.0,
                               ),
                             ),
-                            Container(constraints: BoxConstraints(maxWidth: 130,maxHeight: height / 4.5,),
+                            Container(
+                              height: height / 4.5,
+                              width: 130.0,
+                              decoration: BoxDecoration(
+                                  //color: Colors.white,
+                                  gradient: LinearGradient(
+                                    begin: FractionalOffset.topCenter,
+                                    end: FractionalOffset.bottomCenter,
+                                    colors: [
+                                      Colors.transparent,
+                                      Colors.transparent,
+                                      Colors.black,
+                                    ],
+                                  ),
+                                borderRadius: BorderRadius.circular(11.0),
+                              ),
+                            ),
+                            Container(
+                              constraints: BoxConstraints(
+                                maxWidth: 130,
+                                maxHeight: height / 4.5,
+                              ),
                               padding: EdgeInsets.only(
                                   top: height / 5.5, left: 15, right: 15),
                               child: Text(
@@ -198,7 +219,9 @@ class _BottomClubCardState extends State<BottomClubCard> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          top: height / 10, left: 45,),
+                        top: height / 10,
+                        left: 45,
+                      ),
                       child: Container(
                         child: CircularProgressIndicator(),
                       ),
