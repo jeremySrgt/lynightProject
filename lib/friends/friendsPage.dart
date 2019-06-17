@@ -419,6 +419,10 @@ class _FriendsPageState extends State<FriendsPage> {
     );
   }
 
+
+
+
+//TODO BUG DE SUPPRESSION C'EST PAS LE BON AMI QUI EST SUPPRIMÉ !!!!!!
   void removeFriend(friendID, friendListOfFriend) {
     crudObj.updateData('user', currentUserId, {'friendList': userFriendList});
     crudObj.updateData('user', friendID, {'friendList': friendListOfFriend});

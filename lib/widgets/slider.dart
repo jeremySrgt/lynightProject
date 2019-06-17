@@ -24,6 +24,7 @@ class _CustomSliderState extends State<CustomSlider> {
       'https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46';
   bool pro = false;
   int numberOfFriendRequest = 0;
+  int numberOfInvitation = 0;
 
   final Shader linearGradient = LinearGradient(
     colors: <Color>[Colors.pink, Colors.deepPurple],
@@ -40,6 +41,7 @@ class _CustomSliderState extends State<CustomSlider> {
         name = dataMap['name'];
         profilePicture = dataMap['picture'];
         numberOfFriendRequest = dataMap['friendRequest'].length;
+        numberOfInvitation = dataMap['invitation'].length;
         pro = dataMap['pro'];
       });
     });
@@ -150,6 +152,24 @@ class _CustomSliderState extends State<CustomSlider> {
           Navigator.pushReplacementNamed(context, '/addClub');
         },
       ),
+    );
+  }
+
+
+  Widget _showNotifFriendRequest(){
+    if(numberOfFriendRequest == 0){
+      return Text('');
+    }
+    if(numberOfFriendRequest == 1){
+      return Text(
+        numberOfFriendRequest.toString() + ' demande',
+        style: TextStyle(color: Color(0xFFce3737)),
+      );
+    }
+
+    return Text(
+      numberOfFriendRequest.toString() + ' demandes',
+      style: TextStyle(color: Color(0xFFce3737)),
     );
   }
 
@@ -290,12 +310,7 @@ class _CustomSliderState extends State<CustomSlider> {
                       : Colors.grey,
                 ),
               ),
-              trailing: numberOfFriendRequest != 0
-                  ? Text(
-                      numberOfFriendRequest.toString() + ' demande',
-                      style: TextStyle(color: Color(0xFFce3737)),
-                    )
-                  : Text(''),
+              trailing: _showNotifFriendRequest(),
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/friends');
               },
@@ -323,7 +338,12 @@ class _CustomSliderState extends State<CustomSlider> {
                       : Colors.grey,
                 ),
               ),
-              //TODO ajouter un trailing pour afficher le nombre d'invitation
+              trailing: numberOfInvitation != 0
+                  ? Text(
+                numberOfInvitation.toString() + '',
+                style: TextStyle(color: Color(0xFFce3737)),
+              )
+                  : Text(''),
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/eventInvitation');
               },
