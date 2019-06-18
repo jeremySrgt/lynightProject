@@ -83,7 +83,6 @@ class _EventInvitationState extends State<EventInvitation> {
                       .format(invitationDate.toDate())),
                 ),
                 ButtonTheme.bar(
-                  // make buttons use the appropriate styles for cards
                   child: ButtonBar(
                     children: <Widget>[
                       FlatButton(
@@ -95,7 +94,8 @@ class _EventInvitationState extends State<EventInvitation> {
                       FlatButton(
                         child: const Text('LET\'S GO'),
                         onPressed: () {
-                          //TODO ajouter à la liste des reservations une resa pour le club et la date décrite dans l'invitation
+                          //TODO ajouter à la liste des reservations une resa pour le club et la date écrite dans l'invitation
+
                         },
                       ),
                     ],

@@ -41,8 +41,8 @@ class _CustomSliderState extends State<CustomSlider> {
         name = dataMap['name'];
         profilePicture = dataMap['picture'];
         numberOfFriendRequest = dataMap['friendRequest'].length;
-        numberOfInvitation = dataMap['invitation'].length;
         pro = dataMap['pro'];
+        numberOfInvitation = dataMap['invitation'].length;
       });
     });
   }

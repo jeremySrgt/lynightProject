@@ -365,7 +365,8 @@ class _FriendsPageState extends State<FriendsPage> {
                     border: Border.all(color: Theme.of(context).primaryColor)),
               ),
               onTap: () {
-                _openModalBottomSheet(context,friendListMap[i]['ID'],friendListMap[i]['name']);
+                _openModalBottomSheet(
+                    context, friendListMap[i]['ID'], friendListMap[i]['name']);
               },
             ),
             Text('Inviter'),
@@ -398,8 +399,8 @@ class _FriendsPageState extends State<FriendsPage> {
 //                mutableFriendList = List.from(mutableFriendList)..removeAt(i);
 //                print('MUTABLEFRIENDLIST APRES REMOVE');
 //                print(mutableFriendList);
-                for(int b =0; b < mutableFriendList.length;b++){
-                  if(friendID == mutableFriendList[b]){
+                for (int b = 0; b < mutableFriendList.length; b++) {
+                  if (friendID == mutableFriendList[b]) {
                     mutableFriendList.removeAt(b);
                   }
                 }
@@ -429,32 +430,31 @@ class _FriendsPageState extends State<FriendsPage> {
     );
   }
 
-
-
-
-//TODO BUG DE SUPPRESSION C'EST PAS LE BON AMI QUI EST SUPPRIMÉ !!!!!!
   void removeFriend(friendID, friendListOfFriend) {
     crudObj.updateData('user', currentUserId, {'friendList': userFriendList});
     crudObj.updateData('user', friendID, {'friendList': friendListOfFriend});
     _refresh();
   }
 
-  void _openModalBottomSheet(context, friendID,friendName) {
+  //TODO mettre un pop up en bas de la page pour bien montrer que l'ami a été invité
+  void _openModalBottomSheet(context, friendID, friendName) {
     showModalBottomSheet(
         context: context,
         builder: (context) {
-          return Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Color(0xFF737373)),
-              color: Color(0xFF737373),
-            ),
-            child: Container(
-              child: inviteToClub(friendID,friendName),
+          return Scaffold(
+            body: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(25.0),
-                  topRight: const Radius.circular(25.0),
+                border: Border.all(color: Color(0xFF737373)),
+                color: Color(0xFF737373),
+              ),
+              child: Container(
+                child: inviteToClub(friendID, friendName),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: const Radius.circular(25.0),
+                    topRight: const Radius.circular(25.0),
+                  ),
                 ),
               ),
             ),
@@ -462,7 +462,7 @@ class _FriendsPageState extends State<FriendsPage> {
         });
   }
 
-  Widget inviteToClub(friendID,friendName) {
+  Widget inviteToClub(friendID, friendName) {
     List<dynamic> currentUserReservation =
         List.from(currentUserDataMap['reservation']);
 
@@ -483,8 +483,19 @@ class _FriendsPageState extends State<FriendsPage> {
                       title: Text(currentUserReservation[i]['boiteID']),
                       subtitle: Text(DateFormat('dd/MM/yyyy')
                           .format(reservationDate.toDate())),
-                      onTap: (){
-                        inviteFriend(_userName,friendID,currentUserReservation[i]['boiteID'],reservationDate);
+                      onTap: () {
+                        inviteFriend(
+                            _userName,
+                            friendID,
+                            currentUserReservation[i]['boiteID'],
+                            reservationDate,
+                            currentUserReservation[i]['qrcode']);
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                "$friendName a été invité à ${currentUserReservation[i]['boiteID']}"),
+                          ),
+                        );
                       },
                     ),
                   );
@@ -497,18 +508,22 @@ class _FriendsPageState extends State<FriendsPage> {
     );
   }
 
-
-  void inviteFriend(currentUserName, friendID, boiteName,date){
-    crudObj.getDataFromUserFromDocumentWithID(friendID).then((value){
-      Map<dynamic,dynamic> userDataMap = value.data;
+  void inviteFriend(currentUserName, friendID, boiteName, date, qrCodeUrl) {
+    crudObj.getDataFromUserFromDocumentWithID(friendID).then((value) {
+      Map<dynamic, dynamic> userDataMap = value.data;
       List<dynamic> invitationList = userDataMap['invitation'];
-      if(invitationList != null){
+      if (invitationList != null) {
         List<dynamic> mutableInvitationList = List.from(invitationList);
-        mutableInvitationList.add({'who': currentUserName,'boite': boiteName, 'date':date});
-        crudObj.updateData('user', friendID, {'invitation' : mutableInvitationList});
-      }else{
-        List<Map<dynamic,dynamic>> newListOfInvitation = [{'who': currentUserName,'boite': boiteName, 'date':date}];
-        crudObj.updateData('user', friendID, {'invitation' : newListOfInvitation});
+        mutableInvitationList
+            .add({'who': currentUserName, 'boite': boiteName, 'date': date});
+        crudObj.updateData(
+            'user', friendID, {'invitation': mutableInvitationList});
+      } else {
+        List<Map<dynamic, dynamic>> newListOfInvitation = [
+          {'who': currentUserName, 'boite': boiteName, 'date': date}
+        ];
+        crudObj
+            .updateData('user', friendID, {'invitation': newListOfInvitation});
       }
     });
   }
@@ -722,7 +737,6 @@ class _FriendsPageState extends State<FriendsPage> {
     );
   }
 }
-
 
 //juste une class pour override les header d'une sliverList
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
