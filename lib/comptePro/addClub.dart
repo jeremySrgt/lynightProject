@@ -665,17 +665,112 @@ class _AddClubState extends State<AddClub> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          _clubNameField(),
-          _clubDescription(),
-          _clubPhone(),
-          _clubAdress(),
-          _clubArrond(),
-          _clubPosition(),
-          _clubPrice(),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Colors.white70,
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  offset: Offset(2.0, 5.0),
+                  blurRadius: 10.0,
+                )
+              ],
+            ),
+            child: Column(
+              children: <Widget>[
+                _clubNameField(),
+                _clubDescription(),
+                Container(
+                  height: 15,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 30,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Colors.white70,
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  offset: Offset(2.0, 5.0),
+                  blurRadius: 10.0,
+                )
+              ],
+            ),
+            child: Column(
+              children: <Widget>[
+                _clubPhone(),
+                _clubAdress(),
+                _clubArrond(),
+                _clubPosition(),
+                Container(
+                  height: 15,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 30,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Colors.white70,
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  offset: Offset(2.0, 5.0),
+                  blurRadius: 10.0,
+                )
+              ],
+            ),
+            child: Column(
+              children: <Widget>[
+                _clubPrice(),
+                Container(
+                  height: 15,
+                ),
+              ],
+            ),
+          ),
           _selectionPictures(),
-          _checkboxMusicStyle(),
-          _clubSiteUrl(),
-          _isLoading == false ? submitWidget() : _showCircularProgress()
+          Container(
+            height: 30,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Colors.white70,
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  offset: Offset(2.0, 5.0),
+                  blurRadius: 10.0,
+                )
+              ],
+            ),
+            child: Column(
+              children: <Widget>[
+                _checkboxMusicStyle(),
+                _clubSiteUrl(),
+
+                Container(
+                  height: 15,
+                ),
+              ],
+            ),
+
+          ),
+          _isLoading == false ? submitWidget() : _showCircularProgress(),
         ],
       ),
     );
@@ -689,7 +784,8 @@ class _AddClubState extends State<AddClub> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         backgroundColor: Colors.white,
-        title: Text('Ajouter un club',
+        title: Text(
+          'Ajouter un club',
           style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 30),
         ),
       ),
