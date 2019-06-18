@@ -389,11 +389,21 @@ class _FriendsPageState extends State<FriendsPage> {
                 ),
               ),
               onTap: () {
-                List<dynamic> mutableFriendList = userFriendList;
+                List<dynamic> mutableFriendList = List.from(userFriendList);
                 List<Map<dynamic, dynamic>> mutableFriendListMap =
                     friendListMap;
                 String friendID = friendListMap[i]['ID'];
-                mutableFriendList = List.from(mutableFriendList)..removeAt(i);
+//                print('MUTABLEFRIENDLIST AVANT REMOVE');
+//                print(mutableFriendList);
+//                mutableFriendList = List.from(mutableFriendList)..removeAt(i);
+//                print('MUTABLEFRIENDLIST APRES REMOVE');
+//                print(mutableFriendList);
+                for(int b =0; b < mutableFriendList.length;b++){
+                  if(friendID == mutableFriendList[b]){
+                    mutableFriendList.removeAt(b);
+                  }
+                }
+
                 List<dynamic> mutableFriendListOfFriend =
                     List.from(friendListMap[i]['friendList']);
                 for (int k = 0; k < mutableFriendListOfFriend.length; k++) {
