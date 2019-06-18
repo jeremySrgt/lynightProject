@@ -40,6 +40,7 @@ class _EventInvitationState extends State<EventInvitation> {
 
   List<dynamic> invitationList = [];
   String userName = '';
+  List<dynamic> reservationList = [];
 
   @override
   void initState() {
@@ -83,19 +84,19 @@ class _EventInvitationState extends State<EventInvitation> {
                       .format(invitationDate.toDate())),
                 ),
                 ButtonTheme.bar(
-                  // make buttons use the appropriate styles for cards
                   child: ButtonBar(
                     children: <Widget>[
                       FlatButton(
                         child: const Text('NOPE'),
                         onPressed: () {
-                          //TODO supprimer l'invitation
+                          //TODO supprimer l'invitation de la liste en base et pas en base
                         },
                       ),
                       FlatButton(
                         child: const Text('LET\'S GO'),
                         onPressed: () {
-                          //TODO ajouter à la liste des reservations une resa pour le club et la date décrite dans l'invitation
+                          addReservationToProfil(invitationList[i]['boite'],invitationDate,invitationList[i]['qrcode']);
+                          //TODO supprimer l'invitation une fois celle-ci acceptée
                         },
                       ),
                     ],
@@ -109,12 +110,29 @@ class _EventInvitationState extends State<EventInvitation> {
     );
   }
 
+
+  addReservationToProfil(boiteName,date,qrCodeUrl) {
+    //le qr code est celui de l'ami qui a invité pcq pas le temps de regenerer un qr code pour le moment
+    Map<String, dynamic> reservationInfo = {
+      'boiteID': boiteName,
+      'date': date,
+      'qrcode': qrCodeUrl
+    };
+
+    var mutableListOfReservation = new List.from(reservationList);
+
+    mutableListOfReservation.add(reservationInfo);
+
+    crudObj.updateData('user', currentUserId, {'reservation': mutableListOfReservation});
+  }
+
   void _onLoading() {
     return crudObj.getDataFromUserFromDocument().then((value) {
       Map<String, dynamic> dataMap = value.data;
       setState(() {
         invitationList = dataMap['invitation'];
         userName = dataMap['name'];
+        reservationList = dataMap['reservation'];
       });
 
       _refreshController.loadComplete();
@@ -127,6 +145,7 @@ class _EventInvitationState extends State<EventInvitation> {
       setState(() {
         invitationList = dataMap['invitation'];
         userName = dataMap['name'];
+        reservationList = dataMap['reservation'];
       });
 
       _refreshController.refreshCompleted();
