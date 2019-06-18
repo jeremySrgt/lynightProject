@@ -203,7 +203,8 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Nom du club',
           icon: new Icon(
             FontAwesomeIcons.solidMoon,
-            color: Colors.grey,
+            size: 35,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         validator: (String value) {
@@ -226,7 +227,8 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Decription',
           icon: new Icon(
             FontAwesomeIcons.solidClipboard,
-            color: Colors.grey,
+            size: 35,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         validator: (String value) {
@@ -248,7 +250,8 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Adresse',
           icon: new Icon(
             FontAwesomeIcons.mapMarkerAlt,
-            color: Colors.grey,
+            size: 35,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         validator: (String value) {
@@ -271,7 +274,8 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Arrondissement',
           icon: new Icon(
             FontAwesomeIcons.compass,
-            color: Colors.grey,
+            size: 35,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         //on laisse l'arrondissement optionnel, si pas d'arrondissement, on affiche l'adresse sur la page d'acceuil
@@ -295,7 +299,8 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Téléphone',
           icon: new Icon(
             FontAwesomeIcons.phone,
-            color: Colors.grey,
+            size: 35,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         validator: (String value) {
@@ -368,7 +373,7 @@ class _AddClubState extends State<AddClub> {
             child: Text(
               'Style de musique de la boite',
               style: TextStyle(
-                  fontSize: 18, color: Theme.of(context).primaryColor),
+                  fontSize: 20, color: Theme.of(context).primaryColor),
             ),
           ),
           SizedBox(
@@ -424,7 +429,8 @@ class _AddClubState extends State<AddClub> {
               labelText: 'Latitude',
               icon: new Icon(
                 FontAwesomeIcons.mapPin,
-                color: Colors.grey,
+                size: 35,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             validator: (String value) {
@@ -441,7 +447,8 @@ class _AddClubState extends State<AddClub> {
               labelText: 'Longitude',
               icon: new Icon(
                 FontAwesomeIcons.mapPin,
-                color: Colors.grey,
+                size: 35,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             validator: (String value) {
@@ -468,7 +475,8 @@ class _AddClubState extends State<AddClub> {
               labelText: 'Prix homme',
               icon: new Icon(
                 FontAwesomeIcons.euroSign,
-                color: Colors.grey,
+                size: 35,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             validator: (String value) {
@@ -485,7 +493,8 @@ class _AddClubState extends State<AddClub> {
               labelText: 'Prix femme',
               icon: new Icon(
                 FontAwesomeIcons.euroSign,
-                color: Colors.grey,
+                size: 35,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             validator: (String value) {
@@ -509,7 +518,8 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Site web [optionnel]',
           icon: new Icon(
             FontAwesomeIcons.link,
-            color: Colors.grey,
+            size: 35,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         //pas de validator car le site web est optionnel
@@ -677,8 +687,11 @@ class _AddClubState extends State<AddClub> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text('Ajouter un club'),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        backgroundColor: Colors.white,
+        title: Text('Ajouter un club',
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 30),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
