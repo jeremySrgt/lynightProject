@@ -95,16 +95,14 @@ class _SearchAlgoState extends State<SearchAlgo> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: const Radius.circular(25.0),
-          topRight: const Radius.circular(25.0),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(24.0)),
       ),
       child: Column(children: [
         ListTile(
           leading: Icon(
             Icons.search,
             color: Theme.of(context).accentColor,
+            size: 25,
           ),
           title: TextField(
             controller: strController,
@@ -116,10 +114,12 @@ class _SearchAlgoState extends State<SearchAlgo> {
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
                 hintText: "Recherche par e-mail",
-                hintStyle: TextStyle(color: Colors.grey, fontSize: font * 15),
+                hintStyle: TextStyle(color: Colors.grey, fontSize: font * 20,),
                 border: InputBorder.none),
           ),
+          trailing: Icon(Icons.arrow_downward,color: Theme.of(context).primaryColor,size: 25,),
         ),
+
         resultSearch(),
       ]),
     );
@@ -287,7 +287,7 @@ class _SearchAlgoState extends State<SearchAlgo> {
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 12,
-                                    fontWeight: FontWeight.bold)),
+                                    fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,),
                           ]),
                           trailing: trailingIcon(index),
                         ),

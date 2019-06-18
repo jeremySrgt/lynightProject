@@ -9,6 +9,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:lynight/friends/friendResearch.dart';
 import 'package:folding_cell/folding_cell.dart';
 import 'dart:math' as math;
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:lynight/friends/SearchAlgo.dart';
 
 class FriendsPage extends StatefulWidget {
   FriendsPage({this.onSignOut});
@@ -436,7 +438,6 @@ class _FriendsPageState extends State<FriendsPage> {
     _refresh();
   }
 
-  //TODO mettre un pop up en bas de la page pour bien montrer que l'ami a été invité
   void _openModalBottomSheet(context, friendID, friendName) {
     showModalBottomSheet(
         context: context,
@@ -515,12 +516,12 @@ class _FriendsPageState extends State<FriendsPage> {
       if (invitationList != null) {
         List<dynamic> mutableInvitationList = List.from(invitationList);
         mutableInvitationList
-            .add({'who': currentUserName, 'boite': boiteName, 'date': date});
+            .add({'who': currentUserName, 'boite': boiteName, 'date': date, 'qrcode' : qrCodeUrl});
         crudObj.updateData(
             'user', friendID, {'invitation': mutableInvitationList});
       } else {
         List<Map<dynamic, dynamic>> newListOfInvitation = [
-          {'who': currentUserName, 'boite': boiteName, 'date': date}
+          {'who': currentUserName, 'boite': boiteName, 'date': date, 'qrcode' : qrCodeUrl}
         ];
         crudObj
             .updateData('user', friendID, {'invitation': newListOfInvitation});
@@ -693,6 +694,50 @@ class _FriendsPageState extends State<FriendsPage> {
     );
   }
 
+  Widget _floatingCollapsed() {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromRGBO(212, 63, 141, 1),
+              Color.fromRGBO(2, 80, 197, 1)
+            ]),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
+      ),
+      margin: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 0.0),
+      child: Center(
+        child: ListTile(
+          title: Text(
+            "Recherche t\'es amis",
+            style: TextStyle(color: Colors.white, fontSize: 25.0,),
+             textAlign: TextAlign.center,
+          ),
+          trailing: Icon(Icons.arrow_upward,color: Colors.white,size: 30,),
+        ),
+      ),
+    );
+  }
+
+  Widget _floatingPanel() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(24.0)),
+        border: Border.all(color: Theme.of(context).primaryColor, width: 2),
+      ),
+      margin: const EdgeInsets.all(2.0),
+      child: Center(
+        child: SearchAlgo(
+          currentUserId: _userName,
+          userName: currentUserId,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -701,34 +746,44 @@ class _FriendsPageState extends State<FriendsPage> {
       appBar: AppBar(
         elevation: 0.0,
         // pour éviter l'ombre qui fait moche avec l'animation du refresh
-        backgroundColor: Theme.of(context).primaryColor,
-        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         title: Text(
           'Amis',
-          style: TextStyle(color: Colors.white, fontSize: 30),
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 30),
         ),
       ),
-      body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropMaterialHeader(
-            backgroundColor: Theme.of(context).primaryColor,
-            color: Colors.white,
-            distance: 200.0,
-          ),
-          controller: _refreshController,
-          onLoading: _onLoading,
-          onRefresh: _refresh,
-          child: CustomScrollView(
-            slivers: <Widget>[
-              makeHeader('Recherche tes amis !'),
-              _showFriendResearch(),
-              makeHeader('Demande d\'amis'),
-              friendRequest(),
-              makeHeader('Liste d\'amis'),
-              friendList(),
-            ],
-          )),
+      body: SlidingUpPanel(
+        renderPanelSheet: false,
+        collapsed: _floatingCollapsed(),
+        panel: _floatingPanel(),
+        minHeight: 65,
+        maxHeight: 400,
+        backdropEnabled: true,
+        backdropTapClosesPanel: true,
+        body: SmartRefresher(
+            enablePullDown: true,
+            enablePullUp: false,
+            header: WaterDropMaterialHeader(
+              backgroundColor: Theme.of(context).primaryColor,
+              color: Colors.white,
+              distance: 200.0,
+            ),
+            controller: _refreshController,
+            onLoading: _onLoading,
+            onRefresh: _refresh,
+
+            child: CustomScrollView(
+              slivers: <Widget>[
+//                  makeHeader('Recherche tes amis !'),
+//                  _showFriendResearch(),
+                makeHeader('Demande d\'amis'),
+                friendRequest(),
+                makeHeader('Liste d\'amis'),
+                friendList(),
+              ],
+            )),
+      ),
       drawer: CustomSlider(
         userMail: currentUserMail,
         signOut: widget._signOut,
@@ -737,6 +792,7 @@ class _FriendsPageState extends State<FriendsPage> {
     );
   }
 }
+
 
 //juste une class pour override les header d'une sliverList
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
