@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/widgets/slider.dart';
@@ -44,6 +46,8 @@ class _FriendsPageState extends State<FriendsPage> {
 
   List<Map<dynamic, dynamic>> listOfRequest = [];
   List<dynamic> userFriendRequestListFromFirestore = [];
+
+  List<dynamic> userFriendList = [];
 
   List<Map<dynamic, dynamic>> friendListMap = [];
 
@@ -311,13 +315,13 @@ class _FriendsPageState extends State<FriendsPage> {
         child: Container(
           color: Color(0xFFecf2f9),
 //          alignment: Alignment.center,
-          child: _buttonOneFriendCard(),
+          child: _buttonOneFriendCard(i),
         ),
       );
     });
   }
 
-  Widget _buttonOneFriendCard() {
+  Widget _buttonOneFriendCard(int i) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
@@ -361,7 +365,7 @@ class _FriendsPageState extends State<FriendsPage> {
                     border: Border.all(color: Theme.of(context).primaryColor)),
               ),
               onTap: () {
-                print('BUTTON 2');
+                _openModalBottomSheet(context,friendListMap[i]['ID'],friendListMap[i]['name']);
               },
             ),
             Text('Inviter'),
@@ -385,7 +389,27 @@ class _FriendsPageState extends State<FriendsPage> {
                 ),
               ),
               onTap: () {
-                print('BUTTON 3');
+                List<dynamic> mutableFriendList = userFriendList;
+                List<Map<dynamic, dynamic>> mutableFriendListMap =
+                    friendListMap;
+                String friendID = friendListMap[i]['ID'];
+                mutableFriendList = List.from(mutableFriendList)..removeAt(i);
+                List<dynamic> mutableFriendListOfFriend =
+                    List.from(friendListMap[i]['friendList']);
+                for (int k = 0; k < mutableFriendListOfFriend.length; k++) {
+                  if (currentUserId == mutableFriendListOfFriend[k]) {
+                    mutableFriendListOfFriend.removeAt(k);
+                    break;
+                  }
+                }
+                mutableFriendListMap = List.from(mutableFriendListMap)
+                  ..removeAt(i);
+
+                setState(() {
+                  userFriendList = mutableFriendList;
+                  friendListMap = mutableFriendListMap;
+                });
+                removeFriend(friendID, mutableFriendListOfFriend);
               },
             ),
             Text('Supprimer'),
@@ -393,6 +417,90 @@ class _FriendsPageState extends State<FriendsPage> {
         ),
       ],
     );
+  }
+
+
+
+
+//TODO BUG DE SUPPRESSION C'EST PAS LE BON AMI QUI EST SUPPRIMÉ !!!!!!
+  void removeFriend(friendID, friendListOfFriend) {
+    crudObj.updateData('user', currentUserId, {'friendList': userFriendList});
+    crudObj.updateData('user', friendID, {'friendList': friendListOfFriend});
+    _refresh();
+  }
+
+  void _openModalBottomSheet(context, friendID,friendName) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xFF737373)),
+              color: Color(0xFF737373),
+            ),
+            child: Container(
+              child: inviteToClub(friendID,friendName),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(25.0),
+                  topRight: const Radius.circular(25.0),
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  Widget inviteToClub(friendID,friendName) {
+    List<dynamic> currentUserReservation =
+        List.from(currentUserDataMap['reservation']);
+
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Container(
+            child: Text('Clique sur un évènement pour inviter $friendName'),
+          ),
+          Expanded(
+            child: Container(
+              child: ListView.builder(
+                itemCount: currentUserReservation.length,
+                itemBuilder: (context, i) {
+                  Timestamp reservationDate = currentUserReservation[i]['date'];
+                  return Card(
+                    child: ListTile(
+                      title: Text(currentUserReservation[i]['boiteID']),
+                      subtitle: Text(DateFormat('dd/MM/yyyy')
+                          .format(reservationDate.toDate())),
+                      onTap: (){
+                        inviteFriend(_userName,friendID,currentUserReservation[i]['boiteID'],reservationDate);
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  void inviteFriend(currentUserName, friendID, boiteName,date){
+    crudObj.getDataFromUserFromDocumentWithID(friendID).then((value){
+      Map<dynamic,dynamic> userDataMap = value.data;
+      List<dynamic> invitationList = userDataMap['invitation'];
+      if(invitationList != null){
+        List<dynamic> mutableInvitationList = List.from(invitationList);
+        mutableInvitationList.add({'who': currentUserName,'boite': boiteName, 'date':date});
+        crudObj.updateData('user', friendID, {'invitation' : mutableInvitationList});
+      }else{
+        List<Map<dynamic,dynamic>> newListOfInvitation = [{'who': currentUserName,'boite': boiteName, 'date':date}];
+        crudObj.updateData('user', friendID, {'invitation' : newListOfInvitation});
+      }
+    });
   }
 
   Future<dynamic> _refresh() {
@@ -403,9 +511,11 @@ class _FriendsPageState extends State<FriendsPage> {
       });
 
       List<dynamic> userFriendRequestList = currentUserDataMap['friendRequest'];
+      List<dynamic> currentUserFriendList = currentUserDataMap['friendList'];
       setState(() {
         _userName = currentUserDataMap['name'];
         userFriendRequestListFromFirestore = userFriendRequestList;
+        userFriendList = currentUserFriendList;
       });
 
 //      print('aaaaaaaaaaa');
@@ -440,17 +550,18 @@ class _FriendsPageState extends State<FriendsPage> {
 
 //      Map<String, dynamic> dataMap = value.data;
       List<Map<dynamic, dynamic>> mutableListOfFriendData = [];
-      List<dynamic> tempFriendLList = dataMap['friendList'];
-      if (tempFriendLList.isEmpty) {
+      List<dynamic> tempFriendList = dataMap['friendList'];
+      if (tempFriendList.isEmpty) {
         setState(() {
           friendListMap = [];
         });
       }
-      for (int i = 0; i < tempFriendLList.length; i++) {
+      for (int i = 0; i < tempFriendList.length; i++) {
         crudObj
-            .getDataFromUserFromDocumentWithID(tempFriendLList[i])
+            .getDataFromUserFromDocumentWithID(tempFriendList[i])
             .then((value) {
           Map<dynamic, dynamic> userDataMap = value.data;
+          userDataMap['ID'] = tempFriendList[i];
           mutableListOfFriendData.add(userDataMap);
           setState(() {
             friendListMap = mutableListOfFriendData;
@@ -462,6 +573,7 @@ class _FriendsPageState extends State<FriendsPage> {
     });
   }
 
+  @override
   void dispose() {
     _refreshController.dispose();
     super.dispose();
@@ -475,9 +587,11 @@ class _FriendsPageState extends State<FriendsPage> {
       });
 
       List<dynamic> userFriendRequestList = currentUserDataMap['friendRequest'];
+      List<dynamic> currentUserFriendList = currentUserDataMap['friendList'];
       setState(() {
         _userName = currentUserDataMap['name'];
         userFriendRequestListFromFirestore = userFriendRequestList;
+        userFriendList = currentUserFriendList;
       });
 
 //      print('aaaaaaaaaaa');
@@ -512,17 +626,18 @@ class _FriendsPageState extends State<FriendsPage> {
 
 //      Map<String, dynamic> dataMap = value.data;
       List<Map<dynamic, dynamic>> mutableListOfFriendData = [];
-      List<dynamic> tempFriendLList = dataMap['friendList'];
-      if (tempFriendLList.isEmpty) {
+      List<dynamic> tempFriendList = dataMap['friendList'];
+      if (tempFriendList.isEmpty) {
         setState(() {
           friendListMap = [];
         });
       }
-      for (int i = 0; i < tempFriendLList.length; i++) {
+      for (int i = 0; i < tempFriendList.length; i++) {
         crudObj
-            .getDataFromUserFromDocumentWithID(tempFriendLList[i])
+            .getDataFromUserFromDocumentWithID(tempFriendList[i])
             .then((value) {
           Map<dynamic, dynamic> userDataMap = value.data;
+          userDataMap['ID'] = tempFriendList[i];
           mutableListOfFriendData.add(userDataMap);
           setState(() {
             friendListMap = mutableListOfFriendData;
@@ -559,7 +674,8 @@ class _FriendsPageState extends State<FriendsPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0.0, // pour éviter l'ombre qui fait moche avec l'animation du refresh
+        elevation: 0.0,
+        // pour éviter l'ombre qui fait moche avec l'animation du refresh
         backgroundColor: Theme.of(context).primaryColor,
         iconTheme: IconThemeData(color: Colors.white),
         title: Text(

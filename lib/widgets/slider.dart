@@ -23,6 +23,8 @@ class _CustomSliderState extends State<CustomSlider> {
   String profilePicture =
       'https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46';
   bool pro = false;
+  int numberOfFriendRequest = 0;
+  int numberOfInvitation = 0;
 
   final Shader linearGradient = LinearGradient(
     colors: <Color>[Colors.pink, Colors.deepPurple],
@@ -38,6 +40,8 @@ class _CustomSliderState extends State<CustomSlider> {
       setState(() {
         name = dataMap['name'];
         profilePicture = dataMap['picture'];
+        numberOfFriendRequest = dataMap['friendRequest'].length;
+        numberOfInvitation = dataMap['invitation'].length;
         pro = dataMap['pro'];
       });
     });
@@ -148,6 +152,24 @@ class _CustomSliderState extends State<CustomSlider> {
           Navigator.pushReplacementNamed(context, '/addClub');
         },
       ),
+    );
+  }
+
+
+  Widget _showNotifFriendRequest(){
+    if(numberOfFriendRequest == 0){
+      return Text('');
+    }
+    if(numberOfFriendRequest == 1){
+      return Text(
+        numberOfFriendRequest.toString() + ' demande',
+        style: TextStyle(color: Color(0xFFce3737)),
+      );
+    }
+
+    return Text(
+      numberOfFriendRequest.toString() + ' demandes',
+      style: TextStyle(color: Color(0xFFce3737)),
     );
   }
 
@@ -288,8 +310,42 @@ class _CustomSliderState extends State<CustomSlider> {
                       : Colors.grey,
                 ),
               ),
+              trailing: _showNotifFriendRequest(),
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/friends');
+              },
+            ),
+          ),
+          Container(
+            decoration: widget.activePage == 'Invitation'
+                ? BoxDecoration(
+                color: Color(0xFFebdffc),
+                borderRadius: BorderRadius.circular(15.0))
+                : BoxDecoration(),
+            child: ListTile(
+              leading: Icon(
+                FontAwesomeIcons.compactDisc,
+                color: widget.activePage == 'Invitation'
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              title: Text(
+                'Évènements',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: widget.activePage == 'Invitation'
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                ),
+              ),
+              trailing: numberOfInvitation != 0
+                  ? Text(
+                numberOfInvitation.toString() + '',
+                style: TextStyle(color: Color(0xFFce3737)),
+              )
+                  : Text(''),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/eventInvitation');
               },
             ),
           ),
