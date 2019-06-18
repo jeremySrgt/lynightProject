@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -118,6 +119,25 @@ class AlgoMusicReference {
     return x;
   }
 
+  Map<String, int> returnOneClubAndOneMatched(key, values){
+    var valuesInCompetition = 0;
+    Map<String, int> keyValues = {key : values};
+    Map<String, int> keyRetains = {};
+    List<String> clubRetains;
+
+    if(valuesInCompetition < values){
+      valuesInCompetition = values;
+
+    }
+
+
+    print('club :' );
+    print(key);
+    print('avec la valeur : ');
+    print(values);
+    print(keyValues);
+  }
+
   // Compare les 2 map
   List<String> compareMusic() {
     Map<String, int> mapOfClubAndMatch = creationMapOfMusicAndLiked();
@@ -172,7 +192,7 @@ class AlgoMusicReference {
           // Si c'est le cas on va l'ajouter à la liste qui sera retourné
 
           if ((mapOfUserMusics['populaire'] == mapOfMusicFromList['populaire']) && (mapOfUserMusics['populaire'] == true)) {
-            listNumberOfMusicLiked();
+           // listNumberOfMusicLiked();
             //print('debut de la boucle de verif de style de music');
             //print('*********************');
             // print('Les deux il kiffe populaire');
@@ -340,11 +360,22 @@ class AlgoMusicReference {
             }
           }
 //          print('--------------------------------------------------');
+
         }
 
 
 //    print(bestClub);
 //    return bestClub;
+    mapOfClubAndMatch.forEach((key, value) => returnOneClubAndOneMatched(key, value));
+    var sortedKeys = mapOfClubAndMatch.keys.toList(growable:false)
+      ..sort((k1, k2) => mapOfClubAndMatch[k2].compareTo(mapOfClubAndMatch[k1]));
+    LinkedHashMap sortedMap = new LinkedHashMap
+        .fromIterable(sortedKeys, key: (k) => k, value: (k) => mapOfClubAndMatch[k]);
+    print('map tri&é peut etre --------------------');
+    print(sortedMap);
+
+
+
 
     if (bestClub.isNotEmpty) {
       int length = bestClub.length;
