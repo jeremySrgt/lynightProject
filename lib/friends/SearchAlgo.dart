@@ -287,7 +287,7 @@ class _SearchAlgoState extends State<SearchAlgo> {
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 12,
-                                    fontWeight: FontWeight.bold)),
+                                    fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,),
                           ]),
                           trailing: trailingIcon(index),
                         ),
