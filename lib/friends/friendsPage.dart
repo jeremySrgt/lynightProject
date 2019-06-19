@@ -234,47 +234,49 @@ class _FriendsPageState extends State<FriendsPage> {
 
     return SliverList(
       delegate: SliverChildBuilderDelegate((BuildContext context, int i) {
-        return Slidable(
-          controller: slidableController,
-          key: Key(Random().nextInt(1000).toString() +
-              friendListMap[i]['name'].toString()),
-          actionPane: SlidableScrollActionPane(),
-          actionExtentRatio: 0.25,
-          actions: <Widget>[
-            _inviteFriendSlideButton(i),
+        return Column(
+          children: <Widget>[
+            Slidable(
+              controller: slidableController,
+              key: Key(Random().nextInt(1000).toString() +
+                  friendListMap[i]['name'].toString()),
+              actionPane: SlidableScrollActionPane(),
+              actionExtentRatio: 0.25,
+              actions: <Widget>[
+                _inviteFriendSlideButton(i),
+              ],
+              secondaryActions: <Widget>[
+                _deleteFriendSlideButton(i),
+              ],
+              child: _makeCard(i),
+            ),
+            i == friendListMap.length - 1 ? SizedBox(height: 200.0,) : Container(),
           ],
-          secondaryActions: <Widget>[
-            _deleteFriendSlideButton(i),
-          ],
-          child: _makeCard(i,friendListMap.length),
         );
       }, childCount: friendListMap.length),
     );
   }
 
-  Widget _makeCard(i,totalLength) {
-    return Padding(
-      padding: i == totalLength - 1 ? EdgeInsets.only(bottom: 200.0) : EdgeInsets.only(bottom: 0.0),
-      child: Card(
-        color: Colors.transparent,
-        elevation: 0.0,
-        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromRGBO(212, 63, 141, 1),
-                  Color.fromRGBO(2, 80, 197, 1)
-                ]),
-            //color: Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.all(
-              Radius.circular(25),
-            ),
+  Widget _makeCard(i) {
+    return Card(
+      color: Colors.transparent,
+      elevation: 0.0,
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromRGBO(212, 63, 141, 1),
+                Color.fromRGBO(2, 80, 197, 1)
+              ]),
+          //color: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(25),
           ),
-          child: _makeListTile(i),
         ),
+        child: _makeListTile(i),
       ),
     );
   }
@@ -639,7 +641,7 @@ class _FriendsPageState extends State<FriendsPage> {
         child: ListTile(
           title: Text(
             "Recherche tes amis",
-            style: TextStyle(color: Colors.white, fontSize: 25.0,),
+            style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 25.0,),
              textAlign: TextAlign.center,
           ),
           trailing: Icon(Icons.arrow_upward, color: Theme.of(context).primaryColor, size: 30,),
@@ -651,9 +653,9 @@ class _FriendsPageState extends State<FriendsPage> {
   Widget _floatingPanel() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.purple,
         borderRadius: BorderRadius.all(Radius.circular(24.0)),
-        //border: Border.all(color: Theme.of(context).primaryColor, width: 2),
+//        border: Border.all(color: Theme.of(context).primaryColor, width: 2),
       ),
       margin: const EdgeInsets.all(2.0),
       child: Center(
