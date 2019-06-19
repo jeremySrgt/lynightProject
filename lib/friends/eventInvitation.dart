@@ -97,6 +97,7 @@ class _EventInvitationState extends State<EventInvitation> {
                         onPressed: () {
                           addReservationToProfil(invitationList[i]['boite'],invitationDate,invitationList[i]['qrcode']);
                           //TODO supprimer l'invitation une fois celle-ci acceptée
+                          //TODO afficher une snackbar disant qu'une invitation automatique a été ajouter à l'onglet mes reservations !
                         },
                       ),
                     ],
