@@ -1,7 +1,7 @@
 # Bloon
 
 Bloon is mobile application for E3 project in ESIEE Paris. He list all night clubs and events in Paris and recommend you 
-according to you personnalized profile. Bloon organize your party  into one click.
+according to you personnalized profile. Bloon organize your party into one click.
 ## Getting Started
 
 This project is a starting point for a Flutter application.
