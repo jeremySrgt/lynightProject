@@ -103,7 +103,11 @@ class _EventInvitationState extends State<EventInvitation> {
                                   "Une invitation a été ajoutée à ta liste de reservation"),
                             ),
                           );
-                          //TODO supprimer l'invitation une fois celle-ci acceptée
+                          List<dynamic> mutableListOfInvitation = List.from(invitationList)..removeAt(i);
+                          setState(() {
+                            invitationList = mutableListOfInvitation;
+                          });
+                          _removeInvitation();
                         },
                       ),
                     ],
@@ -115,6 +119,10 @@ class _EventInvitationState extends State<EventInvitation> {
         );
       },
     );
+  }
+
+  void _removeInvitation(){
+    crudObj.updateData('user', currentUserId, {'invitation': invitationList});
   }
 
 
