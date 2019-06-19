@@ -6,7 +6,6 @@ import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:lynight/friends/friendResearch.dart';
 import 'package:folding_cell/folding_cell.dart';
 import 'dart:math' as math;
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -75,14 +74,6 @@ class _FriendsPageState extends State<FriendsPage> {
         currentUserMail = mail;
       });
     });
-  }
-
-  Widget _showFriendResearch() {
-    return SliverList(
-      delegate: SliverChildListDelegate([
-        FriendResearch(userName: _userName, currentUserId: currentUserId),
-      ]),
-    );
   }
 
   Widget friendRequest() {
@@ -369,6 +360,7 @@ class _FriendsPageState extends State<FriendsPage> {
               onTap: () {
                 _openModalBottomSheet(
                     context, friendListMap[i]['ID'], friendListMap[i]['name']);
+
               },
             ),
             Text('Inviter'),
@@ -439,6 +431,7 @@ class _FriendsPageState extends State<FriendsPage> {
   }
 
   void _openModalBottomSheet(context, friendID, friendName) {
+
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -468,11 +461,13 @@ class _FriendsPageState extends State<FriendsPage> {
         List.from(currentUserDataMap['reservation']);
 
     return Container(
+      margin: EdgeInsets.fromLTRB(25, 25, 25, 0),
       child: Column(
         children: <Widget>[
           Container(
-            child: Text('Clique sur un évènement pour inviter $friendName'),
+            child: Text('Clique sur un évènement pour inviter $friendName',textAlign: TextAlign.center,style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 20),),
           ),
+
           Expanded(
             child: Container(
               child: ListView.builder(
@@ -731,8 +726,8 @@ class _FriendsPageState extends State<FriendsPage> {
       margin: const EdgeInsets.all(2.0),
       child: Center(
         child: SearchAlgo(
-          currentUserId: _userName,
-          userName: currentUserId,
+          currentUserId: currentUserId,
+          userName: _userName,
         ),
       ),
     );
@@ -761,6 +756,9 @@ class _FriendsPageState extends State<FriendsPage> {
         maxHeight: 400,
         backdropEnabled: true,
         backdropTapClosesPanel: true,
+        onPanelClosed: (){
+            FocusScope.of(context).requestFocus(new FocusNode());
+        },
         body: SmartRefresher(
             enablePullDown: true,
             enablePullUp: false,
