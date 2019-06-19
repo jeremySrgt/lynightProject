@@ -334,24 +334,23 @@ class AlgoMusicReference {
 
 
 
-
-      var mapSortedInMatchedOrder = mapOfClubAndMatch.keys.toList(
-          growable: false)
-        ..sort((k1, k2) =>
-            mapOfClubAndMatch[k2].compareTo(mapOfClubAndMatch[k1]));
-      LinkedHashMap sortedMap = new LinkedHashMap
-          .fromIterable(mapSortedInMatchedOrder, key: (k) => k,
-          value: (k) => mapOfClubAndMatch[k]);
-      //print('map tri&é peut etre --------------------');
-      //print(sortedMap);
-
-
-    if(mapSortedInMatchedOrder.isNotEmpty){
+if(mapOfClubAndMatch != null) {
+  if (mapOfClubAndMatch.isNotEmpty) {
+    var mapSortedInMatchedOrder = mapOfClubAndMatch.keys.toList(
+        growable: false)
+      ..sort((k1, k2) =>
+          mapOfClubAndMatch[k2].compareTo(mapOfClubAndMatch[k1]));
+    LinkedHashMap sortedMap = new LinkedHashMap
+        .fromIterable(mapSortedInMatchedOrder, key: (k) => k,
+        value: (k) => mapOfClubAndMatch[k]);
+    //print('map tri&é peut etre --------------------');
+    //print(sortedMap);
+    if (mapSortedInMatchedOrder.isNotEmpty) {
       int lengthMap = mapSortedInMatchedOrder.length;
       List<String> bestClubFromMap = [];
-      if(lengthMap >= 5){
+      if (lengthMap >= 5) {
         int loopFor = 5;
-        for(int i =0; i< loopFor; i++){
+        for (int i = 0; i < loopFor; i++) {
           String clubRetenu = mapSortedInMatchedOrder[i];
           //print('------------------');
           //print('en theorie devrait afficher le club retenu : ');
@@ -361,7 +360,9 @@ class AlgoMusicReference {
         }
       }
       return bestClubFromMap;
-    }else{
+    }
+  }
+}else{
       print('club ps encore finit tourner');
       return null;
     }
