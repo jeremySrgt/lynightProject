@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lynight/friends/ResultSearch.dart';
 
 class SearchAlgo extends StatefulWidget {
   final String userName;
@@ -16,10 +17,6 @@ class SearchAlgo extends StatefulWidget {
 class _SearchAlgoState extends State<SearchAlgo> {
   CrudMethods crudObj = new CrudMethods();
   List<Map<dynamic, dynamic>> allUser;
-  bool _isLoading = false;
-  List<dynamic> _friendRequestList0fRequestedFriend;
-
-  bool _alreadyRequestedFriend = false;
 
   final strController = TextEditingController();
   List<Map<dynamic, dynamic>> suggestionList = [];
@@ -75,15 +72,15 @@ class _SearchAlgoState extends State<SearchAlgo> {
         }
       });
     }
+  }
 
- /*     for (int n = 0; n < allUser.length; n++) {
-        if (allUser[n]['mail'].toUpperCase().startsWith(
-            value.toUpperCase())) {
-          setState(() {
-            suggestionList.add(allUser[n]);
-          });
-        }
-      }*/
+  Widget ConditionResultSearch() {
+    if (strController.text.length == 0){
+      setState(() {
+        suggestionList = [];
+      });
+    }
+    return ResultSearch(userName: widget.userName, currentUserId: widget.currentUserId, suggestionList: suggestionList,);
   }
 
   @override
@@ -120,180 +117,8 @@ class _SearchAlgoState extends State<SearchAlgo> {
           ),
           trailing: Icon(Icons.arrow_downward,color: Theme.of(context).primaryColor,size: 25,),
         ),
-
-        resultSearch(),
-      ]),
+        ConditionResultSearch()
+    ]),
     );
-  }
-
-  void addFriend(friendID) {
-    setState(() {
-      _isLoading = true;
-    });
-
-    crudObj.getDataFromUserFromDocumentWithID(friendID).then((value) {
-      Map<String, dynamic> dataMap = value.data;
-      List friendRequestList = dataMap['friendRequest'];
-      if (friendRequestList == null) {
-        crudObj.updateData('user', friendID, {
-          'friendRequest': [widget.currentUserId]
-        });
-      } else {
-        setState(() {
-          _friendRequestList0fRequestedFriend = friendRequestList;
-        });
-
-        for (int i = 0; i < _friendRequestList0fRequestedFriend.length; i++) {
-          if (_friendRequestList0fRequestedFriend[i] == widget.currentUserId) {
-            setState(() {
-              _alreadyRequestedFriend = true;
-            });
-          }
-        }
-
-        if (_alreadyRequestedFriend == false) {
-          List<String> mutableListOfRequestedFriend =
-              List.from(_friendRequestList0fRequestedFriend);
-
-          mutableListOfRequestedFriend.add(widget.currentUserId);
-
-          crudObj.updateData('user', friendID,
-              {'friendRequest': mutableListOfRequestedFriend});
-        } else {
-          print('deja amis===========');
-        }
-      }
-      setState(() {
-        _isLoading = false;
-      });
-    });
-  }
-
-
-  bool alreadyFriend(requestedFriendList){
-      for (int i = 0; i < requestedFriendList.length; i++) {
-        if (widget.currentUserId == requestedFriendList[i]) {
-          return true;
-        }
-      }
-      return false;
-  }
-
-  bool alreadyReq(requestedFriendReq){
-      for (int i = 0; i < requestedFriendReq.length; i++) {
-        if (widget.currentUserId == requestedFriendReq[i]) {
-          return true;
-        }
-      }
-      return false;
-  }
-
-  Widget trailingIcon(index){
-    if(suggestionList[index]['friendList'] == null) {
-      //pour éviter l'erreur null
-    }else {
-      if (alreadyFriend(suggestionList[index]['friendList'])) {
-          return Icon(Icons.check);
-      }
-    }
-      return Icon(
-      alreadyReq(suggestionList[index]['friendRequest']) == true ? FontAwesomeIcons.paperPlane : Icons.add,
-      color: alreadyFriend(suggestionList[index]['friendRequest']) == true ? Colors.white : Colors.white
-    );
-  }
-
-  Widget resultSearch() {
-    if (strController.text.length == 0) {
-      setState(() {
-        suggestionList = [];
-      });
-    }
-    if (suggestionList == [] && strController.text.length >= 1) {
-      return Text("Cet utilisateur n'existe pas");
-    } else {
-      return Expanded(
-        child: Container(
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: suggestionList.length,
-            itemBuilder: (context, index) {
-              print("DANS LE ELSE : " + widget.currentUserId);
-              return Card(
-                color: Colors.transparent,
-                elevation: 12.0,
-                margin:
-                    new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-                child: Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Color.fromRGBO(212, 63, 141, 1),
-                            Color.fromRGBO(2, 80, 197, 1)
-                          ]),
-                      //color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.all(Radius.circular(25))),
-                  child: Center(
-                    child: Container(
-                      height: 80,
-                      padding: EdgeInsets.only(
-                          left: 5.0, right: 5.0, top: 2.0, bottom: 1),
-                      child: Column(children: [
-                        ListTile(
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(100.0),
-                            child: Image.network(
-                              suggestionList[index]['picture'],
-                              fit: BoxFit.cover,
-                              width: 60.0,
-                              height: 150.0,
-                            ),
-                          ),
-                          title: Text(suggestionList[index]['name'],
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold)),
-                          subtitle: Row(children: <Widget>[
-                            Icon(
-                              Icons.alternate_email,
-                              color: Colors.blue,
-                              size: 20,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(suggestionList[index]['mail'],
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,),
-                          ]),
-                          trailing: trailingIcon(index),
-                          onTap: () {
-                            setState(() {
-                              if (alreadyFriend(suggestionList[index]['friendRequest'])) {
-                                //suggestionList[index]['friendRequest'].remove(widget.currentUserId);
-                                //alreadyReq(suggestionList[index]['friendRequest']) = false;
-                              }
-                              else {
-                                addFriend(suggestionList[index]['userID']);
-                                //alreadyReq(suggestionList[index]['friendRequest']) = true;
-                              }
-                            });
-                          },
-                        ),
-                      ]),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      );
-    }
   }
 }
