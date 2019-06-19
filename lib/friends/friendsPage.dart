@@ -360,6 +360,7 @@ class _FriendsPageState extends State<FriendsPage> {
               onTap: () {
                 _openModalBottomSheet(
                     context, friendListMap[i]['ID'], friendListMap[i]['name']);
+
               },
             ),
             Text('Inviter'),
@@ -430,6 +431,7 @@ class _FriendsPageState extends State<FriendsPage> {
   }
 
   void _openModalBottomSheet(context, friendID, friendName) {
+
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -459,11 +461,13 @@ class _FriendsPageState extends State<FriendsPage> {
         List.from(currentUserDataMap['reservation']);
 
     return Container(
+      margin: EdgeInsets.fromLTRB(25, 25, 25, 0),
       child: Column(
         children: <Widget>[
           Container(
-            child: Text('Clique sur un évènement pour inviter $friendName'),
+            child: Text('Clique sur un évènement pour inviter $friendName',textAlign: TextAlign.center,style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 20),),
           ),
+
           Expanded(
             child: Container(
               child: ListView.builder(
@@ -752,6 +756,9 @@ class _FriendsPageState extends State<FriendsPage> {
         maxHeight: 400,
         backdropEnabled: true,
         backdropTapClosesPanel: true,
+        onPanelClosed: (){
+            FocusScope.of(context).requestFocus(new FocusNode());
+        },
         body: SmartRefresher(
             enablePullDown: true,
             enablePullUp: false,
