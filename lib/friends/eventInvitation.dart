@@ -79,7 +79,7 @@ class _EventInvitationState extends State<EventInvitation> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 ListTile(
-                  leading: Icon(FontAwesomeIcons.glassCheers),
+                  leading: Icon(FontAwesomeIcons.glassCheers, color: Theme.of(context).primaryColor,),
                   title: Text(invitationList[i]['who'] + ' t\'invite à sortir '),
                   subtitle: Text(invitationList[i]['boite'] + ' le ' + DateFormat('dd/MM/yyyy')
                       .format(invitationDate.toDate())),
@@ -105,7 +105,7 @@ class _EventInvitationState extends State<EventInvitation> {
                             SnackBar(
                               duration: Duration(milliseconds: 2500),
                               content: Text(
-                                  "Une invitation a été ajoutée à ta liste de reservation"),
+                                  "Une invitation a été ajoutée à ta liste de réservation"),
                             ),
                           );
                           List<dynamic> mutableListOfInvitation = List.from(invitationList)..removeAt(i);
