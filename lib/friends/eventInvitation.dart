@@ -96,8 +96,14 @@ class _EventInvitationState extends State<EventInvitation> {
                         child: const Text('LET\'S GO'),
                         onPressed: () {
                           addReservationToProfil(invitationList[i]['boite'],invitationDate,invitationList[i]['qrcode']);
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              duration: Duration(milliseconds: 2500),
+                              content: Text(
+                                  "Une invitation a été ajoutée à ta liste de reservation"),
+                            ),
+                          );
                           //TODO supprimer l'invitation une fois celle-ci acceptée
-                          //TODO afficher une snackbar disant qu'une invitation automatique a été ajouter à l'onglet mes reservations !
                         },
                       ),
                     ],
