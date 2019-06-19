@@ -195,7 +195,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubNameField() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 0.0, 0.0),
       child: TextFormField(
         maxLines: 1,
         key: new Key('clubName'),
@@ -203,7 +203,7 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Nom du club',
           icon: new Icon(
             FontAwesomeIcons.solidMoon,
-            size: 35,
+            size: 30,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -219,7 +219,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubDescription() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 30.0, 0.0, 15.0),
       child: TextFormField(
         maxLength: 200,
         key: new Key('clubDescription'),
@@ -227,7 +227,7 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Decription',
           icon: new Icon(
             FontAwesomeIcons.solidClipboard,
-            size: 35,
+            size: 30,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -243,14 +243,14 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubAdress() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 50.0, 0.0, 0.0),
       child: TextFormField(
         key: new Key('clubAdress'),
         decoration: InputDecoration(
           labelText: 'Adresse',
           icon: new Icon(
             FontAwesomeIcons.mapMarkerAlt,
-            size: 35,
+            size: 30,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -266,7 +266,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubArrond() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 50.0, 0.0, 0.0),
       child: TextFormField(
         keyboardType: TextInputType.number,
         key: new Key('clubArrond'),
@@ -274,7 +274,7 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Arrondissement',
           icon: new Icon(
             FontAwesomeIcons.compass,
-            size: 35,
+            size: 30,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -291,7 +291,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubPhone() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 0.0, 0.0),
       child: TextFormField(
         key: new Key('clubPhone'),
         keyboardType: TextInputType.number,
@@ -299,7 +299,7 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Téléphone',
           icon: new Icon(
             FontAwesomeIcons.phone,
-            size: 35,
+            size: 30,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -366,7 +366,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _checkboxMusicStyle() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 30.0, 0.0, 0.0),
       child: Column(
         children: <Widget>[
           Center(
@@ -419,7 +419,7 @@ class _AddClubState extends State<AddClub> {
   //peut etre toruver un moyen de convertir les adress en coordonnées satelite
   Widget _clubPosition() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 50.0, 0.0, 25.0),
       child: Column(
         children: <Widget>[
           TextFormField(
@@ -429,7 +429,7 @@ class _AddClubState extends State<AddClub> {
               labelText: 'Latitude',
               icon: new Icon(
                 FontAwesomeIcons.mapPin,
-                size: 35,
+                size: 30,
                 color: Theme.of(context).primaryColor,
               ),
             ),
@@ -447,7 +447,7 @@ class _AddClubState extends State<AddClub> {
               labelText: 'Longitude',
               icon: new Icon(
                 FontAwesomeIcons.mapPin,
-                size: 35,
+                size: 30,
                 color: Theme.of(context).primaryColor,
               ),
             ),
@@ -465,7 +465,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubPrice() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 0.0, 25.0),
       child: Column(
         children: <Widget>[
           TextFormField(
@@ -475,7 +475,7 @@ class _AddClubState extends State<AddClub> {
               labelText: 'Prix homme',
               icon: new Icon(
                 FontAwesomeIcons.euroSign,
-                size: 35,
+                size: 30,
                 color: Theme.of(context).primaryColor,
               ),
             ),
@@ -493,7 +493,7 @@ class _AddClubState extends State<AddClub> {
               labelText: 'Prix femme',
               icon: new Icon(
                 FontAwesomeIcons.euroSign,
-                size: 35,
+                size: 30,
                 color: Theme.of(context).primaryColor,
               ),
             ),
@@ -511,14 +511,14 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubSiteUrl() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 0.0, 25.0),
       child: TextFormField(
         key: new Key('clubUrl'),
         decoration: InputDecoration(
           labelText: 'Site web [optionnel]',
           icon: new Icon(
             FontAwesomeIcons.link,
-            size: 35,
+            size: 30,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -535,7 +535,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _selectionPictures() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 50.0, 0.0, 0.0),
       child: Container(
         height: 220,
         child: ListView.builder(
@@ -682,9 +682,6 @@ class _AddClubState extends State<AddClub> {
               children: <Widget>[
                 _clubNameField(),
                 _clubDescription(),
-                Container(
-                  height: 15,
-                ),
               ],
             ),
           ),
@@ -710,9 +707,6 @@ class _AddClubState extends State<AddClub> {
                 _clubAdress(),
                 _clubArrond(),
                 _clubPosition(),
-                Container(
-                  height: 15,
-                ),
               ],
             ),
           ),
@@ -735,9 +729,6 @@ class _AddClubState extends State<AddClub> {
             child: Column(
               children: <Widget>[
                 _clubPrice(),
-                Container(
-                  height: 15,
-                ),
               ],
             ),
           ),
@@ -762,13 +753,8 @@ class _AddClubState extends State<AddClub> {
               children: <Widget>[
                 _checkboxMusicStyle(),
                 _clubSiteUrl(),
-
-                Container(
-                  height: 15,
-                ),
               ],
             ),
-
           ),
           _isLoading == false ? submitWidget() : _showCircularProgress(),
         ],
