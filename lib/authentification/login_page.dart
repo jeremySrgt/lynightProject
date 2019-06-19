@@ -29,6 +29,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   String _email;
   String _password;
   DateTime dob;
+  String _name;
   FormType _formType = FormType.login;
   String _authHint = '';
   bool _isLoading = false;
@@ -60,32 +61,32 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           _isLoading = false;
         });
         widget.onSignIn();
-        if (_formType == FormType.register || _formType == FormType.registerAsPro) {
+        if (_formType == FormType.register ||
+            _formType == FormType.registerAsPro) {
           UserData userData = new UserData(
-            name: "",
-            surname: "",
-            dob: dob,
-            favoris: [],
-            mail: _email,
-            music: {
-              'electro': true,
-              'populaire': true,
-              'rap': true,
-              'rnb': true,
-              'rock': true,
-              'trans': true,
-            },
-            notification: true,
-            phone: "",
-            picture:
-                "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
-            reservation: [],
-            sex: userSex,
-            pro: _formType == FormType.registerAsPro ? true : false,
-            friendRequest: [],
-            friendList: [],
-            invitation: []
-          );
+              name: _name,
+              surname: "",
+              dob: dob,
+              favoris: [],
+              mail: _email,
+              music: {
+                'electro': true,
+                'populaire': true,
+                'rap': true,
+                'rnb': true,
+                'rock': true,
+                'trans': true,
+              },
+              notification: true,
+              phone: "",
+              picture:
+                  "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
+              reservation: [],
+              sex: userSex,
+              pro: _formType == FormType.registerAsPro ? true : false,
+              friendRequest: [],
+              friendList: [],
+              invitation: []);
           crudObj.createOrUpdateUserData(userData.getDataMap());
         }
       } catch (e) {
@@ -148,6 +149,29 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           }
         },
         onSaved: (value) => _email = value,
+      ),
+    );
+  }
+
+  Widget _buildNameField() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+      child: TextFormField(
+        maxLines: 1,
+        key: new Key('namefield'),
+        decoration: InputDecoration(
+          labelText: 'Prénom',
+          icon: new Icon(
+            Icons.perm_identity,
+            color: Colors.grey,
+          ),
+        ),
+        validator: (String value) {
+          if (value.isEmpty) {
+            return 'Saisissez un prénom';
+          }
+        },
+        onSaved: (value) => _name = value,
       ),
     );
   }
@@ -322,9 +346,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         );
     }
 
-    return Container(
-      child: Text('Probleme creation du submitWidget'),
-    );
   }
 
   Widget _showCircularProgress() {
@@ -353,7 +374,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       ),
     );
   }
-  Widget _showCodeComptePro(){
+
+  Widget _showCodeComptePro() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
       child: TextFormField(
@@ -372,7 +394,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           if (value.isEmpty) {
             return 'Un code est requis pour créer un compte pro';
           }
-          if(value != '1998'){
+          if (value != '1998') {
             return 'Code invalide';
           }
         },
@@ -386,7 +408,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            _showLogo(),
             _buildUsernameField(),
+            _formType == FormType.register
+                ? _buildNameField()
+                : Container(),
+            _formType == FormType.registerAsPro
+                ? _buildNameField()
+                : Container(),
             _buildPasswordField(),
             _formType == FormType.register
                 ? _builConfirmPasswordTextField()
@@ -399,10 +428,15 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             _formType == FormType.registerAsPro
                 ? _builConfirmPasswordTextField()
                 : Container(),
-            _formType == FormType.registerAsPro ? _showDatePicker() : Container(),
-            _formType == FormType.registerAsPro ? _showGenderSelect() : Container(),
-            _formType == FormType.registerAsPro ? _showCodeComptePro() : Container(),
-
+            _formType == FormType.registerAsPro
+                ? _showDatePicker()
+                : Container(),
+            _formType == FormType.registerAsPro
+                ? _showGenderSelect()
+                : Container(),
+            _formType == FormType.registerAsPro
+                ? _showCodeComptePro()
+                : Container(),
             _isLoading == false ? submitWidgets() : _showCircularProgress()
           ],
         ));
@@ -425,8 +459,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 child: _buildForm(),
               ),
             ]),
+            _formType == FormType.registerAsPro ? Container() : comptePro(),
             hintText(),
-            comptePro()
           ]),
         ),
       ),
@@ -446,7 +480,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
         radius: 48.0,
-        child: Image.asset('assets/boite.jpg'),
+        child: Image.asset('assets/bloonLogo.png'),
       ),
     );
   }

@@ -89,14 +89,29 @@ class _EventInvitationState extends State<EventInvitation> {
                       FlatButton(
                         child: const Text('NOPE'),
                         onPressed: () {
-                          //TODO supprimer l'invitation de la liste en base et pas en base
+                          List<dynamic> mutableListOfInvitation = List.from(invitationList)..removeAt(i);
+                          setState(() {
+                            invitationList = mutableListOfInvitation;
+                          });
+                          _removeInvitation();
                         },
                       ),
                       FlatButton(
                         child: const Text('LET\'S GO'),
                         onPressed: () {
                           addReservationToProfil(invitationList[i]['boite'],invitationDate,invitationList[i]['qrcode']);
-                          //TODO supprimer l'invitation une fois celle-ci acceptée
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              duration: Duration(milliseconds: 2500),
+                              content: Text(
+                                  "Une invitation a été ajoutée à ta liste de reservation"),
+                            ),
+                          );
+                          List<dynamic> mutableListOfInvitation = List.from(invitationList)..removeAt(i);
+                          setState(() {
+                            invitationList = mutableListOfInvitation;
+                          });
+                          _removeInvitation();
                         },
                       ),
                     ],
@@ -108,6 +123,10 @@ class _EventInvitationState extends State<EventInvitation> {
         );
       },
     );
+  }
+
+  void _removeInvitation(){
+    crudObj.updateData('user', currentUserId, {'invitation': invitationList});
   }
 
 
