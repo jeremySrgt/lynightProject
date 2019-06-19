@@ -70,5 +70,3 @@ And if you want to go to your club from your destination we will suggest you dif
 
 Friends :
 You can add your firneds on the app and this will allow you to invite them to a nightClub when you will go out.
-
-<img src="assets/boite.jpg" width="100" height="100">
