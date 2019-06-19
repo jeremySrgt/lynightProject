@@ -1,7 +1,7 @@
 # Bloon
 
-application pour le projet E3 Esiee Paris
-
+Bloon is mobile application for E3 project in ESIEE Paris. He list all night clubs and events in Paris and recommend you 
+according to you personnalized profile. Bloon organize your party  into one click.
 ## Getting Started
 
 This project is a starting point for a Flutter application.
@@ -17,5 +17,9 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Features
 
-#Discover
+Profile
+
+Discover
+
+
 
