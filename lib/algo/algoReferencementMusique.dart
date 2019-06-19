@@ -129,18 +129,18 @@ class AlgoMusicReference {
     }
 
 
-    print('club :' );
-    print(key);
-    print('avec la valeur : ');
-    print(values);
-    print(keyValues);
+    //print('club :' );
+    //print(key);
+    //print('avec la valeur : ');
+    //print(values);
+    //print(keyValues);
   }
 
   // Compare les 2 map
   List<String> compareMusic() {
     Map<String, int> mapOfClubAndMatch = creationMapOfMusicAndLiked();
-    print('dheiuzduiezidez');
-    print(mapOfClubAndMatch);
+    //print('dheiuzduiezidez');
+    //print(mapOfClubAndMatch);
 
     final List<String> bestClub = []; //club retenu pour la liste à retourner
 
@@ -197,20 +197,20 @@ class AlgoMusicReference {
 
 
             var numberOfMatchForPoular = mapOfClubAndMatch['${snapClub[i].documentID}'];
-            print('---------------------');
-            print('number of match au debut, devrait etre 0  ');
-            print(numberOfMatchForPoular);
+            //print('---------------------');
+            //print('number of match au debut, devrait etre 0  ');
+            //print(numberOfMatchForPoular);
             if(numberOfMatchForPoular != null) {
               numberOfMatchForPoular = numberOfMatchForPoular + 1;
               mapOfClubAndMatch['${snapClub[i].documentID}'] = numberOfMatchForPoular;
-              print('number of match :;;;;;;;;;;;;;; ');
-              print(numberOfMatchForPoular);
-              print(mapOfClubAndMatch);
+              //print('number of match :;;;;;;;;;;;;;; ');
+              //print(numberOfMatchForPoular);
+              //print(mapOfClubAndMatch);
             }
 
-            print('++++++++++++++++++++++++');
-            print('si popular match');
-            print(mapOfClubAndMatch);
+            //print('++++++++++++++++++++++++');
+            //print('si popular match');
+            //print(mapOfClubAndMatch);
 
           }
             if ((mapOfUserMusics['electro'] == mapOfMusicFromList['electro']) && (mapOfUserMusics['electro'] == true)) {
@@ -218,19 +218,19 @@ class AlgoMusicReference {
               //print('ils aiment le electro tout les 2 ');
 
               var numberOfMatchForElectro = mapOfClubAndMatch['${snapClub[i].documentID}'];
-              print('---------------------');
-              print('number of match au debut, devrait etre 0  ');
-              print(numberOfMatchForElectro);
+              //print('---------------------');
+              //print('number of match au debut, devrait etre 0  ');
+              //print(numberOfMatchForElectro);
               if(numberOfMatchForElectro != null) {
                 numberOfMatchForElectro = numberOfMatchForElectro + 1;
                 mapOfClubAndMatch['${snapClub[i].documentID}'] = numberOfMatchForElectro;
-                print('number of match :;;;;;;;;;;;;;; ');
-                print(numberOfMatchForElectro);
-                print(mapOfClubAndMatch);
+                //print('number of match :;;;;;;;;;;;;;; ');
+                //print(numberOfMatchForElectro);
+                //print(mapOfClubAndMatch);
               }
-              print('***************');
-              print('si pas electro');
-              print(mapOfClubAndMatch);
+              //print('***************');
+              //print('si pas electro');
+              //print(mapOfClubAndMatch);
 
 
             }
@@ -240,20 +240,20 @@ class AlgoMusicReference {
 
 
                 var numberOfMatchForRap = mapOfClubAndMatch['${snapClub[i].documentID}'];
-                print('---------------------');
-                print('number of match au debut, devrait etre 0  ');
-                print(numberOfMatchForRap);
+                //print('---------------------');
+                //print('number of match au debut, devrait etre 0  ');
+                //print(numberOfMatchForRap);
                 if(numberOfMatchForRap != null) {
                   numberOfMatchForRap = numberOfMatchForRap+ 1;
                   mapOfClubAndMatch['${snapClub[i].documentID}'] = numberOfMatchForRap;
-                  print('number of match :;;;;;;;;;;;;;; ');
-                  print(numberOfMatchForRap);
-                  print('si rap : ');
-                  print(mapOfClubAndMatch);
+                  //print('number of match :;;;;;;;;;;;;;; ');
+                  //print(numberOfMatchForRap);
+                  //print('si rap : ');
+                  //print(mapOfClubAndMatch);
                 }
-                print('***************');
-                print('si pas rap');
-                print(mapOfClubAndMatch);
+                //print('***************');
+                //print('si pas rap');
+                //print(mapOfClubAndMatch);
 
 
               }
@@ -262,20 +262,20 @@ class AlgoMusicReference {
                   //print('ils aiment le rnb tout les 2 ');
 
                   var numberOfMatchForRnb = mapOfClubAndMatch['${snapClub[i].documentID}'];
-                  print('---------------------');
-                  print('number of match au debut, devrait etre 0  ');
-                  print(numberOfMatchForRnb);
+                  //print('---------------------');
+                  //print('number of match au debut, devrait etre 0  ');
+                  //print(numberOfMatchForRnb);
                   if(numberOfMatchForRnb != null) {
                     numberOfMatchForRnb = numberOfMatchForRnb+ 1;
                     mapOfClubAndMatch['${snapClub[i].documentID}'] = numberOfMatchForRnb;
-                    print('number of match :;;;;;;;;;;;;;; ');
-                    print(numberOfMatchForRnb);
-                    print('si rnb : ');
-                    print(mapOfClubAndMatch);
+                    //print('number of match :;;;;;;;;;;;;;; ');
+                    //print(numberOfMatchForRnb);
+                    //print('si rnb : ');
+                    //print(mapOfClubAndMatch);
                   }
-                  print('***************');
-                  print('si pas rnb');
-                  print(mapOfClubAndMatch);
+                  //print('***************');
+                  //print('si pas rnb');
+                  //print(mapOfClubAndMatch);
 
                 }
                   if ((mapOfUserMusics['rock'] == mapOfMusicFromList['rock']) && (mapOfUserMusics['rock'] == true)) {
@@ -288,14 +288,14 @@ class AlgoMusicReference {
                     if(numberOfMatchForRock != null) {
                       numberOfMatchForRock = numberOfMatchForRock+ 1;
                       mapOfClubAndMatch['${snapClub[i].documentID}'] = numberOfMatchForRock;
-                      print('number of match :;;;;;;;;;;;;;; ');
-                      print(numberOfMatchForRock);
-                      print('si Rock : ');
-                      print(mapOfClubAndMatch);
+                      //print('number of match :;;;;;;;;;;;;;; ');
+                      //print(numberOfMatchForRock);
+                      //print('si Rock : ');
+                      //print(mapOfClubAndMatch);
                     }
-                    print('***************');
-                    print('si pas Rock');
-                    print(mapOfClubAndMatch);
+                    //print('***************');
+                    //print('si pas Rock');
+                    //print(mapOfClubAndMatch);
 
                   }
                     if ((mapOfUserMusics['trans'] == mapOfMusicFromList['trans']) && (mapOfUserMusics['trans'] == true)) {
@@ -303,29 +303,29 @@ class AlgoMusicReference {
                       //print('ils aiment la trans tout les 2 ');
 
                       var numberOfMatchForTrans = mapOfClubAndMatch['${snapClub[i].documentID}'];
-                      print('---------------------');
-                      print('number of match au debut, devrait etre 0  ');
-                      print(numberOfMatchForTrans);
+                      //print('---------------------');
+                      //print('number of match au debut, devrait etre 0  ');
+                      //print(numberOfMatchForTrans);
                       if(numberOfMatchForTrans != null) {
                         numberOfMatchForTrans = numberOfMatchForTrans+ 1;
                         mapOfClubAndMatch['${snapClub[i].documentID}'] = numberOfMatchForTrans;
-                        print('number of match :;;;;;;;;;;;;;; ');
-                        print(numberOfMatchForTrans);
-                        print('si Trans : ');
-                        print(mapOfClubAndMatch);
+                        //print('number of match :;;;;;;;;;;;;;; ');
+                        //print(numberOfMatchForTrans);
+                        //print('si Trans : ');
+                        //print(mapOfClubAndMatch);
                       }
-                      print('***************');
-                      print('si pas Trans');
-                      print(mapOfClubAndMatch);
+                      //print('***************');
+                      //print('si pas Trans');
+                      //print(mapOfClubAndMatch);
 
 
                       //print('Valur après ajout de trans');
                       //print(bestClub);
                     }
 
-              print('__________________________');
-              print('fin de la map avec les club');
-              print(mapOfClubAndMatch);
+              //print('__________________________');
+              //print('fin de la map avec les club');
+              //print(mapOfClubAndMatch);
               //print('Le club ' +nameOfClubList[i] +'a aucun son en commun avec le user');
             }
           }
@@ -334,13 +334,16 @@ class AlgoMusicReference {
 
 
 
-    mapOfClubAndMatch.forEach((key, value) => returnOneClubAndOneMatched(key, value));
-    var mapSortedInMatchedOrder = mapOfClubAndMatch.keys.toList(growable:false)
-      ..sort((k1, k2) => mapOfClubAndMatch[k2].compareTo(mapOfClubAndMatch[k1]));
-    LinkedHashMap sortedMap = new LinkedHashMap
-        .fromIterable(mapSortedInMatchedOrder, key: (k) => k, value: (k) => mapOfClubAndMatch[k]);
-    print('map tri&é peut etre --------------------');
-    print(sortedMap);
+
+      var mapSortedInMatchedOrder = mapOfClubAndMatch.keys.toList(
+          growable: false)
+        ..sort((k1, k2) =>
+            mapOfClubAndMatch[k2].compareTo(mapOfClubAndMatch[k1]));
+      LinkedHashMap sortedMap = new LinkedHashMap
+          .fromIterable(mapSortedInMatchedOrder, key: (k) => k,
+          value: (k) => mapOfClubAndMatch[k]);
+      //print('map tri&é peut etre --------------------');
+      //print(sortedMap);
 
 
     if(mapSortedInMatchedOrder.isNotEmpty){
@@ -350,11 +353,11 @@ class AlgoMusicReference {
         int loopFor = 5;
         for(int i =0; i< loopFor; i++){
           String clubRetenu = mapSortedInMatchedOrder[i];
-          print('------------------');
-          print('en theorie devrait afficher le club retenu : ');
-          print(clubRetenu);
+          //print('------------------');
+          //print('en theorie devrait afficher le club retenu : ');
+          //print(clubRetenu);
           bestClubFromMap.add(clubRetenu);
-          print(bestClubFromMap);
+          //print(bestClubFromMap);
         }
       }
       return bestClubFromMap;
