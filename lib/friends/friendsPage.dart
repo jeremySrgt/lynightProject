@@ -721,7 +721,7 @@ class _FriendsPageState extends State<FriendsPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(24.0)),
-        border: Border.all(color: Theme.of(context).primaryColor, width: 2),
+        //border: Border.all(color: Theme.of(context).primaryColor, width: 2),
       ),
       margin: const EdgeInsets.all(2.0),
       child: Center(
