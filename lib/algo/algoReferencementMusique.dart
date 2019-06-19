@@ -367,54 +367,73 @@ class AlgoMusicReference {
 //    print(bestClub);
 //    return bestClub;
     mapOfClubAndMatch.forEach((key, value) => returnOneClubAndOneMatched(key, value));
-    var sortedKeys = mapOfClubAndMatch.keys.toList(growable:false)
+    var mapSortedInMatchedOrder = mapOfClubAndMatch.keys.toList(growable:false)
       ..sort((k1, k2) => mapOfClubAndMatch[k2].compareTo(mapOfClubAndMatch[k1]));
     LinkedHashMap sortedMap = new LinkedHashMap
-        .fromIterable(sortedKeys, key: (k) => k, value: (k) => mapOfClubAndMatch[k]);
+        .fromIterable(mapSortedInMatchedOrder, key: (k) => k, value: (k) => mapOfClubAndMatch[k]);
     print('map tri&é peut etre --------------------');
     print(sortedMap);
 
 
-
-
-    if (bestClub.isNotEmpty) {
-      int length = bestClub.length;
-      if (length >= 5) {
-//        print(length);
-        var rdm = new Random();
-        int loop = 5;
-        List<String> mutableListRandomClub = [];
-        for (int i = 0; i < loop; i++) {
-          bool sameClub = false;
-          var currentRandom = rdm.nextInt(length);
-//        print('current random' + currentRandom.toString());
-          if (mutableListRandomClub.isEmpty) {
-//          print('ISEMPTY');
-            mutableListRandomClub.add(bestClub[currentRandom]);
-          } else {
-            for (int j = 0; j < mutableListRandomClub.length; j++) {
-              if (bestClub[currentRandom] == mutableListRandomClub[j]) {
-//              print('SAME CLUB DOMMAGE');
-                sameClub = true;
-                break;
-              }
-            }
-            if (!sameClub) {
-//            print('sur le point dajouter : ' + queryClubList[currentRandom]['name']);
-              mutableListRandomClub.add(bestClub[currentRandom]);
-            } else {
-              loop++;
-            }
-          }
+    if(mapSortedInMatchedOrder.isNotEmpty){
+      int lengthMap = mapSortedInMatchedOrder.length;
+      List<String> bestClubFromMap = [];
+      if(lengthMap >= 5){
+        int loopFor = 5;
+        for(int i =0; i< loopFor; i++){
+          String clubRetenu = mapSortedInMatchedOrder[i];
+          print('------------------');
+          print('en theorie devrait afficher le club retenu : ');
+          print(clubRetenu);
+          bestClubFromMap.add(clubRetenu);
+          print(bestClubFromMap);
         }
-//        print(mutableListRandomClub);
-        return mutableListRandomClub;
-      } else {
-        return bestClub;
       }
-    } else {
-      print('liste des clubs pas encore fetch de la base');
+      return bestClubFromMap;
+    }else{
+      print('club ps encore finit tourner');
       return null;
     }
+
+
+//    if (bestClub.isNotEmpty) {
+//      int length = bestClub.length;
+//      if (length >= 5) {
+////        print(length);
+//        var rdm = new Random();
+//        int loop = 5;
+//        List<String> mutableListRandomClub = [];
+//        for (int i = 0; i < loop; i++) {
+//          bool sameClub = false;
+//          var currentRandom = rdm.nextInt(length);
+////        print('current random' + currentRandom.toString());
+//          if (mutableListRandomClub.isEmpty) {
+////          print('ISEMPTY');
+//            mutableListRandomClub.add(bestClub[currentRandom]);
+//          } else {
+//            for (int j = 0; j < mutableListRandomClub.length; j++) {
+//              if (bestClub[currentRandom] == mutableListRandomClub[j]) {
+////              print('SAME CLUB DOMMAGE');
+//                sameClub = true;
+//                break;
+//              }
+//            }
+//            if (!sameClub) {
+////            print('sur le point dajouter : ' + queryClubList[currentRandom]['name']);
+//              mutableListRandomClub.add(bestClub[currentRandom]);
+//            } else {
+//              loop++;
+//            }
+//          }
+//        }
+////        print(mutableListRandomClub);
+//        return mutableListRandomClub;
+//      } else {
+//        return bestClub;
+//      }
+//    } else {
+//      print('liste des clubs pas encore fetch de la base');
+//      return null;
+//    }
   }
 }
