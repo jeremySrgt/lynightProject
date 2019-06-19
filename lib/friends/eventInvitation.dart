@@ -179,11 +179,11 @@ class _EventInvitationState extends State<EventInvitation> {
       appBar: AppBar(
         elevation: 0.0,
         // pour éviter l'ombre qui fait moche avec l'animation du refresh
-        backgroundColor: Theme.of(context).primaryColor,
-        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         title: Text(
           'Invitation',
-          style: TextStyle(color: Colors.white, fontSize: 30),
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 30,),
         ),
       ),
       body: SmartRefresher(

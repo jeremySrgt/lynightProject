@@ -92,6 +92,7 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
   }
 
   void _onMapCreated(GoogleMapController controller) {
+    location.requestPermission();
     _controller.complete(controller);
   }
 
@@ -113,7 +114,6 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
   @override
   Widget build(BuildContext context) {
     placeAllMarkers();
-    location.requestPermission();
     // TODO: implement build
     return Scaffold(
       resizeToAvoidBottomPadding: false,
