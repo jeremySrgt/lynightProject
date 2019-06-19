@@ -43,6 +43,7 @@ Vous pouvez ajouter des amis dans une liste d'amis pour envoyer des invitations 
 
 Invitation
 Les invations de vous recevez de vos amis sont générer dans un onglet
-
+<
 ![Screenshot_1560948174](https://user-images.githubusercontent.com/44729668/59766483-95f82100-92a0-11e9-8f9a-8b2c09cf9c63.png)
-
+:height: 100px
+:width: 200 px
