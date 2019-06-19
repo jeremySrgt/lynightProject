@@ -1,6 +1,6 @@
 # Bloon
 <p align= "center">
-<img src="assets/logoBigger.png" width="900" height="500">
+<img src="assets/logoBigger.png" >
 </p>
 
 Bloon is mobile application for E3 project in ESIEE Paris. He list all night clubs and events in Paris and recommend you 
