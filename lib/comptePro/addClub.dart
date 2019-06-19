@@ -195,7 +195,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubNameField() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 10.0, 0.0),
       child: TextFormField(
         maxLines: 1,
         key: new Key('clubName'),
@@ -219,7 +219,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubDescription() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 30.0, 0.0, 15.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 30.0, 10.0, 15.0),
       child: TextFormField(
         maxLength: 200,
         key: new Key('clubDescription'),
@@ -243,7 +243,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubAdress() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 50.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 10.0, 0.0),
       child: TextFormField(
         key: new Key('clubAdress'),
         decoration: InputDecoration(
@@ -266,7 +266,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubArrond() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 50.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 30.0, 10.0, 0.0),
       child: TextFormField(
         keyboardType: TextInputType.number,
         key: new Key('clubArrond'),
@@ -291,7 +291,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubPhone() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 10.0, 0.0),
       child: TextFormField(
         key: new Key('clubPhone'),
         keyboardType: TextInputType.number,
@@ -366,7 +366,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _checkboxMusicStyle() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 30.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 30.0, 10.0, 0.0),
       child: Column(
         children: <Widget>[
           Center(
@@ -419,7 +419,7 @@ class _AddClubState extends State<AddClub> {
   //peut etre toruver un moyen de convertir les adress en coordonnées satelite
   Widget _clubPosition() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 50.0, 0.0, 25.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 50.0, 10.0, 25.0),
       child: Column(
         children: <Widget>[
           TextFormField(
@@ -465,7 +465,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubPrice() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 0.0, 25.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 10.0, 25.0),
       child: Column(
         children: <Widget>[
           TextFormField(
@@ -511,7 +511,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _clubSiteUrl() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 0.0, 25.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 20.0, 10.0, 25.0),
       child: TextFormField(
         key: new Key('clubUrl'),
         decoration: InputDecoration(
@@ -535,7 +535,7 @@ class _AddClubState extends State<AddClub> {
 
   Widget _selectionPictures() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 50.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(5.0, 50.0, 10.0, 0.0),
       child: Container(
         height: 220,
         child: ListView.builder(
