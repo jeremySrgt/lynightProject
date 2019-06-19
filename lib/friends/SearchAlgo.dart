@@ -64,6 +64,7 @@ class _SearchAlgoState extends State<SearchAlgo> {
           }else {
             setState(() {
               suggestionList.add(user);
+              print(user);
             });
           }
         }
@@ -187,20 +188,6 @@ class _SearchAlgoState extends State<SearchAlgo> {
       return false;
   }
 
-  Widget ReqSent(index) {
-    if(suggestionList[index]['friendRequest'] == null) {
-      //pour éviter l'erreur null
-    }else {
-      if (alreadyReq(suggestionList[index]['friendRequest'])) {
-        return Icon(FontAwesomeIcons.paperPlane, color: Colors.white,);
-      }
-      else{
-        return Icon(Icons.add,
-          color: Colors.white, size: 30,);
-      }
-    }
-  }
-
   Widget trailingIcon(index){
     if(suggestionList[index]['friendList'] == null) {
       //pour éviter l'erreur null
@@ -209,14 +196,9 @@ class _SearchAlgoState extends State<SearchAlgo> {
           return Icon(Icons.check);
       }
     }
-
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          addFriend(suggestionList[index]['userID']);
-        });
-        },
-      child: ReqSent(index)
+      return Icon(
+      alreadyReq(suggestionList[index]['friendRequest']) == true ? FontAwesomeIcons.paperPlane : Icons.add,
+      color: alreadyFriend(suggestionList[index]['friendRequest']) == true ? Colors.white : Colors.white
     );
   }
 
@@ -229,13 +211,13 @@ class _SearchAlgoState extends State<SearchAlgo> {
     if (suggestionList == [] && strController.text.length >= 1) {
       return Text("Cet utilisateur n'existe pas");
     } else {
-      print("DANS LE ELSE : " + suggestionList.toString());
       return Expanded(
         child: Container(
           child: ListView.builder(
             scrollDirection: Axis.vertical,
             itemCount: suggestionList.length,
             itemBuilder: (context, index) {
+              print("DANS LE ELSE : " + widget.currentUserId);
               return Card(
                 color: Colors.transparent,
                 elevation: 12.0,
@@ -290,6 +272,18 @@ class _SearchAlgoState extends State<SearchAlgo> {
                                     fontWeight: FontWeight.bold),overflow: TextOverflow.ellipsis,),
                           ]),
                           trailing: trailingIcon(index),
+                          onTap: () {
+                            setState(() {
+                              if (alreadyFriend(suggestionList[index]['friendRequest'])) {
+                                //suggestionList[index]['friendRequest'].remove(widget.currentUserId);
+                                //alreadyReq(suggestionList[index]['friendRequest']) = false;
+                              }
+                              else {
+                                addFriend(suggestionList[index]['userID']);
+                                //alreadyReq(suggestionList[index]['friendRequest']) = true;
+                              }
+                            });
+                          },
                         ),
                       ]),
                     ),

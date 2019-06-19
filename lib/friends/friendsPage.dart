@@ -6,7 +6,6 @@ import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:lynight/friends/friendResearch.dart';
 import 'package:folding_cell/folding_cell.dart';
 import 'dart:math' as math;
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -75,14 +74,6 @@ class _FriendsPageState extends State<FriendsPage> {
         currentUserMail = mail;
       });
     });
-  }
-
-  Widget _showFriendResearch() {
-    return SliverList(
-      delegate: SliverChildListDelegate([
-        FriendResearch(userName: _userName, currentUserId: currentUserId),
-      ]),
-    );
   }
 
   Widget friendRequest() {
@@ -731,8 +722,8 @@ class _FriendsPageState extends State<FriendsPage> {
       margin: const EdgeInsets.all(2.0),
       child: Center(
         child: SearchAlgo(
-          currentUserId: _userName,
-          userName: currentUserId,
+          currentUserId: currentUserId,
+          userName: _userName,
         ),
       ),
     );
