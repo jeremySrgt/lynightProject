@@ -1,5 +1,4 @@
 import 'dart:collection';
-import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -122,8 +121,7 @@ class AlgoMusicReference {
   Map<String, int> returnOneClubAndOneMatched(key, values){
     var valuesInCompetition = 0;
     Map<String, int> keyValues = {key : values};
-    Map<String, int> keyRetains = {};
-    List<String> clubRetains;
+
 
     if(valuesInCompetition < values){
       valuesInCompetition = values;
@@ -359,13 +357,11 @@ class AlgoMusicReference {
               //print('Le club ' +nameOfClubList[i] +'a aucun son en commun avec le user');
             }
           }
-//          print('--------------------------------------------------');
 
         }
 
 
-//    print(bestClub);
-//    return bestClub;
+
     mapOfClubAndMatch.forEach((key, value) => returnOneClubAndOneMatched(key, value));
     var mapSortedInMatchedOrder = mapOfClubAndMatch.keys.toList(growable:false)
       ..sort((k1, k2) => mapOfClubAndMatch[k2].compareTo(mapOfClubAndMatch[k1]));
@@ -396,44 +392,5 @@ class AlgoMusicReference {
     }
 
 
-//    if (bestClub.isNotEmpty) {
-//      int length = bestClub.length;
-//      if (length >= 5) {
-////        print(length);
-//        var rdm = new Random();
-//        int loop = 5;
-//        List<String> mutableListRandomClub = [];
-//        for (int i = 0; i < loop; i++) {
-//          bool sameClub = false;
-//          var currentRandom = rdm.nextInt(length);
-////        print('current random' + currentRandom.toString());
-//          if (mutableListRandomClub.isEmpty) {
-////          print('ISEMPTY');
-//            mutableListRandomClub.add(bestClub[currentRandom]);
-//          } else {
-//            for (int j = 0; j < mutableListRandomClub.length; j++) {
-//              if (bestClub[currentRandom] == mutableListRandomClub[j]) {
-////              print('SAME CLUB DOMMAGE');
-//                sameClub = true;
-//                break;
-//              }
-//            }
-//            if (!sameClub) {
-////            print('sur le point dajouter : ' + queryClubList[currentRandom]['name']);
-//              mutableListRandomClub.add(bestClub[currentRandom]);
-//            } else {
-//              loop++;
-//            }
-//          }
-//        }
-////        print(mutableListRandomClub);
-//        return mutableListRandomClub;
-//      } else {
-//        return bestClub;
-//      }
-//    } else {
-//      print('liste des clubs pas encore fetch de la base');
-//      return null;
-//    }
   }
 }
