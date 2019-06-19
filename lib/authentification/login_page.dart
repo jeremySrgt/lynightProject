@@ -408,6 +408,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            _showLogo(),
             _buildUsernameField(),
             _formType == FormType.register
                 ? _buildNameField()
@@ -479,7 +480,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
         radius: 48.0,
-        child: Image.asset('assets/boite.jpg'),
+        child: Image.asset('assets/bloonLogo.png'),
       ),
     );
   }
