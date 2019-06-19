@@ -141,7 +141,7 @@ class _FriendsPageState extends State<FriendsPage> {
                   ),
                   InkWell(
                     //add
-                    child: Icon(FontAwesomeIcons.check),
+                    child: Icon(FontAwesomeIcons.check,color: Colors.green[400],),
                     onTap: () {
                       userFriendRequestListFromFirestore =
                       List.from(userFriendRequestListFromFirestore)
@@ -157,7 +157,7 @@ class _FriendsPageState extends State<FriendsPage> {
                   ),
                   InkWell(
                     //remove
-                    child: Icon(FontAwesomeIcons.times),
+                    child: Icon(FontAwesomeIcons.times,color: Colors.red[400],),
                     onTap: () {
                       userFriendRequestListFromFirestore =
                       List.from(userFriendRequestListFromFirestore)
@@ -246,32 +246,35 @@ class _FriendsPageState extends State<FriendsPage> {
           secondaryActions: <Widget>[
             _deleteFriendSlideButton(i),
           ],
-          child: _makeCard(i),
+          child: _makeCard(i,friendListMap.length),
         );
       }, childCount: friendListMap.length),
     );
   }
 
-  Widget _makeCard(i) {
-    return Card(
-      color: Colors.transparent,
-      elevation: 0.0,
-      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromRGBO(212, 63, 141, 1),
-                Color.fromRGBO(2, 80, 197, 1)
-              ]),
-          //color: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(25),
+  Widget _makeCard(i,totalLength) {
+    return Padding(
+      padding: i == totalLength - 1 ? EdgeInsets.only(bottom: 200.0) : EdgeInsets.only(bottom: 0.0),
+      child: Card(
+        color: Colors.transparent,
+        elevation: 0.0,
+        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromRGBO(212, 63, 141, 1),
+                  Color.fromRGBO(2, 80, 197, 1)
+                ]),
+            //color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.all(
+              Radius.circular(25),
+            ),
           ),
+          child: _makeListTile(i),
         ),
-        child: _makeListTile(i),
       ),
     );
   }
