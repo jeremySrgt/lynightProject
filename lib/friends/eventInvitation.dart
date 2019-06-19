@@ -61,8 +61,9 @@ class _EventInvitationState extends State<EventInvitation> {
 
   Widget _invitation() {
     if (invitationList.isEmpty) {
-      return Center(
-        child: Text('Aucune invitation, désolé t\'as pas d\'amis'),
+      return Padding(
+        padding: EdgeInsets.only(top: 200.0),
+        child: Center(child: Text('Aucune invitation, désolé t\'as pas d\'amis')),
       );
     }
 

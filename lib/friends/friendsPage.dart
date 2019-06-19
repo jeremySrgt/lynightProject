@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lynight/authentification/auth.dart';
@@ -53,6 +56,7 @@ class _FriendsPageState extends State<FriendsPage> {
   List<Map<dynamic, dynamic>> friendListMap = [];
 
   CrudMethods crudObj = new CrudMethods();
+  final SlidableController slidableController = SlidableController();
 
 //  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   RefreshController _refreshController;
@@ -93,7 +97,7 @@ class _FriendsPageState extends State<FriendsPage> {
 
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int i) {
+            (BuildContext context, int i) {
           return Card(
             margin: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 20.0),
             child: Container(
@@ -107,7 +111,7 @@ class _FriendsPageState extends State<FriendsPage> {
                       CircleAvatar(
                         // photo de profil
                         backgroundImage:
-                            NetworkImage(mutableListOfRequest[i]['picture']),
+                        NetworkImage(mutableListOfRequest[i]['picture']),
                         minRadius: 25,
                         maxRadius: 25,
                       ),
@@ -140,13 +144,14 @@ class _FriendsPageState extends State<FriendsPage> {
                     child: Icon(FontAwesomeIcons.check),
                     onTap: () {
                       userFriendRequestListFromFirestore =
-                          List.from(userFriendRequestListFromFirestore)
-                            ..removeAt(i);
+                      List.from(userFriendRequestListFromFirestore)
+                        ..removeAt(i);
 
                       addFriend(mutableListOfRequest[i]['ID'],
                           mutableListOfRequest[i]['friendList']);
                       setState(() {
-                        listOfRequest = List.from(listOfRequest)..removeAt(i);
+                        listOfRequest = List.from(listOfRequest)
+                          ..removeAt(i);
                       });
                     },
                   ),
@@ -155,13 +160,14 @@ class _FriendsPageState extends State<FriendsPage> {
                     child: Icon(FontAwesomeIcons.times),
                     onTap: () {
                       userFriendRequestListFromFirestore =
-                          List.from(userFriendRequestListFromFirestore)
-                            ..removeAt(i);
+                      List.from(userFriendRequestListFromFirestore)
+                        ..removeAt(i);
 
                       removeFriendRequest();
 
                       setState(() {
-                        listOfRequest = List.from(listOfRequest)..removeAt(i);
+                        listOfRequest = List.from(listOfRequest)
+                          ..removeAt(i);
                       });
                     },
                   ),
@@ -183,7 +189,7 @@ class _FriendsPageState extends State<FriendsPage> {
   void addFriend(iDDemander, friendListOfDemander) {
     if (friendListOfDemander != null) {
       List<dynamic> mutableFriendListOfDemander =
-          List.from(friendListOfDemander);
+      List.from(friendListOfDemander);
       mutableFriendListOfDemander.add(currentUserId);
       crudObj.updateData('user', iDDemander, {
         'friendList': mutableFriendListOfDemander
@@ -196,7 +202,7 @@ class _FriendsPageState extends State<FriendsPage> {
 
     if (currentUserDataMap['friendList'] != null) {
       List<dynamic> mutableFriendListOfCurrentUser =
-          List.from(currentUserDataMap['friendList']);
+      List.from(currentUserDataMap['friendList']);
       mutableFriendListOfCurrentUser.add(iDDemander);
       crudObj.updateData('user', currentUserId, {
         'friendList': mutableFriendListOfCurrentUser
@@ -228,199 +234,116 @@ class _FriendsPageState extends State<FriendsPage> {
 
     return SliverList(
       delegate: SliverChildBuilderDelegate((BuildContext context, int i) {
-        return SimpleFoldingCell(
-          frontWidget: _buildFrontWidget(i),
-          innerTopWidget: _buildInnerTopWidget(i),
-          innerBottomWidget: _buildInnerBottomWidget(i),
-          cellSize: Size(MediaQuery.of(context).size.width, 125),
-          padding: EdgeInsets.all(15),
-          animationDuration: Duration(milliseconds: 300),
-          borderRadius: 14,
-          onOpen: () => print('$i cell ouverte'),
-          onClose: () => print('$i cell fermée'),
+        return Slidable(
+          controller: slidableController,
+          key: Key(Random().nextInt(1000).toString() +
+              friendListMap[i]['name'].toString()),
+          actionPane: SlidableScrollActionPane(),
+          actionExtentRatio: 0.25,
+          actions: <Widget>[
+            _inviteFriendSlideButton(i),
+          ],
+          secondaryActions: <Widget>[
+            _deleteFriendSlideButton(i),
+          ],
+          child: _makeCard(i),
         );
       }, childCount: friendListMap.length),
     );
   }
 
-  Widget _buildFrontWidget(int i) {
-    return Builder(
-      builder: (BuildContext context) {
-        return GestureDetector(
-          onTap: () {
-            SimpleFoldingCellState foldingCellState = context
-                .ancestorStateOfType(TypeMatcher<SimpleFoldingCellState>());
-            foldingCellState?.toggleFold();
-          },
-          child: Container(
-            color: Color(0xFFdfd3ff),
-            alignment: Alignment.center,
-            child: ListTile(
-              leading: CircleAvatar(
-                // photo de profil
-                backgroundImage: NetworkImage(friendListMap[i]['picture']),
-                minRadius: 25,
-                maxRadius: 25,
-              ),
-              title: Text(friendListMap[i]['name']),
-              subtitle: Text(friendListMap[i]['mail']),
-            ),
+  Widget _makeCard(i) {
+    return Card(
+      color: Colors.transparent,
+      elevation: 0.0,
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromRGBO(212, 63, 141, 1),
+                Color.fromRGBO(2, 80, 197, 1)
+              ]),
+          //color: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(25),
           ),
-        );
-      },
+        ),
+        child: _makeListTile(i),
+      ),
     );
   }
 
-  Widget _buildInnerTopWidget(int i) {
-    return Builder(builder: (context) {
-      return GestureDetector(
-        onTap: () {
-          SimpleFoldingCellState foldingCellState = context
-              .ancestorStateOfType(TypeMatcher<SimpleFoldingCellState>());
-          foldingCellState?.toggleFold();
-        },
-        child: Container(
-          color: Color(0xFFecf2f9),
-          alignment: Alignment.center,
-          child: ListTile(
-            leading: CircleAvatar(
-              // photo de profil
-              backgroundImage: NetworkImage(friendListMap[i]['picture']),
-              minRadius: 25,
-              maxRadius: 25,
-            ),
-            title: Text(friendListMap[i]['name']),
-            subtitle: Text(friendListMap[i]['mail']),
-          ),
-        ),
-      );
-    });
+  Widget _makeListTile(i) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      leading: CircleAvatar(
+        // photo de profil
+        backgroundImage: NetworkImage(friendListMap[i]['picture']),
+        minRadius: 25,
+        maxRadius: 25,
+      ),
+      title: Text(
+        friendListMap[i]['name'],
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      ),
+      subtitle: Text(
+          friendListMap[i]['mail'], style: TextStyle(color: Colors.white)),
+    );
   }
 
-  Widget _buildInnerBottomWidget(int i) {
-    return Builder(builder: (context) {
-      return GestureDetector(
-        onTap: () {
-          SimpleFoldingCellState foldingCellState = context
-              .ancestorStateOfType(TypeMatcher<SimpleFoldingCellState>());
-          foldingCellState?.toggleFold();
-        },
-        child: Container(
-          color: Color(0xFFecf2f9),
-//          alignment: Alignment.center,
-          child: _buttonOneFriendCard(i),
-        ),
-      );
-    });
-  }
-
-  Widget _buttonOneFriendCard(int i) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            InkWell(
-              child: Container(
-                width: 70,
-                height: 70,
-                child: Icon(
-                  FontAwesomeIcons.handshake,
-                  color: Theme.of(context).primaryColor,
-                ),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40.0),
-                    color: Colors.transparent,
-                    border: Border.all(color: Theme.of(context).primaryColor)),
-              ),
-              onTap: () {
-                print('BUTTON 1');
-              },
-            ),
-            Text('Jsp button'),
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            InkWell(
-              child: Container(
-                width: 70,
-                height: 70,
-                child: Icon(
-                  FontAwesomeIcons.shareAlt,
-                  color: Theme.of(context).primaryColor,
-                ),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40.0),
-                    color: Colors.transparent,
-                    border: Border.all(color: Theme.of(context).primaryColor)),
-              ),
-              onTap: () {
-                _openModalBottomSheet(
-                    context, friendListMap[i]['ID'], friendListMap[i]['name']);
-
-              },
-            ),
-            Text('Inviter'),
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            InkWell(
-              child: Container(
-                width: 70,
-                height: 70,
-                child: Icon(
-                  FontAwesomeIcons.times,
-                  color: Colors.red,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40.0),
-                  color: Colors.transparent,
-                  border: Border.all(color: Colors.red),
-                ),
-              ),
-              onTap: () {
-                List<dynamic> mutableFriendList = List.from(userFriendList);
-                List<Map<dynamic, dynamic>> mutableFriendListMap =
-                    friendListMap;
-                String friendID = friendListMap[i]['ID'];
+  Widget _deleteFriendSlideButton(i) {
+    return IconSlideAction(
+      caption: 'Supprimer',
+      color: Colors.red,
+      icon: Icons.delete,
+      onTap: () {
+        List<dynamic> mutableFriendList = List.from(userFriendList);
+        List<Map<dynamic, dynamic>> mutableFriendListMap =
+            friendListMap;
+        String friendID = friendListMap[i]['ID'];
 //                print('MUTABLEFRIENDLIST AVANT REMOVE');
 //                print(mutableFriendList);
 //                mutableFriendList = List.from(mutableFriendList)..removeAt(i);
 //                print('MUTABLEFRIENDLIST APRES REMOVE');
 //                print(mutableFriendList);
-                for (int b = 0; b < mutableFriendList.length; b++) {
-                  if (friendID == mutableFriendList[b]) {
-                    mutableFriendList.removeAt(b);
-                  }
-                }
+        for (int b = 0; b < mutableFriendList.length; b++) {
+          if (friendID == mutableFriendList[b]) {
+            mutableFriendList.removeAt(b);
+          }
+        }
 
-                List<dynamic> mutableFriendListOfFriend =
-                    List.from(friendListMap[i]['friendList']);
-                for (int k = 0; k < mutableFriendListOfFriend.length; k++) {
-                  if (currentUserId == mutableFriendListOfFriend[k]) {
-                    mutableFriendListOfFriend.removeAt(k);
-                    break;
-                  }
-                }
-                mutableFriendListMap = List.from(mutableFriendListMap)
-                  ..removeAt(i);
+        List<dynamic> mutableFriendListOfFriend =
+        List.from(friendListMap[i]['friendList']);
+        for (int k = 0; k < mutableFriendListOfFriend.length; k++) {
+          if (currentUserId == mutableFriendListOfFriend[k]) {
+            mutableFriendListOfFriend.removeAt(k);
+            break;
+          }
+        }
+        mutableFriendListMap = List.from(mutableFriendListMap)
+          ..removeAt(i);
 
-                setState(() {
-                  userFriendList = mutableFriendList;
-                  friendListMap = mutableFriendListMap;
-                });
-                removeFriend(friendID, mutableFriendListOfFriend);
-              },
-            ),
-            Text('Supprimer'),
-          ],
-        ),
-      ],
+        setState(() {
+          userFriendList = mutableFriendList;
+          friendListMap = mutableFriendListMap;
+        });
+        removeFriend(friendID, mutableFriendListOfFriend);
+      },
+    );
+  }
+
+  Widget _inviteFriendSlideButton(i) {
+    return IconSlideAction(
+      caption: 'Inviter',
+      color: Colors.blue,
+      icon: FontAwesomeIcons.handshake,
+      onTap: () {
+        _openModalBottomSheet(
+            context, friendListMap[i]['ID'], friendListMap[i]['name']);
+      },
     );
   }
 
@@ -431,7 +354,6 @@ class _FriendsPageState extends State<FriendsPage> {
   }
 
   void _openModalBottomSheet(context, friendID, friendName) {
-
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -458,14 +380,17 @@ class _FriendsPageState extends State<FriendsPage> {
 
   Widget inviteToClub(friendID, friendName) {
     List<dynamic> currentUserReservation =
-        List.from(currentUserDataMap['reservation']);
+    List.from(currentUserDataMap['reservation']);
 
     return Container(
       margin: EdgeInsets.fromLTRB(25, 25, 25, 0),
       child: Column(
         children: <Widget>[
           Container(
-            child: Text('Clique sur un évènement pour inviter $friendName',textAlign: TextAlign.center,style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 20),),
+            child: Text('Clique sur un évènement pour inviter $friendName',
+              textAlign: TextAlign.center, style: TextStyle(color: Theme
+                  .of(context)
+                  .primaryColor, fontSize: 20),),
           ),
 
           Expanded(
@@ -511,12 +436,22 @@ class _FriendsPageState extends State<FriendsPage> {
       if (invitationList != null) {
         List<dynamic> mutableInvitationList = List.from(invitationList);
         mutableInvitationList
-            .add({'who': currentUserName, 'boite': boiteName, 'date': date, 'qrcode' : qrCodeUrl});
+            .add({
+          'who': currentUserName,
+          'boite': boiteName,
+          'date': date,
+          'qrcode': qrCodeUrl
+        });
         crudObj.updateData(
             'user', friendID, {'invitation': mutableInvitationList});
       } else {
         List<Map<dynamic, dynamic>> newListOfInvitation = [
-          {'who': currentUserName, 'boite': boiteName, 'date': date, 'qrcode' : qrCodeUrl}
+          {
+            'who': currentUserName,
+            'boite': boiteName,
+            'date': date,
+            'qrcode': qrCodeUrl
+          }
         ];
         crudObj
             .updateData('user', friendID, {'invitation': newListOfInvitation});
@@ -692,13 +627,7 @@ class _FriendsPageState extends State<FriendsPage> {
   Widget _floatingCollapsed() {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color.fromRGBO(212, 63, 141, 1),
-              Color.fromRGBO(2, 80, 197, 1)
-            ]),
+        color: Colors.white,
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
       ),
@@ -707,10 +636,10 @@ class _FriendsPageState extends State<FriendsPage> {
         child: ListTile(
           title: Text(
             "Recherche t\'es amis",
-            style: TextStyle(color: Colors.white, fontSize: 25.0,),
-             textAlign: TextAlign.center,
+            style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 25.0,),
+            textAlign: TextAlign.center,
           ),
-          trailing: Icon(Icons.arrow_upward,color: Colors.white,size: 30,),
+          trailing: Icon(Icons.arrow_upward, color: Theme.of(context).primaryColor, size: 30,),
         ),
       ),
     );
@@ -721,7 +650,9 @@ class _FriendsPageState extends State<FriendsPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(24.0)),
-        border: Border.all(color: Theme.of(context).primaryColor, width: 2),
+        border: Border.all(color: Theme
+            .of(context)
+            .primaryColor, width: 2),
       ),
       margin: const EdgeInsets.all(2.0),
       child: Center(
@@ -742,10 +673,14 @@ class _FriendsPageState extends State<FriendsPage> {
         elevation: 0.0,
         // pour éviter l'ombre qui fait moche avec l'animation du refresh
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        iconTheme: IconThemeData(color: Theme
+            .of(context)
+            .primaryColor),
         title: Text(
           'Amis',
-          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 30),
+          style: TextStyle(color: Theme
+              .of(context)
+              .primaryColor, fontSize: 30),
         ),
       ),
       body: SlidingUpPanel(
@@ -756,14 +691,16 @@ class _FriendsPageState extends State<FriendsPage> {
         maxHeight: 400,
         backdropEnabled: true,
         backdropTapClosesPanel: true,
-        onPanelClosed: (){
-            FocusScope.of(context).requestFocus(new FocusNode());
+        onPanelClosed: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
         },
         body: SmartRefresher(
             enablePullDown: true,
             enablePullUp: false,
             header: WaterDropMaterialHeader(
-              backgroundColor: Theme.of(context).primaryColor,
+              backgroundColor: Theme
+                  .of(context)
+                  .primaryColor,
               color: Colors.white,
               distance: 200.0,
             ),
@@ -811,8 +748,8 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => math.max(maxHeight, minHeight);
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset,
+      bool overlapsContent) {
     return new SizedBox.expand(child: child);
   }
 
