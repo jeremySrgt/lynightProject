@@ -706,7 +706,7 @@ class _FriendsPageState extends State<FriendsPage> {
       child: Center(
         child: ListTile(
           title: Text(
-            "Recherche t\'es amis",
+            "Recherche tes amis",
             style: TextStyle(color: Colors.white, fontSize: 25.0,),
              textAlign: TextAlign.center,
           ),
