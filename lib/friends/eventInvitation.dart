@@ -89,7 +89,11 @@ class _EventInvitationState extends State<EventInvitation> {
                       FlatButton(
                         child: const Text('NOPE'),
                         onPressed: () {
-                          //TODO supprimer l'invitation de la liste en base et pas en base
+                          List<dynamic> mutableListOfInvitation = List.from(invitationList)..removeAt(i);
+                          setState(() {
+                            invitationList = mutableListOfInvitation;
+                          });
+                          _removeInvitation();
                         },
                       ),
                       FlatButton(
