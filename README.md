@@ -50,44 +50,44 @@ Profile :
 When you create a new account, you can personalize your profile with a new image from your gallery or you can use the camera from your phone to take a picture of you instant.
 You can also change the music according the mood you are in, and our algorithm is going to suggest you the best nightClub according to your music style.
 
-<img src="assets/profil.jpg" width="200" height="500">
+<img src="assets/profil.jpg" width="300" height="500" class="center">
 
 
 Research :
 On this page you can research your favorite nightClub with his name.
 
-<img src="assets/recherche.jpg" width="200" height="500">
+<img src="assets/recherche.jpg" width="300" height="500" class="center">
 
 
 Discover :
 The discovery page is the first one you are going to see when you first launched the application, on this page you will see on the top 5 club who are randomly picked from our database.
 On the bottom of the screen you can find the club we suggest you according to the music style you select in your profile.
 
-<img src="assets/decouvrir.jpg" width="200" height="500">
+<img src="assets/decouvrir.jpg" width="300" height="500" class="center">
 
 
 Favorite :
 When you go on a nightClub Page you have the possibility to put in favorites the club, when you do that it will show on your favorite page.
 
-<img src="assets/favoris.jpg" width="200" height="500">
+<img src="assets/favoris.jpg" width="300" height="500" class="center">
 
 
 Reservation :
 When you book a place for a club in particular it will generate a QR Code with your name, the date and the club and when you will go on the reservation page you
 will see all your reservation and when you will be in front of the bailer of the club you will show your QR code to him and he will scan it and you will be able to go in !
 
-<img src="assets/reservation.jpg" width="200" height="500">
+<img src="assets/reservation.jpg" width="300" height="500" class="center">
 
 
 Map :
 If you want to search for the closest nightClub from you, go on the map and you will see all the club from our database.
 And if you want to go to your club from your destination we will suggest you different way to move : uber, map,...
 
-<img src="assets/carte.jpg" width="200" height="500">
+<img src="assets/carte.jpg" width="300" height="500" class="center">
 
 
 Friends :
 You can add your friends on the app and this will allow you to invite them to a nightClub when you will go out.
 
-<img src="assets/amis.jpg" width="200" height="500">
+<img src="assets/amis.jpg" width="300" height="500" class="center">
 
