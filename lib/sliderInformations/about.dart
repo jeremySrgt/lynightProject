@@ -94,7 +94,7 @@ class _AboutState extends State<About> {
 //
 //        ),
         trailing: Icon(
-          FontAwesomeIcons.chevronRight
+          FontAwesomeIcons.externalLinkAlt
         ),
         onTap: (){
           _launchSite();
@@ -121,7 +121,7 @@ class _AboutState extends State<About> {
 //
 //        ),
         trailing: Icon(
-            FontAwesomeIcons.chevronRight
+            FontAwesomeIcons.externalLinkAlt
         ),
         onTap: (){
           _launchWebSite();
