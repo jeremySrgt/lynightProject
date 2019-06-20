@@ -416,7 +416,7 @@ class _AddClubState extends State<AddClub> {
 
   //----------------------------------------------------------------------------------------------
 
-  //peut etre toruver un moyen de convertir les adress en coordonnées satelite
+  //peut etre trouver un moyen de convertir les adress en coordonnées satelite
   Widget _clubPosition() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(5.0, 50.0, 10.0, 25.0),
@@ -668,7 +668,7 @@ class _AddClubState extends State<AddClub> {
           Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.white70,
+              color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
               boxShadow: [
                 BoxShadow(
@@ -691,7 +691,7 @@ class _AddClubState extends State<AddClub> {
           Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.white70,
+              color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
               boxShadow: [
                 BoxShadow(
@@ -716,7 +716,7 @@ class _AddClubState extends State<AddClub> {
           Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.white70,
+              color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
               boxShadow: [
                 BoxShadow(
@@ -739,7 +739,7 @@ class _AddClubState extends State<AddClub> {
           Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: Colors.white70,
+              color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
               boxShadow: [
                 BoxShadow(
