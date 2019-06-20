@@ -56,7 +56,7 @@ When you create a new account, you can personalize your profile with a new image
 You can also change the music according the mood you are in, and our algorithm is going to suggest you the best nightClub according to your music style.
 
 <p align= "center">
-<img src="assets/profil.jpg" width="250" height="500" align="middle">
+<img src="assets/readmeImage/1.png"  align="middle">
 </p>
 
 __Research :__
