@@ -64,29 +64,28 @@ class _ResultSearchState extends State<ResultSearch> {
           'friendRequest': [widget.currentUserId]
         });
       } else {
-        setState(() {
-          _friendRequestList0fRequestedFriend = friendRequestList;
-        });
 
-        for (int i = 0; i < _friendRequestList0fRequestedFriend.length; i++) {
-          if (_friendRequestList0fRequestedFriend[i] == widget.currentUserId) {
-            setState(() {
-              _alreadyRequestedFriend = true;
-            });
+        bool alreadyRequested = false ;
+
+        for (int i = 0; i < friendRequestList.length; i++) {
+          if (widget.currentUserId == friendRequestList[i]) {
+            alreadyRequested = true;
+            break;
           }
         }
 
-        if (_alreadyRequestedFriend == false) {
+        if(alreadyRequested == false){
           List<String> mutableListOfRequestedFriend =
-              List.from(_friendRequestList0fRequestedFriend);
+          List.from(friendRequestList);
 
           mutableListOfRequestedFriend.add(widget.currentUserId);
 
           crudObj.updateData('user', friendID,
               {'friendRequest': mutableListOfRequestedFriend});
-        } else {
-          print('deja amis===========');
+        }else{
+          print('demande deja envoyée');
         }
+
       }
       setState(() {
         _isLoading = false;
@@ -225,12 +224,16 @@ class _ResultSearchState extends State<ResultSearch> {
                         ]),
                         trailing: trailingIcon(index),
                         onTap: () {
-                          setState(() {
                             if (alreadyReq(widget.suggestionList[index]
                                 ['friendRequest'])) {
+                              print('alreadyRequested == true');
                               //suggestionList[index]['friendRequest'].remove(widget.currentUserId);
                               //alreadyReq(suggestionList[index]['friendRequest']) = false;
-                            } else {
+                            } else if(alreadyFriend(widget.suggestionList[index]
+                            ['friendList'])){
+                              print('alreadyFriend == true');
+                            }
+                            else{
                               addFriend(widget.suggestionList[index]['userID']);
                               showDialog(
                                   context: context,
@@ -273,7 +276,6 @@ class _ResultSearchState extends State<ResultSearch> {
                                   });
                               //alreadyReq(suggestionList[index]['friendRequest']) = true;
                             }
-                          });
                         },
                       ),
                     ]),
