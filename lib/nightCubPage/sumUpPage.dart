@@ -149,6 +149,10 @@ class _SumUpState extends State<SumUp> {
   }
 
   Widget userBottomSection(context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double font = MediaQuery.of(context).textScaleFactor;
+
     return Padding(
       padding: EdgeInsets.only(top: 50.0),
       child: Container(
@@ -182,7 +186,7 @@ class _SumUpState extends State<SumUp> {
                         width: MediaQuery.of(context).size.width,
                         height: 120,
                         decoration: BoxDecoration(
-                          color: Colors.white70,
+                          color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
                           boxShadow: [
                             BoxShadow(
@@ -214,34 +218,23 @@ class _SumUpState extends State<SumUp> {
                                     Container (
                                       height: 10,
                                     ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                            colors: [
-                                              Colors.pinkAccent,
-                                              Colors.deepPurpleAccent
-                                            ],
-                                            begin: FractionalOffset(0.0, 0.0),
-                                            end: FractionalOffset(0.5, 0.0),
-                                            stops: [0.0, 1.0],
-                                            tileMode: TileMode.clamp),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(30.0)),
-                                      ),
-                                      child: RaisedButton(
-                                        elevation: 5.0,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0)),
-                                        child: Text(
-                                            'Choisir une date',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16.0)),
-                                        color: Colors.transparent,
-                                        onPressed: () {
-                                          _selectDate(context);
-                                        },
+                                    GestureDetector(
+                                      onTap: () {_selectDate(context);},
+                                      child: Container(
+                                        width: width/2.5,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  Color.fromRGBO(212, 63, 141, 1),
+                                                  Color.fromRGBO(2, 80, 197, 1)
+                                                ]),
+                                            //color: Theme.of(context).primaryColor,
+                                            borderRadius: BorderRadius.all(Radius.circular(25))
+                                        ),
+                                        child: Center(child: Text("Choisir une date", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
                                       ),
                                     ),
                                   ],
@@ -267,41 +260,32 @@ class _SumUpState extends State<SumUp> {
   }
 
   Widget _buttonGenerateQrCode() {
-    return SizedBox(
-      height: 40.0,
-      width: 200,
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double font = MediaQuery.of(context).textScaleFactor;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          generationClicked = true;
+        });
+        _getWidgetImage();
+      },
       child: Container(
+        width: width/2.5,
+        height: 40,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [
-                Colors.pinkAccent,
-                Colors.deepPurpleAccent
-              ],
-              begin: FractionalOffset(0.0, 0.0),
-              end: FractionalOffset(0.5, 0.0),
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp),
-          borderRadius: BorderRadius.all(
-              Radius.circular(30.0)),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromRGBO(212, 63, 141, 1),
+                  Color.fromRGBO(2, 80, 197, 1)
+                ]),
+            //color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.all(Radius.circular(25))
         ),
-        child: RaisedButton(
-          elevation: 5.0,
-          shape: RoundedRectangleBorder(
-              borderRadius:
-              BorderRadius.circular(5.0)),
-          child: Text(
-              'C\'est ok ',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0)),
-          color: Colors.transparent,
-          onPressed: () {
-            setState(() {
-              generationClicked = true;
-            });
-            _getWidgetImage();
-          },
-        ),
+        child: Center(child: Text("C\'est ok !", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
       ),
     );
   }
@@ -327,15 +311,19 @@ class _SumUpState extends State<SumUp> {
   }
 
   Widget _showLoadingQr(context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double font = MediaQuery.of(context).textScaleFactor;
+
     return Opacity(
       opacity: 0.7,
       child: Container(
         color: Theme.of(context).primaryColor,
         child: Padding(
-          padding: const EdgeInsets.only(left: 60),
-          //pas responsive du tout
+          padding: EdgeInsets.only(top: height/5, bottom: height/5, left: width/7, right: width/9),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               LinearPercentIndicator(
                 width: 300.0,
