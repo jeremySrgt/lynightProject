@@ -138,6 +138,8 @@ class _MyCheckboxState extends State<MyCheckbox> {
     final _formKey = GlobalKey<FormState>();
 
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20.0))),
       content: Form(
         key: _formKey,
         child: Column(
@@ -154,7 +156,11 @@ class _MyCheckboxState extends State<MyCheckbox> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: RaisedButton(
-                child: Text("Valider"),
+                color: Theme.of(context).accentColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                    BorderRadius.all(Radius.circular(20.0))),
+                child: Text("Valider", style: TextStyle(color: Colors.white),),
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();

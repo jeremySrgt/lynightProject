@@ -192,6 +192,8 @@ class _UserProfilState extends State<UserProfil> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
                     content: Form(
                       key: _formKey,
                       child: Column(
@@ -207,7 +209,11 @@ class _UserProfilState extends State<UserProfil> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: RaisedButton(
-                              child: Text("Valider"),
+                              color: Theme.of(context).accentColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0))),
+                              child: Text("Valider", style: TextStyle(color: Colors.white),),
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   _formKey.currentState.save();
@@ -253,6 +259,8 @@ class _UserProfilState extends State<UserProfil> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
                     content: Form(
                       key: _formKey,
                       child: Column(
@@ -268,7 +276,11 @@ class _UserProfilState extends State<UserProfil> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: RaisedButton(
-                              child: Text("Valider"),
+                              color: Theme.of(context).accentColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0))),
+                              child: Text("Valider", style: TextStyle(color: Colors.white),),
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   _formKey.currentState.save();
@@ -329,6 +341,8 @@ class _UserProfilState extends State<UserProfil> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
                     content: Form(
                       key: _formKey,
                       child: Column(
@@ -347,7 +361,11 @@ class _UserProfilState extends State<UserProfil> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: RaisedButton(
-                              child: Text("Valider"),
+                                color: Theme.of(context).accentColor,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(20.0))),
+                                child: Text("Valider", style: TextStyle(color: Colors.white),),
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   _formKey.currentState.save();
@@ -381,7 +399,10 @@ class _UserProfilState extends State<UserProfil> {
         ),
         title: Text(
           "Style de musique",
-          style: TextStyle(color: Colors.white, fontSize: 18.0,),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0,
+          ),
         ),
         trailing: IconButton(
           icon: Icon(Icons.edit, color: Colors.white),
@@ -397,22 +418,28 @@ class _UserProfilState extends State<UserProfil> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             musicMap['electro'] == true
-                ? Text('Électro', style: TextStyle(color: Colors.white,height: 1.2))
+                ? Text('Électro',
+                    style: TextStyle(color: Colors.white, height: 1.2))
                 : Container(),
             musicMap['populaire'] == true
-                ? Text('Populaire', style: TextStyle(color: Colors.white,height: 1.2))
+                ? Text('Populaire',
+                    style: TextStyle(color: Colors.white, height: 1.2))
                 : Container(),
             musicMap['rap'] == true
-                ? Text('Rap', style: TextStyle(color: Colors.white,height: 1.2))
+                ? Text('Rap',
+                    style: TextStyle(color: Colors.white, height: 1.2))
                 : Container(),
             musicMap['rnb'] == true
-                ? Text('RnB', style: TextStyle(color: Colors.white,height: 1.2))
+                ? Text('RnB',
+                    style: TextStyle(color: Colors.white, height: 1.2))
                 : Container(),
             musicMap['rock'] == true
-                ? Text('Rock', style: TextStyle(color: Colors.white,height: 1.2))
+                ? Text('Rock',
+                    style: TextStyle(color: Colors.white, height: 1.2))
                 : Container(),
             musicMap['trans'] == true
-                ? Text('Trance', style: TextStyle(color: Colors.white,height: 1.2))
+                ? Text('Trance',
+                    style: TextStyle(color: Colors.white, height: 1.2))
                 : Container(),
           ],
         ),
@@ -449,7 +476,7 @@ class _UserProfilState extends State<UserProfil> {
           style: TextStyle(color: Colors.white, fontSize: 18.0),
         ),
         trailing: Switch(
-            value: _notificationValue, onChanged: _onChangedNotification),
+            value: _notificationValue, onChanged: _onChangedNotification,activeColor: Colors.lightBlueAccent,),
       );
     }
 
