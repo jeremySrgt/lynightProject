@@ -69,7 +69,7 @@ class _AboutState extends State<About> {
         subtitle: Text(
             ' \nBloon est une application mobile qui répertorie les boîtes de nuit à Paris.'
                 + ' Des boîtes de nuit seront recommandées selon votre profil personnalisé,'
-                + ' de plus, Bloon vous permet de réserver une place d\'entrée '
+                + ' invitez vos amis aux évenements que vous auriez réservés.'
                 + '\nLe droit à l\'accès est réservé au boîte de nuit.'
         ,style: TextStyle(color: Colors.black,height: 1.2),textAlign: TextAlign.justify,),
       ),
