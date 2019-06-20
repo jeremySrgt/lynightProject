@@ -386,7 +386,6 @@ class _FriendsPageState extends State<FriendsPage> {
   Widget inviteToClub(friendID, friendName) {
     List<dynamic> currentUserReservation =
     List.from(currentUserDataMap['reservation']);
-
     return Container(
       margin: EdgeInsets.fromLTRB(25, 25, 25, 0),
       child: Column(
@@ -397,7 +396,10 @@ class _FriendsPageState extends State<FriendsPage> {
                   .of(context)
                   .primaryColor, fontSize: 20),),
           ),
-
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 150),
+            child: Center(child: Text('Aucune réservation en cours',style: TextStyle(color: Colors.black),strutStyle: StrutStyle(fontSize: 25),)),
+          ),
           Expanded(
             child: Container(
               child: ListView.builder(
