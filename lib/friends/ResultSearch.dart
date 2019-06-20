@@ -117,12 +117,12 @@ class _ResultSearchState extends State<ResultSearch> {
       //pour éviter l'erreur null
     } else {
       if (alreadyFriend(widget.suggestionList[index]['friendList'])) {
-        return Icon(Icons.check);
+        return Icon(Icons.check,color: Colors.greenAccent,);
       } else {
         return Icon(
             alreadyReq(widget.suggestionList[index]['friendRequest']) == true
                 ? FontAwesomeIcons.paperPlane
-                : Icons.add,
+                : FontAwesomeIcons.plusCircle,
             color:
                 alreadyFriend(widget.suggestionList[index]['friendRequest']) ==
                         true
