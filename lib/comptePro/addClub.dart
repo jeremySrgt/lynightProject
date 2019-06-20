@@ -203,7 +203,7 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Nom du club',
           icon: new Icon(
             FontAwesomeIcons.solidMoon,
-            size: 30,
+            size: 24,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -227,7 +227,7 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Decription',
           icon: new Icon(
             FontAwesomeIcons.solidClipboard,
-            size: 30,
+            size: 24,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -250,7 +250,7 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Adresse',
           icon: new Icon(
             FontAwesomeIcons.mapMarkerAlt,
-            size: 30,
+            size: 24,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -274,7 +274,7 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Arrondissement',
           icon: new Icon(
             FontAwesomeIcons.compass,
-            size: 30,
+            size: 24,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -299,7 +299,7 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Téléphone',
           icon: new Icon(
             FontAwesomeIcons.phone,
-            size: 30,
+            size: 24,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -429,7 +429,7 @@ class _AddClubState extends State<AddClub> {
               labelText: 'Latitude',
               icon: new Icon(
                 FontAwesomeIcons.mapPin,
-                size: 30,
+                size: 24,
                 color: Theme.of(context).primaryColor,
               ),
             ),
@@ -447,7 +447,7 @@ class _AddClubState extends State<AddClub> {
               labelText: 'Longitude',
               icon: new Icon(
                 FontAwesomeIcons.mapPin,
-                size: 30,
+                size: 24,
                 color: Theme.of(context).primaryColor,
               ),
             ),
@@ -475,7 +475,7 @@ class _AddClubState extends State<AddClub> {
               labelText: 'Prix homme',
               icon: new Icon(
                 FontAwesomeIcons.euroSign,
-                size: 30,
+                size: 24,
                 color: Theme.of(context).primaryColor,
               ),
             ),
@@ -493,7 +493,7 @@ class _AddClubState extends State<AddClub> {
               labelText: 'Prix femme',
               icon: new Icon(
                 FontAwesomeIcons.euroSign,
-                size: 30,
+                size: 24,
                 color: Theme.of(context).primaryColor,
               ),
             ),
@@ -518,7 +518,7 @@ class _AddClubState extends State<AddClub> {
           labelText: 'Site web [optionnel]',
           icon: new Icon(
             FontAwesomeIcons.link,
-            size: 30,
+            size: 24,
             color: Theme.of(context).primaryColor,
           ),
         ),
