@@ -182,7 +182,7 @@ class _EventInvitationState extends State<EventInvitation> {
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         title: Text(
-          'Invitation',
+          'Évènements',
           style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 30,),
         ),
       ),

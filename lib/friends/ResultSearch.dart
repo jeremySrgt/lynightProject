@@ -212,13 +212,15 @@ class _ResultSearchState extends State<ResultSearch> {
                           SizedBox(
                             width: 5,
                           ),
-                          Text(
-                            widget.suggestionList[index]['mail'],
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold),
-                            overflow: TextOverflow.ellipsis,
+                          Flexible(
+                            child: Text(
+                              widget.suggestionList[index]['mail'],
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ]),
                         trailing: trailingIcon(index),
