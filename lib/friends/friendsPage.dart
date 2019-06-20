@@ -386,6 +386,27 @@ class _FriendsPageState extends State<FriendsPage> {
   Widget inviteToClub(friendID, friendName) {
     List<dynamic> currentUserReservation =
     List.from(currentUserDataMap['reservation']);
+
+    if (currentUserReservation.isEmpty) {
+      return Container(
+        margin: EdgeInsets.fromLTRB(25, 25, 25, 0),
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Text('Clique sur un évènement pour inviter $friendName',
+                textAlign: TextAlign.center, style: TextStyle(color: Theme
+                    .of(context)
+                    .primaryColor, fontSize: 20),),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 150),
+              child: Center(child: Text('Aucune réservation en cours',style: TextStyle(color: Colors.black),strutStyle: StrutStyle(fontSize: 25),overflow: TextOverflow.visible,)),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Container(
       margin: EdgeInsets.fromLTRB(25, 25, 25, 0),
       child: Column(
@@ -395,10 +416,6 @@ class _FriendsPageState extends State<FriendsPage> {
               textAlign: TextAlign.center, style: TextStyle(color: Theme
                   .of(context)
                   .primaryColor, fontSize: 20),),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 150),
-            child: Center(child: Text('Aucune réservation en cours',style: TextStyle(color: Colors.black),strutStyle: StrutStyle(fontSize: 25),)),
           ),
           Expanded(
             child: Container(
