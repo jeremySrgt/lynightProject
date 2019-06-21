@@ -19,7 +19,7 @@ You can also change the music according the mood you are in, and our algorithm i
 <p align= "center">
 <img src="assets/reademeImage/4.png"  align="middle">
 </p>
-
+</br>
 
 
 __Research :__
@@ -46,10 +46,8 @@ On the bottom of the screen you can find the club we suggest you according to th
 __Favorite :__
 
 When you go on a nightClub Page you have the possibility to put in favorites the club, when you do that it will show on your favorite page.
+</br>
 
-<p align= "center">
-<img src="assets/reademeImage/1.png" align="middle">
-</p>
 
 
 
@@ -62,6 +60,7 @@ will see all your reservation and when you will be in front of the bailer of the
 <img src="assets/reademeImage/8.png" align="middle">
 </p>
 
+</br>
 
 
 __QR Code :__
@@ -73,6 +72,7 @@ When you go to the club you will have to show this Qr code to the bailer and he 
 <img src="assets/reademeImage/4.png" align="middle">
 </p>
 
+</br>
 
 
 __Map :__
@@ -84,6 +84,7 @@ And if you want to go to your club from your destination we will suggest you dif
 <img src="assets/reademeImage/3.png" align="middle">
 </p>
 
+</br>
 
 
 __Friends :__
@@ -94,6 +95,7 @@ You can add your friends on the app and this will allow you to invite them to a 
 <img src="assets/reademeImage/6.png" align="middle">
 </p>
 
+</br>
 
 
 __Event:__
@@ -105,6 +107,7 @@ event screen to accept or deny the invitation.
 <img src="assets/reademeImage/7.png" align="middle">
 </p>
 
+</br>
 
 
 ## Getting Started
