@@ -153,7 +153,7 @@ class _ScannerQrCode extends State<ScannerQrCode> {
   Widget verifQrCodeValue(qrCodeValue){
     Color c = const Color.fromRGBO(0, 0, 0, 0.7);
     if(qrCodeValue != "" && checkIfScanOrNot == false){
-      if(RegExp(r"[a-zA-Z]+\s-\s[a-zA-Z]+?\s-\s[0-9]{2}?/[0-9]{2}?/[0-9]{4}?").hasMatch(qrCodeValue) == true ){
+      if(RegExp(r"([a-zA-Z])+\s-\s([a-zA-Z\s])+?\s-\s[0-9]{2}?/[0-9]{2}?/[0-9]{4}?").hasMatch(qrCodeValue) == true ){
         return Container(
             color: c,
           child: Center(
