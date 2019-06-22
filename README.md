@@ -69,7 +69,7 @@ Once you have made a reservation you will see it on the reservation page. Next i
 When you go to the club you will have to show this Qr code to the bailer and he will scan it and let you go through.
 
 <p align= "center">
-<img src="assets/reademeImage/4.png" align="middle">
+<img src="assets/reademeImage/5.png" align="middle">
 </p>
 
 </br>
