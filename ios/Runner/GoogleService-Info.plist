@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>154364186108-i685mk5dn17dlvt7mi7oglnhbr21vtmo.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.154364186108-i685mk5dn17dlvt7mi7oglnhbr21vtmo</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBo_H6R1_gAmjh687Y7qi-U60qrdx5nu9A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>154364186108</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.flutter.jerem.lynightapple</string>
+	<key>PROJECT_ID</key>
+	<string>bloonios</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bloonios.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:154364186108:ios:476e32b179aed3c6</string>
+	<key>DATABASE_URL</key>
+	<string>https://bloonios.firebaseio.com</string>
+</dict>
+</plist>
