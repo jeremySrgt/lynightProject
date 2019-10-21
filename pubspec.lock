@@ -84,7 +84,7 @@ packages:
       name: firebase_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.11.1+6"
+    version: "0.11.1+12"
   firebase_core:
     dependency: "direct main"
     description:
@@ -150,7 +150,7 @@ packages:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.0"
+    version: "0.5.21+8"
   image:
     dependency: "direct main"
     description:
