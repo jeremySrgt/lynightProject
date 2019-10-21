@@ -39,7 +39,7 @@ dependencies:
   pull_to_refresh: ^1.5.7
   transparent_image: ^1.0.0
   folding_cell: ^0.1.2 # utilisé ? sinon retirer (pas mis a jour)
-  #qr_code_scanner: ^0.0.5 #provoque bug
+  qr_code_scanner: ^0.0.12 #provoque bug
 
 
 

@@ -41,7 +41,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.flutter.jerem.lynight"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 5 // nombre de build upload sur le play store
         versionName "1.0.0"
