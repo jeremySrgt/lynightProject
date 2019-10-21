@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
-      debugShowCheckedModeBanner: false, //retir la banniere de debug
+      debugShowCheckedModeBanner: false, //retire la banniere de debug
       theme: ThemeData(
           primaryColor: primaryColor,
           accentColor: accentColor,
@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         '/maps': (BuildContext context) => GoogleMapsClient(),
         '/sumUpPage': (BuildContext context) => SumUp(),
         '/addClub' : (BuildContext context) => AddClub(),
-        '/scannerQrCode' : (BuildContext context) => ScannerQrCode(),
+        '/scannerQrCode' : (BuildContext context) => AddClub(),//changer avec qrcodescanner a cause du bug
         '/friends' : (BuildContext context) => FriendsPage(),
         //'/favorites':(BuildContext context) => FavoritesNightClub(),
         '/about': (BuildContext context) => About(),

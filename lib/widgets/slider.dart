@@ -119,7 +119,7 @@ class _CustomSliderState extends State<CustomSlider> {
           ),
         ),
         onTap: () {
-          Navigator.pushReplacementNamed(context, '/scannerQrCode');
+          Navigator.pushReplacementNamed(context, '/friends');
         },
       ),
     );
