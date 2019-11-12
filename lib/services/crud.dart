@@ -74,6 +74,14 @@ class CrudMethods {
     
   }
 
+  createOrUpdateAdminData(Map<String, dynamic> userDataMap) async{
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+//    print('USERID ' + user.uid);
+    DocumentReference ref = Firestore.instance.collection('AdminBoite').document(user.uid);
+    return ref.setData(userDataMap, merge: true);
+
+  }
+
   updateUserDataWithUserID(userID, Map<String, dynamic> userDataMap) async{
     DocumentReference ref = Firestore.instance.collection('user').document(userID);
     return ref.setData(userDataMap, merge: true);

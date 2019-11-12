@@ -61,8 +61,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           _isLoading = false;
         });
         widget.onSignIn();
-        if (_formType == FormType.register ||
-            _formType == FormType.registerAsPro) {
+        if (_formType == FormType.register) {
           UserData userData = new UserData(
               name: _name,
               surname: "",
@@ -88,6 +87,34 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               friendList: [],
               invitation: []);
           crudObj.createOrUpdateUserData(userData.getDataMap());
+        }
+
+        if (_formType == FormType.registerAsPro) {
+          UserData userData = new UserData(
+              name: _name,
+              surname: "",
+              dob: dob,
+              favoris: [],
+              mail: _email,
+              music: {
+                'electro': true,
+                'populaire': true,
+                'rap': true,
+                'rnb': true,
+                'rock': true,
+                'trans': true,
+              },
+              notification: true,
+              phone: "",
+              picture:
+              "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
+              reservation: [],
+              sex: userSex,
+              pro: true,
+              friendRequest: [],
+              friendList: [],
+              invitation: []);
+          crudObj.createOrUpdateAdminData(userData.getDataMap());
         }
       } catch (e) {
         setState(() {
