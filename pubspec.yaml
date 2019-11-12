@@ -20,7 +20,7 @@ environment:
 dependencies:
   sliding_up_panel: ^0.3.4
   url_launcher: ^5.0.3
-  geoflutterfire : ^2.0.2
+  #geoflutterfire : ^2.0.2
   location: ^2.3.5
   google_maps_flutter: ^0.5.21+8
   firebase_auth: ^0.14.0+5
@@ -39,7 +39,7 @@ dependencies:
   pull_to_refresh: ^1.5.7
   transparent_image: ^1.0.0
   folding_cell: ^0.1.2 # utilisé ? sinon retirer (pas mis a jour)
-  qr_code_scanner: ^0.0.12 #provoque bug
+  #qr_code_scanner: ^0.0.12  #provoque bug
 
 
 

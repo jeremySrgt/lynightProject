@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         '/maps': (BuildContext context) => GoogleMapsClient(),
         '/sumUpPage': (BuildContext context) => SumUp(),
         '/addClub' : (BuildContext context) => AddClub(),
-        '/scannerQrCode' : (BuildContext context) => ScannerQrCode(),//changer avec qrcodescanner a cause du bug
+        '/scannerQrCode' : (BuildContext context) => FriendsPage(),//changer avec qrcodescanner a cause du bug
         '/friends' : (BuildContext context) => FriendsPage(),
         //'/favorites':(BuildContext context) => FavoritesNightClub(),
         '/about': (BuildContext context) => About(),
