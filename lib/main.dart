@@ -15,6 +15,7 @@ import 'package:lynight/sliderInformations/about.dart';
 import 'package:lynight/sliderInformations/termsAndConditions.dart';
 import 'package:lynight/sliderInformations/confidentiality.dart';
 import 'package:lynight/friends/eventInvitation.dart';
+import 'package:lynight/test/testAdminBoite.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -64,6 +65,7 @@ class _MyAppState extends State<MyApp> {
         '/terms&conditions': (BuildContext context) => TermsAndConditions(),
         '/confidentiality' : (BuildContext context)=> Confidentiality(),
         '/eventInvitation' : (BuildContext context)=> EventInvitation(),
+        '/testAdminBoite' : (BuildContext context)=> TestAdminBoite(),
       },
     );
   }
