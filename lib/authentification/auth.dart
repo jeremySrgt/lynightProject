@@ -28,7 +28,7 @@ class Auth implements BaseAuth {
     AuthResult authresult = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     try {
       await authresult.user.sendEmailVerification();
-      return authresult.user.uid;
+      return null;
     } catch (e) {
       print("An error occured while trying to send email        verification");
       print(e.message);
