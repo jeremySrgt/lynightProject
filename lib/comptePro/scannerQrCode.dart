@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_mobile_vision/qr_camera.dart';
+import 'package:lynight/widgets/slider.dart';
+import 'package:lynight/authentification/auth.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,11 +21,32 @@ class MyApp extends StatelessWidget {
 class ScannerQrCode extends StatefulWidget {
 
 
+  ScannerQrCode({this.onSignOut});
+
+  final VoidCallback onSignOut;
+
+  BaseAuth auth = new Auth();
+
+  void _signOut() async {
+    try {
+      await auth.signOut();
+      onSignOut();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
   @override
   _ScannerQrCode createState() => _ScannerQrCode();
 }
 
 class _ScannerQrCode extends State<ScannerQrCode> {
+
+  String userMail = 'userMail';
+  String userId = 'userId';
+
+
 
   _qrCallback(String code) {
     setState(() {
@@ -74,6 +97,11 @@ class _ScannerQrCode extends State<ScannerQrCode> {
           tooltip: 'Scan',
           child: Icon(Icons.scanner),
         ),
+      ),
+        drawer: CustomSlider(
+        userMail: userMail,
+        signOut: widget._signOut,
+        activePage: 'ScanQr',
       ),
     );
   }
