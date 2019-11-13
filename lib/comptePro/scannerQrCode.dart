@@ -1,3 +1,87 @@
+import 'package:flutter/material.dart';
+import 'package:qr_mobile_vision/qr_camera.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'QR code Scanner',
+      theme: ThemeData(
+        primarySwatch: Colors.amber,
+      ),
+      home: ScannerQrCode(),
+    );
+  }
+}
+
+class ScannerQrCode extends StatefulWidget {
+
+
+  @override
+  _ScannerQrCode createState() => _ScannerQrCode();
+}
+
+class _ScannerQrCode extends State<ScannerQrCode> {
+
+  _qrCallback(String code) {
+    setState(() {
+      _camState = false;
+      _qrInfo = code;
+    });
+  }
+
+  String _qrInfo = 'Scan un code batard';
+  bool _camState = false;
+  _scanCode() {
+    setState(() {
+      _camState = true;
+    });
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Scanner Qr code'),
+      ),
+      body: _camState
+          ? Center(
+        child: SizedBox(
+          width: 512,
+          height: 1024,
+          child: QrCamera(
+            onError: (context, error) => Text(
+              error.toString(),
+              style: TextStyle(color: Colors.red),
+            ),
+            qrCodeCallback: (code) {
+              _qrCallback(code);
+            },
+          ),
+        ),
+      )
+          : Center(
+        child: Text(_qrInfo),
+      ),
+      floatingActionButton: Visibility(
+        visible: !_camState,
+        child: FloatingActionButton(
+          onPressed: _scanCode,
+          tooltip: 'Scan',
+          child: Icon(Icons.scanner),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
 //import 'package:flutter/material.dart';
 //import 'package:flutter/services.dart';
 //import 'package:qr_code_scanner/qr_code_scanner.dart';
