@@ -20,26 +20,26 @@ environment:
 dependencies:
   sliding_up_panel: ^0.3.4
   url_launcher: ^5.0.3
-  geoflutterfire : ^2.0.2
+  #geoflutterfire : ^2.0.2
   location: ^2.3.5
   google_maps_flutter: ^0.5.21+8
-  firebase_auth: ^0.11.0
-  firebase_core: ^0.4.0 #firebase auth require firebase core pour une raison ignore
-  cloud_firestore: ^0.11.0
-  firebase_storage: ^3.0.0
-  image_picker: ^0.6.0+4
+  firebase_auth: ^0.14.0+5
+  firebase_core: ^0.4.0+9
+  cloud_firestore: ^0.12.9+5
+  firebase_storage: ^3.0.6
+  image_picker: 0.6.1+8
   flutter_datetime_picker: ^1.2.1
-  font_awesome_flutter: ^8.2.0
-  qr_flutter: ^2.0.0
-  image: ^2.1.3
-  percent_indicator: ^2.0.0
-  flutter_slidable: ^0.5.3
+  font_awesome_flutter: ^8.5.0
+  qr_flutter: ^2.0.0 #utilisé ? sinon retirer (pas mis a jour)
+  image: ^2.1.4
+  percent_indicator: ^2.1.1
+  flutter_slidable: ^0.5.4
   intl: ^0.15.7
-  path_provider: ^1.1.0
-  pull_to_refresh: ^1.4.4
+  path_provider: ^1.3.1
+  pull_to_refresh: ^1.5.7
   transparent_image: ^1.0.0
-  folding_cell: ^0.1.2
-  #qr_code_scanner: ^0.0.5
+  folding_cell: ^0.1.2 # utilisé ? sinon retirer (pas mis a jour)
+  #qr_code_scanner: ^0.0.12  #provoque bug
 
 
 

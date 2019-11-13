@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>154364186108-i685mk5dn17dlvt7mi7oglnhbr21vtmo.apps.googleusercontent.com</string>
+	<string>130415787973-12ilvsm2u1ahr3h01b0e0v84l7hnjqfe.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.154364186108-i685mk5dn17dlvt7mi7oglnhbr21vtmo</string>
+	<string>com.googleusercontent.apps.130415787973-12ilvsm2u1ahr3h01b0e0v84l7hnjqfe</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBo_H6R1_gAmjh687Y7qi-U60qrdx5nu9A</string>
+	<string>AIzaSyDiapV8uuebWgAkPdq4jLZfbnHsJ-dDgHk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>154364186108</string>
+	<string>130415787973</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.flutter.jerem.lynightapple</string>
 	<key>PROJECT_ID</key>
-	<string>bloonios</string>
+	<string>lynight-53310</string>
 	<key>STORAGE_BUCKET</key>
-	<string>bloonios.appspot.com</string>
+	<string>lynight-53310.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:154364186108:ios:476e32b179aed3c6</string>
+	<string>1:130415787973:ios:6e153227bcf7a49db9d5ac</string>
 	<key>DATABASE_URL</key>
-	<string>https://bloonios.firebaseio.com</string>
+	<string>https://lynight-53310.firebaseio.com</string>
 </dict>
 </plist>

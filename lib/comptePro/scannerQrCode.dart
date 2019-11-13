@@ -37,6 +37,7 @@
 //
 //  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 //  var qrText = "";
+//  QRViewController controller;
 //  @override
 //  Widget build(BuildContext context) {
 //    return Scaffold(
@@ -217,17 +218,11 @@
 //  }
 //
 //  void _onQRViewCreated(QRViewController controller) {
-//    final channel = controller.channel;
-//    controller.init(qrKey);
-//    channel.setMethodCallHandler((MethodCall call) async {
-//      switch (call.method) {
-//        case "onRecognizeQR":
-//          dynamic arguments = call.arguments;
-//          setState(() {
-//              qrText = arguments.toString();
-//              checkIfScanOrNot = false;
-//          });
-//      }
+//    this.controller = controller;
+//    controller.scannedDataStream.listen((scanData) {
+//      setState(() {
+//        qrText = scanData;
+//      });
 //    });
 //  }
 //}

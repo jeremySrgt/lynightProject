@@ -15,6 +15,7 @@ import 'package:lynight/sliderInformations/about.dart';
 import 'package:lynight/sliderInformations/termsAndConditions.dart';
 import 'package:lynight/sliderInformations/confidentiality.dart';
 import 'package:lynight/friends/eventInvitation.dart';
+import 'package:lynight/test/testAdminBoite.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -57,13 +58,14 @@ class _MyAppState extends State<MyApp> {
         '/maps': (BuildContext context) => GoogleMapsClient(),
         '/sumUpPage': (BuildContext context) => SumUp(),
         '/addClub' : (BuildContext context) => AddClub(),
-        '/scannerQrCode' : (BuildContext context) => AddClub(),//changer avec qrcodescanner a cause du bug
+        '/scannerQrCode' : (BuildContext context) => FriendsPage(),//changer avec qrcodescanner a cause du bug
         '/friends' : (BuildContext context) => FriendsPage(),
         //'/favorites':(BuildContext context) => FavoritesNightClub(),
         '/about': (BuildContext context) => About(),
         '/terms&conditions': (BuildContext context) => TermsAndConditions(),
         '/confidentiality' : (BuildContext context)=> Confidentiality(),
         '/eventInvitation' : (BuildContext context)=> EventInvitation(),
+        '/testAdminBoite' : (BuildContext context)=> TestAdminBoite(),
       },
     );
   }

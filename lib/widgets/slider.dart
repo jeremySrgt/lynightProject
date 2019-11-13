@@ -119,7 +119,7 @@ class _CustomSliderState extends State<CustomSlider> {
           ),
         ),
         onTap: () {
-          Navigator.pushReplacementNamed(context, '/friends');
+          Navigator.pushReplacementNamed(context, '/scannerQrCode');
         },
       ),
     );
@@ -349,6 +349,43 @@ class _CustomSliderState extends State<CustomSlider> {
               },
             ),
           ),
+
+
+          Container(
+            decoration: widget.activePage == 'test'
+                ? BoxDecoration(
+                color: Color(0xFFebdffc),
+                borderRadius: BorderRadius.circular(15.0))
+                : BoxDecoration(),
+            child: ListTile(
+              leading: Icon(
+                FontAwesomeIcons.tenge,
+                color: widget.activePage == 'test'
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              title: Text(
+                'TEST',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: widget.activePage == 'test'
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                ),
+              ),
+              trailing: numberOfInvitation != 0
+                  ? Text(
+                numberOfInvitation.toString() + '',
+                style: TextStyle(color: Color(0xFFce3737)),
+              )
+                  : Text(''),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/testAdminBoite');
+              },
+            ),
+          ),
+
+
           pro == true ? Divider() : Container(),
           pro == true ? scanQrPro() : Container(),
           pro == true ? addClubPro() : Container(),
