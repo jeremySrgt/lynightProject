@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 
+
+
 abstract class BaseAuth {
 
   Future<String> currentUser();
@@ -16,12 +18,21 @@ class Auth implements BaseAuth {
   Future<String> signIn(String email, String password) async {
     AuthResult authresult = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     print('USERID : ' + authresult.user.uid);
-    return authresult.user.uid;
+    if (authresult.user.isEmailVerified){
+      return authresult.user.uid;
+    }
+    return null;
   }
 
   Future<String> createUser(String email, String password) async {
     AuthResult authresult = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-    return authresult.user.uid;
+    try {
+      await authresult.user.sendEmailVerification();
+      return authresult.user.uid;
+    } catch (e) {
+      print("An error occured while trying to send email        verification");
+      print(e.message);
+    }
   }
 
   Future<FirebaseUser> user() async{
@@ -43,5 +54,19 @@ class Auth implements BaseAuth {
   Future<void> signOut() async {
     return _firebaseAuth.signOut();
   }
+
+
+    //body: 'Bonjour et bienvenue sur Bloon, l\'application qui vous guidera vos soirées. Veuillez confirmer votre mail en cliquant sur l\'url suivant : ',
+    //subject: 'Validation de votre compte Bloon',
+    //recipients: ['vsoudy@gmail.com'],
+    //isHTML: true,
+    //bccRecipients: ['other@example.com'],
+    //ccRecipients: ['third@example.com'],
+    //attachments: [ 'path/to/image.png', ],
+
+
+  //await FlutterMailer.send(mailOptions);
+
+
 
 }

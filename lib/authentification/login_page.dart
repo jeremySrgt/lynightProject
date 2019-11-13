@@ -60,7 +60,12 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           _authHint = 'Connecté\n\nUser id: $userId';
           _isLoading = false;
         });
-        widget.onSignIn();
+        if(userId == null){
+          print("EMAIL PAS VERIFIE");
+        }else{
+          widget.onSignIn();
+        }
+
         if (_formType == FormType.register ||
             _formType == FormType.registerAsPro) {
           UserData userData = new UserData(
