@@ -34,6 +34,11 @@ class CrudMethods {
     return await Firestore.instance.collection('user').document(user.uid).get();
   }
 
+  getDataFromAdminFromDocument() async{
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    return await Firestore.instance.collection('AdminBoite').document(user.uid).get();
+  }
+
   getDataFromUserFromDocumentWithID(userID) async{
     return await Firestore.instance.collection('user').document(userID).get();
   }

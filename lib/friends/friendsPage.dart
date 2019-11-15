@@ -15,12 +15,13 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:lynight/friends/SearchAlgo.dart';
 
 class FriendsPage extends StatefulWidget {
-  FriendsPage({this.onSignOut});
+  FriendsPage({this.onSignOut, @required this.admin});
 
 //  final BaseAuth auth;
   final VoidCallback onSignOut;
+  final bool admin;
 
-  BaseAuth auth = new Auth();
+  final BaseAuth auth = new Auth();
 
   void _signOut() async {
     try {
@@ -745,6 +746,7 @@ class _FriendsPageState extends State<FriendsPage> {
         userMail: currentUserMail,
         signOut: widget._signOut,
         activePage: 'Amis',
+        admin: widget.admin,
       ),
     );
   }

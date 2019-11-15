@@ -6,7 +6,11 @@ import 'package:lynight/authentification/auth.dart';
 
 class TestAdminBoite extends StatefulWidget{
 
-  BaseAuth auth = new Auth();
+  TestAdminBoite({@required this.admin});
+
+  final bool admin;
+
+  final BaseAuth auth = new Auth();
 
   @override
   State<StatefulWidget> createState() {
@@ -94,7 +98,7 @@ class _TestAdminBoiteState extends State<TestAdminBoite>{
       appBar: AppBar(
         title: Text("test admin boite"),
       ),
-      drawer: CustomSlider(userMail: 'testmail',signOut: (){},activePage: 'test',),
+      drawer: CustomSlider(userMail: 'testmail',signOut: (){},activePage: 'test',admin: widget.admin,),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(

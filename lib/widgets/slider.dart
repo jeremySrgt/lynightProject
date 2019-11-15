@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lynight/services/crud.dart';
-import 'package:lynight/services/userData.dart';
+import 'package:lynight/comptePro/addClub.dart';
+import 'package:lynight/profilUtilisateur/profilUtilisateur.dart';
+import 'package:lynight/myReservations/myReservation.dart';
+import 'package:lynight/friends/friendsPage.dart';
+import 'package:lynight/friends/eventInvitation.dart';
+import 'package:lynight/test/testAdminBoite.dart';
 
 class CustomSlider extends StatefulWidget {
-  final String userMail;
-  Function signOut;
-  final String activePage;
 
-  CustomSlider({this.userMail, this.signOut, this.activePage});
+  CustomSlider({@required this.userMail, @required this.signOut,  @required this.activePage, @required this.admin});
+  final String userMail;
+  final Function signOut;
+  final String activePage;
+  final admin;
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _CustomSliderState();
   }
 }
@@ -33,18 +38,33 @@ class _CustomSliderState extends State<CustomSlider> {
   void initState() {
     super.initState();
 
-    crudObj.getDataFromUserFromDocument().then((value) {
-      // correspond à await Firestore.instance.collection('user').document(user.uid).get();
-      Map<String, dynamic> dataMap = value
-          .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
-      setState(() {
-        name = dataMap['name'];
-        profilePicture = dataMap['picture'];
-        numberOfFriendRequest = dataMap['friendRequest'].length;
-        pro = dataMap['pro'];
-        numberOfInvitation = dataMap['invitation'].length;
+    if(widget.admin){
+      crudObj.getDataFromAdminFromDocument().then((value) {
+        // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+        Map<String, dynamic> dataMap = value
+            .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
+        setState(() {
+          name = dataMap['name'];
+          profilePicture = dataMap['picture'];
+          numberOfFriendRequest = dataMap['friendRequest'].length;
+          pro = dataMap['pro'];
+          numberOfInvitation = dataMap['invitation'].length;
+        });
       });
-    });
+    }else{
+      crudObj.getDataFromUserFromDocument().then((value) {
+        // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+        Map<String, dynamic> dataMap = value
+            .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
+        setState(() {
+          name = dataMap['name'];
+          profilePicture = dataMap['picture'];
+          numberOfFriendRequest = dataMap['friendRequest'].length;
+          pro = dataMap['pro'];
+          numberOfInvitation = dataMap['invitation'].length;
+        });
+      });
+    }
   }
 
   Widget header(context) {
@@ -149,7 +169,7 @@ class _CustomSliderState extends State<CustomSlider> {
           ),
         ),
         onTap: () {
-          Navigator.pushReplacementNamed(context, '/addClub');
+          Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => AddClub(admin: widget.admin,)));
         },
       ),
     );
@@ -230,7 +250,7 @@ class _CustomSliderState extends State<CustomSlider> {
                 ),
               ),
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/userProfil');
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => UserProfil(admin: widget.admin,)));
               },
             ),
           ),
@@ -257,7 +277,7 @@ class _CustomSliderState extends State<CustomSlider> {
                 ),
               ),
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/myReservations');
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => ListPage(admin: widget.admin,)));
               },
             ),
           ),
@@ -312,7 +332,7 @@ class _CustomSliderState extends State<CustomSlider> {
               ),
               trailing: _showNotifFriendRequest(),
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/friends');
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => FriendsPage(admin: widget.admin,)));
               },
             ),
           ),
@@ -345,7 +365,7 @@ class _CustomSliderState extends State<CustomSlider> {
               )
                   : Text(''),
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/eventInvitation');
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => EventInvitation(admin: widget.admin,)));
               },
             ),
           ),
@@ -380,7 +400,7 @@ class _CustomSliderState extends State<CustomSlider> {
               )
                   : Text(''),
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/testAdminBoite');
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => TestAdminBoite(admin: widget.admin,)));
               },
             ),
           ),
