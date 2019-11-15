@@ -499,15 +499,4 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     );
   }
 
-//  Widget _acceptSwitch() {
-//    return SwitchListTile(
-//      value: _formData['acceptTerms'],
-//      onChanged: (bool value) {
-//        setState(() {
-//          _formData['acceptTerms'] = value;
-//        });
-//      },
-//      title: Text('Accept the Terms'),
-//    );
-//  }
 }
