@@ -56,11 +56,10 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         String userId = _formType == FormType.login
             ? await widget.auth.signIn(_email, _password)
             : await widget.auth.createUser(_email, _password);
-        setState(() {
-          _authHint = 'Connecté\n\nUser id: $userId';
-          _isLoading = false;
-        });
-        widget.onSignIn();
+//        setState(() {
+//          _authHint = 'Connecté\n\nUser id: $userId';
+//          _isLoading = false;
+//        });
         if (_formType == FormType.register ||
             _formType == FormType.registerAsPro) {
           UserData userData = new UserData(
@@ -80,7 +79,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               notification: true,
               phone: "",
               picture:
-                  "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
+              "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
               reservation: [],
               sex: userSex,
               pro: _formType == FormType.registerAsPro ? true : false,
@@ -89,6 +88,21 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               invitation: []);
           crudObj.createOrUpdateUserData(userData.getDataMap());
         }
+
+        if(userId == null){
+          print("EMAIL PAS VERIFIE");
+          setState(() {
+            _authHint = 'Véréfie ton e-mail :)';
+            _isLoading = false;
+            _formType = FormType.login;
+          });
+        }else{
+          _authHint = 'Connecté\n\nUser id: $userId';
+          _isLoading = false;
+          widget.onSignIn();
+        }
+
+
       } catch (e) {
         setState(() {
           _isLoading = false;
