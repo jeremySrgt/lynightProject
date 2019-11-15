@@ -18,7 +18,6 @@ class TestAdminBoite extends StatefulWidget{
   }
 }
 
-
 class _TestAdminBoiteState extends State<TestAdminBoite>{
 
   CrudMethods crudObj = CrudMethods();

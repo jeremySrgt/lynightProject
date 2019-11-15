@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               notification: true,
               phone: "",
               picture:
-                  "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
+              "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
               reservation: [],
               sex: userSex,
               pro: _formType == FormType.registerAsPro ? true : false,
