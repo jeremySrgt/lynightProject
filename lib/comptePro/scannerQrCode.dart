@@ -60,6 +60,21 @@ class _ScannerQrCode extends State<ScannerQrCode> {
     });
   }
 
+  Widget successInScanning() {
+    return Center(
+      child: Column(
+        children: <Widget>[
+          Text('Succes ! ',
+              style: TextStyle(fontSize: 20, color: Colors.green)),
+          SizedBox(height: 15),
+          Text('Bienvenue ', style: TextStyle(fontSize: 20)),
+          SizedBox(height: 15),
+          Text(_qrInfo, style: TextStyle(fontSize: 25))
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,14 +113,13 @@ class _ScannerQrCode extends State<ScannerQrCode> {
                             child: Container(
                               child: Column(
                                 children: <Widget>[
-                                  Text('Succes ! ',
-                                      style: TextStyle(
-                                          fontSize: 20, color: Colors.green)),
+                                  Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green,
+                                    size: 30,
+                                  ),
                                   SizedBox(height: 15),
-                                  Text('Bienvenue ',
-                                      style: TextStyle(fontSize: 20)),
-                                  SizedBox(height: 15),
-                                  Text(_qrInfo, style: TextStyle(fontSize: 25))
+                                  successInScanning()
                                 ],
                               ),
                             ),
@@ -114,10 +128,9 @@ class _ScannerQrCode extends State<ScannerQrCode> {
                             child: Container(
                               child: Column(
                                 children: <Widget>[
-                                  Text("Scannez un qr code",
-                                    style: TextStyle(
-                                      fontSize: 20
-                                    ),
+                                  Text(
+                                    "Scannez un QR code",
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ],
                               ),
