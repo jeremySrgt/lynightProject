@@ -186,6 +186,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.7"
+  native_device_orientation:
+    dependency: transitive
+    description:
+      name: native_device_orientation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2"
   path:
     dependency: transitive
     description:
@@ -249,6 +256,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0+55"
+  qr_mobile_vision:
+    dependency: "direct main"
+    description:
+      name: qr_mobile_vision
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2"
   quiver:
     dependency: transitive
     description:
