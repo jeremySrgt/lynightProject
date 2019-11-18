@@ -3,22 +3,11 @@ import 'package:qr_mobile_vision/qr_camera.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/authentification/auth.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MaterialApp(home: ScannerQrCode()));
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'QR code Scanner',
-      theme: ThemeData(
-        primarySwatch: Colors.amber,
-      ),
-      home: ScannerQrCode(),
-    );
-  }
-}
 
 class ScannerQrCode extends StatefulWidget {
+
   ScannerQrCode({this.onSignOut});
 
   final VoidCallback onSignOut;

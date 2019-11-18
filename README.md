@@ -22,14 +22,6 @@ You can also change the music according the mood you are in, and our algorithm i
 </br>
 
 
-__Research :__
-
-On this page you can research your favorite nightClub with his name.
-
-<p align= "center">
-<img src="assets/reademeImage/2.png" align="middle">
-</p>
-
 
 
 __Discover :__
@@ -42,6 +34,15 @@ On the bottom of the screen you can find the club we suggest you according to th
 </p>
 
 
+__Research :__
+
+On this page you can research your favorite nightClub with his name.
+
+<p align= "center">
+<img src="assets/reademeImage/2.png" align="middle">
+</p>
+
+
 
 __Favorite :__
 
@@ -49,6 +50,19 @@ When you go on a nightClub Page you have the possibility to put in favorites the
 </br>
 
 
+
+
+
+__QR Code :__
+
+Once you have made a reservation you will see it on the reservation page. Next if you click on it you will see a new page with a QR code on it. 
+When you go to the club you will have to show this Qr code to the bailer and he will scan it and let you go through.
+
+<p align= "center">
+<img src="assets/reademeImage/5.png" align="middle">
+</p>
+
+</br>
 
 
 __Reservation :__
@@ -62,17 +76,6 @@ will see all your reservation and when you will be in front of the bailer of the
 
 </br>
 
-
-__QR Code :__
-
-Once you have made a reservation you will see it on the reservation page. Next if you click on it you will see a new page with a QR code on it. 
-When you go to the club you will have to show this Qr code to the bailer and he will scan it and let you go through.
-
-<p align= "center">
-<img src="assets/reademeImage/5.png" align="middle">
-</p>
-
-</br>
 
 
 __Map :__
