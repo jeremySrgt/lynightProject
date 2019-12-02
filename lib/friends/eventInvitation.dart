@@ -8,12 +8,13 @@ import 'package:lynight/widgets/slider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class EventInvitation extends StatefulWidget {
-  EventInvitation({this.onSignOut});
+  EventInvitation({this.onSignOut, @required this.admin});
 
 //  final BaseAuth auth;
   final VoidCallback onSignOut;
+  final bool admin;
 
-  BaseAuth auth = new Auth();
+  final BaseAuth auth = new Auth();
 
   void _signOut() async {
     try {
@@ -147,29 +148,57 @@ class _EventInvitationState extends State<EventInvitation> {
   }
 
   void _onLoading() {
-    return crudObj.getDataFromUserFromDocument().then((value) {
-      Map<String, dynamic> dataMap = value.data;
-      setState(() {
-        invitationList = dataMap['invitation'];
-        userName = dataMap['name'];
-        reservationList = dataMap['reservation'];
-      });
 
-      _refreshController.loadComplete();
-    });
+    if(widget.admin){
+      return crudObj.getDataFromAdminFromDocument().then((value) {
+        Map<String, dynamic> dataMap = value.data;
+        setState(() {
+          invitationList = dataMap['invitation'];
+          userName = dataMap['name'];
+          reservationList = dataMap['reservation'];
+        });
+
+        _refreshController.loadComplete();
+      });
+    }else{
+      return crudObj.getDataFromUserFromDocument().then((value) {
+        Map<String, dynamic> dataMap = value.data;
+        setState(() {
+          invitationList = dataMap['invitation'];
+          userName = dataMap['name'];
+          reservationList = dataMap['reservation'];
+        });
+
+        _refreshController.loadComplete();
+      });
+    }
+
   }
 
   void _refresh() {
-    return crudObj.getDataFromUserFromDocument().then((value) {
-      Map<String, dynamic> dataMap = value.data;
-      setState(() {
-        invitationList = dataMap['invitation'];
-        userName = dataMap['name'];
-        reservationList = dataMap['reservation'];
-      });
+    if(widget.admin){
+      return crudObj.getDataFromAdminFromDocument().then((value) {
+        Map<String, dynamic> dataMap = value.data;
+        setState(() {
+          invitationList = dataMap['invitation'];
+          userName = dataMap['name'];
+          reservationList = dataMap['reservation'];
+        });
 
-      _refreshController.refreshCompleted();
-    });
+        _refreshController.refreshCompleted();
+      });
+    }else{
+      return crudObj.getDataFromUserFromDocument().then((value) {
+        Map<String, dynamic> dataMap = value.data;
+        setState(() {
+          invitationList = dataMap['invitation'];
+          userName = dataMap['name'];
+          reservationList = dataMap['reservation'];
+        });
+
+        _refreshController.refreshCompleted();
+      });
+    }
   }
 
   @override
@@ -203,6 +232,7 @@ class _EventInvitationState extends State<EventInvitation> {
         userMail: currentUserMail,
         signOut: widget._signOut,
         activePage: 'Invitation',
+        admin: widget.admin,
       ),
     );
   }

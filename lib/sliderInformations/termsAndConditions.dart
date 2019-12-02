@@ -56,6 +56,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
         userMail: userMail,
         signOut: widget._signOut,
         activePage: '/terms&conditions',
+        admin: false,
       ),
     );
   }

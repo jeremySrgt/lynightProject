@@ -8,12 +8,13 @@ import 'package:lynight/profilUtilisateur/selectProfilPicture.dart';
 import 'package:lynight/profilUtilisateur/checkbox.dart';
 
 class UserProfil extends StatefulWidget {
-  UserProfil({this.onSignOut});
+  UserProfil({this.onSignOut, @required this.admin});
 
 //  final BaseAuth auth;
   final VoidCallback onSignOut;
+  final bool admin;
 
-  BaseAuth auth = new Auth();
+  final BaseAuth auth = new Auth();
 
   void _signOut() async {
     try {
@@ -64,14 +65,25 @@ class _UserProfilState extends State<UserProfil> {
         userMail = mail;
       });
     });
-    crudObj.getDataFromUserFromDocument().then((value) {
+
+    if(widget.admin){
+      crudObj.getDataFromAdminFromDocument().then((value) {
+        // correspond à await Firestore.instance.collection('user').document(user.uid).get();
+        Map<String, dynamic> dataMap = value
+            .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
+        setState(() {
+          _notificationValue = dataMap['notification'];
+        });
+      });
+    }else{
+      crudObj.getDataFromUserFromDocument().then((value) {
       // correspond à await Firestore.instance.collection('user').document(user.uid).get();
       Map<String, dynamic> dataMap = value
           .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
       setState(() {
         _notificationValue = dataMap['notification'];
       });
-    });
+    });}
   }
 
   void _openModalBottomSheet(context) {
@@ -560,6 +572,7 @@ class _UserProfilState extends State<UserProfil> {
         userMail: userMail,
         signOut: widget._signOut,
         activePage: 'Profil',
+        admin: widget.admin,
       ),
       resizeToAvoidBottomPadding: false,
       body: CustomScrollView(

@@ -30,7 +30,7 @@ class Auth implements BaseAuth {
       await authresult.user.sendEmailVerification();
       return null;
     } catch (e) {
-      print("An error occured while trying to send email        verification");
+      print("An error occured while trying to send email verification");
       print(e.message);
     }
   }
