@@ -93,13 +93,15 @@ class CrudMethods {
 
   }
 
-//  deleteData(collection, docId) {
-//    Firestore.instance
-//        .collection(collection)
-//        .document(docId)
-//        .delete()
-//        .catchError((e) {
-//      print(e);
-//    });
-//  }
+
+  //ATTENTION AVEC CA LES AMIS /!\/!\/!\/!\/!\/!\/!\
+  deleteData(collection, docId) {
+    Firestore.instance
+        .collection(collection)
+        .document(docId)
+        .delete()
+        .catchError((e) {
+      print(e);
+    });
+  }
 }

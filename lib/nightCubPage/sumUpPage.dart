@@ -19,8 +19,9 @@ import 'package:image/image.dart' as I;
 
 class SumUp extends StatefulWidget {
   final String clubName;
+  final String clubId;
 
-  SumUp({this.clubName});
+  SumUp({@required this.clubName, @required this.clubId});
 
   @override
   State<StatefulWidget> createState() {
@@ -41,6 +42,10 @@ class _SumUpState extends State<SumUp> {
   bool _isLoading = false;
   String userName = '';
 
+  List<dynamic> _listPlacesDispo;
+  String _selectedPlace;
+  Map<dynamic, dynamic>_mapSelectedPlace;
+
   final Shader linearGradient = LinearGradient(
     colors: <Color>[Colors.pink, Colors.deepPurple],
   ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
@@ -60,6 +65,19 @@ class _SumUpState extends State<SumUp> {
         userName = dataMap['name'];
       });
     });
+
+    Firestore.instance
+        .collection('club')
+        .document('-LhKMefcBQ5wcJwluZxY')
+        .collection('placesDispo')
+        .getDocuments()
+        .then((value) {
+      setState(() {
+        _listPlacesDispo = value.documents;
+        _selectedPlace = value.documents[0].documentID.toString();
+        _mapSelectedPlace = value.documents[0].data;
+      });
+    });
   }
 
   Future<void> _getWidgetImage() async {
@@ -69,6 +87,7 @@ class _SumUpState extends State<SumUp> {
       var image = await boundary.toImage();
       ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
       Uint8List pngBytes = byteData.buffer.asUint8List();
+
       I.Image imgFile = I.decodeImage(pngBytes);
 //      var test = I.encodePng(imgFile);
 
@@ -85,6 +104,7 @@ class _SumUpState extends State<SumUp> {
         qrImage = file;
       });
       uploadQrCodeToFirestore();
+      changePlaceState();
     } catch (exception) {
       print(exception.toString());
     }
@@ -127,6 +147,24 @@ class _SumUpState extends State<SumUp> {
         .collection('user')
         .document(user.uid)
         .updateData({"reservation": mutableListOfReservation});
+  }
+
+  changePlaceState() {
+
+    //delete the place from placesDispo
+    Firestore.instance
+        .collection('club')
+        .document(widget.clubId)
+        .collection('placesDispo')
+        .document(_selectedPlace)
+        .delete()
+        .catchError((e) {
+      print(e);
+    });
+
+    //add the place to placesReservees
+    Firestore.instance.collection('club').document(widget.clubId).collection('placesReservees').document(_selectedPlace).setData(_mapSelectedPlace);
+
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -215,26 +253,35 @@ class _SumUpState extends State<SumUp> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    Container (
+                                    Container(
                                       height: 10,
                                     ),
                                     GestureDetector(
-                                      onTap: () {_selectDate(context);},
+                                      onTap: () {
+                                        _selectDate(context);
+                                      },
                                       child: Container(
-                                        width: width/2.5,
+                                        width: width / 2.5,
                                         height: 40,
                                         decoration: BoxDecoration(
                                             gradient: LinearGradient(
                                                 begin: Alignment.topLeft,
                                                 end: Alignment.bottomRight,
                                                 colors: [
-                                                  Color.fromRGBO(212, 63, 141, 1),
+                                                  Color.fromRGBO(
+                                                      212, 63, 141, 1),
                                                   Color.fromRGBO(2, 80, 197, 1)
                                                 ]),
                                             //color: Theme.of(context).primaryColor,
-                                            borderRadius: BorderRadius.all(Radius.circular(25))
-                                        ),
-                                        child: Center(child: Text("Choisir une date", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(25))),
+                                        child: Center(
+                                            child: Text(
+                                          "Choisir une date",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                        )),
                                       ),
                                     ),
                                   ],
@@ -272,7 +319,7 @@ class _SumUpState extends State<SumUp> {
         _getWidgetImage();
       },
       child: Container(
-        width: width/2.5,
+        width: width / 2.5,
         height: 40,
         decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -283,23 +330,25 @@ class _SumUpState extends State<SumUp> {
                   Color.fromRGBO(2, 80, 197, 1)
                 ]),
             //color: Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.all(Radius.circular(25))
-        ),
-        child: Center(child: Text("C\'est ok !", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+            borderRadius: BorderRadius.all(Radius.circular(25))),
+        child: Center(
+            child: Text(
+          "C\'est ok !",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        )),
       ),
     );
   }
 
   _showQrGenerating() {
     return Opacity(
-      opacity: 0.1,
+      opacity: 1.0, //mettre à 0.1 pour le rendre invisible
       child: Column(
         children: [
           RepaintBoundary(
             key: globalKey,
             child: QrImage(
-              data:
-                  "$userName - ${widget.clubName} - ${DateFormat('dd/MM/yyyy').format(selectedDate)}",
+              data: _selectedPlace,
               size: 200.0,
               version: 8,
               backgroundColor: Colors.white,
@@ -320,7 +369,11 @@ class _SumUpState extends State<SumUp> {
       child: Container(
         color: Theme.of(context).primaryColor,
         child: Padding(
-          padding: EdgeInsets.only(top: height/5, bottom: height/5, left: width/7, right: width/9),
+          padding: EdgeInsets.only(
+              top: height / 5,
+              bottom: height / 5,
+              left: width / 7,
+              right: width / 9),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -375,7 +428,8 @@ class _SumUpState extends State<SumUp> {
                       height: 200,
                       width: 200,
                       color: Colors
-                          .white, // mettre Colors.red permet de voir ou est placé le qr code invisible, pratique pour debug en fonction des differentes taille de portable
+                          .transparent, // mettre Colors.red permet de voir ou est placé le qr code invisible, pratique pour debug en fonction des differentes taille de portable
+                      //mettre Colors.white pour rendre le qr invisible
                     ),
                   ],
                 ),
