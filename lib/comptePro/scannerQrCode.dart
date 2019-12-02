@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:qr_mobile_vision/qr_camera.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/authentification/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() => runApp(MaterialApp(home: ScannerQrCode()));
 
-
 class ScannerQrCode extends StatefulWidget {
-
   ScannerQrCode({this.onSignOut});
 
   final VoidCallback onSignOut;
 
-  BaseAuth auth = new Auth();
+  final BaseAuth auth = new Auth();
 
   void _signOut() async {
     try {
@@ -31,6 +30,24 @@ class _ScannerQrCode extends State<ScannerQrCode> {
   String userMail = 'userMail';
   String userId = 'userId';
   bool _default = false;
+  List<dynamic> _listePlace;
+  String testQrCode = "cSWrs7G9GUXvH9q8jlqH";
+
+  @override
+  void initState() {
+    super.initState();
+
+    Firestore.instance
+        .collection('club')
+        .document('-LhKMefcBQ5wcJwluZxY')
+        .collection('placesReservees')
+        .getDocuments()
+        .then((value) {
+      setState(() {
+        _listePlace = value.documents;
+      });
+    });
+  }
 
   _qrCallback(String code) {
     setState(() {
@@ -64,6 +81,10 @@ class _ScannerQrCode extends State<ScannerQrCode> {
     );
   }
 
+  Widget compareQrCode(clubData, context) {
+
+    return Container();
+  }
 
   Widget errorInScan() {
     return Center(
@@ -117,13 +138,15 @@ class _ScannerQrCode extends State<ScannerQrCode> {
                             child: Container(
                               child: Column(
                                 children: <Widget>[
-                                  Icon(
-                                    Icons.check_circle,
-                                    color: Colors.green,
-                                    size: 30,
-                                  ),
-                                  SizedBox(height: 15),
-                                  successInScanning()
+                                  _qrInfo == _listePlace[2].documentID
+                                  ? Text(
+                                        "Ah blabla c'est  le meme "
+                                      )
+                                  : Text(
+                                      "Pas les mêmes " + "\n" +
+                                          _qrInfo  + "\n" +
+                                          _listePlace[2].documentID
+                                  )
                                 ],
                               ),
                             ),
@@ -132,10 +155,15 @@ class _ScannerQrCode extends State<ScannerQrCode> {
                             child: Container(
                               child: Column(
                                 children: <Widget>[
-                                  Text(
-                                    "Scannez un QR code",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
+                                  _listePlace == null
+                                      ? Text(
+                                          "Y a rien dans la liste",
+                                          style: TextStyle(fontSize: 20),
+                                        )
+                                      : Text(
+                                          _listePlace[1]['price'].toString(),
+                                          style: TextStyle(fontSize: 20),
+                                        ),
                                 ],
                               ),
                             ),
