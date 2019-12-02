@@ -342,7 +342,7 @@ class _SumUpState extends State<SumUp> {
 
   _showQrGenerating() {
     return Opacity(
-      opacity: 1.0, //mettre à 0.1 pour le rendre invisible
+      opacity: 0.1, //mettre à 0.1 pour le rendre invisible
       child: Column(
         children: [
           RepaintBoundary(
@@ -428,7 +428,7 @@ class _SumUpState extends State<SumUp> {
                       height: 200,
                       width: 200,
                       color: Colors
-                          .transparent, // mettre Colors.red permet de voir ou est placé le qr code invisible, pratique pour debug en fonction des differentes taille de portable
+                          .white, // mettre Colors.red permet de voir ou est placé le qr code invisible, pratique pour debug en fonction des differentes taille de portable
                       //mettre Colors.white pour rendre le qr invisible
                     ),
                   ],
