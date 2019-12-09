@@ -160,7 +160,7 @@ class _AboutState extends State<About> {
       drawer: CustomSlider(
         userMail: userMail,
         signOut: widget._signOut,
-        activePage: '/about',
+        activePage: 'about',
       ),
     );
   }

@@ -7,6 +7,8 @@ import 'package:lynight/myReservations/myReservation.dart';
 import 'package:lynight/friends/friendsPage.dart';
 import 'package:lynight/friends/eventInvitation.dart';
 import 'package:lynight/test/testAdminBoite.dart';
+import 'package:lynight/main.dart';
+import 'package:provider/provider.dart';
 
 class CustomSlider extends StatefulWidget {
 
@@ -179,13 +181,13 @@ class _CustomSliderState extends State<CustomSlider> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    var currentDrawer = Provider.of<DrawerStateInfo>(context).getCurrentDrawer;
     return Drawer(
       child: ListView(
         children: <Widget>[
           header(context),
           Container(
-            decoration: widget.activePage == 'Accueil'
+            decoration: currentDrawer == 0
                 ? BoxDecoration(
                     color: Color(0xFFebdffc),
                     borderRadius: BorderRadius.circular(15.0))
@@ -193,7 +195,7 @@ class _CustomSliderState extends State<CustomSlider> {
             child: ListTile(
               leading: Icon(
                 Icons.home,
-                color: widget.activePage == 'Accueil'
+                color: currentDrawer == 0
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -201,18 +203,21 @@ class _CustomSliderState extends State<CustomSlider> {
                 'Accueil',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: widget.activePage == 'Accueil'
+                  color: currentDrawer == 0
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
+                if(widget.activePage == 'Accueil') return;
+                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(0);
                 Navigator.pushReplacementNamed(context, '/');
               },
             ),
           ),
           Container(
-            decoration: widget.activePage == 'Profil'
+            decoration: currentDrawer == 1
                 ? BoxDecoration(
                     color: Color(0xFFebdffc),
                     borderRadius: BorderRadius.circular(15.0))
@@ -220,7 +225,7 @@ class _CustomSliderState extends State<CustomSlider> {
             child: ListTile(
               leading: Icon(
                 Icons.account_circle,
-                color: widget.activePage == 'Profil'
+                color: currentDrawer == 1
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -228,18 +233,21 @@ class _CustomSliderState extends State<CustomSlider> {
                 'Profil',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: widget.activePage == 'Profil'
+                  color: currentDrawer == 1
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
+                if(widget.activePage == 'Profil') return;
+                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(1);
                 Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => UserProfil()));
               },
             ),
           ),
           Container(
-            decoration: widget.activePage == 'Reservations'
+            decoration: currentDrawer == 2
                 ? BoxDecoration(
                     color: Color(0xFFebdffc),
                     borderRadius: BorderRadius.circular(15.0))
@@ -247,7 +255,7 @@ class _CustomSliderState extends State<CustomSlider> {
             child: ListTile(
               leading: Icon(
                 Icons.book,
-                color: widget.activePage == 'Reservations'
+                color: currentDrawer == 2
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -255,18 +263,21 @@ class _CustomSliderState extends State<CustomSlider> {
                 'Réservations',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: widget.activePage == 'Reservations'
+                  color: currentDrawer == 2
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
+                if(widget.activePage == 'Reservations') return;
+                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(2);
                 Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => ListPage()));
               },
             ),
           ),
           Container(
-            decoration: widget.activePage == 'Maps'
+            decoration: currentDrawer == 3
                 ? BoxDecoration(
                     color: Color(0xFFebdffc),
                     borderRadius: BorderRadius.circular(15.0))
@@ -274,7 +285,7 @@ class _CustomSliderState extends State<CustomSlider> {
             child: ListTile(
               leading: Icon(
                 FontAwesomeIcons.mapMarked,
-                color: widget.activePage == 'Maps'
+                color: currentDrawer == 3
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -282,18 +293,21 @@ class _CustomSliderState extends State<CustomSlider> {
                 'Carte',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: widget.activePage == 'Maps'
+                  color: currentDrawer == 3
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
+                if(widget.activePage == 'Maps') return;
+                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(3);
                 Navigator.pushReplacementNamed(context, '/maps');
               },
             ),
           ),
           Container(
-            decoration: widget.activePage == 'Amis'
+            decoration: currentDrawer == 4
                 ? BoxDecoration(
                     color: Color(0xFFebdffc),
                     borderRadius: BorderRadius.circular(15.0))
@@ -301,7 +315,7 @@ class _CustomSliderState extends State<CustomSlider> {
             child: ListTile(
               leading: Icon(
                 FontAwesomeIcons.userFriends,
-                color: widget.activePage == 'Amis'
+                color: currentDrawer == 4
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -309,19 +323,22 @@ class _CustomSliderState extends State<CustomSlider> {
                 'Amis',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: widget.activePage == 'Amis'
+                  color: currentDrawer == 4
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
               ),
               trailing: _showNotifFriendRequest(),
               onTap: () {
+                Navigator.of(context).pop();
+                if(widget.activePage == 'Amis') return;
+                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(4);
                 Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => FriendsPage()));
               },
             ),
           ),
           Container(
-            decoration: widget.activePage == 'Invitation'
+            decoration: currentDrawer == 5
                 ? BoxDecoration(
                 color: Color(0xFFebdffc),
                 borderRadius: BorderRadius.circular(15.0))
@@ -329,7 +346,7 @@ class _CustomSliderState extends State<CustomSlider> {
             child: ListTile(
               leading: Icon(
                 FontAwesomeIcons.compactDisc,
-                color: widget.activePage == 'Invitation'
+                color: currentDrawer == 5
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -337,7 +354,7 @@ class _CustomSliderState extends State<CustomSlider> {
                 'Évènements',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: widget.activePage == 'Invitation'
+                  color: currentDrawer == 5
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
@@ -349,6 +366,9 @@ class _CustomSliderState extends State<CustomSlider> {
               )
                   : Text(''),
               onTap: () {
+                Navigator.of(context).pop();
+                if(widget.activePage == 'Invitation') return;
+                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(5);
                 Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => EventInvitation()));
               },
             ),
@@ -356,7 +376,7 @@ class _CustomSliderState extends State<CustomSlider> {
 
 
           Container(
-            decoration: widget.activePage == 'test'
+            decoration: currentDrawer == 6
                 ? BoxDecoration(
                 color: Color(0xFFebdffc),
                 borderRadius: BorderRadius.circular(15.0))
@@ -364,7 +384,7 @@ class _CustomSliderState extends State<CustomSlider> {
             child: ListTile(
               leading: Icon(
                 FontAwesomeIcons.tenge,
-                color: widget.activePage == 'test'
+                color: currentDrawer == 6
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -372,18 +392,15 @@ class _CustomSliderState extends State<CustomSlider> {
                 'TEST',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: widget.activePage == 'test'
+                  color: currentDrawer == 6
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
               ),
-              trailing: numberOfInvitation != 0
-                  ? Text(
-                numberOfInvitation.toString() + '',
-                style: TextStyle(color: Color(0xFFce3737)),
-              )
-                  : Text(''),
               onTap: () {
+                Navigator.of(context).pop();
+                if(widget.activePage == 'test') return;
+                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(6);
                 Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => TestAdminBoite()));
               },
             ),
@@ -395,7 +412,7 @@ class _CustomSliderState extends State<CustomSlider> {
           pro == true ? addClubPro() : Container(),
           Divider(),
           Container(
-            decoration: widget.activePage == 'about'
+            decoration: currentDrawer == 7
                 ? BoxDecoration(
                     color: Color(0xFFebdffc),
                     borderRadius: BorderRadius.circular(15.0))
@@ -403,7 +420,7 @@ class _CustomSliderState extends State<CustomSlider> {
             child: ListTile(
               leading: Icon(
                 FontAwesomeIcons.infoCircle,
-                color: widget.activePage == 'about'
+                color: currentDrawer == 7
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -411,12 +428,15 @@ class _CustomSliderState extends State<CustomSlider> {
                 'À propos',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: widget.activePage == 'about'
+                  color: currentDrawer == 7
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pop();
+                if(widget.activePage == 'about') return;
+                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(7);
                 Navigator.pushReplacementNamed(context, '/about');
               },
             ),

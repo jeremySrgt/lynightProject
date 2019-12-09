@@ -17,6 +17,7 @@ import 'package:lynight/sliderInformations/confidentiality.dart';
 import 'package:lynight/friends/eventInvitation.dart';
 import 'package:lynight/test/testAdminBoite.dart';
 import 'package:lynight/creditCard/CarteCredit.dart';
+import 'package:provider/provider.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -42,33 +43,55 @@ class _MyAppState extends State<MyApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false, //retire la banniere de debug
-      theme: ThemeData(
-          primaryColor: primaryColor,
-          accentColor: accentColor,
-          fontFamily: 'Comfortaa',
-      ),
-      //home: AuthPage(),
-      routes: {
-        '/': (BuildContext context) => RootPage(auth: Auth(),),
+    return MultiProvider(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false, //retire la banniere de debug
+        theme: ThemeData(
+            primaryColor: primaryColor,
+            accentColor: accentColor,
+            fontFamily: 'Comfortaa',
+        ),
+        //home: AuthPage(),
+        routes: {
+          '/': (BuildContext context) => RootPage(auth: Auth(),),
 //        '/principal': (BuildContext context) => PrincipalPage(),
-        '/nightClubProfile': (BuildContext context) => NightClubProfile(),
-        '/userProfil': (BuildContext context) => UserProfil(),
-        '/myReservations': (BuildContext context) => ListPage(),
-        '/maps': (BuildContext context) => GoogleMapsClient(),
-        '/sumUpPage': (BuildContext context) => SumUp(),
-        '/addClub' : (BuildContext context) => AddClub(),
-        '/scannerQrCode' : (BuildContext context) => ScannerQrCode(),//changer avec qrcodescanner a cause du bug
-        '/friends' : (BuildContext context) => FriendsPage(),
-        //'/favorites':(BuildContext context) => FavoritesNightClub(),
-        '/about': (BuildContext context) => About(),
-        '/terms&conditions': (BuildContext context) => TermsAndConditions(),
-        '/confidentiality' : (BuildContext context)=> Confidentiality(),
-        '/eventInvitation' : (BuildContext context)=> EventInvitation(),
-        '/testAdminBoite' : (BuildContext context)=> TestAdminBoite(),
-        '/carteCredit' : (BuildContext context)=> CarteCredit(),
-      },
+          '/nightClubProfile': (BuildContext context) => NightClubProfile(),
+          '/userProfil': (BuildContext context) => UserProfil(),
+          '/myReservations': (BuildContext context) => ListPage(),
+          '/maps': (BuildContext context) => GoogleMapsClient(),
+          '/sumUpPage': (BuildContext context) => SumUp(),
+          '/addClub' : (BuildContext context) => AddClub(),
+          '/scannerQrCode' : (BuildContext context) => ScannerQrCode(),//changer avec qrcodescanner a cause du bug
+          '/friends' : (BuildContext context) => FriendsPage(),
+          //'/favorites':(BuildContext context) => FavoritesNightClub(),
+          '/about': (BuildContext context) => About(),
+          '/terms&conditions': (BuildContext context) => TermsAndConditions(),
+          '/confidentiality' : (BuildContext context)=> Confidentiality(),
+          '/eventInvitation' : (BuildContext context)=> EventInvitation(),
+          '/testAdminBoite' : (BuildContext context)=> TestAdminBoite(),
+          '/carteCredit' : (BuildContext context)=> CarteCredit(),
+        },
+      ),
+      providers: <SingleChildCloneableWidget>[
+        ChangeNotifierProvider<DrawerStateInfo>(
+            create: (_) => DrawerStateInfo()),
+      ],
     );
+  }
+}
+
+
+class DrawerStateInfo with ChangeNotifier {
+  int _currentDrawer = 0;
+
+  int get getCurrentDrawer => _currentDrawer;
+
+  void setCurrentDrawer(int drawer) {
+    _currentDrawer = drawer;
+    notifyListeners();
+  }
+
+  void increment() {
+    notifyListeners();
   }
 }

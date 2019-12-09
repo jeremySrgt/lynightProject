@@ -9,7 +9,6 @@ import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:folding_cell/folding_cell.dart';
 import 'dart:math' as math;
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:lynight/friends/SearchAlgo.dart';

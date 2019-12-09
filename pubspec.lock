@@ -123,13 +123,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  folding_cell:
-    dependency: "direct main"
-    description:
-      name: folding_cell
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -235,6 +228,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  provider:
+    dependency: "direct main"
+    description:
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.0"
   pull_to_refresh:
     dependency: "direct main"
     description:
@@ -248,7 +248,7 @@ packages:
       name: qr
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.2.0"
   qr_flutter:
     dependency: "direct main"
     description:
