@@ -16,6 +16,7 @@ import 'package:lynight/sliderInformations/termsAndConditions.dart';
 import 'package:lynight/sliderInformations/confidentiality.dart';
 import 'package:lynight/friends/eventInvitation.dart';
 import 'package:lynight/test/testAdminBoite.dart';
+import 'package:lynight/creditCard/CarteCredit.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -66,6 +67,7 @@ class _MyAppState extends State<MyApp> {
         '/confidentiality' : (BuildContext context)=> Confidentiality(),
         '/eventInvitation' : (BuildContext context)=> EventInvitation(),
         '/testAdminBoite' : (BuildContext context)=> TestAdminBoite(),
+        '/carteCredit' : (BuildContext context)=> CarteCredit(),
       },
     );
   }

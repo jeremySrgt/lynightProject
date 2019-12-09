@@ -81,6 +81,7 @@ flutter:
     - assets/bloon_final_pin.png
     - assets/bloonLogo.png
     - assets/gris_chargement.jpg
+    - icons/
     #- assets/loupe.png
     #- assets/test.jpg
   #  - images/a_dot_ham.jpeg
@@ -100,6 +101,7 @@ flutter:
       - family: Montserrat
         fonts:
           - asset: fonts/Montserrat/Montserrat-Regular.ttf
+
       - family: Comfortaa
         fonts:
           - asset: fonts/Comfortaa/Comfortaa[wght].ttf

@@ -380,7 +380,7 @@ class _CustomSliderState extends State<CustomSlider> {
               )
                   : Text(''),
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/testAdminBoite');
+                Navigator.pushReplacementNamed(context, '/carteCredit');
               },
             ),
           ),
