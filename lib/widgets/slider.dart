@@ -29,7 +29,6 @@ class _CustomSliderState extends State<CustomSlider> {
   String name = 'UserName';
   String profilePicture =
       'https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46';
-  bool pro = false;
   int numberOfFriendRequest = 0;
   int numberOfInvitation = 0;
 
@@ -47,7 +46,6 @@ class _CustomSliderState extends State<CustomSlider> {
           name = dataMap['name'];
           profilePicture = dataMap['picture'];
           numberOfFriendRequest = dataMap['friendRequest'].length;
-          pro = dataMap['pro'];
           numberOfInvitation = dataMap['invitation'].length;
         });
       });
@@ -78,7 +76,7 @@ class _CustomSliderState extends State<CustomSlider> {
               style: TextStyle(fontSize: 11.0),
             ),
           ),
-          RaisedButton(
+          widget.activePage == 'Accueil' ? RaisedButton(
             elevation: 5.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0)),
@@ -92,7 +90,7 @@ class _CustomSliderState extends State<CustomSlider> {
             color: Colors.white,
             textColor: Theme.of(context).primaryColor,
             onPressed: widget.signOut,
-          ),
+          ): Container(),
         ],
       ),
       decoration: BoxDecoration(
@@ -407,9 +405,6 @@ class _CustomSliderState extends State<CustomSlider> {
           ),
 
 
-          pro == true ? Divider() : Container(),
-          pro == true ? scanQrPro() : Container(),
-          pro == true ? addClubPro() : Container(),
           Divider(),
           Container(
             decoration: currentDrawer == 7
