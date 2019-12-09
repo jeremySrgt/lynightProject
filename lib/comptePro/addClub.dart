@@ -13,10 +13,9 @@ import 'package:lynight/services/clubData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddClub extends StatefulWidget {
-  AddClub({this.onSignOut, @required this.admin});
+  AddClub({this.onSignOut});
 
   final VoidCallback onSignOut;
-  final bool admin;
 
   final BaseAuth auth = new Auth();
 
@@ -793,7 +792,6 @@ class _AddClubState extends State<AddClub> {
         userMail: userMail,
         signOut: widget._signOut,
         activePage: 'AddClub',
-        admin: widget.admin,
       ),
     );
   }

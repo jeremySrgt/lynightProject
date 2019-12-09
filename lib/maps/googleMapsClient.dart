@@ -165,7 +165,6 @@ class _GoogleMapsState extends State<GoogleMapsClient> {
         userMail: userMail,
         signOut: widget._signOut,
         activePage: 'Maps',
-        admin: false,
       ),
     );
   }

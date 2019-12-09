@@ -8,11 +8,10 @@ import 'package:lynight/widgets/slider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class EventInvitation extends StatefulWidget {
-  EventInvitation({this.onSignOut, @required this.admin});
+  EventInvitation({this.onSignOut});
 
 //  final BaseAuth auth;
   final VoidCallback onSignOut;
-  final bool admin;
 
   final BaseAuth auth = new Auth();
 
@@ -64,7 +63,8 @@ class _EventInvitationState extends State<EventInvitation> {
     if (invitationList.isEmpty) {
       return Padding(
         padding: EdgeInsets.only(top: 200.0),
-        child: Center(child: Text('Aucune invitation, désolé t\'as pas d\'amis')),
+        child:
+            Center(child: Text('Aucune invitation, désolé t\'as pas d\'amis')),
       );
     }
 
@@ -80,10 +80,15 @@ class _EventInvitationState extends State<EventInvitation> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 ListTile(
-                  leading: Icon(FontAwesomeIcons.glassCheers, color: Theme.of(context).primaryColor,),
-                  title: Text(invitationList[i]['who'] + ' t\'invite à sortir '),
-                  subtitle: Text(invitationList[i]['boite'] + ' le ' + DateFormat('dd/MM/yyyy')
-                      .format(invitationDate.toDate())),
+                  leading: Icon(
+                    FontAwesomeIcons.glassCheers,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  title:
+                      Text(invitationList[i]['who'] + ' t\'invite à sortir '),
+                  subtitle: Text(invitationList[i]['boite'] +
+                      ' le ' +
+                      DateFormat('dd/MM/yyyy').format(invitationDate.toDate())),
                 ),
                 ButtonTheme.bar(
                   child: ButtonBar(
@@ -91,7 +96,8 @@ class _EventInvitationState extends State<EventInvitation> {
                       FlatButton(
                         child: const Text('NOPE'),
                         onPressed: () {
-                          List<dynamic> mutableListOfInvitation = List.from(invitationList)..removeAt(i);
+                          List<dynamic> mutableListOfInvitation =
+                              List.from(invitationList)..removeAt(i);
                           setState(() {
                             invitationList = mutableListOfInvitation;
                           });
@@ -101,7 +107,8 @@ class _EventInvitationState extends State<EventInvitation> {
                       FlatButton(
                         child: const Text('LET\'S GO'),
                         onPressed: () {
-                          addReservationToProfil(invitationList[i]['boite'],invitationDate,invitationList[i]['qrcode']);
+                          addReservationToProfil(invitationList[i]['boite'],
+                              invitationDate, invitationList[i]['qrcode']);
                           Scaffold.of(context).showSnackBar(
                             SnackBar(
                               duration: Duration(milliseconds: 2500),
@@ -109,7 +116,8 @@ class _EventInvitationState extends State<EventInvitation> {
                                   "Une invitation a été ajoutée à ta liste de réservation"),
                             ),
                           );
-                          List<dynamic> mutableListOfInvitation = List.from(invitationList)..removeAt(i);
+                          List<dynamic> mutableListOfInvitation =
+                              List.from(invitationList)..removeAt(i);
                           setState(() {
                             invitationList = mutableListOfInvitation;
                           });
@@ -127,12 +135,11 @@ class _EventInvitationState extends State<EventInvitation> {
     );
   }
 
-  void _removeInvitation(){
+  void _removeInvitation() {
     crudObj.updateData('user', currentUserId, {'invitation': invitationList});
   }
 
-
-  addReservationToProfil(boiteName,date,qrCodeUrl) {
+  addReservationToProfil(boiteName, date, qrCodeUrl) {
     //le qr code est celui de l'ami qui a invité pcq pas le temps de regenerer un qr code pour le moment
     Map<String, dynamic> reservationInfo = {
       'boiteID': boiteName,
@@ -144,61 +151,34 @@ class _EventInvitationState extends State<EventInvitation> {
 
     mutableListOfReservation.add(reservationInfo);
 
-    crudObj.updateData('user', currentUserId, {'reservation': mutableListOfReservation});
+    crudObj.updateData(
+        'user', currentUserId, {'reservation': mutableListOfReservation});
   }
 
   void _onLoading() {
-
-    if(widget.admin){
-      return crudObj.getDataFromAdminFromDocument().then((value) {
-        Map<String, dynamic> dataMap = value.data;
-        setState(() {
-          invitationList = dataMap['invitation'];
-          userName = dataMap['name'];
-          reservationList = dataMap['reservation'];
-        });
-
-        _refreshController.loadComplete();
+    return crudObj.getDataFromUserFromDocument().then((value) {
+      Map<String, dynamic> dataMap = value.data;
+      setState(() {
+        invitationList = dataMap['invitation'];
+        userName = dataMap['name'];
+        reservationList = dataMap['reservation'];
       });
-    }else{
-      return crudObj.getDataFromUserFromDocument().then((value) {
-        Map<String, dynamic> dataMap = value.data;
-        setState(() {
-          invitationList = dataMap['invitation'];
-          userName = dataMap['name'];
-          reservationList = dataMap['reservation'];
-        });
 
-        _refreshController.loadComplete();
-      });
-    }
-
+      _refreshController.loadComplete();
+    });
   }
 
   void _refresh() {
-    if(widget.admin){
-      return crudObj.getDataFromAdminFromDocument().then((value) {
-        Map<String, dynamic> dataMap = value.data;
-        setState(() {
-          invitationList = dataMap['invitation'];
-          userName = dataMap['name'];
-          reservationList = dataMap['reservation'];
-        });
-
-        _refreshController.refreshCompleted();
+    return crudObj.getDataFromUserFromDocument().then((value) {
+      Map<String, dynamic> dataMap = value.data;
+      setState(() {
+        invitationList = dataMap['invitation'];
+        userName = dataMap['name'];
+        reservationList = dataMap['reservation'];
       });
-    }else{
-      return crudObj.getDataFromUserFromDocument().then((value) {
-        Map<String, dynamic> dataMap = value.data;
-        setState(() {
-          invitationList = dataMap['invitation'];
-          userName = dataMap['name'];
-          reservationList = dataMap['reservation'];
-        });
 
-        _refreshController.refreshCompleted();
-      });
-    }
+      _refreshController.refreshCompleted();
+    });
   }
 
   @override
@@ -212,7 +192,10 @@ class _EventInvitationState extends State<EventInvitation> {
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         title: Text(
           'Évènements',
-          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 30,),
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+            fontSize: 30,
+          ),
         ),
       ),
       body: SmartRefresher(
@@ -232,7 +215,6 @@ class _EventInvitationState extends State<EventInvitation> {
         userMail: currentUserMail,
         signOut: widget._signOut,
         activePage: 'Invitation',
-        admin: widget.admin,
       ),
     );
   }

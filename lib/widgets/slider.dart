@@ -10,11 +10,10 @@ import 'package:lynight/test/testAdminBoite.dart';
 
 class CustomSlider extends StatefulWidget {
 
-  CustomSlider({@required this.userMail, @required this.signOut,  @required this.activePage, @required this.admin});
+  CustomSlider({@required this.userMail, @required this.signOut,  @required this.activePage});
   final String userMail;
   final Function signOut;
   final String activePage;
-  final admin;
 
   @override
   State<StatefulWidget> createState() {
@@ -37,21 +36,6 @@ class _CustomSliderState extends State<CustomSlider> {
 
   void initState() {
     super.initState();
-
-    if(widget.admin){
-      crudObj.getDataFromAdminFromDocument().then((value) {
-        // correspond à await Firestore.instance.collection('user').document(user.uid).get();
-        Map<String, dynamic> dataMap = value
-            .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
-        setState(() {
-          name = dataMap['name'];
-          profilePicture = dataMap['picture'];
-          numberOfFriendRequest = dataMap['friendRequest'].length;
-          pro = dataMap['pro'];
-          numberOfInvitation = dataMap['invitation'].length;
-        });
-      });
-    }else{
       crudObj.getDataFromUserFromDocument().then((value) {
         // correspond à await Firestore.instance.collection('user').document(user.uid).get();
         Map<String, dynamic> dataMap = value
@@ -64,7 +48,6 @@ class _CustomSliderState extends State<CustomSlider> {
           numberOfInvitation = dataMap['invitation'].length;
         });
       });
-    }
   }
 
   Widget header(context) {
@@ -169,7 +152,7 @@ class _CustomSliderState extends State<CustomSlider> {
           ),
         ),
         onTap: () {
-          Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => AddClub(admin: widget.admin,)));
+          Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => AddClub()));
         },
       ),
     );
@@ -250,7 +233,7 @@ class _CustomSliderState extends State<CustomSlider> {
                 ),
               ),
               onTap: () {
-                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => UserProfil(admin: widget.admin,)));
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => UserProfil()));
               },
             ),
           ),
@@ -277,7 +260,7 @@ class _CustomSliderState extends State<CustomSlider> {
                 ),
               ),
               onTap: () {
-                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => ListPage(admin: widget.admin,)));
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => ListPage()));
               },
             ),
           ),
@@ -332,7 +315,7 @@ class _CustomSliderState extends State<CustomSlider> {
               ),
               trailing: _showNotifFriendRequest(),
               onTap: () {
-                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => FriendsPage(admin: widget.admin,)));
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => FriendsPage()));
               },
             ),
           ),
@@ -365,7 +348,7 @@ class _CustomSliderState extends State<CustomSlider> {
               )
                   : Text(''),
               onTap: () {
-                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => EventInvitation(admin: widget.admin,)));
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => EventInvitation()));
               },
             ),
           ),
@@ -400,7 +383,7 @@ class _CustomSliderState extends State<CustomSlider> {
               )
                   : Text(''),
               onTap: () {
-                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => TestAdminBoite(admin: widget.admin,)));
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => TestAdminBoite()));
               },
             ),
           ),

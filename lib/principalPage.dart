@@ -61,25 +61,13 @@ class _PrincipalPageState extends State<PrincipalPage>
       });
     });
 
-
-    if(widget.admin){
-      print("ADDDDDDDMIN");
-      crudObj.getDataFromAdminFromDocument().then((value){
-        Map<dynamic, dynamic> userMap = value.data;
-        Map<dynamic, dynamic> userMusic = userMap['music'];
-        setState(() {
-          mapOfUserMusic = userMusic;
-        });
+    crudObj.getDataFromUserFromDocument().then((value) {
+      Map<dynamic, dynamic> userMap = value.data;
+      Map<dynamic, dynamic> userMusic = userMap['music'];
+      setState(() {
+        mapOfUserMusic = userMusic;
       });
-    }else{
-      crudObj.getDataFromUserFromDocument().then((value){
-        Map<dynamic, dynamic> userMap = value.data;
-        Map<dynamic, dynamic> userMusic = userMap['music'];
-        setState(() {
-          mapOfUserMusic = userMusic;
-        });
-      });
-    }
+    });
   }
 
   void _handleSelected() {
@@ -99,15 +87,15 @@ class _PrincipalPageState extends State<PrincipalPage>
   Widget bottomNavigation() {
     return Container(
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromRGBO(	212, 63, 141, 1),
-                Color.fromRGBO(		2, 80, 197, 1)
-              ]),
-          //color: Theme.of(context).primaryColor,
-         ),
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromRGBO(212, 63, 141, 1),
+              Color.fromRGBO(2, 80, 197, 1)
+            ]),
+        //color: Theme.of(context).primaryColor,
+      ),
       child: TabBar(
           controller: _controller,
           unselectedLabelColor: Colors.white,
@@ -137,25 +125,42 @@ class _PrincipalPageState extends State<PrincipalPage>
       length: 3,
       child: Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: bottomNavigation(),
-        body: TabBarView(controller: _controller, children: [
-          SafeArea(
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: height/35,
-                ),
-                TopClubCard(musicMap: mapOfUserMusic),
-                BottomClubCard(musicMap: mapOfUserMusic),
-                SizedBox(
-                  height: height/35,
-                )
-              ],
-            ),
+//        bottomNavigationBar: bottomNavigation(),
+        body: SafeArea(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: height / 35,
+              ),
+              TopClubCard(musicMap: mapOfUserMusic),
+              BottomClubCard(musicMap: mapOfUserMusic),
+              SizedBox(
+                height: height / 35,
+              )
+            ],
           ),
-          SearchBar(),
-          FavoritesNightClub(),
-        ]),
+        ),
+//La recherhce trouver un meilleur moyen de l'intégrer et les queries pour rechercher les boites (peut etre avec algolia
+        //pour les favoris rajouter un onglet dans le slider pour permettre d'alléger la page principale
+
+//        TabBarView(controller: _controller, children: [
+//          SafeArea(
+//            child: Column(
+//              children: <Widget>[
+//                SizedBox(
+//                  height: height/35,
+//                ),
+//                TopClubCard(musicMap: mapOfUserMusic),
+//                BottomClubCard(musicMap: mapOfUserMusic),
+//                SizedBox(
+//                  height: height/35,
+//                )
+//              ],
+//            ),
+//          ),
+//          SearchBar(),
+//          FavoritesNightClub(),
+//        ]),
         appBar: AppBar(
           title: Text(
             appBarTitle,
@@ -172,7 +177,6 @@ class _PrincipalPageState extends State<PrincipalPage>
           userMail: mail,
           signOut: widget._signOut,
           activePage: 'Accueil',
-          admin: widget.admin,
         ),
       ),
     );
