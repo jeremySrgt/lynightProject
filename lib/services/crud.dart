@@ -34,6 +34,11 @@ class CrudMethods {
     return await Firestore.instance.collection('user').document(user.uid).get();
   }
 
+  getDataFromAdminFromDocument() async{
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    return await Firestore.instance.collection('AdminBoite').document(user.uid).get();
+  }
+
   getDataFromUserFromDocumentWithID(userID) async{
     return await Firestore.instance.collection('user').document(userID).get();
   }
@@ -74,19 +79,29 @@ class CrudMethods {
     
   }
 
+  createOrUpdateAdminData(Map<String, dynamic> userDataMap) async{
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+//    print('USERID ' + user.uid);
+    DocumentReference ref = Firestore.instance.collection('AdminBoite').document(user.uid);
+    return ref.setData(userDataMap, merge: true);
+
+  }
+
   updateUserDataWithUserID(userID, Map<String, dynamic> userDataMap) async{
     DocumentReference ref = Firestore.instance.collection('user').document(userID);
     return ref.setData(userDataMap, merge: true);
 
   }
 
-//  deleteData(collection, docId) {
-//    Firestore.instance
-//        .collection(collection)
-//        .document(docId)
-//        .delete()
-//        .catchError((e) {
-//      print(e);
-//    });
-//  }
+
+  //ATTENTION AVEC CA LES AMIS /!\/!\/!\/!\/!\/!\/!\
+  deleteData(collection, docId) {
+    Firestore.instance
+        .collection(collection)
+        .document(docId)
+        .delete()
+        .catchError((e) {
+      print(e);
+    });
+  }
 }

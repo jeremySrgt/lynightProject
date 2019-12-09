@@ -13,10 +13,12 @@ import 'package:lynight/searchBar/searchBar.dart';
 import 'package:lynight/favorites/favoritesNightClub.dart';
 
 class PrincipalPage extends StatefulWidget {
-  PrincipalPage({this.auth, this.onSignOut});
+  PrincipalPage({this.auth, this.onSignOut, this.userId, this.admin});
 
   final BaseAuth auth;
   final VoidCallback onSignOut;
+  final String userId;
+  final bool admin;
 
   void _signOut() async {
     try {
@@ -59,13 +61,25 @@ class _PrincipalPageState extends State<PrincipalPage>
       });
     });
 
-    crudObj.getDataFromUserFromDocument().then((value){
-      Map<dynamic, dynamic> userMap = value.data;
-      Map<dynamic, dynamic> userMusic = userMap['music'];
-      setState(() {
-        mapOfUserMusic = userMusic;
+
+    if(widget.admin){
+      print("ADDDDDDDMIN");
+      crudObj.getDataFromAdminFromDocument().then((value){
+        Map<dynamic, dynamic> userMap = value.data;
+        Map<dynamic, dynamic> userMusic = userMap['music'];
+        setState(() {
+          mapOfUserMusic = userMusic;
+        });
       });
-    });
+    }else{
+      crudObj.getDataFromUserFromDocument().then((value){
+        Map<dynamic, dynamic> userMap = value.data;
+        Map<dynamic, dynamic> userMusic = userMap['music'];
+        setState(() {
+          mapOfUserMusic = userMusic;
+        });
+      });
+    }
   }
 
   void _handleSelected() {
@@ -158,6 +172,7 @@ class _PrincipalPageState extends State<PrincipalPage>
           userMail: mail,
           signOut: widget._signOut,
           activePage: 'Accueil',
+          admin: widget.admin,
         ),
       ),
     );

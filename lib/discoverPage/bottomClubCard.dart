@@ -6,7 +6,6 @@ import 'package:lynight/algo/algoReferencementMusique.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class BottomClubCard extends StatefulWidget {
-  @override
   final musicMap;
 
   BottomClubCard({this.musicMap});

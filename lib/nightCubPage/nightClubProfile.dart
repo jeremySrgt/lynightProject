@@ -19,7 +19,7 @@ class NightClubProfile extends StatefulWidget {
 class _NightClubProfile extends State<NightClubProfile> {
   String userId = 'userId';
   CrudMethods crudObj = new CrudMethods();
-  Map<dynamic,dynamic> currentClubData;
+  Map<dynamic, dynamic> currentClubData;
 
   bool electro = false;
   bool rap = false;
@@ -48,7 +48,7 @@ class _NightClubProfile extends State<NightClubProfile> {
       });
     });
 
-    crudObj.getDataFromClubFromDocumentWithID(widget.documentID).then((value){
+    crudObj.getDataFromClubFromDocumentWithID(widget.documentID).then((value) {
       setState(() {
         currentClubData = value.data;
       });
@@ -409,6 +409,7 @@ class _NightClubProfile extends State<NightClubProfile> {
                     MaterialPageRoute(
                         builder: (context) => SumUp(
                               clubName: clubData['name'],
+                              clubId: widget.documentID,
                             )));
               },
             ),
@@ -472,65 +473,68 @@ class _NightClubProfile extends State<NightClubProfile> {
   }
 
   Widget pageConstruct(clubData, context) {
-    if(clubData == null){
-    return Center(child: CircularProgressIndicator(),);
+    if (clubData == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
     }
     return CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            floating: false,
-            pinned: true,
-            expandedHeight: 200,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              titlePadding: EdgeInsets.symmetric(vertical: 5),
-              background: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                  Image.network(
-                    clubData['pictures'][0],
-                    fit: BoxFit.cover,
-                  ),
-                  Container(
-                    child: favoriteButton(),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    alignment: Alignment.topRight,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Colors.transparent, Colors.black54],
-                            stops: [0.5,1.0],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          tileMode:TileMode.repeated,
-                        )),
-                  ),
-                ],
-              ),
-              title: Container(
-                constraints: BoxConstraints(maxWidth: 300),
-                child: Text(
-                  clubData['name'],
-                  style: TextStyle(fontSize: 30),
-                  overflow: TextOverflow.visible,textAlign: TextAlign.center,
+      slivers: <Widget>[
+        SliverAppBar(
+          floating: false,
+          pinned: true,
+          expandedHeight: 200,
+          flexibleSpace: FlexibleSpaceBar(
+            centerTitle: true,
+            titlePadding: EdgeInsets.symmetric(vertical: 5),
+            background: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                Image.network(
+                  clubData['pictures'][0],
+                  fit: BoxFit.cover,
                 ),
-              ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
                 Container(
-                  child: Column(
-                    children: <Widget>[
-                      nightClubProfileInfo(clubData, context),
-                    ],
-                  ),
+                  child: favoriteButton(),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  alignment: Alignment.topRight,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    colors: [Colors.transparent, Colors.black54],
+                    stops: [0.5, 1.0],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    tileMode: TileMode.repeated,
+                  )),
                 ),
               ],
             ),
+            title: Container(
+              constraints: BoxConstraints(maxWidth: 300),
+              child: Text(
+                clubData['name'],
+                style: TextStyle(fontSize: 30),
+                overflow: TextOverflow.visible,
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
-        ],
-      );
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    nightClubProfileInfo(clubData, context),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 
   @override

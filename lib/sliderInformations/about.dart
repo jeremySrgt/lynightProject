@@ -161,6 +161,7 @@ class _AboutState extends State<About> {
         userMail: userMail,
         signOut: widget._signOut,
         activePage: '/about',
+        admin: false,
       ),
     );
   }

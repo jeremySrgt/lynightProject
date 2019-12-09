@@ -14,12 +14,13 @@ import 'package:lynight/profilUtilisateur/selectProfilPicture.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ListPage extends StatefulWidget {
-  ListPage({this.onSignOut});
+  ListPage({this.onSignOut, @required this.admin});
 
 //  final BaseAuth auth;
   final VoidCallback onSignOut;
+  final bool admin;
 
-  BaseAuth auth = new Auth();
+  final BaseAuth auth = new Auth();
 
   void _signOut() async {
     try {
@@ -54,13 +55,23 @@ class _ListPageState extends State<ListPage> {
       });
     });
 
-    crudObj.getDataFromUserFromDocument().then((value) {
-      Map<String, dynamic> dataMap = value.data;
-      List reservationList = dataMap['reservation'];
-      setState(() {
-        reservation = reservationList;
+    if(widget.admin){
+      crudObj.getDataFromAdminFromDocument().then((value) {
+        Map<String, dynamic> dataMap = value.data;
+        List reservationList = dataMap['reservation'];
+        setState(() {
+          reservation = reservationList;
+        });
       });
-    });
+    }else{
+      crudObj.getDataFromUserFromDocument().then((value) {
+        Map<String, dynamic> dataMap = value.data;
+        List reservationList = dataMap['reservation'];
+        setState(() {
+          reservation = reservationList;
+        });
+      });
+    }
   }
 
   Widget _makeCard(oneReservationMap) {
@@ -255,6 +266,7 @@ class _ListPageState extends State<ListPage> {
         userMail: userMail,
         signOut: widget._signOut,
         activePage: 'Reservations',
+        admin: widget.admin,
       ),
     );
   }

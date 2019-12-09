@@ -56,6 +56,7 @@ class _ConfidentialityState extends State<Confidentiality> {
         userMail: userMail,
         signOut: widget._signOut,
         activePage: '/confidentiality',
+        admin: false,
       ),
     );
   }
