@@ -8,7 +8,7 @@ import 'package:lynight/profilUtilisateur/selectProfilPicture.dart';
 import 'package:lynight/profilUtilisateur/checkbox.dart';
 
 class UserProfil extends StatefulWidget {
-  UserProfil({this.onSignOut});
+  UserProfil({@required this.onSignOut});
 
 //  final BaseAuth auth;
   final VoidCallback onSignOut;
@@ -603,6 +603,14 @@ class _UserProfilState extends State<UserProfil> {
                 ),
                 Container(
                   height: 10,
+                ),
+                Container(
+                  child: FlatButton(
+                      onPressed: () {
+                        widget._signOut();
+                        Navigator.pushReplacementNamed(context, '/');
+                      },
+                      child: Text("Deconnexion")),
                 ),
               ],
             ),

@@ -76,21 +76,28 @@ class _CustomSliderState extends State<CustomSlider> {
               style: TextStyle(fontSize: 11.0),
             ),
           ),
-          widget.activePage == 'Accueil' ? RaisedButton(
-            elevation: 5.0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0)),
-            child: Text(
-              'Déconnexion',
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Theme.of(context).primaryColor,
+          ButtonTheme(
+            minWidth: 160.0,
+            child: RaisedButton.icon(
+              elevation: 3.0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0)),
+              label: Text(
+                'Profil',
+                style: TextStyle(
+                  fontSize: 14.0,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
+              icon: Icon(Icons.account_circle),
+              color: Colors.white,
+              textColor: Theme.of(context).primaryColor,
+              onPressed: (){
+                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(10);
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => UserProfil(onSignOut: widget.signOut)));
+              },
             ),
-            color: Colors.white,
-            textColor: Theme.of(context).primaryColor,
-            onPressed: widget.signOut,
-          ): Container(),
+          )
         ],
       ),
       decoration: BoxDecoration(
@@ -222,13 +229,13 @@ class _CustomSliderState extends State<CustomSlider> {
                 : BoxDecoration(),
             child: ListTile(
               leading: Icon(
-                Icons.account_circle,
+                Icons.book,
                 color: currentDrawer == 1
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
               title: Text(
-                'Profil',
+                'Réservations',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: currentDrawer == 1
@@ -238,9 +245,9 @@ class _CustomSliderState extends State<CustomSlider> {
               ),
               onTap: () {
                 Navigator.of(context).pop();
-                if(widget.activePage == 'Profil') return;
+                if(widget.activePage == 'Reservations') return;
                 Provider.of<DrawerStateInfo>(context).setCurrentDrawer(1);
-                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => UserProfil()));
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => ListPage()));
               },
             ),
           ),
@@ -252,13 +259,13 @@ class _CustomSliderState extends State<CustomSlider> {
                 : BoxDecoration(),
             child: ListTile(
               leading: Icon(
-                Icons.book,
+                FontAwesomeIcons.mapMarked,
                 color: currentDrawer == 2
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
               title: Text(
-                'Réservations',
+                'Carte',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: currentDrawer == 2
@@ -268,9 +275,9 @@ class _CustomSliderState extends State<CustomSlider> {
               ),
               onTap: () {
                 Navigator.of(context).pop();
-                if(widget.activePage == 'Reservations') return;
+                if(widget.activePage == 'Maps') return;
                 Provider.of<DrawerStateInfo>(context).setCurrentDrawer(2);
-                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => ListPage()));
+                Navigator.pushReplacementNamed(context, '/maps');
               },
             ),
           ),
@@ -282,38 +289,8 @@ class _CustomSliderState extends State<CustomSlider> {
                 : BoxDecoration(),
             child: ListTile(
               leading: Icon(
-                FontAwesomeIcons.mapMarked,
-                color: currentDrawer == 3
-                    ? Theme.of(context).primaryColor
-                    : Colors.grey,
-              ),
-              title: Text(
-                'Carte',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: currentDrawer == 3
-                      ? Theme.of(context).primaryColor
-                      : Colors.grey,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                if(widget.activePage == 'Maps') return;
-                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(3);
-                Navigator.pushReplacementNamed(context, '/maps');
-              },
-            ),
-          ),
-          Container(
-            decoration: currentDrawer == 4
-                ? BoxDecoration(
-                    color: Color(0xFFebdffc),
-                    borderRadius: BorderRadius.circular(15.0))
-                : BoxDecoration(),
-            child: ListTile(
-              leading: Icon(
                 FontAwesomeIcons.userFriends,
-                color: currentDrawer == 4
+                color: currentDrawer == 3
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -321,7 +298,7 @@ class _CustomSliderState extends State<CustomSlider> {
                 'Amis',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: currentDrawer == 4
+                  color: currentDrawer == 3
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
@@ -330,13 +307,13 @@ class _CustomSliderState extends State<CustomSlider> {
               onTap: () {
                 Navigator.of(context).pop();
                 if(widget.activePage == 'Amis') return;
-                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(4);
+                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(3);
                 Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => FriendsPage()));
               },
             ),
           ),
           Container(
-            decoration: currentDrawer == 5
+            decoration: currentDrawer == 4
                 ? BoxDecoration(
                 color: Color(0xFFebdffc),
                 borderRadius: BorderRadius.circular(15.0))
@@ -344,7 +321,7 @@ class _CustomSliderState extends State<CustomSlider> {
             child: ListTile(
               leading: Icon(
                 FontAwesomeIcons.compactDisc,
-                color: currentDrawer == 5
+                color: currentDrawer == 4
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
@@ -352,7 +329,7 @@ class _CustomSliderState extends State<CustomSlider> {
                 'Évènements',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: currentDrawer == 5
+                  color: currentDrawer == 4
                       ? Theme.of(context).primaryColor
                       : Colors.grey,
                 ),
@@ -366,7 +343,7 @@ class _CustomSliderState extends State<CustomSlider> {
               onTap: () {
                 Navigator.of(context).pop();
                 if(widget.activePage == 'Invitation') return;
-                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(5);
+                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(4);
                 Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => EventInvitation()));
               },
             ),
@@ -374,7 +351,7 @@ class _CustomSliderState extends State<CustomSlider> {
 
 
           Container(
-            decoration: currentDrawer == 6
+            decoration: currentDrawer == 5
                 ? BoxDecoration(
                 color: Color(0xFFebdffc),
                 borderRadius: BorderRadius.circular(15.0))
@@ -382,12 +359,45 @@ class _CustomSliderState extends State<CustomSlider> {
             child: ListTile(
               leading: Icon(
                 FontAwesomeIcons.tenge,
-                color: currentDrawer == 6
+                color: currentDrawer == 5
                     ? Theme.of(context).primaryColor
                     : Colors.grey,
               ),
               title: Text(
                 'TEST',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: currentDrawer == 5
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).pop();
+                if(widget.activePage == 'test') return;
+                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(5);
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => TestAdminBoite()));
+              },
+            ),
+          ),
+
+
+          Divider(),
+          Container(
+            decoration: currentDrawer == 6
+                ? BoxDecoration(
+                    color: Color(0xFFebdffc),
+                    borderRadius: BorderRadius.circular(15.0))
+                : BoxDecoration(),
+            child: ListTile(
+              leading: Icon(
+                FontAwesomeIcons.infoCircle,
+                color: currentDrawer == 6
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey,
+              ),
+              title: Text(
+                'À propos',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: currentDrawer == 6
@@ -397,41 +407,8 @@ class _CustomSliderState extends State<CustomSlider> {
               ),
               onTap: () {
                 Navigator.of(context).pop();
-                if(widget.activePage == 'test') return;
-                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(6);
-                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => TestAdminBoite()));
-              },
-            ),
-          ),
-
-
-          Divider(),
-          Container(
-            decoration: currentDrawer == 7
-                ? BoxDecoration(
-                    color: Color(0xFFebdffc),
-                    borderRadius: BorderRadius.circular(15.0))
-                : BoxDecoration(),
-            child: ListTile(
-              leading: Icon(
-                FontAwesomeIcons.infoCircle,
-                color: currentDrawer == 7
-                    ? Theme.of(context).primaryColor
-                    : Colors.grey,
-              ),
-              title: Text(
-                'À propos',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: currentDrawer == 7
-                      ? Theme.of(context).primaryColor
-                      : Colors.grey,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
                 if(widget.activePage == 'about') return;
-                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(7);
+                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(6);
                 Navigator.pushReplacementNamed(context, '/about');
               },
             ),
