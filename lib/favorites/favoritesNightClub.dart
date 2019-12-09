@@ -4,19 +4,33 @@ import 'package:flutter/widgets.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/services/crud.dart';
+import 'package:lynight/widgets/slider.dart';
 
 class FavoritesNightClub extends StatefulWidget {
+
+  FavoritesNightClub({this.onSignOut});
+
   final BaseAuth auth = new Auth();
+  final VoidCallback onSignOut;
+
+  void _signOut() async {
+    try {
+      await auth.signOut();
+      onSignOut();
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _FavoritesNightClubState();
   }
 }
 
 class _FavoritesNightClubState extends State<FavoritesNightClub> {
   String userId = 'userId';
+  String userMail = 'userMail';
   CrudMethods crudObj = new CrudMethods();
   Map<String, dynamic> data;
 
@@ -25,6 +39,11 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
     widget.auth.currentUser().then((id) {
       setState(() {
         userId = id;
+      });
+    });
+    widget.auth.userEmail().then((mail) {
+      setState(() {
+        userMail = mail;
       });
     });
   }
@@ -148,16 +167,28 @@ class _FavoritesNightClubState extends State<FavoritesNightClub> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream:
-          Firestore.instance.collection('user').document(userId).snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return CircularProgressIndicator();
-        }
-        var userData = snapshot.data;
-        return favoritesList(userData);
-      },
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        title: Text(
+          'Mes Favoris',
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 30),
+        ),
+      ),
+      body: StreamBuilder(
+        stream:
+        Firestore.instance.collection('user').document(userId).snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return CircularProgressIndicator();
+          }
+          var userData = snapshot.data;
+          return favoritesList(userData);
+        },
+      ),
+      drawer: CustomSlider(userMail: userMail, signOut: widget.onSignOut, activePage: 'Favoris'),
     );
   }
 }
