@@ -33,7 +33,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   final primaryColor = const Color(0xFF7854d3);
   final accentColor = const Color(0xFF6f43e0);
 
@@ -47,14 +46,12 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false, //retire la banniere de debug
         theme: ThemeData(
-            primaryColor: primaryColor,
-            accentColor: accentColor,
-            fontFamily: 'Comfortaa',
+          primaryColor: primaryColor,
+          accentColor: accentColor,
+          fontFamily: 'Comfortaa',
         ),
-        //home: AuthPage(),
         routes: {
           '/': (BuildContext context) => RootPage(auth: Auth(),),
-//        '/principal': (BuildContext context) => PrincipalPage(),
           '/nightClubProfile': (BuildContext context) => NightClubProfile(),
           '/userProfil': (BuildContext context) => UserProfil(),
           '/myReservations': (BuildContext context) => ListPage(),
@@ -79,7 +76,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
 
 class DrawerStateInfo with ChangeNotifier {
   int _currentDrawer = 0;
