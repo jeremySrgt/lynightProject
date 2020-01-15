@@ -12,6 +12,9 @@ import 'package:lynight/services/crud.dart';
 import 'package:lynight/services/clubData.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+//FIXME TOUT CE QUI EST RELATIF AU COMPTE PRO A ETE DEPLACE DANS L'APP BLOON PRO
+
 class AddClub extends StatefulWidget {
   AddClub({this.onSignOut});
 

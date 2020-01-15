@@ -5,6 +5,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+
+
+
+//FIXME TOUT CE QUI EST RELATIF AU COMPTE PRO A ETE DEPLACE DANS L'APP BLOON PRO
+
 class UploadClubPictures extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {

@@ -4,6 +4,9 @@ import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+//FIXME TOUT CE QUI EST RELATIF AU COMPTE PRO A ETE DEPLACE DANS L'APP BLOON PRO
+
 void main() => runApp(MaterialApp(home: ScannerQrCode()));
 
 class ScannerQrCode extends StatefulWidget {
