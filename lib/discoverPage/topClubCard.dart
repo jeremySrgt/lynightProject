@@ -33,8 +33,6 @@ class _TopClubCardState extends State<TopClubCard> {
   bool rock = false;
   bool trans = false;
 
-
-
   //AlgoMusicReference algoTest = new AlgoMusicReference();
 
   @override
@@ -45,7 +43,6 @@ class _TopClubCardState extends State<TopClubCard> {
 //        club = results;
 //      });
 //    });
-
 
     crudObj.getDataDocuments('club').then((querySnapshot) {
       //print(querySnapshot.documents[3].documentID);
@@ -166,22 +163,26 @@ class _TopClubCardState extends State<TopClubCard> {
       padding: const EdgeInsets.only(left: 20.0, right: 25),
       child: Container(
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-          Icon(
-            Icons.music_note,
-            color: Colors.blue,
-          ),
-          SizedBox(
-            width: width / 40,
-          ),
-          Container(
-            constraints: BoxConstraints(maxWidth: width/ 2.9),
-            child: Text("${musicMap['electro'] == true ? 'Électro  ' : ''}${musicMap['populaire'] == true ? 'Populaire  ' : '' }${musicMap['rap'] == true ? 'Rap  ' : '' }${musicMap['rnb'] == true ? 'RnB  ' : '' }${musicMap['rock'] == true ? 'Rock  ' : '' }${musicMap['trans'] == true ? 'Trance  ' : '' }"
-              ,style: TextStyle(color: Colors.white,),overflow: TextOverflow.ellipsis,),
-          ),
-
-        ]),
+              Icon(
+                Icons.music_note,
+                color: Colors.blue,
+              ),
+              SizedBox(
+                width: width / 40,
+              ),
+              Container(
+                constraints: BoxConstraints(maxWidth: width / 2.9),
+                child: Text(
+                  "${musicMap['electro'] == true ? 'Électro  ' : ''}${musicMap['populaire'] == true ? 'Populaire  ' : ''}${musicMap['rap'] == true ? 'Rap  ' : ''}${musicMap['rnb'] == true ? 'RnB  ' : ''}${musicMap['rock'] == true ? 'Rock  ' : ''}${musicMap['trans'] == true ? 'Trance  ' : ''}",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ]),
       ),
     );
   }

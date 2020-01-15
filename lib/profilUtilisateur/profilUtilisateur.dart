@@ -8,11 +8,10 @@ import 'package:lynight/profilUtilisateur/selectProfilPicture.dart';
 import 'package:lynight/profilUtilisateur/checkbox.dart';
 
 class UserProfil extends StatefulWidget {
-  UserProfil({this.onSignOut, @required this.admin});
+  UserProfil({@required this.onSignOut});
 
 //  final BaseAuth auth;
   final VoidCallback onSignOut;
-  final bool admin;
 
   final BaseAuth auth = new Auth();
 
@@ -66,24 +65,14 @@ class _UserProfilState extends State<UserProfil> {
       });
     });
 
-    if(widget.admin){
-      crudObj.getDataFromAdminFromDocument().then((value) {
-        // correspond à await Firestore.instance.collection('user').document(user.uid).get();
-        Map<String, dynamic> dataMap = value
-            .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
-        setState(() {
-          _notificationValue = dataMap['notification'];
-        });
-      });
-    }else{
-      crudObj.getDataFromUserFromDocument().then((value) {
+    crudObj.getDataFromUserFromDocument().then((value) {
       // correspond à await Firestore.instance.collection('user').document(user.uid).get();
       Map<String, dynamic> dataMap = value
           .data; // retourne la Map des donné de l'utilisateur correspondant à uid passé dans la methode venant du cruObj
       setState(() {
         _notificationValue = dataMap['notification'];
       });
-    });}
+    });
   }
 
   void _openModalBottomSheet(context) {
@@ -224,8 +213,11 @@ class _UserProfilState extends State<UserProfil> {
                               color: Theme.of(context).accentColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0))),
-                              child: Text("Valider", style: TextStyle(color: Colors.white),),
+                                      BorderRadius.all(Radius.circular(20.0))),
+                              child: Text(
+                                "Valider",
+                                style: TextStyle(color: Colors.white),
+                              ),
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   _formKey.currentState.save();
@@ -292,7 +284,10 @@ class _UserProfilState extends State<UserProfil> {
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20.0))),
-                              child: Text("Valider", style: TextStyle(color: Colors.white),),
+                              child: Text(
+                                "Valider",
+                                style: TextStyle(color: Colors.white),
+                              ),
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   _formKey.currentState.save();
@@ -373,11 +368,14 @@ class _UserProfilState extends State<UserProfil> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: RaisedButton(
-                                color: Theme.of(context).accentColor,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0))),
-                                child: Text("Valider", style: TextStyle(color: Colors.white),),
+                              color: Theme.of(context).accentColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0))),
+                              child: Text(
+                                "Valider",
+                                style: TextStyle(color: Colors.white),
+                              ),
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   _formKey.currentState.save();
@@ -488,7 +486,10 @@ class _UserProfilState extends State<UserProfil> {
           style: TextStyle(color: Colors.white, fontSize: 18.0),
         ),
         trailing: Switch(
-            value: _notificationValue, onChanged: _onChangedNotification,activeColor: Colors.lightBlueAccent,),
+          value: _notificationValue,
+          onChanged: _onChangedNotification,
+          activeColor: Colors.lightBlueAccent,
+        ),
       );
     }
 
@@ -572,7 +573,6 @@ class _UserProfilState extends State<UserProfil> {
         userMail: userMail,
         signOut: widget._signOut,
         activePage: 'Profil',
-        admin: widget.admin,
       ),
       resizeToAvoidBottomPadding: false,
       body: CustomScrollView(
@@ -603,6 +603,14 @@ class _UserProfilState extends State<UserProfil> {
                 ),
                 Container(
                   height: 10,
+                ),
+                Container(
+                  child: FlatButton(
+                      onPressed: () {
+                        widget._signOut();
+                        Navigator.pushReplacementNamed(context, '/');
+                      },
+                      child: Text("Deconnexion")),
                 ),
               ],
             ),

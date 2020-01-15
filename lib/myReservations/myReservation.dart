@@ -14,11 +14,10 @@ import 'package:lynight/profilUtilisateur/selectProfilPicture.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ListPage extends StatefulWidget {
-  ListPage({this.onSignOut, @required this.admin});
+  ListPage({this.onSignOut});
 
 //  final BaseAuth auth;
   final VoidCallback onSignOut;
-  final bool admin;
 
   final BaseAuth auth = new Auth();
 
@@ -55,23 +54,13 @@ class _ListPageState extends State<ListPage> {
       });
     });
 
-    if(widget.admin){
-      crudObj.getDataFromAdminFromDocument().then((value) {
-        Map<String, dynamic> dataMap = value.data;
-        List reservationList = dataMap['reservation'];
-        setState(() {
-          reservation = reservationList;
-        });
+    crudObj.getDataFromUserFromDocument().then((value) {
+      Map<String, dynamic> dataMap = value.data;
+      List reservationList = dataMap['reservation'];
+      setState(() {
+        reservation = reservationList;
       });
-    }else{
-      crudObj.getDataFromUserFromDocument().then((value) {
-        Map<String, dynamic> dataMap = value.data;
-        List reservationList = dataMap['reservation'];
-        setState(() {
-          reservation = reservationList;
-        });
-      });
-    }
+    });
   }
 
   Widget _makeCard(oneReservationMap) {
@@ -185,7 +174,7 @@ class _ListPageState extends State<ListPage> {
                 icon: Icons.delete,
                 onTap: () {
                   setState(() {
-                    reservation =  List.from(reservation)..removeAt(index);
+                    reservation = List.from(reservation)..removeAt(index);
                   });
                   Firestore.instance
                       .collection('user')
@@ -200,14 +189,13 @@ class _ListPageState extends State<ListPage> {
                         textColor: Colors.white,
                         onPressed: () {
                           setState(() {
-                            reservation =  List.from(reservation)..insert(
-                                index, mutableListOfReservation[index]);
+                            reservation = List.from(reservation)
+                              ..insert(index, mutableListOfReservation[index]);
                           });
                           Firestore.instance
                               .collection('user')
                               .document(userId)
-                              .updateData(
-                              {"reservation": reservation});
+                              .updateData({"reservation": reservation});
                         },
                       )));
                 },
@@ -217,7 +205,7 @@ class _ListPageState extends State<ListPage> {
               child: SlidableDrawerDismissal(),
               onDismissed: (actionType) {
                 setState(() {
-                  reservation =  List.from(reservation)..removeAt(index);
+                  reservation = List.from(reservation)..removeAt(index);
                 });
                 Firestore.instance
                     .collection('user')
@@ -232,14 +220,13 @@ class _ListPageState extends State<ListPage> {
                       textColor: Colors.white,
                       onPressed: () {
                         setState(() {
-                          reservation =  List.from(reservation)..insert(
-                              index, mutableListOfReservation[index]);
+                          reservation = List.from(reservation)
+                            ..insert(index, mutableListOfReservation[index]);
                         });
                         Firestore.instance
                             .collection('user')
                             .document(userId)
-                            .updateData(
-                            {"reservation": reservation});
+                            .updateData({"reservation": reservation});
                       },
                     )));
               },
@@ -259,14 +246,16 @@ class _ListPageState extends State<ListPage> {
         elevation: 0.0,
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-        title: Text('Mes reservations',style: TextStyle(color: Theme.of(context).primaryColor,fontSize: 30),),
+        title: Text(
+          'Mes reservations',
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 30),
+        ),
       ),
       body: _makeBody(userReservationList),
       drawer: CustomSlider(
         userMail: userMail,
         signOut: widget._signOut,
         activePage: 'Reservations',
-        admin: widget.admin,
       ),
     );
   }

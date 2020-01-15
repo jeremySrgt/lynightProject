@@ -6,6 +6,7 @@ import 'package:lynight/services/crud.dart';
 import 'package:lynight/services/userData.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flare_flutter/flare_actor.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title, this.auth, this.onSignIn}) : super(key: key);
@@ -79,7 +80,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               notification: true,
               phone: "",
               picture:
-              "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
+                  "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
               reservation: [],
               sex: userSex,
               pro: _formType == FormType.registerAsPro ? true : false,
@@ -107,7 +108,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               notification: true,
               phone: "",
               picture:
-              "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
+                  "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
               reservation: [],
               sex: userSex,
               pro: true,
@@ -372,7 +373,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           ],
         );
     }
-
   }
 
   Widget _showCircularProgress() {
@@ -437,9 +437,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           children: <Widget>[
             _showLogo(),
             _buildUsernameField(),
-            _formType == FormType.register
-                ? _buildNameField()
-                : Container(),
+            _formType == FormType.register ? _buildNameField() : Container(),
             _formType == FormType.registerAsPro
                 ? _buildNameField()
                 : Container(),
@@ -503,13 +501,17 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
   Widget _showLogo() {
     return Padding(
-      padding: EdgeInsets.only(top: 20.0),
-      child: CircleAvatar(
-        backgroundColor: Colors.transparent,
-        radius: 48.0,
-        child: Image.asset('assets/bloonLogo.png'),
-      ),
-    );
+        padding: EdgeInsets.only(top: 20.0),
+        child: Container(
+          height: 200,
+          width: 500,
+          child: FlareActor(
+            "assets/splash_screen_bloon.flr",
+            alignment: Alignment.center,
+            fit: BoxFit.cover,
+            animation: "intro",
+            shouldClip: true,
+          ),
+        ));
   }
-
 }

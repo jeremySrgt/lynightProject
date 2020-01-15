@@ -68,7 +68,7 @@ class _SumUpState extends State<SumUp> {
 
     Firestore.instance
         .collection('club')
-        .document('-LhKMefcBQ5wcJwluZxY')
+        .document(widget.clubId)
         .collection('placesDispo')
         .getDocuments()
         .then((value) {
