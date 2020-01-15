@@ -10,6 +10,7 @@ import 'package:lynight/test/testAdminBoite.dart';
 import 'package:lynight/main.dart';
 import 'package:provider/provider.dart';
 import 'package:lynight/favorites/favoritesNightClub.dart';
+import 'package:lynight/creditCard/CarteCredit.dart';
 
 class CustomSlider extends StatefulWidget {
 
@@ -407,7 +408,7 @@ class _CustomSliderState extends State<CustomSlider> {
                 Navigator.of(context).pop();
                 if(widget.activePage == 'test') return;
                 Provider.of<DrawerStateInfo>(context).setCurrentDrawer(6);
-                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => TestAdminBoite()));
+                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => CarteCredit()));
               },
             ),
           ),

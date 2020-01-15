@@ -5,15 +5,16 @@ import 'package:lynight/creditCard/flutter_credit_card.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/services/crud.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
+import 'package:braintree_payment/braintree_payment.dart';
+
+
 
 class CarteCredit extends StatefulWidget {
   CarteCredit({this.onSignOut});
 
   final VoidCallback onSignOut;
 
-  BaseAuth auth = new Auth();
+  final BaseAuth auth = new Auth();
 
   void _signOut() async {
     try {
@@ -41,12 +42,15 @@ class _CarteCreditState extends State<CarteCredit> {
   CrudMethods crudObj = new CrudMethods();
   String userMail = 'userMail';
 
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         title: Text(
@@ -55,36 +59,43 @@ class _CarteCreditState extends State<CarteCredit> {
         ),
         backgroundColor: Colors.white,
       ),
-        body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              CreditCardWidget(
-                cardNumber: cardNumber,
-                expiryDate: expiryDate,
-                cardHolderName: cardHolderName,
-                cvvCode: cvvCode,
-                showBackView: isCvvFocused,
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: CreditCardForm(
-                    onCreditCardModelChange: onCreditCardModelChange,
-                  ),
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            CreditCardWidget(
+              cardNumber: cardNumber,
+              expiryDate: expiryDate,
+              cardHolderName: cardHolderName,
+              cvvCode: cvvCode,
+              showBackView: isCvvFocused,
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    CreditCardForm(
+                      onCreditCardModelChange: onCreditCardModelChange,
+                    ),
+                    RaisedButton(
+                      onPressed: () {
+                        print("addCard pressed");
+                        },
+                      child: Text("addCard"),
+                    ),
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
+      ),
       drawer: CustomSlider(
         userMail: userMail,
         signOut: widget._signOut,
         activePage: 'test',
       ),
-      );
-
+    );
   }
-
-
 
   void onCreditCardModelChange(CreditCardModel creditCardModel) {
     setState(() {
@@ -95,7 +106,4 @@ class _CarteCreditState extends State<CarteCredit> {
       isCvvFocused = creditCardModel.isCvvFocused;
     });
   }
-
-
-
 }

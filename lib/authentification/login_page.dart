@@ -7,6 +7,7 @@ import 'package:lynight/services/userData.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:flare_flutter/flare_controller.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title, this.auth, this.onSignIn}) : super(key: key);
@@ -21,7 +22,7 @@ class LoginPage extends StatefulWidget {
 
 enum FormType { login, register, registerAsPro }
 
-class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
   static final formKey = new GlobalKey<FormState>();
   final TextEditingController _passwordTextController = TextEditingController();
 

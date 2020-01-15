@@ -39,7 +39,7 @@ class _ScannerQrCode extends State<ScannerQrCode> {
     });
   }
 
-  String _qrInfo = 'Scan un code batard';
+  String _qrInfo = 'Scan un code';
   bool _camState = false;
 
   _scanCode() {

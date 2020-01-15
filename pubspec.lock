@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  braintree_payment:
+    dependency: "direct main"
+    description:
+      name: braintree_payment
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.2"
   carousel_pro:
     dependency: "direct main"
     description:
@@ -171,7 +178,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.15.8"
+    version: "0.16.0"
   location:
     dependency: "direct main"
     description:
