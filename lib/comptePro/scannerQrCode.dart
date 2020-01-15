@@ -187,7 +187,7 @@ class _ScannerQrCode extends State<ScannerQrCode> {
 
   Widget checkPlace() {
     if(_isScanning){
-      return CircularProgressIndicator();
+      return Text("...");
     }
     print(_maptest);
     if(_maptest["alreadyScan"] == true ){
