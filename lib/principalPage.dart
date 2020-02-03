@@ -9,12 +9,11 @@ import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/searchBar/searchBar.dart';
 
 class PrincipalPage extends StatefulWidget {
-  PrincipalPage({this.auth, this.onSignOut, this.userId, this.admin});
+  PrincipalPage({this.auth, this.onSignOut, this.userId});
 
   final BaseAuth auth;
   final VoidCallback onSignOut;
   final String userId;
-  final bool admin;
 
   void _signOut() async {
     try {

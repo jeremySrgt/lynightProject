@@ -4,10 +4,6 @@ import 'package:lynight/authentification/login_page.dart';
 import 'package:lynight/principalPage.dart';
 import 'package:lynight/services/crud.dart';
 
-
-
-
-
 enum AuthStatus {
   NOT_DETERMINED,
   NOT_LOGGED_IN,
@@ -40,8 +36,8 @@ class _RootPageState extends State<RootPage> {
         }
       });
 
-      authStatus = user == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
-
+      authStatus =
+          user == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
     });
   }
 
@@ -60,26 +56,17 @@ class _RootPageState extends State<RootPage> {
     //un document avec l'id du compte et un champ unique contenant le documentreference
     //de l'utilisateur pour ensuite regarde lors de la connexion si le parent du docref est Adminboite ou user
     //et ainsi savoir si l'utilisateur est un admin ou pas
+    //FIXME plus besoin de tester si admin ou pas sur cette class car les admins ont été deplacé sur une autre app
 
     setState(() {
-      crudObj.getDataFromUserFromDocument().then((value){
-        print("DATADATADATADATADATADATADATADATADA");
+      crudObj.getDataFromUserFromDocument().then((value) {
+        print("DONNER DU USER");
         print(value.data);
-        if(value.data == null) {
-          print("RENTRER DANS LE IF");
-          setState(() {
-            admin = true;
-            authStatus = AuthStatus.LOGGED_IN;
-          });
-        }else{
-          print("RENTRER DANS LE ELSE");
-          setState(() {
-            admin = false;
-            authStatus = AuthStatus.LOGGED_IN;
-          });
-        }
+        setState(() {
+          admin = false;
+          authStatus = AuthStatus.LOGGED_IN;
+        });
       });
-//      authStatus = AuthStatus.LOGGED_IN;
     });
   }
 
@@ -98,7 +85,6 @@ class _RootPageState extends State<RootPage> {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -120,10 +106,8 @@ class _RootPageState extends State<RootPage> {
             userId: _userId,
             auth: widget.auth,
             onSignOut: logoutCallback,
-            admin: admin,
           );
-        }
-        else
+        } else
           return buildWaitingScreen();
         break;
       default:
@@ -132,67 +116,3 @@ class _RootPageState extends State<RootPage> {
     }
   }
 }
-
-
-//class RootPage extends StatefulWidget {
-//  RootPage({Key key, this.auth}) : super(key: key);
-//  final BaseAuth auth;
-//
-//  @override
-//  State<StatefulWidget> createState() => new _RootPageState();
-//}
-//
-//enum AuthStatus {
-//  notSignedIn,
-//  signedIn,
-//}
-//
-//class _RootPageState extends State<RootPage> {
-//
-//  String userID;
-//  String userMail;
-//
-//  AuthStatus authStatus = AuthStatus.notSignedIn;
-//
-//  initState() {
-//    super.initState();
-//    widget.auth.currentUser().then((userId) {
-//      setState(() {
-//        authStatus = userId != null ? AuthStatus.signedIn : AuthStatus.notSignedIn;
-//        userID = userId;
-//      });
-//    });
-//    widget.auth.userEmail().then((userEmail) {
-//      setState(() {
-//        userMail = userEmail;
-//      });
-//    });
-//  }
-//
-//
-//  void _updateAuthStatus(AuthStatus status) {
-//    setState(() {
-//      authStatus = status;
-//    });
-//  }
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    switch (authStatus) {
-//      case AuthStatus.notSignedIn:
-//        return LoginPage(
-//          title: 'Authentification',
-//          auth: widget.auth,
-//          onSignIn: () => _updateAuthStatus(AuthStatus.signedIn),
-//        );
-//      case AuthStatus.signedIn:
-//        return PrincipalPage(
-//          auth: widget.auth,
-//          onSignOut: () => _updateAuthStatus(AuthStatus.notSignedIn)
-//        );
-//    }
-//    return Container(
-//      child: Text('Probleme dans les root'),
-//    );
-//  }
-//}

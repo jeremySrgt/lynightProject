@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:math';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,6 +12,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 //FIXME TOUT CE QUI EST RELATIF AU COMPTE PRO A ETE DEPLACE DANS L'APP BLOON PRO
+//FIXME CETTE FONCTION A ETE GARDE SI JAMAIS ON DOIT RAJOUTER DES CLUB VIA FLUTTER
+//FIXME LE DVLP DU SCRAPY EN PYTHON EST EN COURS PERMETTANT DE SE PASSER DE CETTE CLASS
+//FIXME LA CLASSE SERA SUPPRIMEE UNE FOIS QUE PYTHON SERA FONCTIONNELLE
 
 class AddClub extends StatefulWidget {
   AddClub({this.onSignOut});
