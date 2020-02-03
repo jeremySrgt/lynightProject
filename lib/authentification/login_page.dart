@@ -20,7 +20,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => new _LoginPageState();
 }
 
-enum FormType { login, register, registerAsPro }
+enum FormType { login, register}
 
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
   static final formKey = new GlobalKey<FormState>();
@@ -59,7 +59,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
             ? await widget.auth.signIn(_email, _password)
             : await widget.auth.createUser(_email, _password);
         setState(() {
-          _authHint = 'Connecté\n\nUser id: $userId';
           _isLoading = false;
         });
         widget.onSignIn();
@@ -84,39 +83,11 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
                   "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
               reservation: [],
               sex: userSex,
-              pro: _formType == FormType.registerAsPro ? true : false,
+              pro: false,
               friendRequest: [],
               friendList: [],
               invitation: []);
           crudObj.createOrUpdateUserData(userData.getDataMap());
-        }
-
-        if (_formType == FormType.registerAsPro) {
-          UserData userData = new UserData(
-              name: _name,
-              surname: "",
-              dob: dob,
-              favoris: [],
-              mail: _email,
-              music: {
-                'electro': true,
-                'populaire': true,
-                'rap': true,
-                'rnb': true,
-                'rock': true,
-                'trans': true,
-              },
-              notification: true,
-              phone: "",
-              picture:
-                  "https://firebasestorage.googleapis.com/v0/b/lynight-53310.appspot.com/o/profilePics%2Fbloon_pics.jpg?alt=media&token=ab6c1537-9b1c-4cb4-b9d6-2e5fa9c7cb46",
-              reservation: [],
-              sex: userSex,
-              pro: true,
-              friendRequest: [],
-              friendList: [],
-              invitation: []);
-          crudObj.createOrUpdateAdminData(userData.getDataMap());
         }
       } catch (e) {
         setState(() {
@@ -136,14 +107,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
     formKey.currentState.reset();
     setState(() {
       _formType = FormType.register;
-      _authHint = '';
-    });
-  }
-
-  void moveToRegisterAsPro() {
-    formKey.currentState.reset();
-    setState(() {
-      _formType = FormType.registerAsPro;
       _authHint = '';
     });
   }
@@ -393,43 +356,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
             textAlign: TextAlign.center));
   }
 
-  Widget comptePro() {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: FlatButton(
-        onPressed: moveToRegisterAsPro,
-        child: Text('Compte Pro'),
-      ),
-    );
-  }
-
-  Widget _showCodeComptePro() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-      child: TextFormField(
-        obscureText: true,
-        maxLines: 1,
-        keyboardType: TextInputType.number,
-        key: new Key('codepro'),
-        decoration: InputDecoration(
-          labelText: 'Code de compte Pro',
-          icon: new Icon(
-            Icons.verified_user,
-            color: Colors.grey,
-          ),
-        ),
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'Un code est requis pour créer un compte pro';
-          }
-          if (value != '1998') {
-            return 'Code invalide';
-          }
-        },
-      ),
-    );
-  }
-
   Widget _buildForm() {
     return Form(
         key: formKey,
@@ -439,9 +365,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
             _showLogo(),
             _buildUsernameField(),
             _formType == FormType.register ? _buildNameField() : Container(),
-            _formType == FormType.registerAsPro
-                ? _buildNameField()
-                : Container(),
             _buildPasswordField(),
             _formType == FormType.register
                 ? _builConfirmPasswordTextField()
@@ -451,18 +374,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
               height: 10.0,
             ),
             _formType == FormType.register ? _showGenderSelect() : Container(),
-            _formType == FormType.registerAsPro
-                ? _builConfirmPasswordTextField()
-                : Container(),
-            _formType == FormType.registerAsPro
-                ? _showDatePicker()
-                : Container(),
-            _formType == FormType.registerAsPro
-                ? _showGenderSelect()
-                : Container(),
-            _formType == FormType.registerAsPro
-                ? _showCodeComptePro()
-                : Container(),
             _isLoading == false ? submitWidgets() : _showCircularProgress()
           ],
         ));
@@ -485,7 +396,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
                 child: _buildForm(),
               ),
             ]),
-            _formType == FormType.registerAsPro ? Container() : comptePro(),
             hintText(),
           ]),
         ),
