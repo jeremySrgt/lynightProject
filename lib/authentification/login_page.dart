@@ -7,7 +7,6 @@ import 'package:lynight/services/userData.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flare_flutter/flare_actor.dart';
-import 'package:flare_flutter/flare_controller.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title, this.auth, this.onSignIn}) : super(key: key);
@@ -61,7 +60,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
         setState(() {
           _isLoading = false;
         });
-        widget.onSignIn();
         if (_formType == FormType.register) {
           UserData userData = new UserData(
               name: _name,
@@ -89,6 +87,21 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
               invitation: []);
           crudObj.createOrUpdateUserData(userData.getDataMap());
         }
+
+        if(userId == null){
+          print("EMAIL PAS VERIFIE");
+          setState(() {
+            _authHint = 'Véréfie ton e-mail 🙂';
+            _isLoading = false;
+            _formType = FormType.login;
+          });
+        }else{
+          _isLoading = false;
+          widget.onSignIn();
+        }
+
+
+
       } catch (e) {
         setState(() {
           _isLoading = false;

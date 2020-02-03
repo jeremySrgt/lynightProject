@@ -4,6 +4,10 @@ import 'package:lynight/authentification/login_page.dart';
 import 'package:lynight/principalPage.dart';
 import 'package:lynight/services/crud.dart';
 
+
+
+
+
 enum AuthStatus {
   NOT_DETERMINED,
   NOT_LOGGED_IN,
@@ -36,8 +40,8 @@ class _RootPageState extends State<RootPage> {
         }
       });
 
-      authStatus =
-          user == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
+      authStatus = user == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
+
     });
   }
 
@@ -56,16 +60,25 @@ class _RootPageState extends State<RootPage> {
     //un document avec l'id du compte et un champ unique contenant le documentreference
     //de l'utilisateur pour ensuite regarde lors de la connexion si le parent du docref est Adminboite ou user
     //et ainsi savoir si l'utilisateur est un admin ou pas
-    //FIXME plus besoin de tester si admin ou pas sur cette class car les admins ont été deplacé sur une autre app
 
+
+    //permet de ne pas pouvoir se connecter avec un compte pro sur l'app normal
+    //on devrati integrer la meme fonction sur l'appli pro pour faire l'inverses
     setState(() {
-      crudObj.getDataFromUserFromDocument().then((value) {
+      crudObj.getDataFromUserFromDocument().then((value){
         print("DONNER DU USER");
         print(value.data);
-        setState(() {
-          admin = false;
-          authStatus = AuthStatus.LOGGED_IN;
-        });
+        if(value.data == null) {
+          setState(() {
+            admin = true;
+            authStatus = AuthStatus.NOT_LOGGED_IN;
+          });
+        }else{
+          setState(() {
+            admin = false;
+            authStatus = AuthStatus.LOGGED_IN;
+          });
+        }
       });
     });
   }
@@ -85,6 +98,7 @@ class _RootPageState extends State<RootPage> {
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +121,8 @@ class _RootPageState extends State<RootPage> {
             auth: widget.auth,
             onSignOut: logoutCallback,
           );
-        } else
+        }
+        else
           return buildWaitingScreen();
         break;
       default:
