@@ -6,7 +6,7 @@ import 'package:lynight/discoverPage/bottomClubCard.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/widgets/slider.dart';
-import 'package:lynight/searchBar/searchBar.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class PrincipalPage extends StatefulWidget {
   PrincipalPage({this.auth, this.onSignOut, this.userId});
@@ -52,25 +52,9 @@ class _PrincipalPageState extends State<PrincipalPage>
   bool _IsSearching;
   String _searchText = "";
 
-//  _PrincipalPageState() {
-//    _searchQuery.addListener(() {
-//      if (_searchQuery.text.isEmpty) {
-//        setState(() {
-//          _IsSearching = false;
-//          _searchText = "";
-//        });
-//      }
-//      else {
-//        setState(() {
-//          _IsSearching = true;
-//          _searchText = _searchQuery.text;
-//        });
-//      }
-//    });
-//  }
-
 
   CrudMethods crudObj = new CrudMethods();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   Map<dynamic, dynamic> mapOfUserMusic;
 
   void initState() {
@@ -90,6 +74,30 @@ class _PrincipalPageState extends State<PrincipalPage>
         mapOfUserMusic = userMusic;
       });
     });
+
+    _firebaseMessaging.getToken().then((token){
+      print(token);
+      crudObj.createOrUpdateUserData({"tokenNotif": token});
+    });
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        final notification = message['notification'];
+        print(notification);
+        print(notification['title']);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+      },
+    );
+
+    //juste pour IOS
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+
   }
 
   @override
