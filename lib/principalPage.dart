@@ -123,9 +123,6 @@ class _PrincipalPageState extends State<PrincipalPage>
           ],
         ),
       ),
-//La recherhce trouver un meilleur moyen de l'intégrer et les queries pour rechercher les boites (peut etre avec algolia
-      //pour les favoris rajouter un onglet dans le slider pour permettre d'alléger la page principale
-
       appBar: buildBar(context),
       drawer: CustomSlider(
         userMail: mail,
@@ -150,29 +147,5 @@ class _PrincipalPageState extends State<PrincipalPage>
             },
           ),
         ]);
-  }
-
-  void _handleSearchStart() {
-    setState(() {
-      _IsSearching = true;
-    });
-  }
-
-  void _handleSearchEnd() {
-    setState(() {
-      this.actionIcon = new Icon(
-        Icons.search,
-        color: Theme.of(context).primaryColor,
-      );
-      this.appBarTitle = new Text(
-        "Découvrir",
-        style: TextStyle(
-            color: Color(0xFF7854d3),
-            fontSize: 30.0,
-            fontWeight: FontWeight.w500),
-      );
-      _IsSearching = false;
-      _searchQuery.clear();
-    });
   }
 }

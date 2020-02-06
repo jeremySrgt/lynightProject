@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:algolia/algolia.dart';
 import 'algoliaInstantiate.dart';
+import 'package:lynight/nightCubPage/nightClubProfile.dart';
 
 class DataSearch extends SearchDelegate<String> {
   Algolia algolia = AlgoliaInstance.algolia;
   AlgoliaQuery searchQuery;
+
+  final Shader linearGradient = LinearGradient(
+    colors: <Color>[Colors.pink, Colors.deepPurple],
+  ).createShader(Rect.fromLTWH(0.0, 0.0, 150.0, 70.0));
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -57,10 +62,22 @@ class DataSearch extends SearchDelegate<String> {
                         final AlgoliaObjectSnapshot result =
                             snapshot.data.hits[index];
                         return ListTile(
-                          title: Text(result.data['name'],
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700, fontSize: 18)),
+                          title: Text(
+                            result.data['name'],
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                foreground: Paint()..shader = linearGradient),
+                          ),
                           subtitle: Text(result.data['adress']),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NightClubProfile(
+                                    documentID: result.objectID),
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
@@ -86,7 +103,7 @@ class DataSearch extends SearchDelegate<String> {
               AsyncSnapshot<AlgoliaQuerySnapshot> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return new Text('Chargement...');
+                return Text('Chargement...');
                 break;
               default:
                 if (snapshot.hasError) {
@@ -103,10 +120,22 @@ class DataSearch extends SearchDelegate<String> {
                         final AlgoliaObjectSnapshot result =
                             snapshot.data.hits[index];
                         return ListTile(
-                          title: Text(result.data['name'],
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700, fontSize: 18)),
+                          title: Text(
+                            result.data['name'],
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                foreground: Paint()..shader = linearGradient),
+                          ),
                           subtitle: Text(result.data['adress']),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NightClubProfile(
+                                    documentID: result.objectID),
+                              ),
+                            );
+                          },
                         );
                       },
                     ),

@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 import 'package:lynight/services/crud.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class TopClubCard extends StatefulWidget {
   final musicMap;
@@ -12,7 +11,6 @@ class TopClubCard extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _TopClubCardState();
   }
 }
