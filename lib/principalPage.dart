@@ -7,6 +7,7 @@ import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/services/crud.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:lynight/searchBar/dataSearch.dart';
 
 class PrincipalPage extends StatefulWidget {
   PrincipalPage({this.auth, this.onSignOut, this.userId});
@@ -33,7 +34,6 @@ class PrincipalPage extends StatefulWidget {
 
 class _PrincipalPageState extends State<PrincipalPage>
     with TickerProviderStateMixin {
-
   String mail = 'userMail';
 
 //  TabController _controller;
@@ -41,17 +41,17 @@ class _PrincipalPageState extends State<PrincipalPage>
   Widget appBarTitle = new Text(
     "Découvrir",
     style: TextStyle(
-        color: Color(0xFF7854d3),
-        fontSize: 30.0,
-        fontWeight: FontWeight.w500),
+        color: Color(0xFF7854d3), fontSize: 30.0, fontWeight: FontWeight.w500),
   );
 
-  Icon actionIcon = new Icon(Icons.search, color: Color(0xFF7854d3),);
+  Icon actionIcon = new Icon(
+    Icons.search,
+    color: Color(0xFF7854d3),
+  );
   final key = new GlobalKey<ScaffoldState>();
   final TextEditingController _searchQuery = new TextEditingController();
   bool _IsSearching;
   String _searchText = "";
-
 
   CrudMethods crudObj = new CrudMethods();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
@@ -75,7 +75,7 @@ class _PrincipalPageState extends State<PrincipalPage>
       });
     });
 
-    _firebaseMessaging.getToken().then((token){
+    _firebaseMessaging.getToken().then((token) {
       print(token);
       crudObj.createOrUpdateUserData({"tokenNotif": token});
     });
@@ -97,7 +97,6 @@ class _PrincipalPageState extends State<PrincipalPage>
     //juste pour IOS
     _firebaseMessaging.requestNotificationPermissions(
         const IosNotificationSettings(sound: true, badge: true, alert: true));
-
   }
 
   @override
@@ -108,7 +107,8 @@ class _PrincipalPageState extends State<PrincipalPage>
     return Scaffold(
       key: key,
       backgroundColor: Colors.white,
-      resizeToAvoidBottomPadding: false, //evite que les widgets remonte dû à l'apparition du clavier
+      resizeToAvoidBottomPadding: false,
+      //evite que les widgets remonte dû à l'apparition du clavier
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -143,44 +143,28 @@ class _PrincipalPageState extends State<PrincipalPage>
         elevation: 0.0,
         backgroundColor: Colors.white,
         actions: <Widget>[
-          new IconButton(icon: actionIcon, onPressed: () {
-            setState(() {
-              if (this.actionIcon.icon == Icons.search) {
-                this.actionIcon = new Icon(Icons.close, color: Theme.of(context).primaryColor,);
-                this.appBarTitle = new TextField(
-                  autofocus: true,
-                  controller: _searchQuery,
-                  style: new TextStyle(
-                    color: Theme.of(context).primaryColor,
-
-                  ),
-                  decoration: new InputDecoration(
-                    border: InputBorder.none,
-//                      prefixIcon: new Icon(Icons.search, color: Theme.of(context).primaryColor),
-                      hintText: "Recherche...",
-                      hintStyle: new TextStyle(color: Theme.of(context).primaryColor)
-                  ),
-                );
-                _handleSearchStart();
-              }
-              else {
-                _handleSearchEnd();
-              }
-            });
-          },),
-        ]
-    );
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearch());
+            },
+          ),
+        ]);
   }
+
   void _handleSearchStart() {
     setState(() {
       _IsSearching = true;
     });
   }
+
   void _handleSearchEnd() {
     setState(() {
-      this.actionIcon = new Icon(Icons.search, color: Theme.of(context).primaryColor,);
-      this.appBarTitle =
-      new Text(
+      this.actionIcon = new Icon(
+        Icons.search,
+        color: Theme.of(context).primaryColor,
+      );
+      this.appBarTitle = new Text(
         "Découvrir",
         style: TextStyle(
             color: Color(0xFF7854d3),
@@ -191,5 +175,4 @@ class _PrincipalPageState extends State<PrincipalPage>
       _searchQuery.clear();
     });
   }
-
 }

@@ -15,6 +15,10 @@
 *.iws
 .idea/
 
+#secret key related
+algolia_secret_key.txt
+google_secret_key.json
+
 # Visual Studio Code related
 .vscode/
 
