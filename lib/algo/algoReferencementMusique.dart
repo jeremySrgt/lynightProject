@@ -5,6 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:lynight/services/crud.dart';
 
 
+//TODO l'algo est trop lourd et tourne en front
+//TODO on peut utiliser algolia pour nous renvoyer une liste de club qui match les préférences de l'utilisateur
+//TODO l'appli serait plus rapide et on pourrait supprimer cette class
+
+
 class AlgoMusicReference {
   CrudMethods crudObj = new CrudMethods();
   Stream club;

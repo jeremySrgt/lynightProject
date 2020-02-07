@@ -61,28 +61,23 @@ class _TopClubCardState extends State<TopClubCard> {
   void _randomClubToShow() {
     if (queryClubList != null) {
       int length = queryClubList.length;
-//      print(length);
       var rdm = new Random();
       int loop = 5;
       List<Map<dynamic, dynamic>> mutableListRandomClub = [];
       for (int i = 0; i < loop; i++) {
         bool sameClub = false;
         var currentRandom = rdm.nextInt(length);
-//        print('current random' + currentRandom.toString());
         if (mutableListRandomClub.isEmpty) {
-//          print('ISEMPTY');
           mutableListRandomClub.add(queryClubList[currentRandom]);
         } else {
           for (int j = 0; j < mutableListRandomClub.length; j++) {
             if (queryClubList[currentRandom]['clubID'] ==
                 mutableListRandomClub[j]['clubID']) {
-//              print('SAME CLUB DOMMAGE');
               sameClub = true;
               break;
             }
           }
           if (!sameClub) {
-//            print('sur le point dajouter : ' + queryClubList[currentRandom]['name']);
             mutableListRandomClub.add(queryClubList[currentRandom]);
           } else {
             loop++;
