@@ -19,9 +19,9 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => new _LoginPageState();
 }
 
-enum FormType { login, register}
+enum FormType { login, register }
 
-class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
+class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   static final formKey = new GlobalKey<FormState>();
   final TextEditingController _passwordTextController = TextEditingController();
 
@@ -88,24 +88,35 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
           crudObj.createOrUpdateUserData(userData.getDataMap());
         }
 
-        if(userId == null){
+        if (userId == null) {
           print("EMAIL PAS VERIFIE");
           setState(() {
             _authHint = 'Véréfie ton e-mail 🙂';
             _isLoading = false;
             _formType = FormType.login;
           });
-        }else{
+        } else {
           _isLoading = false;
           widget.onSignIn();
         }
-
-
-
       } catch (e) {
         setState(() {
           _isLoading = false;
-          _authHint = 'Erreur connexion\n\n${e.toString()}';
+          switch (e.code) {
+            case 'ERROR_INVALID_EMAIL':
+              _authHint = 'Email invalide';
+              break;
+            case 'ERROR_USER_NOT_FOUND':
+              _authHint = 'Aucun utilisateur trouvé ';
+              break;
+            case 'ERROR_WRONG_PASSWORD':
+              _authHint = 'Mauvais mot de passe';
+              break;
+            default:
+              _authHint = 'Erreur de connexion';
+              break;
+          }
+//          _authHint = 'Erreur connexion\n\n${e.toString()}';
         });
         print(e);
       }
@@ -387,7 +398,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
               height: 10.0,
             ),
             _formType == FormType.register ? _showGenderSelect() : Container(),
-            _isLoading == false ? submitWidgets() : _showCircularProgress()
+            _isLoading == false ? submitWidgets() : _showCircularProgress(),
+//            _formType != FormType.register ? googleSignIn() : Container(),
           ],
         ));
   }
@@ -437,5 +449,37 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
             shouldClip: true,
           ),
         ));
+  }
+
+  Widget googleSignIn() {
+    return OutlineButton(
+      splashColor: Colors.grey,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      highlightElevation: 0,
+      borderSide: BorderSide(color: Colors.grey),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image(image: AssetImage("assets/google_logo.png"), height: 35.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                'Se connecter avec Google',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+      onPressed: (){
+          widget.auth.signInWithGoogle();
+      },
+    );
   }
 }

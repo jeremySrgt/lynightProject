@@ -3,7 +3,13 @@ import 'package:algolia/algolia.dart';
 import 'algoliaInstantiate.dart';
 import 'package:lynight/nightCubPage/nightClubProfile.dart';
 
+
+
 class DataSearch extends SearchDelegate<String> {
+
+  @override
+  String get searchFieldLabel => 'Nom, Style, Lieu';
+
   Algolia algolia = AlgoliaInstance.algolia;
   AlgoliaQuery searchQuery;
 
