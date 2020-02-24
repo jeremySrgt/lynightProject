@@ -405,12 +405,14 @@ class _NightClubProfile extends State<NightClubProfile> {
               textColor: Colors.black87,
               onPressed: () {
                 Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SumUp(
-                              clubName: clubData['name'],
-                              clubId: widget.documentID,
-                            )));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SumUp(
+                      clubName: clubData['name'],
+                      clubId: widget.documentID,
+                    ),
+                  ),
+                );
               },
             ),
           ],
@@ -462,7 +464,8 @@ class _NightClubProfile extends State<NightClubProfile> {
                 lineSeparator(),
                 nightClubPrice(),
                 SizedBox(height: 20),
-                nightClubLetsParty(),
+                Text("Reservation bientôt disponible", style: TextStyle(color: Colors.green[800]),),
+//                nightClubLetsParty(),
                 SizedBox(height: 30),
               ],
             ),

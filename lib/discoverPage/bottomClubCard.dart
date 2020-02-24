@@ -54,7 +54,6 @@ class _BottomClubCardState extends State<BottomClubCard> {
     double height = MediaQuery.of(context).size.height;
     double font = MediaQuery.of(context).textScaleFactor;
 
-    // TODO: implement build
     return Container(
       height: height / 3,
       child: Column(
