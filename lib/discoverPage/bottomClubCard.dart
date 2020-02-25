@@ -7,8 +7,9 @@ import 'package:transparent_image/transparent_image.dart';
 
 class BottomClubCard extends StatefulWidget {
   final musicMap;
+  final widgetKey;
 
-  BottomClubCard({this.musicMap});
+  BottomClubCard({this.musicMap, this.widgetKey});
 
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -22,6 +23,7 @@ class _BottomClubCardState extends State<BottomClubCard> {
   Map<dynamic, dynamic> mapOfUserMusic;
   List<DocumentSnapshot> dataClubFromBDD;
   List<String> clubSelected;
+
 
   @override
   void initState() {
@@ -61,6 +63,7 @@ class _BottomClubCardState extends State<BottomClubCard> {
           Row(
             children: <Widget>[
               Padding(
+                key: widget.widgetKey,
                 padding: const EdgeInsets.only(left: 30.0),
                 child: Text(
                   'Recommandé',
@@ -72,6 +75,7 @@ class _BottomClubCardState extends State<BottomClubCard> {
             ],
           ),
           Expanded(
+//            key: widget.widgetKey,
             child: clubList(),
           ),
         ],

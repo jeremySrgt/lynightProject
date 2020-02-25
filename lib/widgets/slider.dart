@@ -382,36 +382,36 @@ class _CustomSliderState extends State<CustomSlider> {
           ),
 
 
-          Container(
-            decoration: currentDrawer == 6
-                ? BoxDecoration(
-                color: Color(0xFFebdffc),
-                borderRadius: BorderRadius.circular(15.0))
-                : BoxDecoration(),
-            child: ListTile(
-              leading: Icon(
-                FontAwesomeIcons.tenge,
-                color: currentDrawer == 6
-                    ? Theme.of(context).primaryColor
-                    : Colors.grey,
-              ),
-              title: Text(
-                'TEST',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: currentDrawer == 6
-                      ? Theme.of(context).primaryColor
-                      : Colors.grey,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                if(widget.activePage == 'test') return;
-                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(6);
-                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => CarteCredit()));
-              },
-            ),
-          ),
+//          Container(
+//            decoration: currentDrawer == 6
+//                ? BoxDecoration(
+//                color: Color(0xFFebdffc),
+//                borderRadius: BorderRadius.circular(15.0))
+//                : BoxDecoration(),
+//            child: ListTile(
+//              leading: Icon(
+//                FontAwesomeIcons.tenge,
+//                color: currentDrawer == 6
+//                    ? Theme.of(context).primaryColor
+//                    : Colors.grey,
+//              ),
+//              title: Text(
+//                'TEST',
+//                style: TextStyle(
+//                  fontWeight: FontWeight.bold,
+//                  color: currentDrawer == 6
+//                      ? Theme.of(context).primaryColor
+//                      : Colors.grey,
+//                ),
+//              ),
+//              onTap: () {
+//                Navigator.of(context).pop();
+//                if(widget.activePage == 'test') return;
+//                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(6);
+//                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => CarteCredit()));
+//              },
+//            ),
+//          ),
 
 
           Divider(),

@@ -6,8 +6,9 @@ import 'package:lynight/services/crud.dart';
 
 class TopClubCard extends StatefulWidget {
   final musicMap;
+  final widgetKey;
 
-  TopClubCard({this.musicMap});
+  TopClubCard({@required this.musicMap, @required this.widgetKey});
 
   @override
   State<StatefulWidget> createState() {
@@ -240,6 +241,7 @@ class _TopClubCardState extends State<TopClubCard> {
       return _loadingState();
     }
     return Expanded(
+      key: widget.widgetKey,
       child: ListView.builder(
           itemCount: fiveRandomClub.length,
           //faire une verif que la list ne soit pas null pour ca utiliser le refresh peut etre ca pourrait etre sympa

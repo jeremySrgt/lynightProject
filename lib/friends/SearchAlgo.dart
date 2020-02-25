@@ -61,7 +61,6 @@ class _SearchAlgoState extends State<SearchAlgo> {
           }else {
             setState(() {
               suggestionList.add(user);
-              print(user);
             });
           }
         }

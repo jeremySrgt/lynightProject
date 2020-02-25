@@ -45,6 +45,7 @@ dependencies:
   algolia: ^0.1.6+1
   firebase_in_app_messaging: ^0.1.1+1
   google_sign_in: ^4.1.4
+  tutorial_coach_mark: ^0.3.0
 
 
 

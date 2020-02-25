@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:ui';
 
 import 'package:lynight/discoverPage/topClubCard.dart';
 import 'package:lynight/discoverPage/bottomClubCard.dart';
@@ -8,6 +9,9 @@ import 'package:lynight/services/crud.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:lynight/searchBar/dataSearch.dart';
+import 'package:tutorial_coach_mark/target_position.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+import 'package:lynight/widgets/tutorial_focus.dart';
 
 class PrincipalPage extends StatefulWidget {
   PrincipalPage({this.auth, this.onSignOut, this.userId});
@@ -27,7 +31,6 @@ class PrincipalPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _PrincipalPageState();
   }
 }
@@ -37,6 +40,12 @@ class _PrincipalPageState extends State<PrincipalPage>
   String mail = 'userMail';
 
 //  TabController _controller;
+
+  List<TargetFocus> targets = List();
+
+  GlobalKey keyButton = GlobalKey();
+  GlobalKey keyButton2 = GlobalKey();
+  GlobalKey keyButton3 = GlobalKey();
 
   Widget appBarTitle = new Text(
     "Découvrir",
@@ -97,6 +106,37 @@ class _PrincipalPageState extends State<PrincipalPage>
     //juste pour IOS
     _firebaseMessaging.requestNotificationPermissions(
         const IosNotificationSettings(sound: true, badge: true, alert: true));
+
+    TutorialFocus tuto = new TutorialFocus(key1: keyButton, key2: keyButton2, key3: keyButton3);
+    tuto.initTutorialClass();
+
+    targets = tuto.getTargetList();
+
+
+    Future.delayed(Duration(milliseconds: 100), () {
+      showTutorial();
+    });
+  }
+
+  void showTutorial() {
+    TutorialCoachMark(
+        context,
+        targets: targets, // List<TargetFocus>
+        colorShadow: Theme.of(context).primaryColor, // DEFAULT Colors.black
+//         alignSkip: Alignment.bottomRight,
+         textSkip: "Passer le tuto",
+//         paddingFocus: 10,
+         opacityShadow: 0.9,
+        finish: (){
+          print("finish");
+        },
+        clickTarget: (target){
+          print(target);
+        },
+        clickSkip: (){
+          print("skip");
+        }
+    )..show();
   }
 
   @override
@@ -115,8 +155,8 @@ class _PrincipalPageState extends State<PrincipalPage>
             SizedBox(
               height: height / 35,
             ),
-            TopClubCard(musicMap: mapOfUserMusic),
-            BottomClubCard(musicMap: mapOfUserMusic),
+            TopClubCard(musicMap: mapOfUserMusic, widgetKey : keyButton),
+            BottomClubCard(musicMap: mapOfUserMusic, widgetKey : keyButton2),
             SizedBox(
               height: height / 35,
             )
@@ -141,7 +181,7 @@ class _PrincipalPageState extends State<PrincipalPage>
         backgroundColor: Colors.white,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.search, key: keyButton3,),
             onPressed: () {
               showSearch(context: context, delegate: DataSearch());
             },
