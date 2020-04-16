@@ -106,14 +106,21 @@ class _PrincipalPageState extends State<PrincipalPage>
     _firebaseMessaging.requestNotificationPermissions(
         const IosNotificationSettings(sound: true, badge: true, alert: true));
 
-    TutorialFocus tuto = new TutorialFocus(key1: keyButton, key2: keyButton2, key3: keyButton3);
-    tuto.initTutorialClass();
-
-    targets = tuto.getTargetList();
 
 
-    Future.delayed(Duration(milliseconds: 100), () {
-      showTutorial();
+    crudObj.getDataFromUserFromDocument().then((value) {
+      Map<dynamic, dynamic> userMap = value.data;
+      if(userMap['tutoDone']== null){
+        TutorialFocus tuto = new TutorialFocus(key1: keyButton, key2: keyButton2, key3: keyButton3);
+        tuto.initTutorialClass();
+
+        targets = tuto.getTargetList();
+        crudObj.createOrUpdateUserData({"tutoDone": true});
+
+        Future.delayed(Duration(milliseconds: 100), () {
+          showTutorial();
+        });
+      }
     });
   }
 
