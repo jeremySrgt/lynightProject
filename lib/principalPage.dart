@@ -38,7 +38,6 @@ class PrincipalPage extends StatefulWidget {
 class _PrincipalPageState extends State<PrincipalPage>
     with TickerProviderStateMixin {
   String mail = 'userMail';
-
 //  TabController _controller;
 
   List<TargetFocus> targets = List();

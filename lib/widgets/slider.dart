@@ -254,34 +254,54 @@ class _CustomSliderState extends State<CustomSlider> {
             ),
           ),
           Container(
-            decoration: currentDrawer == 2
-                ? BoxDecoration(
-                    color: Color(0xFFebdffc),
-                    borderRadius: BorderRadius.circular(15.0))
-                : BoxDecoration(),
-            child: ListTile(
-              leading: Icon(
-                Icons.book,
-                color: currentDrawer == 2
-                    ? Theme.of(context).primaryColor
-                    : Colors.grey,
-              ),
-              title: Text(
-                'Réservations',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: currentDrawer == 2
-                      ? Theme.of(context).primaryColor
-                      : Colors.grey,
+            decoration: BoxDecoration(),
+            child: Stack(
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(
+                    Icons.book,
+                    color: Colors.grey[300]
+                  ),
+                  title: Text(
+                    'Réservations',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[300]
+                    ),
+                  ),
                 ),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                if(widget.activePage == 'Reservations') return;
-                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(2);
-                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => ListPage()));
-              },
+                Positioned(
+                  top: 35,
+                  left: 72,
+                  child: Text('Bientôt disponible', style: TextStyle(fontSize: 10.0, color: Colors.red[600]),),
+                )
+              ],
             ),
+
+//            décommenter pour reactivier la navigation vers les reservations
+//            child: ListTile(
+//              leading: Icon(
+//                Icons.book,
+//                color: currentDrawer == 2
+//                    ? Theme.of(context).primaryColor
+//                    : Colors.grey,
+//              ),
+//              title: Text(
+//                'Réservations',
+//                style: TextStyle(
+//                  fontWeight: FontWeight.bold,
+//                  color: currentDrawer == 2
+//                      ? Theme.of(context).primaryColor
+//                      : Colors.grey,
+//                ),
+//              ),
+//              onTap: () {
+//                Navigator.of(context).pop();
+//                if(widget.activePage == 'Reservations') return;
+//                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(2);
+//                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => ListPage()));
+//              },
+//            ),
           ),
           Container(
             decoration: currentDrawer == 3
@@ -345,73 +365,62 @@ class _CustomSliderState extends State<CustomSlider> {
             ),
           ),
           Container(
-            decoration: currentDrawer == 5
-                ? BoxDecoration(
-                color: Color(0xFFebdffc),
-                borderRadius: BorderRadius.circular(15.0))
-                : BoxDecoration(),
-            child: ListTile(
-              leading: Icon(
-                FontAwesomeIcons.compactDisc,
-                color: currentDrawer == 5
-                    ? Theme.of(context).primaryColor
-                    : Colors.grey,
-              ),
-              title: Text(
-                'Évènements',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: currentDrawer == 5
-                      ? Theme.of(context).primaryColor
-                      : Colors.grey,
+            decoration: BoxDecoration(),
+            child: Stack(
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(
+                    FontAwesomeIcons.compactDisc,
+                    color: Colors.grey[300],
+                  ),
+                  title: Text(
+                    'Évènements',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[300],
+                    ),
+                  ),
                 ),
-              ),
-              trailing: numberOfInvitation != 0
-                  ? Text(
-                numberOfInvitation.toString() + '',
-                style: TextStyle(color: Color(0xFFce3737)),
-              )
-                  : Text(''),
-              onTap: () {
-                Navigator.of(context).pop();
-                if(widget.activePage == 'Invitation') return;
-                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(5);
-                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => EventInvitation()));
-              },
+                Positioned(
+                  top: 35,
+                  left: 72,
+                  child: Text('Bientôt disponible', style: TextStyle(fontSize: 10.0, color: Colors.red[600]),),
+                )
+              ],
             ),
-          ),
 
-
-//          Container(
-//            decoration: currentDrawer == 6
-//                ? BoxDecoration(
-//                color: Color(0xFFebdffc),
-//                borderRadius: BorderRadius.circular(15.0))
-//                : BoxDecoration(),
+// decommenter pour reactiver la navigation vers les events
 //            child: ListTile(
 //              leading: Icon(
-//                FontAwesomeIcons.tenge,
-//                color: currentDrawer == 6
+//                FontAwesomeIcons.compactDisc,
+//                color: currentDrawer == 5
 //                    ? Theme.of(context).primaryColor
 //                    : Colors.grey,
 //              ),
 //              title: Text(
-//                'TEST',
+//                'Évènements',
 //                style: TextStyle(
 //                  fontWeight: FontWeight.bold,
-//                  color: currentDrawer == 6
+//                  color: currentDrawer == 5
 //                      ? Theme.of(context).primaryColor
 //                      : Colors.grey,
 //                ),
 //              ),
+//              trailing: numberOfInvitation != 0
+//                  ? Text(
+//                numberOfInvitation.toString() + '',
+//                style: TextStyle(color: Color(0xFFce3737)),
+//              )
+//                  : Text(''),
 //              onTap: () {
 //                Navigator.of(context).pop();
-//                if(widget.activePage == 'test') return;
-//                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(6);
-//                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => CarteCredit()));
+//                if(widget.activePage == 'Invitation') return;
+//                Provider.of<DrawerStateInfo>(context).setCurrentDrawer(5);
+//                Navigator.pushReplacement(context ,MaterialPageRoute(builder: (BuildContext context) => EventInvitation()));
 //              },
 //            ),
-//          ),
+          ),
+
 
 
           Divider(),
