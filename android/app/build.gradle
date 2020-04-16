@@ -43,8 +43,8 @@ android {
         applicationId "com.flutter.jerem.lynight"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 5 // nombre de build upload sur le play store
-        versionName "1.0.0"
+        versionCode 11 // nombre de build upload sur le play store
+        versionName "2.1.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner" //changer a cause du bug
         multiDexEnabled true //ajouter pour resoudre bug
     }
@@ -53,7 +53,7 @@ android {
         release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
             storePassword keystoreProperties['storePassword']
         }
     }
