@@ -8,7 +8,7 @@ import 'package:lynight/profilUtilisateur/selectProfilPicture.dart';
 import 'package:lynight/profilUtilisateur/checkbox.dart';
 
 class UserProfil extends StatefulWidget {
-  UserProfil({@required this.onSignOut});
+  UserProfil({this.onSignOut});
 
 //  final BaseAuth auth;
   final VoidCallback onSignOut;

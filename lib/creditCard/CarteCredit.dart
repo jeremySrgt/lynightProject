@@ -5,7 +5,6 @@ import 'package:lynight/creditCard/flutter_credit_card.dart';
 import 'package:lynight/widgets/slider.dart';
 import 'package:lynight/authentification/auth.dart';
 import 'package:lynight/services/crud.dart';
-import 'package:braintree_payment/braintree_payment.dart';
 
 
 
